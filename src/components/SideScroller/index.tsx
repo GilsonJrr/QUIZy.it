@@ -1,11 +1,12 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import * as Styled from "./styled";
 
 type ScrollerProps<GenericProps> = {
-  title: string | ReactNode;
+  title?: string | ReactNode;
   displayQuantity: number;
   collection: GenericProps[];
   renderItem: (item: GenericProps) => ReactNode;
+  backgroundColor?: string;
 };
 
 const SideScroller = <GenericProps,>({
@@ -13,12 +14,20 @@ const SideScroller = <GenericProps,>({
   renderItem,
   displayQuantity,
   title,
+  backgroundColor,
 }: ScrollerProps<GenericProps>) => {
   const [step, setStep] = useState(0);
   const [navigated, setNavigated] = useState(false);
+  const [notLongEnough, setNotLongEnough] = useState(false);
+
+  useEffect(() => {
+    if (collection.length <= displayQuantity + 1) {
+      setNotLongEnough(true);
+    }
+  }, [collection, displayQuantity]);
 
   const splitArray = (array: GenericProps[], size: number) => {
-    if (array.length < size + 1) {
+    if (array.length <= size + 1) {
       return [array];
     }
     const result: any[] = [];
@@ -67,13 +76,17 @@ const SideScroller = <GenericProps,>({
           onClick={() => handleScroll("backward", collection.length)}
           side="left"
           show={navigated}
+          backgroundColor={backgroundColor}
         >
           <Styled.ArrowLeft size={40} />
         </Styled.ScrollButtons>
         <Styled.CentralItemsContainer navigated={navigated}>
           {divideCollection[step]
-            ?.slice(navigated ? 0 : 1, divideCollection[step].length)
-            .map((item, index) => {
+            ?.slice(
+              navigated || notLongEnough ? 0 : 1,
+              divideCollection[step].length
+            )
+            .map((item) => {
               return (
                 <Styled.ScrollerItem displayQuantity={displayQuantity}>
                   {renderItem(item)}
@@ -85,6 +98,7 @@ const SideScroller = <GenericProps,>({
           onClick={() => handleScroll("forward", collection.length)}
           side="right"
           show={!(collection.length < displayQuantity + 1)}
+          backgroundColor={backgroundColor}
         >
           <Styled.ArrowRight size={40} />
         </Styled.ScrollButtons>

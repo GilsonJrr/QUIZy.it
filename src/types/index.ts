@@ -28,11 +28,13 @@ export type QuestionFiltered = {
 
 export type collectionType = {
   id: number;
+  uid: number;
   title: string;
   subTitle: string;
   image: string;
   info?: string[];
-  action: () => void;
+  difficult?: string;
+  type?: string;
 };
 
 //enums

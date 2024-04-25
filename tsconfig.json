@@ -21,8 +21,9 @@
       "utils/*": ["utils/*"],
       "types/*": ["types/*"],
       "views/*": ["views/*"],
-      "assets/*": ["assets/*"]
+      "assets/*": ["assets/*"],
+      "lib/*": ["lib/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "types/index.d.ts"]
 }

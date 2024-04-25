@@ -8,6 +8,7 @@ type Props = {
   show?: boolean;
   navigated?: boolean;
   displayQuantity?: number;
+  backgroundColor?: string;
 };
 
 export const Container = styled.div`
@@ -16,13 +17,11 @@ export const Container = styled.div`
   align-items: center;
   height: 100%;
   padding: 50px 0;
-  background-color: #f5f6fa;
   box-sizing: border-box;
   width: 100%;
   overflow-x: hidden;
   overflow-y: hidden;
   position: relative;
-  margin: 50px 0 0 0;
 `;
 
 export const SideScroller = styled.div`
@@ -64,7 +63,7 @@ export const ScrollButtons = styled.div<Props>`
   width: 200px;
   background: linear-gradient(
     ${({ side }) => (side === "left" ? "90deg" : "270deg")},
-    rgba(255, 255, 255) 0%,
+    ${({ backgroundColor }) => backgroundColor || "#ffffff"} 0%,
     rgba(0, 212, 255, 0) 100%
   );
   align-items: center;

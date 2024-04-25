@@ -8,12 +8,17 @@ type Props = {
 
 export const Container = styled.div`
   display: flex;
-  flex-direction: column;
-  /* align-items: center;
-  justify-content: center; */
-  /* height: 100vh; */
   width: 100%;
-  background-color: #f5f6fa;
-  box-sizing: border-box;
-  /* position: relative; */
+  background-color: #ebf0ef;
+  height: 100%;
+`;
+
+export const QuizzesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* justify-content: center; */
+  width: 100%;
+  /* margin-left: 100px; */
+  padding: 20px 0 0 100px;
 `;

@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
 import QuizDashboard from "views/dashboard/QuizDashboard";
 import Quiz from "views/Quiz";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import GlobalStyle from "lib/styles/globalStyles";
 
 const router = createBrowserRouter([
   {
@@ -21,9 +21,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    {/* <BrowserRouter>
-      <App />
-    </BrowserRouter> */}
+    <GlobalStyle />
     <RouterProvider router={router} />
   </React.StrictMode>
 );

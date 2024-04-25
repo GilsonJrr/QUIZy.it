@@ -43,6 +43,9 @@
       ],
       "assets/*": [
         "assets/*"
+      ],
+      "lib/*": [
+        "lib/*"
       ]
     }
   },
@@ -63,5 +66,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "file-loader": "^6.2.0"
   }
 }

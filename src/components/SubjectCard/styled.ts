@@ -8,13 +8,14 @@ export const More = styled.div`
   top: 100%;
   left: 0;
   z-index: 1000;
+  width: 100%;
 `;
 
 export const Image = styled.img`
   height: 80%;
   width: 100%;
   object-fit: cover;
-  border-radius: 6px 6px 0 0;
+  border-radius: 3px 3px 0 0;
   cursor: pointer;
 `;
 
@@ -29,6 +30,9 @@ export const Title = styled.h1`
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1.6rem;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const SubTitle = styled.h1`
@@ -36,6 +40,9 @@ export const SubTitle = styled.h1`
   font-size: 0.8rem;
   color: blue;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const ExtraInfoText = styled.h3`
