@@ -3,7 +3,6 @@ import * as Styled from "./styled";
 import SideScroller from "components/SideScroller";
 import SubjectCard from "components/SubjectCard";
 import { collectionType } from "types/index";
-import Sidebar from "components/Sidebar";
 import { easyQuizzes, mediumQuizzes, hardQuizzes } from "assets/consts";
 import SearchInput from "components/inputs/SearchInput";
 
@@ -68,7 +67,6 @@ const QuizDashboard = () => {
 
   return (
     <Styled.Container>
-      <Sidebar />
       <Styled.QuizzesContainer>
         <SearchInput value={search} setValue={setSearch} />
         {search && searched.length === 0 && <h1>no results</h1>}

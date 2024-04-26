@@ -7,7 +7,7 @@ import Logo from "assets/images/Logo.png";
 import { IoMdHome } from "react-icons/io";
 import { IoSettings } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
-import { FaFlag } from "react-icons/fa";
+// import { FaFlag } from "react-icons/fa";
 
 import { IoMdExit } from "react-icons/io";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -28,7 +28,10 @@ const Sidebar: FC<SidebarProps> = ({ logo }) => {
         <Styled.Logo src={Logo} />
       </Styled.LogoContainer>
       <Styled.MenuContainer>
-        <Styled.IconContainer active={currentUrl === "/"}>
+        <Styled.IconContainer
+          active={currentUrl === "/"}
+          onClick={() => navigate("/")}
+        >
           <IoMdHome size={30} />
         </Styled.IconContainer>
         <Styled.IconContainer
@@ -43,12 +46,12 @@ const Sidebar: FC<SidebarProps> = ({ logo }) => {
         >
           <IoSettings size={30} />
         </Styled.IconContainer>
-        <Styled.IconContainer
-          active={currentUrl === "/user"}
-          onClick={() => navigate("/user")}
+        {/* <Styled.IconContainer
+          active={currentUrl === "/news"}
+          onClick={() => navigate("/news")}
         >
           <FaFlag size={30} />
-        </Styled.IconContainer>
+        </Styled.IconContainer> */}
       </Styled.MenuContainer>
       <Styled.ExitContainer>
         <IoMdExit size={30} />
