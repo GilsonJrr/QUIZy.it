@@ -33,6 +33,7 @@ export const Title = styled.h1`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 100%;
 `;
 
 export const SubTitle = styled.h1`
@@ -43,6 +44,7 @@ export const SubTitle = styled.h1`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 100%;
 `;
 
 export const ExtraInfoText = styled.h3`

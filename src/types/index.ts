@@ -44,3 +44,9 @@ export enum EAnswerIndexation {
   C = 2,
   D = 3,
 }
+
+export enum RouterTitle {
+  "/" = "Dashboard",
+  "/user" = "User",
+  "/settings" = "Settings",
+}

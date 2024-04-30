@@ -1,8 +1,6 @@
 import React, { FC } from "react";
 import * as Styled from "./styled";
 
-import Logo from "assets/images/Logo.png";
-
 //Icons
 import { IoMdHome } from "react-icons/io";
 import { IoSettings } from "react-icons/io5";
@@ -24,9 +22,6 @@ const Sidebar: FC<SidebarProps> = ({ logo }) => {
 
   return (
     <Styled.Container>
-      <Styled.LogoContainer>
-        <Styled.Logo src={Logo} />
-      </Styled.LogoContainer>
       <Styled.MenuContainer>
         <Styled.IconContainer
           active={currentUrl === "/"}
@@ -46,12 +41,6 @@ const Sidebar: FC<SidebarProps> = ({ logo }) => {
         >
           <IoSettings size={30} />
         </Styled.IconContainer>
-        {/* <Styled.IconContainer
-          active={currentUrl === "/news"}
-          onClick={() => navigate("/news")}
-        >
-          <FaFlag size={30} />
-        </Styled.IconContainer> */}
       </Styled.MenuContainer>
       <Styled.ExitContainer>
         <IoMdExit size={30} />

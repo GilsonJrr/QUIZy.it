@@ -5,6 +5,7 @@ import SubjectCard from "components/SubjectCard";
 import { collectionType } from "types/index";
 import { easyQuizzes, mediumQuizzes, hardQuizzes } from "assets/consts";
 import SearchInput from "components/inputs/SearchInput";
+import { FaRegUser } from "react-icons/fa";
 
 const QuizDashboard = () => {
   const [search, setSearch] = useState("");
@@ -67,8 +68,15 @@ const QuizDashboard = () => {
 
   return (
     <Styled.Container>
+      {/* <Styled.Header>
+        <Styled.SearchInputHeader>
+          <SearchInput value={search} setValue={setSearch} />
+        </Styled.SearchInputHeader>
+        <Styled.RightSideHeader>
+          <FaRegUser size={40} />
+        </Styled.RightSideHeader>
+      </Styled.Header> */}
       <Styled.QuizzesContainer>
-        <SearchInput value={search} setValue={setSearch} />
         {search && searched.length === 0 && <h1>no results</h1>}
         {search && (
           <SideScroller<collectionType>
