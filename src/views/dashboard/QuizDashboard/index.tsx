@@ -76,7 +76,7 @@ const QuizDashboard = () => {
       <Styled.Card gridName="card1" scrollable>
         <Styled.CardTitle>New Quizes</Styled.CardTitle>
         <Styled.CardInner>
-          {easyQuizzes.map((easy) => {
+          {easyQuizzes?.map((easy) => {
             return (
               <Styled.QuizCard
                 onClick={() =>
@@ -104,7 +104,7 @@ const QuizDashboard = () => {
       <Styled.Card gridName="card3" scrollable>
         <Styled.CardTitle>My list</Styled.CardTitle>
         <Styled.CardInner>
-          {myList.map((easy) => {
+          {myList?.map((easy) => {
             return (
               <Styled.QuizCard>
                 <Styled.QuizImage />
