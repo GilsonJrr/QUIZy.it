@@ -93,7 +93,7 @@ const QuizDashboard = () => {
       <Styled.Card gridName="card1" scrollable>
         <Styled.CardTitle>New Quizes</Styled.CardTitle>
         <Styled.CardInner>
-          {easyQuizzes.length > 0 ? (
+          {easyQuizzes && easyQuizzes.length > 0 ? (
             easyQuizzes?.map((easy) => {
               return renderItem(easy);
             })
@@ -113,7 +113,7 @@ const QuizDashboard = () => {
       <Styled.Card gridName="card3" scrollable>
         <Styled.CardTitle>My list</Styled.CardTitle>
         <Styled.CardInner>
-          {myList.length > 0 ? (
+          {myList && myList.length > 0 ? (
             myList?.map((list) => {
               return renderItem(list);
             })
