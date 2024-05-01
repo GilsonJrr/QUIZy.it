@@ -6,8 +6,11 @@ import { collectionType } from "types/index";
 import { easyQuizzes, mediumQuizzes, hardQuizzes } from "assets/consts";
 import SearchInput from "components/inputs/SearchInput";
 import { FaRegUser } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const QuizDashboard = () => {
+  const navigate = useNavigate();
+
   const [search, setSearch] = useState("");
   const renderItem = (item: collectionType) => {
     return <SubjectCard subject={item} />;
@@ -31,7 +34,9 @@ const QuizDashboard = () => {
     ),
   ];
 
-  const myList = JSON.parse(localStorage.getItem("netQuiz_my_list") || "null");
+  const myList: collectionType[] = JSON.parse(
+    localStorage.getItem("netQuiz_my_list") || "null"
+  );
 
   const QuizzesDisplay = [
     {
@@ -68,36 +73,53 @@ const QuizDashboard = () => {
 
   return (
     <Styled.Container>
-      {/* <Styled.Header>
-        <Styled.SearchInputHeader>
-          <SearchInput value={search} setValue={setSearch} />
-        </Styled.SearchInputHeader>
-        <Styled.RightSideHeader>
-          <FaRegUser size={40} />
-        </Styled.RightSideHeader>
-      </Styled.Header> */}
-      <Styled.QuizzesContainer>
-        {search && searched.length === 0 && <h1>no results</h1>}
-        {search && (
-          <SideScroller<collectionType>
-            displayQuantity={5}
-            collection={searched}
-            renderItem={(item) => renderItem(item)}
-            backgroundColor="#ebf0ef"
-          />
-        )}
-        {QuizzesDisplay.map((quizzes) => {
-          return (
-            <SideScroller<collectionType>
-              title={quizzes.title}
-              displayQuantity={quizzes.displayQuantity}
-              collection={quizzes.collection}
-              renderItem={(item) => renderItem(item)}
-              backgroundColor="#ebf0ef"
-            />
-          );
-        })}
-      </Styled.QuizzesContainer>
+      <Styled.Card gridName="card1" scrollable>
+        <Styled.CardTitle>New Quizes</Styled.CardTitle>
+        <Styled.CardInner>
+          {easyQuizzes.map((easy) => {
+            return (
+              <Styled.QuizCard
+                onClick={() =>
+                  navigate(
+                    `/quiz?category=${easy.uid}&difficulty=${easy.difficult}&type=${easy.type}`
+                  )
+                }
+              >
+                <Styled.QuizImage />
+                <Styled.QuizTitlesContainer>
+                  <Styled.QuizTitle>{easy.title}</Styled.QuizTitle>
+                  <Styled.QuizInfo>
+                    {easy.difficult} | {easy.type}
+                  </Styled.QuizInfo>
+                  <Styled.StartButton>Start</Styled.StartButton>
+                </Styled.QuizTitlesContainer>
+              </Styled.QuizCard>
+            );
+          })}
+        </Styled.CardInner>
+      </Styled.Card>
+      <Styled.Card gridName="card2">
+        <Styled.CardTitle>Completed Quizzes</Styled.CardTitle>
+      </Styled.Card>
+      <Styled.Card gridName="card3" scrollable>
+        <Styled.CardTitle>My list</Styled.CardTitle>
+        <Styled.CardInner>
+          {myList.map((easy) => {
+            return (
+              <Styled.QuizCard>
+                <Styled.QuizImage />
+                <Styled.QuizTitlesContainer>
+                  <Styled.QuizTitle>{easy.title}</Styled.QuizTitle>
+                  <Styled.QuizInfo>
+                    {easy.difficult} | {easy.type}
+                  </Styled.QuizInfo>
+                  <Styled.StartButton>Start</Styled.StartButton>
+                </Styled.QuizTitlesContainer>
+              </Styled.QuizCard>
+            );
+          })}
+        </Styled.CardInner>
+      </Styled.Card>
     </Styled.Container>
   );
 };

@@ -15,7 +15,7 @@ type dashboardProps = {
 const Dashboard: FC<dashboardProps> = ({ children }) => {
   const location = useLocation();
 
-  const userName = "Gilson Cosme de Vasconcelos Junior";
+  const userName = "UserName";
   const userType = "Student";
   const alerts = 5;
   const messages = 20;

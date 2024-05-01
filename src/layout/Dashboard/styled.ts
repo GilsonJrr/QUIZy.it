@@ -6,18 +6,21 @@ import { FaChevronLeft } from "react-icons/fa";
 
 export const Container = styled.div`
   position: relative;
+  overflow: hidden;
 `;
 
 export const Content = styled.div`
-  padding-top: 9vh;
+  margin-top: 9vh;
+  height: 91%;
+  margin-left: 7vw;
+  width: calc(100vw - 7vw);
+  overflow: hidden;
 `;
 
 export const Header = styled.div`
   position: fixed;
   display: flex;
   top: 0;
-  /* left: 6rem; */
-  /* width: calc(100vw - 6rem); */
   width: 100%;
   background-color: #f8f8f8;
   z-index: 10000;
