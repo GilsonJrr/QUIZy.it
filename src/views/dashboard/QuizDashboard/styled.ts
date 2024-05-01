@@ -58,6 +58,7 @@ export const CardInner = styled.div`
   flex-direction: column;
   gap: 20px;
   overflow: auto;
+  height: 100%;
 `;
 
 //TODO: componentizar esses estilos
@@ -100,3 +101,11 @@ export const StartButton = styled.div`
   font-weight: 600;
 `;
 //TODO: componentizar esses estilos
+
+export const EmptyListMessage = styled.h2`
+  margin: auto;
+  text-align: center;
+  width: 50%;
+  font-size: 1.1rem;
+  font-weight: 500;
+`;

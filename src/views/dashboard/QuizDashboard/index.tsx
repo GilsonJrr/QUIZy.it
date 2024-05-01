@@ -13,7 +13,24 @@ const QuizDashboard = () => {
 
   const [search, setSearch] = useState("");
   const renderItem = (item: collectionType) => {
-    return <SubjectCard subject={item} />;
+    return (
+      <Styled.QuizCard
+        onClick={() =>
+          navigate(
+            `/quiz?category=${item.uid}&difficulty=${item.difficult}&type=${item.type}`
+          )
+        }
+      >
+        <Styled.QuizImage />
+        <Styled.QuizTitlesContainer>
+          <Styled.QuizTitle>{item.title}</Styled.QuizTitle>
+          <Styled.QuizInfo>
+            {item.difficult} | {item.type}
+          </Styled.QuizInfo>
+          <Styled.StartButton>Start</Styled.StartButton>
+        </Styled.QuizTitlesContainer>
+      </Styled.QuizCard>
+    );
   };
 
   const HistoryQuizzes = [
@@ -76,48 +93,35 @@ const QuizDashboard = () => {
       <Styled.Card gridName="card1" scrollable>
         <Styled.CardTitle>New Quizes</Styled.CardTitle>
         <Styled.CardInner>
-          {easyQuizzes?.map((easy) => {
-            return (
-              <Styled.QuizCard
-                onClick={() =>
-                  navigate(
-                    `/quiz?category=${easy.uid}&difficulty=${easy.difficult}&type=${easy.type}`
-                  )
-                }
-              >
-                <Styled.QuizImage />
-                <Styled.QuizTitlesContainer>
-                  <Styled.QuizTitle>{easy.title}</Styled.QuizTitle>
-                  <Styled.QuizInfo>
-                    {easy.difficult} | {easy.type}
-                  </Styled.QuizInfo>
-                  <Styled.StartButton>Start</Styled.StartButton>
-                </Styled.QuizTitlesContainer>
-              </Styled.QuizCard>
-            );
-          })}
+          {easyQuizzes.length > 0 ? (
+            easyQuizzes?.map((easy) => {
+              return renderItem(easy);
+            })
+          ) : (
+            <Styled.EmptyListMessage>
+              No new quiz available at this time. Please check later
+            </Styled.EmptyListMessage>
+          )}
         </Styled.CardInner>
       </Styled.Card>
       <Styled.Card gridName="card2">
         <Styled.CardTitle>Completed Quizzes</Styled.CardTitle>
+        <Styled.EmptyListMessage>
+          you have not completed any quiz so far
+        </Styled.EmptyListMessage>
       </Styled.Card>
       <Styled.Card gridName="card3" scrollable>
         <Styled.CardTitle>My list</Styled.CardTitle>
         <Styled.CardInner>
-          {myList?.map((easy) => {
-            return (
-              <Styled.QuizCard>
-                <Styled.QuizImage />
-                <Styled.QuizTitlesContainer>
-                  <Styled.QuizTitle>{easy.title}</Styled.QuizTitle>
-                  <Styled.QuizInfo>
-                    {easy.difficult} | {easy.type}
-                  </Styled.QuizInfo>
-                  <Styled.StartButton>Start</Styled.StartButton>
-                </Styled.QuizTitlesContainer>
-              </Styled.QuizCard>
-            );
-          })}
+          {myList.length > 0 ? (
+            myList?.map((list) => {
+              return renderItem(list);
+            })
+          ) : (
+            <Styled.EmptyListMessage>
+              Your List is empty add quizzes here to do it later or retry it
+            </Styled.EmptyListMessage>
+          )}
         </Styled.CardInner>
       </Styled.Card>
     </Styled.Container>

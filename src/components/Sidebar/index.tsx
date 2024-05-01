@@ -24,9 +24,8 @@ const Sidebar: FC<SidebarProps> = ({ logo }) => {
     <Styled.Container>
       <Styled.MenuContainer>
         <Styled.IconContainer
-          active={currentUrl === "/" || currentUrl === "/home"}
-          // onClick={() => navigate("/")}
-          onClick={() => navigate("/home")}
+          active={currentUrl === "/"}
+          onClick={() => navigate("/")}
         >
           <IoMdHome size={30} />
         </Styled.IconContainer>
