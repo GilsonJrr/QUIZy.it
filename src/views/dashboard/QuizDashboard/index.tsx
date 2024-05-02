@@ -2,36 +2,20 @@ import React, { useState } from "react";
 import * as Styled from "./styled";
 import SideScroller from "components/SideScroller";
 import SubjectCard from "components/SubjectCard";
-import { collectionType } from "types/index";
+import { TResult, TCollection } from "types/index";
 import { easyQuizzes, mediumQuizzes, hardQuizzes } from "assets/consts";
 import SearchInput from "components/inputs/SearchInput";
 import { FaRegUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import Table from "components/Table";
+import Card from "components/Card";
+import RenderTable from "components/renderItems/RenderTable";
+import RenderQuizCard from "components/renderItems/RenderQuizCard";
 
 const QuizDashboard = () => {
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
-  const renderItem = (item: collectionType) => {
-    return (
-      <Styled.QuizCard
-        onClick={() =>
-          navigate(
-            `/quiz?category=${item.uid}&difficulty=${item.difficult}&type=${item.type}`
-          )
-        }
-      >
-        <Styled.QuizImage />
-        <Styled.QuizTitlesContainer>
-          <Styled.QuizTitle>{item.title}</Styled.QuizTitle>
-          <Styled.QuizInfo>
-            {item.difficult} | {item.type}
-          </Styled.QuizInfo>
-          <Styled.StartButton>Start</Styled.StartButton>
-        </Styled.QuizTitlesContainer>
-      </Styled.QuizCard>
-    );
-  };
 
   const HistoryQuizzes = [
     ...easyQuizzes.filter((quiz) => quiz.title === "History"),
@@ -51,7 +35,7 @@ const QuizDashboard = () => {
     ),
   ];
 
-  const myList: collectionType[] = JSON.parse(
+  const myList: TCollection[] = JSON.parse(
     localStorage.getItem("netQuiz_my_list") || "null"
   );
 
@@ -88,42 +72,54 @@ const QuizDashboard = () => {
     },
   ];
 
+  const TableHeaderTitles = [
+    { label: "Title", width: 50 },
+    { label: "Score", width: 25 },
+    { label: "Date", width: 25 },
+  ];
+
+  const results: TResult[] = [
+    { quiz: "History", date: "12/07/2024", score: "9/10" },
+  ];
+
   return (
     <Styled.Container>
-      <Styled.Card gridName="card1" scrollable>
-        <Styled.CardTitle>New Quizes</Styled.CardTitle>
-        <Styled.CardInner>
-          {easyQuizzes && easyQuizzes.length > 0 ? (
-            easyQuizzes?.map((easy) => {
-              return renderItem(easy);
-            })
-          ) : (
-            <Styled.EmptyListMessage>
-              No new quiz available at this time. Please check later
-            </Styled.EmptyListMessage>
-          )}
-        </Styled.CardInner>
-      </Styled.Card>
-      <Styled.Card gridName="card2">
-        <Styled.CardTitle>Completed Quizzes</Styled.CardTitle>
-        <Styled.EmptyListMessage>
-          you have not completed any quiz so far
-        </Styled.EmptyListMessage>
-      </Styled.Card>
-      <Styled.Card gridName="card3" scrollable>
-        <Styled.CardTitle>My list</Styled.CardTitle>
-        <Styled.CardInner>
-          {myList && myList.length > 0 ? (
-            myList?.map((list) => {
-              return renderItem(list);
-            })
-          ) : (
-            <Styled.EmptyListMessage>
-              Your List is empty add quizzes here to do it later or retry it
-            </Styled.EmptyListMessage>
-          )}
-        </Styled.CardInner>
-      </Styled.Card>
+      <Card
+        gridName="card1"
+        title="New Quizes"
+        isEmpty={easyQuizzes && easyQuizzes.length < 0}
+        emptyMessage={"No new quiz available at this time. Please check later"}
+      >
+        {easyQuizzes?.map((item) => {
+          return <RenderQuizCard item={item} />;
+        })}
+      </Card>
+      <Card
+        gridName="card3"
+        title="My list"
+        isEmpty={myList && myList.length < 0}
+        emptyMessage={
+          "Your List is empty add quizzes here to do it later or retry it"
+        }
+      >
+        {myList?.map((list) => {
+          return <RenderQuizCard item={list} />;
+        })}
+      </Card>
+      <Card
+        gridName="card2"
+        title="Completed Quizzes"
+        isEmpty={results?.length === 0}
+        emptyMessage={"you have not completed any quiz so far"}
+        redirectTo="Results"
+        redirectPath="/results"
+      >
+        <Table<TResult>
+          header={TableHeaderTitles}
+          content={results.slice(0, 3)}
+          renderItem={(item) => <RenderTable item={item} />}
+        />
+      </Card>
     </Styled.Container>
   );
 };

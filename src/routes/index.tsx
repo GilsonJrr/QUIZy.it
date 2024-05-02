@@ -2,9 +2,9 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "layout/Dashboard";
 import QuizDashboard from "views/dashboard/QuizDashboard";
-import User from "views/dashboard/User";
-import Settings from "views/dashboard/Settings";
 import Quiz from "views/Quiz";
+import Results from "views/dashboard/Results";
+import Quizzes from "views/dashboard/Quizzes";
 
 const Routers = () => {
   return (
@@ -12,8 +12,8 @@ const Routers = () => {
       <Routes>
         <Route element={<Dashboard />}>
           <Route path="/" element={<QuizDashboard />} />
-          <Route path="/user" element={<User />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/quizzes" element={<Quizzes />} />
+          <Route path="/results" element={<Results />} />
         </Route>
         <Route path="/quiz" element={<Quiz />} />
       </Routes>

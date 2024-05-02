@@ -3,9 +3,8 @@ import * as Styled from "./styled";
 
 //Icons
 import { IoMdHome } from "react-icons/io";
-import { IoSettings } from "react-icons/io5";
-import { FaUser } from "react-icons/fa";
-// import { FaFlag } from "react-icons/fa";
+import { FaFileSignature } from "react-icons/fa6";
+import { MdOutlineQuiz } from "react-icons/md";
 
 import { IoMdExit } from "react-icons/io";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -30,16 +29,16 @@ const Sidebar: FC<SidebarProps> = ({ logo }) => {
           <IoMdHome size={30} />
         </Styled.IconContainer>
         <Styled.IconContainer
-          active={currentUrl === "/user"}
-          onClick={() => navigate("/user")}
+          active={currentUrl === "/quizzes"}
+          onClick={() => navigate("/quizzes")}
         >
-          <FaUser size={30} />
+          <MdOutlineQuiz size={30} />
         </Styled.IconContainer>
         <Styled.IconContainer
-          active={currentUrl === "/settings"}
-          onClick={() => navigate("/settings")}
+          active={currentUrl === "/results"}
+          onClick={() => navigate("/results")}
         >
-          <IoSettings size={30} />
+          <FaFileSignature size={30} />
         </Styled.IconContainer>
       </Styled.MenuContainer>
       <Styled.ExitContainer>

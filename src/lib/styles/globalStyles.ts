@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
   }
   /* Estilo para todos os elementos com barra de rolagem */
   *::-webkit-scrollbar {
-      width: 5px; /* largura da barra de rolagem */
+      width: 4px; /* largura da barra de rolagem */
   }
 
   /* Estilizando o botão de rolagem para cima e para baixo */

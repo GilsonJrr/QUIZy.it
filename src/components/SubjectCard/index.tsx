@@ -1,13 +1,13 @@
 import React, { FC } from "react";
 import * as Styled from "./styled";
-import { collectionType } from "types/index";
+import { TCollection } from "types/index";
 import { GoDotFill } from "react-icons/go";
 import { FaPlay } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 type ModalProps = {
-  subject: collectionType;
+  subject: TCollection;
 };
 
 const SubjectCard: FC<ModalProps> = ({ subject }) => {
@@ -15,7 +15,7 @@ const SubjectCard: FC<ModalProps> = ({ subject }) => {
   const navigate = useNavigate();
 
   const handleMyList = () => {
-    let initialItems: collectionType[] | null = JSON.parse(
+    let initialItems: TCollection[] | null = JSON.parse(
       localStorage.getItem("netQuiz_my_list") || "null"
     );
 

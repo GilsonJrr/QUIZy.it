@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import * as Styled from "../styled";
 import SideScroller from "components/SideScroller";
 import SubjectCard from "components/SubjectCard";
-import { collectionType } from "types/index";
+import { TCollection } from "types/index";
 import { easyQuizzes, mediumQuizzes, hardQuizzes } from "assets/consts";
 import SearchInput from "components/inputs/SearchInput";
 import { FaRegUser } from "react-icons/fa";
 
 const QuizDashboard = () => {
   const [search, setSearch] = useState("");
-  const renderItem = (item: collectionType) => {
+  const renderItem = (item: TCollection) => {
     return <SubjectCard subject={item} />;
   };
 
@@ -79,7 +79,7 @@ const QuizDashboard = () => {
       {/* <Styled.QuizzesContainer>
         {search && searched.length === 0 && <h1>no results</h1>}
         {search && (
-          <SideScroller<collectionType>
+          <SideScroller<TCollection>
             displayQuantity={5}
             collection={searched}
             renderItem={(item) => renderItem(item)}
@@ -88,7 +88,7 @@ const QuizDashboard = () => {
         )}
         {QuizzesDisplay.map((quizzes) => {
           return (
-            <SideScroller<collectionType>
+            <SideScroller<TCollection>
               title={quizzes.title}
               displayQuantity={quizzes.displayQuantity}
               collection={quizzes.collection}

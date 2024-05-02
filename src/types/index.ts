@@ -26,7 +26,7 @@ export type QuestionFiltered = {
   correctAnswers: string;
 };
 
-export type collectionType = {
+export type TCollection = {
   id: number;
   uid: number;
   title: string;
@@ -35,6 +35,12 @@ export type collectionType = {
   info?: string[];
   difficult?: string;
   type?: string;
+};
+
+export type TResult = {
+  quiz: string;
+  score: string;
+  date: string;
 };
 
 //enums
@@ -50,4 +56,6 @@ export enum RouterTitle {
   "/" = "Dashboard",
   "/user" = "User",
   "/settings" = "Settings",
+  "/results" = "Results",
+  "/quizzes" = "Quizzes",
 }
