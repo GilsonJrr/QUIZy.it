@@ -13,4 +13,9 @@ export const TableBodyComponents = styled.div<Props>`
   border: 1px solid rgba(0, 0, 0, 0.8);
   padding: 5px 10px;
   border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  @media screen and (min-width: 600px) {
+    justify-content: flex-start;
+  }
 `;

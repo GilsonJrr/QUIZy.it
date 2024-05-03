@@ -10,8 +10,8 @@ type ResultsProps = {};
 const Results: FC<ResultsProps> = () => {
   const TableHeaderTitles = [
     { label: "Title", width: 50 },
-    { label: "Score", width: 25 },
-    { label: "Date", width: 25 },
+    { label: "Score", width: 20 },
+    { label: "Date", width: 30 },
   ];
 
   const results = useMemo(() => {

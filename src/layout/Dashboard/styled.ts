@@ -14,46 +14,80 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  margin-top: 9vh;
+  margin-top: 6vh;
   height: 91%;
-  margin-left: 7vw;
-  width: calc(100vw - 7vw);
+  margin-left: 0px;
+  width: 100%;
   overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media screen and (min-width: 600px) {
+    width: calc(100vw - 7vw);
+    margin-left: 7vw;
+    margin-top: 9vh;
+  }
 `;
 
 export const Header = styled.div`
+  display: none;
+  @media screen and (min-width: 600px) {
+    position: fixed;
+    display: flex;
+    top: 0;
+    width: 100%;
+    background-color: #f8f8f8;
+    z-index: 10000;
+    height: 9vh;
+  }
+`;
+
+export const HeaderMobile = styled.div`
   position: fixed;
   display: flex;
   top: 0;
   width: 100%;
   background-color: #f8f8f8;
   z-index: 10000;
-  height: 9vh;
+  height: 6vh;
+  @media screen and (min-width: 600px) {
+    display: none;
+  }
 `;
 
 export const LogoContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 7vw;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-top: none;
-  padding: 10px 20px;
+  @media screen and (min-width: 600px) {
+    width: 7vw;
+    padding: 10px 20px;
+  }
 `;
 
 export const Logo = styled.img`
-  width: 80%;
+  width: 50%;
+  @media screen and (min-width: 600px) {
+    width: 80%;
+  }
 `;
 
 export const HeaderTitle = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 53vw;
+  justify-content: center;
+  width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-top: none;
   border-left: none;
   padding: 10px 20px;
+  @media screen and (min-width: 600px) {
+    width: 53vw;
+    justify-content: space-between;
+  }
 `;
 
 export const HeaderTitleText = styled.h1`
@@ -75,6 +109,17 @@ export const StartQuizButton = styled.button`
     background-color: #b0d9d1;
     border: 1px solid #b0d9d1;
   }
+`;
+
+export const HeaderHamburgerMenu = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* width: 5vw; */
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-top: none;
+  border-left: none;
+  padding: 10px 20px;
 `;
 
 export const HeaderMessage = styled.div`

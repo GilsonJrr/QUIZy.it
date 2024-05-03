@@ -11,39 +11,56 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 type SidebarProps = {
   logo?: string;
+  display?: boolean;
+  onClose?: () => void;
 };
 
-const Sidebar: FC<SidebarProps> = ({ logo }) => {
+const Sidebar: FC<SidebarProps> = ({ logo, display, onClose }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
   const currentUrl = location.pathname;
 
+  const handleRedirect = (navigatePath: string) => {
+    navigate(navigatePath);
+    onClose?.();
+  };
+
   return (
-    <Styled.Container>
-      <Styled.MenuContainer>
-        <Styled.IconContainer
-          active={currentUrl === "/"}
-          onClick={() => navigate("/")}
-        >
-          <IoMdHome size={30} />
-        </Styled.IconContainer>
-        <Styled.IconContainer
-          active={currentUrl === "/quizzes"}
-          onClick={() => navigate("/quizzes")}
-        >
-          <MdOutlineQuiz size={30} />
-        </Styled.IconContainer>
-        <Styled.IconContainer
-          active={currentUrl === "/results"}
-          onClick={() => navigate("/results")}
-        >
-          <FaFileSignature size={30} />
-        </Styled.IconContainer>
-      </Styled.MenuContainer>
-      <Styled.ExitContainer>
-        <IoMdExit size={30} />
-      </Styled.ExitContainer>
+    <Styled.Container showMenu={display}>
+      <Styled.ContainerBackGround onClick={onClose}>
+        <Styled.MenuContainer>
+          <Styled.IconContainer
+            active={currentUrl === "/"}
+            onClick={() => handleRedirect("/")}
+          >
+            <IoMdHome size={30} />
+            <Styled.MenuText active={currentUrl === "/"}>Home</Styled.MenuText>
+          </Styled.IconContainer>
+          <Styled.IconContainer
+            active={currentUrl === "/quizzes"}
+            onClick={() => handleRedirect("/quizzes")}
+          >
+            <MdOutlineQuiz size={30} />
+            <Styled.MenuText active={currentUrl === "/quizzes"}>
+              Quizzes
+            </Styled.MenuText>
+          </Styled.IconContainer>
+          <Styled.IconContainer
+            active={currentUrl === "/results"}
+            onClick={() => handleRedirect("/results")}
+          >
+            <FaFileSignature size={30} />
+            <Styled.MenuText active={currentUrl === "/results"}>
+              Results
+            </Styled.MenuText>
+          </Styled.IconContainer>
+        </Styled.MenuContainer>
+        <Styled.ExitContainer>
+          <IoMdExit size={30} />
+          <Styled.MenuText exit>Exit</Styled.MenuText>
+        </Styled.ExitContainer>
+      </Styled.ContainerBackGround>
     </Styled.Container>
   );
 };

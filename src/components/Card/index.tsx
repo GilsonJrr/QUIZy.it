@@ -12,6 +12,7 @@ type CardProps = {
   redirectTo?: string;
   redirectPath?: string;
   scrollable?: boolean;
+  width?: string;
 };
 
 const Card: FC<CardProps> = ({
@@ -23,11 +24,12 @@ const Card: FC<CardProps> = ({
   redirectTo,
   redirectPath = "/",
   scrollable,
+  width,
 }) => {
   const navigate = useNavigate();
 
   return (
-    <Styled.Card gridName={gridName} scrollable={scrollable}>
+    <Styled.Card gridName={gridName} scrollable={scrollable} width={width}>
       <Styled.CardHeader>
         <Styled.CardTitle>{title}</Styled.CardTitle>
         {redirectTo && (

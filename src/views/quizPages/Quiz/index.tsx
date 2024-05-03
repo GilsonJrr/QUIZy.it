@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import axios from "axios";
+import he from "he";
 import * as Styled from "./styled";
 import { Answer, EAnswerIndexation, QuestionFiltered } from "types";
 import { randomize } from "utils";
@@ -95,6 +96,12 @@ const Quiz = () => {
 
   console.log("questions", current + 1, questions?.length, showScore);
 
+  const DecodedText = (text: string) => {
+    const decodedText = he.decode(text);
+
+    return decodedText;
+  };
+
   const finishQuiz = () => {
     setShowScore(false);
     navigate("/quizResult", {
@@ -133,7 +140,9 @@ const Quiz = () => {
         </Styled.Header>
 
         <Styled.QuestionContainer>
-          <Styled.Question>{questions?.[current]?.question}</Styled.Question>
+          <Styled.Question>
+            {DecodedText(questions?.[current]?.question)}
+          </Styled.Question>
           <Styled.OptionsContainer>
             {questions?.[current]?.answers.map((answer, index: number) => {
               const active = answer.answer === selectedAnswer?.answer;
@@ -147,7 +156,7 @@ const Quiz = () => {
                     {EAnswerIndexation[index]}
                   </Styled.AnswerIndex>
                   <Styled.AnswerText active={active}>
-                    {answer.answer}
+                    {DecodedText(answer.answer || "")}
                   </Styled.AnswerText>
                 </Styled.AnswerButton>
               );

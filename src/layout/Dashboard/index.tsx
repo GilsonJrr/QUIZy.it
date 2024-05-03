@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useEffect, useState } from "react";
+import React, { FC, ReactNode, useState } from "react";
 import * as Styled from "./styled";
 import Sidebar from "components/Sidebar";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ import Logo from "assets/images/Logo.png";
 
 import { MdFactCheck } from "react-icons/md";
 import { randomQuiz } from "functions/index";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 type dashboardProps = {
   children?: ReactNode | ReactNode[];
@@ -18,6 +19,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
   const navigate = useNavigate();
 
   const [openMessages, setOpenMessages] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   const userName = "UserName";
   const userType = "Student";
@@ -52,7 +54,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
 
   return (
     <Styled.Container>
-      <Sidebar />
+      <Sidebar display={showMenu} onClose={() => setShowMenu(false)} />
       <Styled.Header>
         <Styled.LogoContainer>
           <Styled.Logo src={Logo} />
@@ -102,6 +104,19 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
           <Styled.ChevronLeft size={20} />
         </Styled.HeaderProfile>
       </Styled.Header>
+      <Styled.HeaderMobile>
+        <Styled.LogoContainer>
+          <Styled.Logo src={Logo} />
+        </Styled.LogoContainer>
+        <Styled.HeaderTitle>
+          <Styled.HeaderTitleText>
+            {RouterTitle[currentUrl as keyof typeof RouterTitle]}
+          </Styled.HeaderTitleText>
+        </Styled.HeaderTitle>
+        <Styled.HeaderHamburgerMenu onClick={() => setShowMenu(!showMenu)}>
+          <GiHamburgerMenu size={25} />
+        </Styled.HeaderHamburgerMenu>
+      </Styled.HeaderMobile>
       <Styled.Content>{children || <Outlet />}</Styled.Content>
     </Styled.Container>
   );

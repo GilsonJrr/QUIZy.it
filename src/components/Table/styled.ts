@@ -29,6 +29,8 @@ export const TableBodyContent = styled.div`
   display: flex;
   width: 100%;
   gap: 5px;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const TableHeaderComponents = styled.div<Props>`
@@ -37,4 +39,9 @@ export const TableHeaderComponents = styled.div<Props>`
   color: white;
   padding: 5px 10px;
   border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  @media screen and (min-width: 600px) {
+    justify-content: flex-start;
+  }
 `;

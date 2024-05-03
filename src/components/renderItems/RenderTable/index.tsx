@@ -22,10 +22,10 @@ const RenderTable: FC<RenderTableProps> = ({ item }) => {
       <Styled.TableBodyComponents width={50}>
         {EQuizTitle[item.quiz as keyof typeof EQuizTitle]}
       </Styled.TableBodyComponents>
-      <Styled.TableBodyComponents width={25}>
+      <Styled.TableBodyComponents width={20}>
         {item.score}
       </Styled.TableBodyComponents>
-      <Styled.TableBodyComponents width={25}>
+      <Styled.TableBodyComponents width={30}>
         {handleDate(item.date)}
       </Styled.TableBodyComponents>
     </Styled.TableContent>

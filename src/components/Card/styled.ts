@@ -3,12 +3,12 @@ import styled from "styled-components";
 type Props = {
   gridName?: string;
   scrollable?: boolean;
-  width?: number;
+  width?: string;
 };
 
 export const Card = styled.div<Props>`
   border-radius: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.4);
+  border: none;
   padding: 15px 20px;
   grid-area: ${({ gridName }) => gridName};
   display: flex;
@@ -16,7 +16,7 @@ export const Card = styled.div<Props>`
   gap: 20px;
   position: relative;
   transition: 0.3s ease-in-out all;
-  height: 100%;
+  height: 100vh;
   overflow: auto;
 
   ::-webkit-scrollbar-thumb {
@@ -42,6 +42,11 @@ export const Card = styled.div<Props>`
     bottom: 0;
     left: 0;
     border-radius: 0 0 20px 20px;
+  }
+
+  @media screen and (min-width: 600px) {
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    height: 100%;
   }
 `;
 
