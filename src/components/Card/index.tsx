@@ -11,6 +11,7 @@ type CardProps = {
   emptyMessage?: string;
   redirectTo?: string;
   redirectPath?: string;
+  scrollable?: boolean;
 };
 
 const Card: FC<CardProps> = ({
@@ -21,11 +22,12 @@ const Card: FC<CardProps> = ({
   emptyMessage,
   redirectTo,
   redirectPath = "/",
+  scrollable,
 }) => {
   const navigate = useNavigate();
 
   return (
-    <Styled.Card gridName={gridName}>
+    <Styled.Card gridName={gridName} scrollable={scrollable}>
       <Styled.CardHeader>
         <Styled.CardTitle>{title}</Styled.CardTitle>
         {redirectTo && (
@@ -34,7 +36,7 @@ const Card: FC<CardProps> = ({
           </Styled.RedirectButton>
         )}
       </Styled.CardHeader>
-      <Styled.CardInner>
+      <Styled.CardInner scrollable={scrollable}>
         {isEmpty ? (
           <Styled.EmptyListMessage>{emptyMessage}</Styled.EmptyListMessage>
         ) : (

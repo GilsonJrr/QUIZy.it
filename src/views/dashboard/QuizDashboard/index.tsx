@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import * as Styled from "./styled";
 import SideScroller from "components/SideScroller";
 import SubjectCard from "components/SubjectCard";
@@ -78,9 +78,10 @@ const QuizDashboard = () => {
     { label: "Date", width: 25 },
   ];
 
-  const results: TResult[] = [
-    { quiz: "History", date: "12/07/2024", score: "9/10" },
-  ];
+  const results = useMemo(() => {
+    const resultStorage = localStorage.getItem("netQuiz_my_results");
+    return resultStorage ? JSON.parse(resultStorage) : [];
+  }, []);
 
   return (
     <Styled.Container>
@@ -89,6 +90,7 @@ const QuizDashboard = () => {
         title="New Quizes"
         isEmpty={easyQuizzes && easyQuizzes.length < 0}
         emptyMessage={"No new quiz available at this time. Please check later"}
+        scrollable
       >
         {easyQuizzes?.map((item) => {
           return <RenderQuizCard item={item} />;
@@ -101,6 +103,7 @@ const QuizDashboard = () => {
         emptyMessage={
           "Your List is empty add quizzes here to do it later or retry it"
         }
+        scrollable
       >
         {myList?.map((list) => {
           return <RenderQuizCard item={list} />;
@@ -116,7 +119,7 @@ const QuizDashboard = () => {
       >
         <Table<TResult>
           header={TableHeaderTitles}
-          content={results.slice(0, 3)}
+          content={results.slice(0, 2)}
           renderItem={(item) => <RenderTable item={item} />}
         />
       </Card>

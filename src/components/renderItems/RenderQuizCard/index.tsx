@@ -12,7 +12,7 @@ const RenderQuizCard: FC<RenderQuizCardProps> = ({ item }) => {
     <Styled.QuizCard
       onClick={() =>
         navigate(
-          `/quiz?category=${item.uid}&difficulty=${item.difficult}&type=${item.type}`
+          `/quiz?amount=3&category=${item.uid}&difficulty=${item.difficult}&type=${item.type}`
         )
       }
     >

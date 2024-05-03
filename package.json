@@ -46,6 +46,9 @@
       ],
       "lib/*": [
         "lib/*"
+      ],
+      "functions/*": [
+        "functions/*"
       ]
     }
   },

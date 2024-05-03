@@ -41,9 +41,26 @@ export const OptionButton = styled.button`
   font-size: 1.2rem;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.3s ease-in-out all;
+  transition: 0.1s ease-in-out all;
 
   &:hover {
     transform: scale(1.05);
   }
+`;
+
+export const GoBackButton = styled.button`
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  width: calc(100% - 40px);
+  background-color: #4a4747;
+  outline: none;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 15px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  z-index: 1000;
 `;

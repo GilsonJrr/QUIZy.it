@@ -1,12 +1,13 @@
-import React, { FC, ReactNode } from "react";
+import React, { FC, ReactNode, useEffect, useState } from "react";
 import * as Styled from "./styled";
 import Sidebar from "components/Sidebar";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { RouterTitle } from "types";
 
 import Logo from "assets/images/Logo.png";
 
 import { MdFactCheck } from "react-icons/md";
+import { randomQuiz } from "functions/index";
 
 type dashboardProps = {
   children?: ReactNode | ReactNode[];
@@ -14,13 +15,41 @@ type dashboardProps = {
 
 const Dashboard: FC<dashboardProps> = ({ children }) => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const [openMessages, setOpenMessages] = useState(false);
 
   const userName = "UserName";
   const userType = "Student";
   const alerts = 5;
-  const messages = 20;
+  // const messages = 20;
 
   const currentUrl = location.pathname;
+
+  const handleBlur = () => {
+    setTimeout(() => {
+      setOpenMessages(false);
+    }, 200);
+  };
+
+  const messages = [
+    {
+      from: "John Doe",
+      message:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    },
+    {
+      from: "John Doe",
+      message:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    },
+    {
+      from: "John Doe",
+      message:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    },
+  ];
+
   return (
     <Styled.Container>
       <Sidebar />
@@ -32,17 +61,31 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
           <Styled.HeaderTitleText>
             {RouterTitle[currentUrl as keyof typeof RouterTitle]}
           </Styled.HeaderTitleText>
-          <Styled.StartQuizButton>
+          <Styled.StartQuizButton onClick={() => navigate(randomQuiz())}>
             <MdFactCheck size={25} />
             Start Quiz
           </Styled.StartQuizButton>
         </Styled.HeaderTitle>
         <Styled.HeaderMessage>
-          <Styled.AlertContainer>
+          <Styled.AlertContainer
+            onClick={() => setOpenMessages(!openMessages)}
+            onBlur={handleBlur}
+            tabIndex={0}
+          >
             <Styled.Mail size={25} />
             <Styled.AlertTag>
-              {messages >= 100 ? "99+" : messages}
+              {messages.length >= 100 ? "99+" : messages.length}
             </Styled.AlertTag>
+            <Styled.DropDowContainer open={openMessages}>
+              {messages.map((message) => {
+                return (
+                  <Styled.MessageContainer>
+                    <Styled.MessageFrom>{message.from}</Styled.MessageFrom>
+                    <Styled.Message>{message.message}</Styled.Message>
+                  </Styled.MessageContainer>
+                );
+              })}
+            </Styled.DropDowContainer>
           </Styled.AlertContainer>
         </Styled.HeaderMessage>
         <Styled.HeaderMessage>

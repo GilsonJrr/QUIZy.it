@@ -22,7 +22,8 @@
       "types/*": ["types/*"],
       "views/*": ["views/*"],
       "assets/*": ["assets/*"],
-      "lib/*": ["lib/*"]
+      "lib/*": ["lib/*"],
+      "functions/*": ["functions/*"]
     }
   },
   "include": ["src", "types/index.d.ts"]

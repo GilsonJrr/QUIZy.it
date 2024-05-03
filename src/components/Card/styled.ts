@@ -57,13 +57,13 @@ export const CardTitle = styled.h1`
   font-size: 1.4rem;
 `;
 
-export const CardInner = styled.div`
+export const CardInner = styled.div<Props>`
   display: flex;
   flex-direction: column;
   gap: 20px;
   overflow: auto;
   height: 100%;
-  padding-bottom: 50px;
+  padding-bottom: ${({ scrollable }) => (scrollable ? "150" : "0")}px;
 `;
 
 export const EmptyListMessage = styled.h2`

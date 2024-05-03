@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 import * as Styled from "./styled";
 import Card from "components/Card";
 import Table from "components/Table";
@@ -14,18 +14,21 @@ const Results: FC<ResultsProps> = () => {
     { label: "Date", width: 25 },
   ];
 
-  const Results: TResult[] = [];
+  const results = useMemo(() => {
+    const resultStorage = localStorage.getItem("netQuiz_my_results");
+    return resultStorage ? JSON.parse(resultStorage) : [];
+  }, []);
 
   return (
     <Styled.Container>
       <Card
         title="Completed Quizzes"
-        isEmpty={Results.length === 0}
+        isEmpty={results.length === 0}
         emptyMessage={"you have not completed any quiz so far"}
       >
         <Table<TResult>
           header={TableHeaderTitles}
-          content={Results}
+          content={results}
           renderItem={(item) => <RenderTable item={item} />}
         />
       </Card>
