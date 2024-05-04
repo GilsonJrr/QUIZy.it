@@ -13,12 +13,13 @@ export const Container = styled.div`
 
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
     grid-column-gap: 20px;
     grid-row-gap: 20px;
     grid-template-areas:
       "card1 card3"
       "card1 card3"
+      "card2 card3"
       "card2 card3";
   }
 `;

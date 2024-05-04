@@ -5,6 +5,7 @@ export const QuizCard = styled.div`
   border-radius: 20px;
   border: 1px solid rgba(0, 0, 0, 0.4);
   min-height: 110px;
+  cursor: pointer;
 `;
 
 export const QuizImage = styled.img`

@@ -52,7 +52,7 @@ const QuizDashboard = () => {
       </Card>
       <Card
         gridName="card2"
-        title="Completed Quizzes"
+        title="Last Completed Quizzes"
         isEmpty={results?.length === 0}
         emptyMessage={"you have not completed any quiz so far"}
         redirectTo="Results"
@@ -60,7 +60,7 @@ const QuizDashboard = () => {
       >
         <Table<TResult>
           header={TableHeaderTitles}
-          content={results.slice(0, 2)}
+          content={results.slice(0, 5)}
           renderItem={(item) => <RenderTable item={item} />}
         />
       </Card>
