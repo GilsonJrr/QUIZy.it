@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import * as Styled from "./styled";
-import { TResult, TCollection } from "types/index";
+import { TResult, TCollection, THeader } from "types/index";
 import { easyQuizzes } from "assets/consts";
 import Table from "components/Table";
 import Card from "components/Card";
@@ -12,10 +12,11 @@ const QuizDashboard = () => {
     localStorage.getItem("netQuiz_my_list") || "null"
   );
 
-  const TableHeaderTitles = [
+  const TableHeaderTitles: THeader[] = [
     { label: "Title", width: 50 },
     { label: "Score", width: 20 },
-    { label: "Date", width: 30 },
+    { label: "Date", width: 20 },
+    { label: "Option", width: 10, align: "center" },
   ];
 
   const results = useMemo(() => {

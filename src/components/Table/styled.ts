@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-type Props = { width?: number };
+type Props = { width?: number; align?: "center" | "flex-start" };
 
 export const Table = styled.div`
   display: flex;
@@ -42,6 +42,6 @@ export const TableHeaderComponents = styled.div<Props>`
   display: flex;
   justify-content: center;
   @media screen and (min-width: 600px) {
-    justify-content: flex-start;
+    justify-content: ${({ align }) => align || "flex-start"};
   }
 `;

@@ -1,7 +1,7 @@
 import React, { FC, ReactNode, useState } from "react";
 import * as Styled from "./styled";
 import Sidebar from "components/Sidebar";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { RouterTitle } from "types";
 
 import Logo from "assets/images/Logo.png";
@@ -14,6 +14,7 @@ type dashboardProps = {
 
 const Dashboard: FC<dashboardProps> = ({ children }) => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [openMessages, setOpenMessages] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
@@ -39,17 +40,13 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
     <Styled.Container>
       <Sidebar display={showMenu} onClose={() => setShowMenu(false)} />
       <Styled.Header>
-        <Styled.LogoContainer>
+        <Styled.LogoContainer onClick={() => navigate("/")}>
           <Styled.Logo src={Logo} />
         </Styled.LogoContainer>
         <Styled.HeaderTitle>
           <Styled.HeaderTitleText>
             {RouterTitle[currentUrl as keyof typeof RouterTitle]}
           </Styled.HeaderTitleText>
-          {/* <Styled.StartQuizButton>
-            <MdFactCheck size={25} />
-            Start Quiz
-          </Styled.StartQuizButton> */}
         </Styled.HeaderTitle>
         <Styled.HeaderMessage>
           <Styled.AlertContainer
@@ -80,7 +77,8 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
             <Styled.ProfileName>{userName || ""}</Styled.ProfileName>
             <Styled.UserType>{userType || ""}</Styled.UserType>
           </Styled.ProfileTitles>
-          <Styled.ChevronLeft size={20} />
+          {/* TODO:  "  Implementar profile aqui  "  */}
+          {/* <Styled.ChevronLeft size={20} /> */}
         </Styled.HeaderProfile>
       </Styled.Header>
       <Styled.HeaderMobile>

@@ -62,6 +62,8 @@ export const LogoContainer = styled.div`
   justify-content: center;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-top: none;
+  cursor: pointer;
+
   @media screen and (min-width: 600px) {
     width: 7vw;
     padding: 10px 20px;

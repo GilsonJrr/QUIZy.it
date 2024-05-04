@@ -25,9 +25,10 @@ const RenderTable: FC<RenderTableProps> = ({ item }) => {
       <Styled.TableBodyComponents width={20}>
         {item.score}
       </Styled.TableBodyComponents>
-      <Styled.TableBodyComponents width={30}>
+      <Styled.TableBodyComponents width={20}>
         {handleDate(item.date)}
       </Styled.TableBodyComponents>
+      <Styled.Option>Retry</Styled.Option>
     </Styled.TableContent>
   );
 };

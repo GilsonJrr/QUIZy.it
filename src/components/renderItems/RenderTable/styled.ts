@@ -2,10 +2,23 @@ import styled from "styled-components";
 
 type Props = { width?: number };
 
+export const Option = styled.div`
+  display: flex;
+  background-color: #4a4747;
+  color: #ffffff;
+  justify-content: center;
+  border-radius: 3px;
+  cursor: pointer;
+  width: 10%;
+  height: 100%;
+  padding: 5px 10px;
+`;
+
 export const TableContent = styled.div`
   display: flex;
   width: 100%;
   gap: 5px;
+  position: relative;
 `;
 
 export const TableBodyComponents = styled.div<Props>`

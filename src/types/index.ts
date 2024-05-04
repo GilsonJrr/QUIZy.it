@@ -48,6 +48,12 @@ export type TResult = {
   date: string;
 };
 
+export type THeader = {
+  label: string;
+  width: number;
+  align?: "center" | "flex-start";
+};
+
 //enums
 export enum EAnswerIndexation {
   A = 0,

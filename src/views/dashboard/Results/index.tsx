@@ -2,16 +2,17 @@ import React, { FC, useMemo } from "react";
 import * as Styled from "./styled";
 import Card from "components/Card";
 import Table from "components/Table";
-import { TResult } from "types/index";
+import { THeader, TResult } from "types/index";
 import RenderTable from "components/renderItems/RenderTable";
 
 type ResultsProps = {};
 
 const Results: FC<ResultsProps> = () => {
-  const TableHeaderTitles = [
+  const TableHeaderTitles: THeader[] = [
     { label: "Title", width: 50 },
     { label: "Score", width: 20 },
-    { label: "Date", width: 30 },
+    { label: "Date", width: 20 },
+    { label: "Option", width: 10, align: "center" },
   ];
 
   const results = useMemo(() => {

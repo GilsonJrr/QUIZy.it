@@ -1,13 +1,9 @@
 import React, { ReactNode } from "react";
 import * as Styled from "./styled";
-
-type headerTypes = {
-  label: string;
-  width: number;
-};
+import { THeader } from "types/index";
 
 type TableProps<GenericProps> = {
-  header: headerTypes[];
+  header: THeader[];
   content: GenericProps[];
   renderItem: (item: GenericProps) => ReactNode;
 };
@@ -22,7 +18,10 @@ const Table = <GenericProps,>({
       <Styled.TableContent>
         {header.map((titles) => {
           return (
-            <Styled.TableHeaderComponents width={titles.width || 10}>
+            <Styled.TableHeaderComponents
+              width={titles.width || 10}
+              align={titles.align}
+            >
               {titles.label}
             </Styled.TableHeaderComponents>
           );
