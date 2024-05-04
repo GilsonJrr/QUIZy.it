@@ -85,7 +85,7 @@ export const HeaderTitle = styled.div`
   border-left: none;
   padding: 10px 20px;
   @media screen and (min-width: 600px) {
-    width: 53vw;
+    width: 58vw;
     justify-content: space-between;
   }
 `;

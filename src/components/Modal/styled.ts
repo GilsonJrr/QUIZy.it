@@ -12,4 +12,6 @@ export const ModalBackground = styled.div`
 
   align-items: center;
   justify-content: center;
+
+  /* transition: 1s ease-in-out all; */
 `;

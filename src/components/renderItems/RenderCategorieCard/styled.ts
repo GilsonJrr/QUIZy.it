@@ -8,10 +8,10 @@ export const QuizCard = styled.div`
   cursor: pointer;
 `;
 
-export const QuizImage = styled.div`
+export const QuizImage = styled.img`
   width: 20%;
   height: 100%;
-  background-color: #f8f8;
+  background-color: #e6e6e6;
   border-radius: 20px 0 0 20px;
 `;
 
@@ -20,7 +20,6 @@ export const QuizTitlesContainer = styled.div`
   padding: 20px;
   position: relative;
   display: flex;
-  /* flex-direction: column; */
   align-items: center;
   justify-content: space-between;
 `;

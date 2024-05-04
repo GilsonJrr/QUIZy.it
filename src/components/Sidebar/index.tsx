@@ -5,7 +5,6 @@ import * as Styled from "./styled";
 import { IoMdHome } from "react-icons/io";
 import { FaFileSignature } from "react-icons/fa6";
 import { MdOutlineQuiz } from "react-icons/md";
-import { IoMdMail } from "react-icons/io";
 import { HiBellAlert } from "react-icons/hi2";
 
 import { IoMdExit } from "react-icons/io";
@@ -60,26 +59,15 @@ const Sidebar: FC<SidebarProps> = ({ logo, display, onClose }) => {
             </Styled.MenuText>
           </Styled.IconContainer>
           {isMobile && (
-            <>
-              <Styled.IconContainer
-                active={currentUrl === "/message"}
-                onClick={() => handleRedirect("/message")}
-              >
-                <IoMdMail size={30} />
-                <Styled.MenuText active={currentUrl === "/message"}>
-                  Messages
-                </Styled.MenuText>
-              </Styled.IconContainer>
-              <Styled.IconContainer
-                active={currentUrl === "/alerts"}
-                onClick={() => handleRedirect("/alerts")}
-              >
-                <HiBellAlert size={30} />
-                <Styled.MenuText active={currentUrl === "/alerts"}>
-                  Alerts
-                </Styled.MenuText>
-              </Styled.IconContainer>
-            </>
+            <Styled.IconContainer
+              active={currentUrl === "/message"}
+              onClick={() => handleRedirect("/message")}
+            >
+              <HiBellAlert size={30} />
+              <Styled.MenuText active={currentUrl === "/message"}>
+                Messages
+              </Styled.MenuText>
+            </Styled.IconContainer>
           )}
         </Styled.MenuContainer>
         <Styled.ExitContainer>

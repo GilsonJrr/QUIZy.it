@@ -1,13 +1,11 @@
 import React, { FC, ReactNode, useState } from "react";
 import * as Styled from "./styled";
 import Sidebar from "components/Sidebar";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { RouterTitle } from "types";
 
 import Logo from "assets/images/Logo.png";
 
-import { MdFactCheck } from "react-icons/md";
-import { randomQuiz } from "functions/index";
 import { GiHamburgerMenu } from "react-icons/gi";
 
 type dashboardProps = {
@@ -16,15 +14,12 @@ type dashboardProps = {
 
 const Dashboard: FC<dashboardProps> = ({ children }) => {
   const location = useLocation();
-  const navigate = useNavigate();
 
   const [openMessages, setOpenMessages] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
 
   const userName = "UserName";
   const userType = "Student";
-  const alerts = 5;
-  // const messages = 20;
 
   const currentUrl = location.pathname;
 
@@ -34,23 +29,11 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
     }, 200);
   };
 
-  const messages = [
-    {
-      from: "John Doe",
-      message:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    },
-    {
-      from: "John Doe",
-      message:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    },
-    {
-      from: "John Doe",
-      message:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    },
-  ];
+  const handleOpenMessages = () => {
+    messages.length > 0 && setOpenMessages(!openMessages);
+  };
+
+  const messages: any[] = [];
 
   return (
     <Styled.Container>
@@ -63,23 +46,25 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
           <Styled.HeaderTitleText>
             {RouterTitle[currentUrl as keyof typeof RouterTitle]}
           </Styled.HeaderTitleText>
-          <Styled.StartQuizButton onClick={() => navigate(randomQuiz())}>
+          {/* <Styled.StartQuizButton>
             <MdFactCheck size={25} />
             Start Quiz
-          </Styled.StartQuizButton>
+          </Styled.StartQuizButton> */}
         </Styled.HeaderTitle>
         <Styled.HeaderMessage>
           <Styled.AlertContainer
-            onClick={() => setOpenMessages(!openMessages)}
+            onClick={handleOpenMessages}
             onBlur={handleBlur}
             tabIndex={0}
           >
-            <Styled.Mail size={25} />
-            <Styled.AlertTag>
-              {messages.length >= 100 ? "99+" : messages.length}
-            </Styled.AlertTag>
+            <Styled.Alert size={25} />
+            {messages.length > 0 && (
+              <Styled.AlertTag>
+                {messages.length >= 100 ? "99+" : messages.length}
+              </Styled.AlertTag>
+            )}
             <Styled.DropDowContainer open={openMessages}>
-              {messages.map((message) => {
+              {messages?.map((message) => {
                 return (
                   <Styled.MessageContainer>
                     <Styled.MessageFrom>{message.from}</Styled.MessageFrom>
@@ -88,12 +73,6 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
                 );
               })}
             </Styled.DropDowContainer>
-          </Styled.AlertContainer>
-        </Styled.HeaderMessage>
-        <Styled.HeaderMessage>
-          <Styled.AlertContainer>
-            <Styled.Alert size={25} />
-            <Styled.AlertTag>{alerts >= 100 ? "99+" : alerts}</Styled.AlertTag>
           </Styled.AlertContainer>
         </Styled.HeaderMessage>
         <Styled.HeaderProfile>

@@ -39,6 +39,7 @@ export type TCollection = {
 
 export type TCategories = {
   title: string;
+  image?: string;
 };
 
 export type TResult = {

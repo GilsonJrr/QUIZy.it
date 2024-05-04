@@ -25,11 +25,11 @@ export const Container = styled.div<Props>`
 
 export const ContainerBackGround = styled.div<Props>`
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 9vh);
   background-color: rgba(0, 0, 0, 0.4);
   position: fixed;
   left: 0;
-  top: 0;
+  bottom: 0;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -49,19 +49,20 @@ export const MenuContainer = styled.div`
   padding: 20px;
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.3);
+  border-top: none;
   background-color: #ffffff;
   height: auto;
   @media screen and (min-width: 600px) {
-    padding: 80px 20px 0 20px;
+    padding: 20px 20px 0 20px;
     height: 100%;
   }
 `;
 
 export const IconContainer = styled.div<Props>`
-  color: ${({ active }) => (active ? "#f8f8f8" : "#b0d9d1")};
+  color: ${({ active }) => (active ? "#f8f8f8" : "#4a4747")};
   padding: 15px;
   cursor: pointer;
-  background-color: ${({ active }) => (active ? "#b0d9d1" : "transparent")};
+  background-color: ${({ active }) => (active ? "#4a4747" : "transparent")};
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -70,7 +71,7 @@ export const IconContainer = styled.div<Props>`
   gap: 20px;
 
   &:hover {
-    background-color: #b0d9d1;
+    background-color: #4a4747;
     color: #f8f8f8;
   }
 
