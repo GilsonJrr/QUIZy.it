@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { FaPlay } from "react-icons/fa";
 import { BsSubstack } from "react-icons/bs";
 import EmptyImage from "assets/images/Empty_quiz_image_state.png";
+import ModalTemplate from "../ModalTemplate";
+import { useModalContext } from "../modalContext";
 
 type PreQuizModalProps = {
   item: TCollection;
@@ -12,6 +14,7 @@ type PreQuizModalProps = {
 
 const PreQuizModal: FC<PreQuizModalProps> = ({ item }) => {
   const navigate = useNavigate();
+  const { handleModal } = useModalContext();
 
   const handleMyList = () => {
     let initialItems: TCollection[] | null = JSON.parse(
@@ -29,33 +32,35 @@ const PreQuizModal: FC<PreQuizModalProps> = ({ item }) => {
   };
 
   return (
-    <Styled.Container>
-      <Styled.Image src={item.image ? item.image : EmptyImage} />
-      <Styled.Content>
-        <Styled.Title>{item.title}</Styled.Title>
-        <Styled.SubTitle>{item.subTitle}</Styled.SubTitle>
-        <Styled.InfoContainer>
-          <Styled.Info>{item.difficult} </Styled.Info>|
-          <Styled.Info> {item.type}</Styled.Info>
-        </Styled.InfoContainer>
-        <Styled.OptionContainer>
-          <Styled.OptionButton onClick={handleMyList}>
-            My list
-            <BsSubstack size={12} />
-          </Styled.OptionButton>
-          <Styled.OptionButton
-            onClick={() =>
-              navigate(
-                `/quiz?amount=10&category=${item.uid}&difficulty=${item.difficult}&type=${item.type}`
-              )
-            }
-          >
-            Start
-            <FaPlay size={12} />
-          </Styled.OptionButton>
-        </Styled.OptionContainer>
-      </Styled.Content>
-    </Styled.Container>
+    <ModalTemplate onClick={() => handleModal("")}>
+      <Styled.Container>
+        <Styled.Image src={item.image ? item.image : EmptyImage} />
+        <Styled.Content>
+          <Styled.Title>{item.title}</Styled.Title>
+          <Styled.SubTitle>{item.subTitle}</Styled.SubTitle>
+          <Styled.InfoContainer>
+            <Styled.Info>{item.difficult} </Styled.Info>|
+            <Styled.Info> {item.type}</Styled.Info>
+          </Styled.InfoContainer>
+          <Styled.OptionContainer>
+            <Styled.OptionButton onClick={handleMyList}>
+              My list
+              <BsSubstack size={12} />
+            </Styled.OptionButton>
+            <Styled.OptionButton
+              onClick={() =>
+                navigate(
+                  `/quiz?amount=10&category=${item.uid}&difficulty=${item.difficult}&type=${item.type}`
+                )
+              }
+            >
+              Start
+              <FaPlay size={12} />
+            </Styled.OptionButton>
+          </Styled.OptionContainer>
+        </Styled.Content>
+      </Styled.Container>
+    </ModalTemplate>
   );
 };
 

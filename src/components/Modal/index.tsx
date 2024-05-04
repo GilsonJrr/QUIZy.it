@@ -1,19 +1,12 @@
 import React from "react";
-import * as Styled from "./styled";
 import { useModalContext } from "./modalContext";
 
 const Modal = () => {
-  const { modalContent, handleModal, modal } = useModalContext();
-
-  //TODO: atualizar o handleModal com stop propagation
+  const { modalContent, modal } = useModalContext();
 
   if (!modal) return null;
 
-  return (
-    <Styled.ModalBackground onClick={() => handleModal("")}>
-      {modalContent}
-    </Styled.ModalBackground>
-  );
+  return <>{modalContent}</>;
 };
 
 export default Modal;
