@@ -1,46 +1,38 @@
-# Getting Started with Create React App
+# QUIZy.it
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![QUIZy Logo](path/to/your/logo.png)
 
-## Available Scripts
+## Descrição
 
-In the project directory, you can run:
+QUIZy.it é uma plataforma de quiz interativa projetada para facilitar a aprendizagem e a avaliação de alunos. Com uma interface intuitiva e recursos personalizáveis, permite tanto a criação quanto a participação em quizzes de diversos temas e níveis de dificuldade.
 
-### `npm start`
+O site é dividido em três seções principais:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Páginas de Login
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **Alunos**: Os alunos podem fazer login para acessar seu perfil, ver suas pontuações e participar de quizzes.
+- **Professores**: Professores têm acesso privilegiado para criar, gerenciar e atribuir quizzes aos alunos.
 
-### `npm test`
+### Páginas do Estudante
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Dashboard**: No dashboard do aluno, os usuários podem visualizar seus quizzes ativos, resultados anteriores e desempenho geral.
+- **Explorar Quizzes**: Uma seção onde os alunos podem procurar e participar de quizzes disponíveis em uma variedade de temas.
+- **Perfil**: Os alunos podem editar suas informações pessoais e preferências de conta.
 
-### `npm run build`
+### Páginas do Professor
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Dashboard**: Uma visão geral das estatísticas dos quizzes, desempenho dos alunos e ferramentas de gerenciamento.
+- **Criar Quiz**: Os professores podem criar novos quizzes, definir perguntas e respostas, e personalizar configurações.
+- **Gerenciar Alunos**: Funcionalidade para adicionar, remover e gerenciar alunos inscritos em seus quizzes.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Como Contribuir
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Se você estiver interessado em contribuir para o desenvolvimento do QUIZy.it, veja algumas maneiras de ajudar:
 
-### `npm run eject`
+- **Desenvolvimento de Frontend/Backend**: Contribua com código para aprimorar a funcionalidade e a experiência do usuário.
+- **Design e UX**: Ajude a projetar uma interface mais intuitiva e agradável para os usuários.
+- **Testes e Q&A**: Realize testes extensivos para identificar bugs e garantir a estabilidade da plataforma.
+- **Tradução**: Colabore na tradução do site para outros idiomas, tornando-o mais acessível globalmente.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Sinta-se à vontade para enviar pull requests, relatar problemas ou propor novos recursos!
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
