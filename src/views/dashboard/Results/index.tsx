@@ -16,7 +16,7 @@ const Results: FC<ResultsProps> = () => {
 
   const results = useMemo(() => {
     const resultStorage = localStorage.getItem("netQuiz_my_results");
-    return resultStorage ? JSON.parse(resultStorage) : [];
+    return resultStorage ? JSON.parse(resultStorage).reverse() : [];
   }, []);
 
   return (

@@ -27,7 +27,6 @@ const QuizResult: FC<QuizResultProps> = () => {
       date: new Date().toISOString(),
     });
 
-    console.log("local: ", initialItems);
     localStorage.setItem("netQuiz_my_results", JSON.stringify(initialItems));
     navigate("/results");
   };

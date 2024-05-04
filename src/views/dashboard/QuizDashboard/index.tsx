@@ -1,86 +1,26 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import * as Styled from "./styled";
-import SideScroller from "components/SideScroller";
-import SubjectCard from "components/SubjectCard";
 import { TResult, TCollection } from "types/index";
-import { easyQuizzes, mediumQuizzes, hardQuizzes } from "assets/consts";
-import SearchInput from "components/inputs/SearchInput";
-import { FaRegUser } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { easyQuizzes } from "assets/consts";
 import Table from "components/Table";
 import Card from "components/Card";
 import RenderTable from "components/renderItems/RenderTable";
 import RenderQuizCard from "components/renderItems/RenderQuizCard";
 
 const QuizDashboard = () => {
-  const navigate = useNavigate();
-
-  const [search, setSearch] = useState("");
-
-  const HistoryQuizzes = [
-    ...easyQuizzes.filter((quiz) => quiz.title === "History"),
-    ...mediumQuizzes.filter((quiz) => quiz.title === "History"),
-    ...hardQuizzes.filter((quiz) => quiz.title === "History"),
-  ];
-
-  const searched = [
-    ...easyQuizzes.filter((quiz) =>
-      quiz.title.toUpperCase().includes(search.toUpperCase())
-    ),
-    ...mediumQuizzes.filter((quiz) =>
-      quiz.title.toUpperCase().includes(search.toUpperCase())
-    ),
-    ...hardQuizzes.filter((quiz) =>
-      quiz.title.toUpperCase().includes(search.toUpperCase())
-    ),
-  ];
-
   const myList: TCollection[] = JSON.parse(
     localStorage.getItem("netQuiz_my_list") || "null"
   );
 
-  const QuizzesDisplay = [
-    {
-      title: <h2>My list</h2>,
-      displayQuantity: 5,
-      collection: myList,
-    },
-    {
-      title: <h2>All Quizes</h2>,
-      displayQuantity: 5,
-      collection: [...easyQuizzes, ...mediumQuizzes, ...hardQuizzes],
-    },
-    {
-      title: <h2>Easy Quizes</h2>,
-      displayQuantity: 5,
-      collection: easyQuizzes,
-    },
-    {
-      title: <h2>Medium Quizes</h2>,
-      displayQuantity: 5,
-      collection: mediumQuizzes,
-    },
-    {
-      title: <h2>Hard Quizes</h2>,
-      displayQuantity: 5,
-      collection: hardQuizzes,
-    },
-    {
-      title: <h2>History Quizes</h2>,
-      displayQuantity: 5,
-      collection: HistoryQuizzes,
-    },
-  ];
-
   const TableHeaderTitles = [
     { label: "Title", width: 50 },
-    { label: "Score", width: 25 },
-    { label: "Date", width: 25 },
+    { label: "Score", width: 20 },
+    { label: "Date", width: 30 },
   ];
 
   const results = useMemo(() => {
     const resultStorage = localStorage.getItem("netQuiz_my_results");
-    return resultStorage ? JSON.parse(resultStorage) : [];
+    return resultStorage ? JSON.parse(resultStorage).reverse() : [];
   }, []);
 
   return (

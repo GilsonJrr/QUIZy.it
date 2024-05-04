@@ -1,21 +1,20 @@
 import React, { FC } from "react";
 import * as Styled from "./styled";
 import { TCollection } from "types/index";
-import { useNavigate } from "react-router-dom";
+import { useModalContext } from "components/Modal/modalContext";
+import PreQuizModal from "components/Modal/PreQuizModal";
 
 type RenderQuizCardProps = { item: TCollection };
 
 const RenderQuizCard: FC<RenderQuizCardProps> = ({ item }) => {
-  const navigate = useNavigate();
+  const { handleModal } = useModalContext();
+
+  const renderModal = () => {
+    return <PreQuizModal item={item} />;
+  };
 
   return (
-    <Styled.QuizCard
-      onClick={() =>
-        navigate(
-          `/quiz?amount=3&category=${item.uid}&difficulty=${item.difficult}&type=${item.type}`
-        )
-      }
-    >
+    <Styled.QuizCard onClick={() => handleModal(renderModal())}>
       <Styled.QuizImage />
       <Styled.QuizTitlesContainer>
         <Styled.QuizTitle>{item.title}</Styled.QuizTitle>

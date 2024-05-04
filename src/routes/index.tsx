@@ -6,19 +6,22 @@ import Quiz from "views/quizPages/Quiz";
 import Results from "views/dashboard/Results";
 import Quizzes from "views/dashboard/Quizzes";
 import QuizResult from "views/quizPages/QuizResult";
+import { ModalProvider } from "components/Modal/modalContext";
 
 const Routers = () => {
   return (
     <Router>
-      <Routes>
-        <Route element={<Dashboard />}>
-          <Route path="/" element={<QuizDashboard />} />
-          <Route path="/quizzes" element={<Quizzes />} />
-          <Route path="/results" element={<Results />} />
-        </Route>
-        <Route path="/quiz" element={<Quiz />} />
-        <Route path="/quizResult" element={<QuizResult />} />
-      </Routes>
+      <ModalProvider>
+        <Routes>
+          <Route element={<Dashboard />}>
+            <Route path="/" element={<QuizDashboard />} />
+            <Route path="/quizzes" element={<Quizzes />} />
+            <Route path="/results" element={<Results />} />
+          </Route>
+          <Route path="/quiz" element={<Quiz />} />
+          <Route path="/quizResult" element={<QuizResult />} />
+        </Routes>
+      </ModalProvider>
     </Router>
   );
 };

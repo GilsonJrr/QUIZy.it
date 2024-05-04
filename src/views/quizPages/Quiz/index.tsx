@@ -1,27 +1,17 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import he from "he";
 import * as Styled from "./styled";
 import { Answer, EAnswerIndexation, QuestionFiltered } from "types";
 import { randomize } from "utils";
-import Modal from "components/Modal";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { FaCheck } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 
-// type QuizProps = {
-//   amount: number;
-//   category: number;
-//   difficulty: "easy" | "medium" | "hard";
-//   type: "multiple" | "boolean";
-// };
-
 const Quiz = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  console.log("location", `${location.pathname}${location.search}`);
-  // const { category, difficulty, type } = useParams();
 
   const category = new URLSearchParams(location.search).get("category");
   const difficulty = new URLSearchParams(location.search).get("difficulty");
@@ -121,7 +111,6 @@ const Quiz = () => {
     <Styled.Container>
       <Styled.QuizContainer>
         <Styled.Header>
-          {/* <Styled.Title>Trivia Master</Styled.Title> */}
           <Styled.Close onClick={() => navigate(-1)}>
             <IoClose size={20} />
           </Styled.Close>
@@ -212,41 +201,6 @@ const Quiz = () => {
             : "Check"}
         </Styled.ContinueButton>
       </Styled.QuizCheckContainer>
-      {/* <Modal
-        action={nextQuestion}
-        modalType={selectedAnswer?.type || ""}
-        showModal={showModal}
-        position="bottom"
-      >
-        <h2>{selectedAnswer?.type}!!</h2>
-        <h3>
-          {selectedAnswer?.type === "incorrect"
-            ? `the right answer is: ${questions?.[current]?.correctAnswers}`
-            : "Grate job "}
-        </h3>
-        <Styled.ContinueButton
-          onClick={nextQuestion}
-          disabled={!selectedAnswer}
-        >
-          Continue
-        </Styled.ContinueButton>
-      </Modal>
-
-      <Modal
-        action={finishQuiz}
-        modalType={selectedAnswer?.type || ""}
-        showModal={showScoreModal}
-        position="center"
-      >
-        <h2>your score was !!</h2>
-        <h3>{score}</h3>
-        <Styled.ContinueButton
-          onClick={nextQuestion}
-          disabled={!selectedAnswer}
-        >
-          Finish
-        </Styled.ContinueButton>
-      </Modal> */}
     </Styled.Container>
   );
 };
