@@ -8,5 +8,5 @@ export const randomQuiz = () => {
       ? "medium"
       : difficultyNumber === 3 && "hard";
 
-  return `/quiz?category=${id}&difficulty=${difficult}&type=multiple`;
+  return `/quiz?amount=10&category=${id}&difficulty=${difficult}&type=multiple`;
 };

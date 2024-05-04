@@ -48,7 +48,7 @@ const PreQuizModal: FC<PreQuizModalProps> = ({ item }) => {
           <Styled.OptionButton
             onClick={() =>
               navigate(
-                `/quiz?category=${item.uid}&difficulty=${item.difficult}&type=${item.type}`
+                `/quiz?amount=10&category=${item.uid}&difficulty=${item.difficult}&type=${item.type}`
               )
             }
           >
