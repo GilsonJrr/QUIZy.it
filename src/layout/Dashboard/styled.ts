@@ -191,6 +191,7 @@ export const ProfileName = styled.h1`
 
 export const UserType = styled.h2`
   font-size: 0.7rem;
+  text-transform: capitalize;
 `;
 
 export const ChevronLeft = styled(FaChevronLeft)`

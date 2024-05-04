@@ -6,10 +6,12 @@ import { IoMdHome } from "react-icons/io";
 import { FaFileSignature } from "react-icons/fa6";
 import { MdOutlineQuiz } from "react-icons/md";
 import { HiBellAlert } from "react-icons/hi2";
+import { FaPeopleGroup } from "react-icons/fa6";
 
 import { IoMdExit } from "react-icons/io";
 import { useLocation, useNavigate } from "react-router-dom";
 import useDeviceType from "hooks/useDeviceType";
+import { userType } from "assets/consts";
 
 type SidebarProps = {
   logo?: string;
@@ -49,6 +51,17 @@ const Sidebar: FC<SidebarProps> = ({ logo, display, onClose }) => {
               Quizzes
             </Styled.MenuText>
           </Styled.IconContainer>
+          {userType === "tutor" && (
+            <Styled.IconContainer
+              active={currentUrl === "/students"}
+              onClick={() => handleRedirect("/students")}
+            >
+              <FaPeopleGroup size={30} />
+              <Styled.MenuText active={currentUrl === "/students"}>
+                Students
+              </Styled.MenuText>
+            </Styled.IconContainer>
+          )}
           <Styled.IconContainer
             active={currentUrl === "/results"}
             onClick={() => handleRedirect("/results")}

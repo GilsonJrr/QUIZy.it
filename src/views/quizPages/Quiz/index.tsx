@@ -98,7 +98,12 @@ const Quiz = () => {
       state: {
         score: score,
         amount: amount,
-        title: category,
+        quiz: {
+          category: category,
+          difficulty: difficulty,
+          type: type,
+          amount: amount,
+        },
       },
     });
   };

@@ -9,7 +9,7 @@ const QuizResult: FC<QuizResultProps> = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { score = 0, amount = 0, title = "history" } = location.state;
+  const { score = 0, amount = 0, quiz, title = "history" } = location.state;
   const finalScore = (score * 100) / amount;
 
   const handleResults = () => {
@@ -23,8 +23,13 @@ const QuizResult: FC<QuizResultProps> = () => {
 
     initialItems.push({
       score: `${score}/${amount}`,
-      quiz: title,
+      quiz: quiz.category,
       date: new Date().toISOString(),
+      quizInfo: {
+        difficulty: quiz.difficulty,
+        amount: quiz.amount,
+        type: quiz.type,
+      },
     });
 
     localStorage.setItem("netQuiz_my_results", JSON.stringify(initialItems));

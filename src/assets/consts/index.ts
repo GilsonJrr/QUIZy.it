@@ -726,3 +726,7 @@ export const easyQuizzes = [
     image: "",
   },
 ];
+
+//TODO: usar isso so pra mostar os tipos de usuario
+type TUserType = "tutor" | "student";
+export const userType: TUserType = "student";

@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 //types
 export type QuizQuestion = {
   category: string;
@@ -42,16 +44,29 @@ export type TCategories = {
   image?: string;
 };
 
+export type TQUiz = {
+  difficulty: string;
+  type: string;
+  amount: number;
+};
+
 export type TResult = {
   quiz: string | number;
   score: string;
   date: string;
+  quizInfo: TQUiz;
 };
 
 export type THeader = {
   label: string;
   width: number;
   align?: "center" | "flex-start";
+};
+
+export type TOptions = {
+  option?: string;
+  optionIcon?: ReactNode;
+  onClick?: () => void;
 };
 
 //enums
@@ -96,4 +111,6 @@ export enum RouterTitle {
   "/settings" = "Settings",
   "/results" = "Results",
   "/quizzes" = "Quizzes",
+  "/students" = "Students",
+  "/messages" = "Messages",
 }

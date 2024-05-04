@@ -7,6 +7,7 @@ import { RouterTitle } from "types";
 import Logo from "assets/images/Logo.png";
 
 import { GiHamburgerMenu } from "react-icons/gi";
+import { userType } from "assets/consts";
 
 type dashboardProps = {
   children?: ReactNode | ReactNode[];
@@ -20,7 +21,6 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
   const [showMenu, setShowMenu] = useState(false);
 
   const userName = "UserName";
-  const userType = "Student";
 
   const currentUrl = location.pathname;
 

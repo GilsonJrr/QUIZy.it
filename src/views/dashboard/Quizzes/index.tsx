@@ -1,7 +1,12 @@
 import React, { FC, useState } from "react";
 import * as Styled from "./styled";
 import Card from "components/Card";
-import { easyQuizzes, hardQuizzes, mediumQuizzes } from "assets/consts";
+import {
+  easyQuizzes,
+  hardQuizzes,
+  mediumQuizzes,
+  userType,
+} from "assets/consts";
 import RenderQuizCard from "components/renderItems/RenderQuizCard";
 
 import { GiCardRandom } from "react-icons/gi";
@@ -9,7 +14,10 @@ import { FaFastBackward } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { randomQuiz } from "functions/index";
 import RenderCategoriesCard from "components/renderItems/RenderCategorieCard";
-import { TCategories } from "types/index";
+import { TCategories, TOptions } from "types/index";
+import OptionsButton from "components/OptionsButton";
+import { IoMdAddCircleOutline } from "react-icons/io";
+import { MdPlaylistAddCheck } from "react-icons/md";
 
 type QuizzesProps = {};
 
@@ -37,18 +45,38 @@ const Quizzes: FC<QuizzesProps> = () => {
     ...hardQuizzes.filter((quiz) => quiz.title === category),
   ];
 
+  const StudentOptions: TOptions[] = [
+    {
+      option: "Radon Quiz",
+      optionIcon: <GiCardRandom size={40} />,
+      onClick: () => navigate(randomQuiz()),
+    },
+    {
+      option: "Retry last Quiz",
+      optionIcon: <FaFastBackward size={40} />,
+      onClick: () => navigate(lastQuiz),
+    },
+  ];
+
+  const TutorOptions: TOptions[] = [
+    {
+      option: "Add Quiz",
+      optionIcon: <IoMdAddCircleOutline size={40} />,
+      // onClick: () => navigate(randomQuiz()),
+    },
+    {
+      option: "Add category",
+      optionIcon: <MdPlaylistAddCheck size={40} />,
+      // onClick: () => navigate(lastQuiz),
+    },
+  ];
+
   return (
     <Styled.Container>
-      <Styled.OptionButtonContainer>
-        <Styled.OptionButton onClick={() => navigate(randomQuiz())}>
-          <GiCardRandom size={40} />
-          Radon Quiz
-        </Styled.OptionButton>
-        <Styled.OptionButton onClick={() => navigate(lastQuiz)}>
-          <FaFastBackward size={40} />
-          Retry last Quiz
-        </Styled.OptionButton>
-      </Styled.OptionButtonContainer>
+      <OptionsButton
+        options={userType === "student" ? StudentOptions : TutorOptions}
+        width="45%"
+      />
       <Card
         gridName="card2"
         title="New Quizes"
