@@ -63,7 +63,7 @@ const Quizzes: FC<QuizzesProps> = () => {
     {
       option: "Add Quiz",
       optionIcon: <IoMdAddCircleOutline size={40} />,
-      // onClick: () => navigate(randomQuiz()),
+      onClick: () => navigate("/quizzes/quiz-create"),
     },
     {
       option: "Add category",
@@ -84,7 +84,8 @@ const Quizzes: FC<QuizzesProps> = () => {
       />
       <Card
         gridName="card2"
-        title="All Quizes"
+        //TODO: mudar para new Quizzes para os alunos
+        title={userType === "student" ? "New Quizzes" : "All Quizes"}
         isEmpty={allQuizzes && allQuizzes.length === 0}
         emptyMessage={
           search

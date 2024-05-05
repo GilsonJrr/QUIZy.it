@@ -15,6 +15,7 @@ import Students from "views/dashboard/Students";
 import { ModalProvider } from "components/Modal/modalContext";
 import { userType } from "assets/consts";
 import NotFound from "views/NotFound";
+import QuizCreate from "views/dashboard/Quizzes/QuizzesPages/QuizCreate";
 
 const Routers = () => {
   return (
@@ -28,6 +29,7 @@ const Routers = () => {
               <Route path="/students" element={<Students />} />
             )}
             <Route path="/results" element={<Results />} />
+            <Route path="/quizzes/quiz-create" element={<QuizCreate />} />
           </Route>
           {userType === "student" && (
             <Route

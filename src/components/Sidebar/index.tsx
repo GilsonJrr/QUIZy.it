@@ -24,7 +24,8 @@ const Sidebar: FC<SidebarProps> = ({ logo, display, onClose }) => {
   const navigate = useNavigate();
   const isMobile = useDeviceType();
 
-  const currentUrl = location.pathname;
+  const currentUrl = location.pathname.split("/")[1];
+  console.log("currentUrl", location);
 
   const handleRedirect = (navigatePath: string) => {
     navigate(navigatePath);
@@ -36,14 +37,14 @@ const Sidebar: FC<SidebarProps> = ({ logo, display, onClose }) => {
       <Styled.ContainerBackGround onClick={onClose}>
         <Styled.MenuContainer>
           <Styled.IconContainer
-            active={currentUrl === "/"}
+            active={currentUrl === ""}
             onClick={() => handleRedirect("/")}
           >
             <IoMdHome size={30} />
             <Styled.MenuText active={currentUrl === "/"}>Home</Styled.MenuText>
           </Styled.IconContainer>
           <Styled.IconContainer
-            active={currentUrl === "/quizzes"}
+            active={currentUrl === "quizzes"}
             onClick={() => handleRedirect("/quizzes")}
           >
             <MdOutlineQuiz size={30} />
@@ -53,7 +54,7 @@ const Sidebar: FC<SidebarProps> = ({ logo, display, onClose }) => {
           </Styled.IconContainer>
           {userType === "tutor" && (
             <Styled.IconContainer
-              active={currentUrl === "/students"}
+              active={currentUrl === "students"}
               onClick={() => handleRedirect("/students")}
             >
               <FaPeopleGroup size={30} />
@@ -63,7 +64,7 @@ const Sidebar: FC<SidebarProps> = ({ logo, display, onClose }) => {
             </Styled.IconContainer>
           )}
           <Styled.IconContainer
-            active={currentUrl === "/results"}
+            active={currentUrl === "results"}
             onClick={() => handleRedirect("/results")}
           >
             <FaFileSignature size={30} />
@@ -73,7 +74,7 @@ const Sidebar: FC<SidebarProps> = ({ logo, display, onClose }) => {
           </Styled.IconContainer>
           {isMobile && (
             <Styled.IconContainer
-              active={currentUrl === "/message"}
+              active={currentUrl === "message"}
               onClick={() => handleRedirect("/message")}
             >
               <HiBellAlert size={30} />
