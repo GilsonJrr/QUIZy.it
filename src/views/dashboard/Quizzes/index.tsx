@@ -26,6 +26,7 @@ const Quizzes: FC<QuizzesProps> = () => {
   const lastQuiz = localStorage.getItem("lastQuiz") || "";
 
   const [category, setCategory] = useState("");
+  const [search, setSearch] = useState<string>();
 
   const categories: TCategories[] = [
     { title: "History" },
@@ -71,6 +72,10 @@ const Quizzes: FC<QuizzesProps> = () => {
     },
   ];
 
+  const allQuizzes = [...easyQuizzes, ...mediumQuizzes, ...hardQuizzes].filter(
+    (e) => e.title.toUpperCase().includes(search?.toUpperCase() || "")
+  );
+
   return (
     <Styled.Container>
       <OptionsButton
@@ -79,12 +84,19 @@ const Quizzes: FC<QuizzesProps> = () => {
       />
       <Card
         gridName="card2"
-        title="New Quizes"
-        isEmpty={easyQuizzes && easyQuizzes.length < 0}
-        emptyMessage={"No new quiz available at this time. Please check later"}
+        title="All Quizes"
+        isEmpty={allQuizzes && allQuizzes.length === 0}
+        emptyMessage={
+          search
+            ? "Quiz not found"
+            : "No new quiz available at this time. Please check later"
+        }
         scrollable
+        searchable
+        searchValue={search}
+        setSearch={(e) => setSearch(e)}
       >
-        {easyQuizzes?.map((item) => {
+        {allQuizzes?.map((item) => {
           return <RenderQuizCard item={item} />;
         })}
       </Card>

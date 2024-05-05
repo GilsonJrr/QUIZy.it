@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 type Props = { width?: number };
 
-export const Option = styled.div`
+export const Option = styled.div<Props>`
   display: flex;
   background-color: #4a4747;
   color: #ffffff;
   justify-content: center;
   border-radius: 3px;
   cursor: pointer;
-  width: 10%;
+  width: ${({ width }) => width || 10}%;
   height: 100%;
   padding: 5px 10px;
 `;

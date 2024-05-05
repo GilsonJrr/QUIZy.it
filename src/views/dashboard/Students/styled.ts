@@ -13,3 +13,10 @@ export const Container = styled.div<Props>`
     flex-direction: column;
   }
 `;
+
+export const MapRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+`;

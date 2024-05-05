@@ -69,6 +69,21 @@ export type TOptions = {
   onClick?: () => void;
 };
 
+export type TStudentList = {
+  Name: string;
+  Group: string;
+  Average: string;
+  Email: string;
+  Phone: string;
+  Photo: string;
+};
+
+export type TTutorResult = {
+  name: string;
+  quiz: string;
+  score: string;
+};
+
 //enums
 export enum EAnswerIndexation {
   A = 0,

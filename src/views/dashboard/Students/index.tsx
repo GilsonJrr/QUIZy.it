@@ -1,24 +1,17 @@
 import React, { FC } from "react";
 import * as Styled from "./styled";
 import Card from "components/Card";
-import Table from "components/Table";
 import OptionsButton from "components/OptionsButton";
 import { TOptions } from "types/index";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { FaEdit } from "react-icons/fa";
 import { FaUserEdit } from "react-icons/fa";
+import RenderStudentCard from "components/renderItems/RenderStudentCard";
+import { students } from "assets/consts";
 
 type StudentsProps = {};
 
 const Students: FC<StudentsProps> = () => {
-  const TableHeaderTitles = [
-    { label: "Name", width: 30 },
-    { label: "Group", width: 20 },
-    { label: "Last Score", width: 20 },
-    { label: "Email", width: 20 },
-    { label: "Option", width: 10 },
-  ];
-
   const Options: TOptions[] = [
     {
       option: "Add student",
@@ -44,14 +37,13 @@ const Students: FC<StudentsProps> = () => {
         title={"Students list"}
         isEmpty={false}
         emptyMessage={"you have not registered any student so far"}
+        scrollable
       >
-        <Table
-          header={TableHeaderTitles}
-          content={[]}
-          renderItem={function (item: unknown): React.ReactNode {
-            throw new Error("Function not implemented.");
-          }}
-        />
+        <Styled.MapRow>
+          {students?.map((item) => {
+            return <RenderStudentCard item={item} width="49%" />;
+          })}
+        </Styled.MapRow>
       </Card>
     </Styled.Container>
   );

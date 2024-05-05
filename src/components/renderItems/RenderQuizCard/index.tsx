@@ -5,9 +5,9 @@ import { useModalContext } from "components/Modal/modalContext";
 import PreQuizModal from "components/Modal/PreQuizModal";
 import EmptyImage from "assets/images/Empty_quiz_image_state.png";
 
-type RenderQuizCardProps = { item: TCollection };
+type RenderQuizCardProps = { item: TCollection; editMode?: boolean };
 
-const RenderQuizCard: FC<RenderQuizCardProps> = ({ item }) => {
+const RenderQuizCard: FC<RenderQuizCardProps> = ({ item, editMode }) => {
   const { handleModal } = useModalContext();
 
   return (
@@ -18,7 +18,7 @@ const RenderQuizCard: FC<RenderQuizCardProps> = ({ item }) => {
         <Styled.QuizInfo>
           {item.difficult} | {item.type}
         </Styled.QuizInfo>
-        <Styled.StartButton>Start</Styled.StartButton>
+        <Styled.StartButton>{editMode ? "Edit" : "Start"}</Styled.StartButton>
       </Styled.QuizTitlesContainer>
     </Styled.QuizCard>
   );

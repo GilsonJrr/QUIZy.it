@@ -1,3 +1,5 @@
+import { TStudentList, TTutorResult } from "types/index";
+
 export const hardQuizzes = [
   {
     id: 1,
@@ -727,6 +729,62 @@ export const easyQuizzes = [
   },
 ];
 
+export const students: TStudentList[] = [
+  {
+    Name: "João",
+    Group: "Level 01",
+    Average: "80%",
+    Email: "joao@example.com",
+    Phone: "+55 11 1234-5678",
+    Photo: "",
+  },
+  {
+    Name: "Maria",
+    Group: "Level 02",
+    Average: "90%",
+    Email: "maria@example.com",
+    Phone: "+55 11 9876-5432",
+    Photo: "",
+  },
+  {
+    Name: "Pedro",
+    Group: "Level 01",
+    Average: "70%",
+    Email: "pedro@example.com",
+    Phone: "+55 11 8765-4321",
+    Photo: "",
+  },
+  {
+    Name: "Ana",
+    Group: "Level 03",
+    Average: "85%",
+    Email: "ana@example.com",
+    Phone: "+55 11 2345-6789",
+    Photo: "",
+  },
+  {
+    Name: "Ana Maria",
+    Group: "Level 03",
+    Average: "85%",
+    Email: "ana@example.com",
+    Phone: "+55 11 2345-6789",
+    Photo: "",
+  },
+];
+
+export const TutorResults: TTutorResult[] = [
+  { name: "Joao", quiz: "History", score: "7/10" },
+  { name: "Maria", quiz: "Math", score: "9/10" },
+  { name: "Pedro", quiz: "Science", score: "5/10" },
+  { name: "Ana", quiz: "Literature", score: "8/10" },
+  { name: "Carlos", quiz: "Geography", score: "6/10" },
+  { name: "Laura", quiz: "Biology", score: "8/10" },
+  { name: "Rafael", quiz: "Chemistry", score: "4/10" },
+  { name: "Mariana", quiz: "Physics", score: "7/10" },
+  { name: "Gabriel", quiz: "Art", score: "9/10" },
+  { name: "Isabel", quiz: "Music", score: "6/10" },
+];
+
 //TODO: usar isso so pra mostar os tipos de usuario
 type TUserType = "tutor" | "student";
-export const userType: TUserType = "student";
+export const userType: TUserType = "tutor";

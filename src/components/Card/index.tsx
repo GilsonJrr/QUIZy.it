@@ -2,6 +2,7 @@ import React, { FC, ReactNode } from "react";
 import * as Styled from "./styled";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import SearchInput from "components/inputs/SearchInput";
 
 type CardProps = {
   title: string;
@@ -13,6 +14,9 @@ type CardProps = {
   redirectPath?: string;
   scrollable?: boolean;
   width?: string;
+  searchable?: boolean;
+  searchValue?: string;
+  setSearch?: (search: string) => void;
 };
 
 const Card: FC<CardProps> = ({
@@ -25,6 +29,9 @@ const Card: FC<CardProps> = ({
   redirectPath = "/",
   scrollable,
   width,
+  searchable,
+  searchValue = "",
+  setSearch,
 }) => {
   const navigate = useNavigate();
 
@@ -32,6 +39,9 @@ const Card: FC<CardProps> = ({
     <Styled.Card gridName={gridName} scrollable={scrollable} width={width}>
       <Styled.CardHeader>
         <Styled.CardTitle>{title}</Styled.CardTitle>
+        {searchable && (
+          <SearchInput value={searchValue} setValue={(e) => setSearch?.(e)} />
+        )}
         {redirectTo && (
           <Styled.RedirectButton onClick={() => navigate(redirectPath)}>
             {redirectTo} <FaArrowRight />

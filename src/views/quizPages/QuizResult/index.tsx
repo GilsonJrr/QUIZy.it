@@ -38,15 +38,15 @@ const QuizResult: FC<QuizResultProps> = () => {
 
   const handleMessage = () => {
     switch (true) {
-      case finalScore < 30:
+      case finalScore <= 30:
         return `Uh-oh! It appears there's a bit of a stumble here. But fret not! Every 
                 misstep is just another opportunity to learn and grow. Take a breather, 
                 review the material, and gear up for round two!`;
-      case finalScore < 50:
+      case finalScore <= 50:
         return `Not quite there yet, but hey, progress is progress! Keep your chin up and 
                 your determination strong. Reflect on what you've encountered, regroup, 
                 and charge ahead with renewed vigor!`;
-      case finalScore < 80:
+      case finalScore <= 80:
         return `You're making strides, but there's still a bit more ground to cover. Don't 
                 let this deter you; instead, let it fuel your determination. Keep pushing 
                 forward, keep striving for excellence. You're closer than you think!`;

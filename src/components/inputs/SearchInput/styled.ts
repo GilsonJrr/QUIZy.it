@@ -5,11 +5,11 @@ type Props = {};
 export const Container = styled.div<Props>`
   padding: 10px 20px;
   border-radius: 30px;
-  border: 2px solid #000000;
+  border: 1px solid rgba(0, 0, 0, 0.5);
   background-color: #ffffff;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 10px;
 `;
 
