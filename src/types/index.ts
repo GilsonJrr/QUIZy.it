@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 
-//types
 export type QuizQuestion = {
   category: string;
   id: string;
@@ -82,6 +81,29 @@ export type TTutorResult = {
   name: string;
   quiz: string;
   score: string;
+};
+
+export type TOption = {
+  value: string;
+  label: string;
+};
+
+export type TMultipleQuestions = {
+  questionTitle: string;
+  answer01: string;
+  answer02: string;
+  answer03?: string;
+  answer04?: string;
+  rightAnswer?: string;
+};
+
+export type TFormData = {
+  title: string;
+  description?: string;
+  image: string;
+  type: string;
+  category: string;
+  questions?: TMultipleQuestions[];
 };
 
 //enums
