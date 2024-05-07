@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
-type Props = {};
+type Props = { width?: string };
 
 export const Container = styled.div<Props>`
   display: flex;
   flex-direction: column;
   gap: 4px;
   position: relative;
+  width: ${({ width }) => width};
 `;
 
 export const Label = styled.label<Props>`

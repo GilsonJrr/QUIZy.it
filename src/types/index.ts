@@ -97,6 +97,11 @@ export type TMultipleQuestions = {
   rightAnswer?: string;
 };
 
+export type TTrueOrFalseQuestions = {
+  questionTitle: string;
+  answer: boolean;
+};
+
 export type TFormData = {
   title: string;
   description?: string;
@@ -104,6 +109,7 @@ export type TFormData = {
   type: string;
   category: string;
   questions?: TMultipleQuestions[];
+  trueOrFalseQuestions?: TTrueOrFalseQuestions[];
 };
 
 //enums
@@ -151,4 +157,6 @@ export enum RouterTitle {
   "/students" = "Students",
   "/messages" = "Messages",
   "/quizzes/quiz-create" = "Add quiz",
+  "/students/student-create" = "Add Student",
+  "/students/group-create" = "Add Group",
 }

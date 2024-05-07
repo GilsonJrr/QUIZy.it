@@ -5,12 +5,13 @@ import { FieldError } from "react-hook-form";
 interface SimpleInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string | ReactNode;
   error?: FieldError | undefined;
+  width?: string;
 }
 
 const SimpleInput = forwardRef<HTMLInputElement, SimpleInputProps>(
-  ({ label, error, ...rest }, ref) => {
+  ({ label, error, width, ...rest }, ref) => {
     return (
-      <Styled.Container>
+      <Styled.Container width={width}>
         <Styled.Label>{label}</Styled.Label>
         <Styled.Input type="text" ref={ref} {...rest} />
         {error && <Styled.Error>{error.message}</Styled.Error>}

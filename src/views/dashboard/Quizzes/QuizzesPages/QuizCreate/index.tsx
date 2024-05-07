@@ -1,6 +1,5 @@
 import React, { FC, useState } from "react";
 import { useForm } from "react-hook-form";
-import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Styled from "./styled";
 import BreadCrumbs from "components/BreadCrumbs";
@@ -9,34 +8,9 @@ import SimpleInput from "components/inputs/SimpleInput";
 import TextAreaInput from "components/inputs/TextAreaInput";
 import SelectInput from "components/inputs/SelectInput";
 import { TFormData, TOption } from "types/index";
+import ToggleInput from "components/inputs/ToggleInput";
+import { NewQuizSchema } from "lib/schemas";
 type QuizCreateProps = {};
-
-export const NewQuizSchema = Yup.object().shape({
-  title: Yup.string().required("You must add a title").min(3),
-  description: Yup.string(),
-  image: Yup.string().required("You must add a image"),
-  type: Yup.string().required("O tipo é obrigatório"),
-  category: Yup.string().required("A categoria é obrigatória"),
-  questions: Yup.array().of(
-    Yup.object().shape({
-      questionTitle: Yup.string().required("You must add a title"),
-      answer01: Yup.string().required("You must add a right answer"),
-      answer02: Yup.string().required("You must add at least one more answer"),
-      answer03: Yup.string(),
-      answer04: Yup.string(),
-      rightAnswer: Yup.string(),
-    })
-  ),
-});
-
-export const NewMultipleQuestions = Yup.object().shape({
-  questionTitle: Yup.string().required("You must add a title"),
-  answer01: Yup.string().required("You must add a right answer"),
-  answer02: Yup.string().required("You must add at least one more answer"),
-  answer03: Yup.string(),
-  answer04: Yup.string(),
-  rightAnswer: Yup.string(),
-});
 
 const QuizCreate: FC<QuizCreateProps> = () => {
   const [question, setQuestion] = useState([0]);
@@ -64,8 +38,8 @@ const QuizCreate: FC<QuizCreateProps> = () => {
   const handleAddQuestion = () => {
     if (question.length < 15) {
       setQuestion([...question, question[question.length - 1] + 1]);
+      setSelectedQuestion(question[question.length - 1] + 1);
     }
-    setSelectedQuestion(question[question.length - 1] + 1);
   };
 
   const handleDeleteQuestion = (id: number) => {
@@ -88,6 +62,8 @@ const QuizCreate: FC<QuizCreateProps> = () => {
     { value: "history", label: "History" },
     { value: "geography", label: "Geography" },
   ];
+
+  // const categoryOptions: TOption[] = [];
 
   console.log("question", question, question.length);
 
@@ -147,12 +123,14 @@ const QuizCreate: FC<QuizCreateProps> = () => {
                 error={errors.type}
                 {...register("type")}
               />
-              <SelectInput
-                label={"Category"}
-                options={categoryOptions}
-                error={errors.category}
-                {...register("category")}
-              />
+              {categoryOptions.length > 0 && (
+                <SelectInput
+                  label={"Category"}
+                  options={categoryOptions}
+                  error={errors.category}
+                  {...register("category")}
+                />
+              )}
             </Styled.SelectContainer>
           </Styled.Form>
         </Card>
@@ -209,12 +187,14 @@ const QuizCreate: FC<QuizCreateProps> = () => {
                   Delete
                 </Styled.SubmitButton>
               )}
-              <Styled.SubmitButton
-                onClick={handleAddQuestion}
-                disabled={addButtonDisabled}
-              >
-                Add
-              </Styled.SubmitButton>
+              {question.length < 15 && (
+                <Styled.SubmitButton
+                  onClick={handleAddQuestion}
+                  disabled={addButtonDisabled}
+                >
+                  Add
+                </Styled.SubmitButton>
+              )}
             </Styled.ButtonContainer>
             <Styled.QuestionsContainer>
               {question.map((question, index) => {
@@ -236,23 +216,30 @@ const QuizCreate: FC<QuizCreateProps> = () => {
                 label={"Question"}
                 placeholder="Enter question title"
                 value={
-                  watch(`questions.${selectedQuestion}.questionTitle`) || ""
+                  watch(
+                    `trueOrFalseQuestions.${selectedQuestion}.questionTitle`
+                  ) || ""
                 }
-                error={errors.questions?.[selectedQuestion]?.questionTitle}
-                {...register(`questions.${selectedQuestion}.questionTitle`)}
+                error={
+                  errors.trueOrFalseQuestions?.[selectedQuestion]?.questionTitle
+                }
+                {...register(
+                  `trueOrFalseQuestions.${selectedQuestion}.questionTitle`
+                )}
               />
-              <Styled.AnswerContainer>
-                <SimpleInput
-                  label={<Styled.Label>Right answer</Styled.Label>}
-                  value={watch(`questions.${selectedQuestion}.answer01`) || ""}
-                  error={errors.questions?.[selectedQuestion]?.answer01}
-                  {...register(`questions.${selectedQuestion}.answer01`)}
-                />
-                <SimpleInput
-                  label={"Answer 2"}
-                  value={watch(`questions.${selectedQuestion}.answer02`) || ""}
-                  error={errors.questions?.[selectedQuestion]?.answer02}
-                  {...register(`questions.${selectedQuestion}.answer02`)}
+              <Styled.AnswerContainer justify="flex-start">
+                <ToggleInput
+                  Label="Answer"
+                  options={[
+                    { label: "True", value: true },
+                    { label: "False", value: false },
+                  ]}
+                  setValue={(value) =>
+                    setValue(
+                      `trueOrFalseQuestions.${selectedQuestion}.answer`,
+                      value
+                    )
+                  }
                 />
               </Styled.AnswerContainer>
             </Styled.Form>

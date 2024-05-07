@@ -16,6 +16,7 @@ import RenderStudentCard from "components/renderItems/RenderStudentCard";
 
 export const TutorPage = () => {
   const [search, setSearch] = useState<string>();
+  const [searchStudents, setSearchStudents] = useState<string>();
   const TableHeaderTitles = [
     { label: "Name", width: 40 },
     { label: "Quiz", width: 40 },
@@ -25,6 +26,10 @@ export const TutorPage = () => {
 
   const allQuizzes = [...easyQuizzes, ...mediumQuizzes, ...hardQuizzes].filter(
     (e) => e.title.toUpperCase().includes(search?.toUpperCase() || "")
+  );
+
+  const filterStudents = students.filter((e) =>
+    e.Name.toUpperCase().includes(searchStudents?.toUpperCase() || "")
   );
 
   return (
@@ -52,15 +57,20 @@ export const TutorPage = () => {
       <Card
         gridName="card3"
         title="My students"
-        isEmpty={students.length === 0}
+        isEmpty={filterStudents.length === 0}
         emptyMessage={
-          "Your List is empty add quizzes here to do it later or retry it"
+          searchStudents
+            ? "Student not found"
+            : "you have not registered any student so far"
         }
         scrollable
+        searchable
+        searchValue={searchStudents}
+        setSearch={(e) => setSearchStudents(e)}
         redirectTo="Students"
         redirectPath="/students"
       >
-        {students?.map((item) => {
+        {filterStudents?.map((item) => {
           return <RenderStudentCard item={item} />;
         })}
       </Card>
