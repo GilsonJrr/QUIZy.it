@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as Styled from "../styled";
 import { TTutorResult } from "types/index";
 import {
@@ -6,15 +6,25 @@ import {
   easyQuizzes,
   hardQuizzes,
   mediumQuizzes,
-  students,
+  userID,
 } from "assets/consts";
 import Table from "components/Table";
 import Card from "components/Card";
 import RenderTable from "components/renderItems/RenderTable";
 import RenderQuizCard from "components/renderItems/RenderQuizCard";
 import RenderStudentCard from "components/renderItems/RenderStudentCard";
+import { useSelector } from "react-redux";
+import { RootState } from "Store/root-reducer";
+import { useDispatch } from "react-redux";
+import { requestStudentList } from "Store/students/actions";
 
 export const TutorPage = () => {
+  const { students, isLoading } = useSelector(
+    (state: RootState) => state.studentReducer
+  );
+
+  const dispatch = useDispatch();
+
   const [search, setSearch] = useState<string>();
   const [searchStudents, setSearchStudents] = useState<string>();
   const TableHeaderTitles = [
@@ -28,9 +38,15 @@ export const TutorPage = () => {
     (e) => e.title.toUpperCase().includes(search?.toUpperCase() || "")
   );
 
-  const filterStudents = students.filter((e) =>
-    e.Name.toUpperCase().includes(searchStudents?.toUpperCase() || "")
+  const filterStudents = students?.filter((e) =>
+    e.name.toUpperCase().includes(searchStudents?.toUpperCase() || "")
   );
+
+  useEffect(() => {
+    if (students === undefined) {
+      dispatch(requestStudentList({ uid: userID }));
+    }
+  }, [dispatch, students]);
 
   return (
     <Styled.Container>
@@ -57,7 +73,7 @@ export const TutorPage = () => {
       <Card
         gridName="card3"
         title="My students"
-        isEmpty={filterStudents.length === 0}
+        isEmpty={filterStudents?.length === 0}
         emptyMessage={
           searchStudents
             ? "Student not found"
@@ -70,9 +86,13 @@ export const TutorPage = () => {
         redirectTo="Students"
         redirectPath="/students"
       >
-        {filterStudents?.map((item) => {
-          return <RenderStudentCard item={item} />;
-        })}
+        {isLoading ? (
+          <>Loading...</>
+        ) : (
+          filterStudents?.map((item) => {
+            return <RenderStudentCard item={item} />;
+          })
+        )}
       </Card>
       <Card
         gridName="card2"

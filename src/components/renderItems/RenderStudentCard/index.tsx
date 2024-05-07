@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 import * as Styled from "./styled";
-import { TStudentList } from "types/index";
 import EmptyImage from "assets/images/Empty_quiz_image_state.png";
+import { StudentTypeValues } from "Store/students/types";
 
 type RenderStudentCardProps = {
-  item: TStudentList;
+  item: StudentTypeValues;
   width?: string;
   onClick?: () => void;
 };
@@ -16,15 +16,20 @@ const RenderStudentCard: FC<RenderStudentCardProps> = ({
 }) => {
   return (
     <Styled.Container width={width} onClick={onClick}>
-      <Styled.PhotoContainer src={item.Photo ? item.Photo : EmptyImage} />
+      <Styled.PhotoContainer src={item.photo ? item.photo : EmptyImage} />
       <Styled.InfoContainer>
-        <Styled.Name>{item.Name}</Styled.Name>
+        <Styled.Name>{item.name}</Styled.Name>
         <Styled.InnerInfoContainer>
-          <Styled.Info>Group: {item.Group} | </Styled.Info>
-          <Styled.Info> Average: {item.Average}</Styled.Info>
+          <Styled.Info>Group: {item.group} </Styled.Info>
+          {item.average && (
+            <Styled.Info>
+              | Average:
+              {item.average}
+            </Styled.Info>
+          )}
         </Styled.InnerInfoContainer>
-        <Styled.Contact>Phone: {item.Phone}</Styled.Contact>
-        <Styled.Contact>Email: {item.Email}</Styled.Contact>
+        <Styled.Contact>Phone: {item.phone}</Styled.Contact>
+        <Styled.Contact>Email: {item.email}</Styled.Contact>
       </Styled.InfoContainer>
       <Styled.ButtonContainer>
         <Styled.ActionButton>

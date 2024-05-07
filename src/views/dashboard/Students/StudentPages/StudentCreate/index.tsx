@@ -9,9 +9,9 @@ import TextAreaInput from "components/inputs/TextAreaInput";
 import SelectInput from "components/inputs/SelectInput";
 import { TOption } from "types/index";
 import { StudentCreateSchema } from "lib/schemas";
-import { database } from "lib/firebase";
-import { ref, set } from "firebase/database";
 import { idGenerator } from "utils/index";
+import { useDispatch } from "react-redux";
+import { setStudent } from "Store/students/actions";
 
 type StudentCreateProps = {};
 
@@ -26,6 +26,9 @@ type TStudent = {
 };
 
 const StudentCreate: FC<StudentCreateProps> = () => {
+  const dispatch = useDispatch();
+  const userID = "f76fd8s7f78sdf";
+
   const [extraFields, setExtraFields] = useState<any[]>([]);
   const [extraField, setExtraField] = useState<string>();
   const [editingField, setEditingField] = useState(0);
@@ -42,17 +45,16 @@ const StudentCreate: FC<StudentCreateProps> = () => {
     resolver: yupResolver(StudentCreateSchema),
   });
 
-  const setStudent = async (uid: string, data: TStudent) => {
-    return set(ref(database, `user/${uid}/students/${idGenerator(18)}`), data)
-      .then((user) => user)
-      .catch((err) => {
-        throw new Error(err);
-      });
-  };
-
   const onSubmit = (data: TStudent) => {
     console.log("data", data);
-    setStudent("f76fd8s7f78sdf", data);
+
+    const preparedData = {
+      id: idGenerator(18),
+      uid: userID,
+      ...data,
+    };
+
+    dispatch(setStudent(preparedData));
   };
 
   const handleAddField = () => {
