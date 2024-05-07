@@ -9,6 +9,10 @@ import TextAreaInput from "components/inputs/TextAreaInput";
 import SelectInput from "components/inputs/SelectInput";
 import { TOption } from "types/index";
 import { StudentCreateSchema } from "lib/schemas";
+import { database } from "lib/firebase";
+import { ref, set } from "firebase/database";
+import { idGenerator } from "utils/index";
+
 type StudentCreateProps = {};
 
 type TStudent = {
@@ -17,6 +21,8 @@ type TStudent = {
   email: string;
   group?: string;
   about?: string;
+  birthDate?: string;
+  socialNetWork?: string;
 };
 
 const StudentCreate: FC<StudentCreateProps> = () => {
@@ -36,8 +42,17 @@ const StudentCreate: FC<StudentCreateProps> = () => {
     resolver: yupResolver(StudentCreateSchema),
   });
 
+  const setStudent = async (uid: string, data: TStudent) => {
+    return set(ref(database, `user/${uid}/students/${idGenerator(18)}`), data)
+      .then((user) => user)
+      .catch((err) => {
+        throw new Error(err);
+      });
+  };
+
   const onSubmit = (data: TStudent) => {
     console.log("data", data);
+    setStudent("f76fd8s7f78sdf", data);
   };
 
   const handleAddField = () => {
@@ -123,9 +138,23 @@ const StudentCreate: FC<StudentCreateProps> = () => {
                 {...register("group")}
               />
             </Styled.SelectContainer>
+            <Styled.SelectContainer>
+              <SimpleInput
+                label={"BirthDate"}
+                placeholder="Choose a birthDate"
+                error={errors.birthDate}
+                {...register("birthDate")}
+              />
+              <SimpleInput
+                label={"Social NetWork"}
+                placeholder="Choose a Social NetWork"
+                error={errors.socialNetWork}
+                {...register("socialNetWork")}
+              />
+            </Styled.SelectContainer>
             <TextAreaInput
               label="About"
-              height="25vh"
+              height="15vh"
               error={errors.about}
               {...register("about")}
             />

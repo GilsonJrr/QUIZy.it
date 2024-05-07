@@ -76,7 +76,13 @@ const Students: FC<StudentsProps> = () => {
           <Tabs tabs={tabs} activeTab={(tab) => setTab(tab)} />
           <Styled.MapRow>
             {searchedStudents.map((item) => {
-              return <RenderStudentCard item={item} width="49%" />;
+              return (
+                <RenderStudentCard
+                  item={item}
+                  width="49%"
+                  onClick={() => navigate("/students/student-profile")}
+                />
+              );
             })}
           </Styled.MapRow>
         </Styled.CardInner>

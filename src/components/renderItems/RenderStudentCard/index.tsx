@@ -6,11 +6,16 @@ import EmptyImage from "assets/images/Empty_quiz_image_state.png";
 type RenderStudentCardProps = {
   item: TStudentList;
   width?: string;
+  onClick?: () => void;
 };
 
-const RenderStudentCard: FC<RenderStudentCardProps> = ({ item, width }) => {
+const RenderStudentCard: FC<RenderStudentCardProps> = ({
+  item,
+  width,
+  onClick,
+}) => {
   return (
-    <Styled.Container width={width}>
+    <Styled.Container width={width} onClick={onClick}>
       <Styled.PhotoContainer src={item.Photo ? item.Photo : EmptyImage} />
       <Styled.InfoContainer>
         <Styled.Name>{item.Name}</Styled.Name>

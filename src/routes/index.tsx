@@ -18,6 +18,7 @@ import NotFound from "views/NotFound";
 import QuizCreate from "views/dashboard/Quizzes/QuizzesPages/QuizCreate";
 import StudentCreate from "views/dashboard/Students/StudentPages/StudentCreate";
 import GroupCreate from "views/dashboard/Students/StudentPages/GroupCreate";
+import StudentProfile from "views/dashboard/Students/StudentPages/StudentProfile";
 
 const Routers = () => {
   return (
@@ -31,6 +32,10 @@ const Routers = () => {
             {userType !== "student" && (
               <>
                 <Route path="/students" element={<Students />} />
+                <Route
+                  path="/students/student-profile"
+                  element={<StudentProfile />}
+                />
                 <Route
                   path="/students/student-create"
                   element={<StudentCreate />}

@@ -12,3 +12,14 @@ export const randomize = (answer: Answer[]) => {
 
   return sequence;
 };
+
+export const idGenerator = (size: number) => {
+  var characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var id = "";
+  for (var i = 0; i < size; i++) {
+    var idex = Math.floor(Math.random() * characters.length);
+    id += characters.charAt(idex);
+  }
+  return id;
+};

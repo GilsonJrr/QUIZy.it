@@ -11,6 +11,8 @@ export const StudentCreateSchema = Yup.object().shape({
   email: Yup.string().required("You must add a image"),
   group: Yup.string(),
   about: Yup.string(),
+  birthDate: Yup.string(),
+  socialNetWork: Yup.string(),
 });
 
 export const MultipleChosesSchema = Yup.object().shape({
