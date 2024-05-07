@@ -785,6 +785,9 @@ export const TutorResults: TTutorResult[] = [
   { name: "Isabel", quiz: "Music", score: "6/10" },
 ];
 
-//TODO: usar isso so pra mostar os tipos de usuario
+//TODO: Atualizar no firebase isso
 type TUserType = "tutor" | "student";
+
 export const userType: TUserType = "tutor";
+
+export const userID = "f76fd8s7f78sdf";

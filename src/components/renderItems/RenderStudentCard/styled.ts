@@ -33,7 +33,7 @@ export const Name = styled.h1`
 export const InnerInfoContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   margin: 10px 0;
 `;
 
