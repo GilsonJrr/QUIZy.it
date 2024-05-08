@@ -6,7 +6,7 @@ type Props = { width?: string };
 export const Container = styled.div<Props>`
   display: flex;
   border: 1px solid rgba(0, 0, 0, 0.5);
-  border-radius: 55px 20px 20px 55px;
+  border-radius: 100px 20px 20px 100px;
   position: relative;
   width: ${({ width }) => width || "100%"};
 `;

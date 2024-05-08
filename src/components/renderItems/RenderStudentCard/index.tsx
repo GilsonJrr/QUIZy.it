@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import * as Styled from "./styled";
-import EmptyImage from "assets/images/Empty_quiz_image_state.png";
 import { StudentTypeValues } from "Store/students/types";
+import Avatar from "components/Avatar";
 
 type RenderStudentCardProps = {
   item: StudentTypeValues;
@@ -16,7 +16,7 @@ const RenderStudentCard: FC<RenderStudentCardProps> = ({
 }) => {
   return (
     <Styled.Container width={width} onClick={onClick}>
-      <Styled.PhotoContainer src={item.photo ? item.photo : EmptyImage} />
+      <Avatar size="big" name={item.name} photo={item.photo} />
       <Styled.InfoContainer>
         <Styled.Name>{item.name}</Styled.Name>
         <Styled.InnerInfoContainer>
