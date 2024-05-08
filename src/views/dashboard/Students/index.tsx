@@ -62,9 +62,12 @@ const Students: FC<StudentsProps> = () => {
     }
   };
 
-  const searchedStudents = filterStudents()?.filter((student) =>
-    student.name.toUpperCase().includes(search.toUpperCase())
-  );
+  const searchedStudents =
+    students && students?.length > 0
+      ? filterStudents()?.filter((student) =>
+          student.name.toUpperCase().includes(search.toUpperCase())
+        )
+      : [];
 
   useEffect(() => {
     if (students === undefined) {

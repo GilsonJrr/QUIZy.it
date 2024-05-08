@@ -13,11 +13,13 @@ import { userID } from "assets/consts";
 import { requestGroupList, setGroup } from "Store/group/actions";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
+import Avatar from "components/Avatar";
 type StudentCreateProps = {};
 
 type TStudent = {
   title: string;
   about?: string;
+  image?: string;
 };
 
 const GroupCreate: FC<StudentCreateProps> = () => {
@@ -68,9 +70,15 @@ const GroupCreate: FC<StudentCreateProps> = () => {
               error={errors.title}
               {...register("title")}
             />
+            <SimpleInput
+              label={"Group image"}
+              placeholder="Enter the group image"
+              error={errors.image}
+              {...register("image")}
+            />
             <TextAreaInput
               label="About"
-              height="53vh"
+              height="45vh"
               error={errors.about}
               {...register("about")}
             />
@@ -80,7 +88,16 @@ const GroupCreate: FC<StudentCreateProps> = () => {
           {groups &&
             groups.length > 0 &&
             groups?.map((group) => {
-              return <div>{group.title}</div>;
+              return (
+                <div>
+                  <Avatar
+                    size="medium"
+                    name={group.title}
+                    photo={group.image}
+                  />
+                  {group.title}
+                </div>
+              );
             })}
         </Card>
         <Styled.ButtonContainer>

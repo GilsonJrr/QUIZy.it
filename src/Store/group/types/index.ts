@@ -24,6 +24,8 @@ export type GroupTypeValues = {
   uid?: string;
   title: string;
   about?: string;
+  group?: string;
+  image?: string;
 };
 
 export type GroupState = {

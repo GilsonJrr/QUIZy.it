@@ -15,6 +15,7 @@ import { setStudent } from "Store/students/actions";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { requestGroupList } from "Store/group/actions";
+import { useNavigate } from "react-router-dom";
 
 type StudentCreateProps = {};
 
@@ -31,6 +32,8 @@ type TStudent = {
 
 const StudentCreate: FC<StudentCreateProps> = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { groups } = useSelector((state: RootState) => state.groupReducer);
   const userID = "f76fd8s7f78sdf";
 
@@ -51,15 +54,17 @@ const StudentCreate: FC<StudentCreateProps> = () => {
   });
 
   const onSubmit = (data: TStudent) => {
-    console.log("data", data);
+    const { group, ...rest } = data;
 
     const preparedData = {
       id: idGenerator(18),
       uid: userID,
-      ...data,
+      group: data.group === "groupLess" ? "" : data.group,
+      ...rest,
     };
 
     dispatch(setStudent(preparedData));
+    navigate(-1);
   };
 
   const handleAddField = () => {
@@ -105,8 +110,6 @@ const StudentCreate: FC<StudentCreateProps> = () => {
         return { label: group.title, value: group.title };
       })
     : [];
-
-  console.log("groups", groups);
 
   useEffect(() => {
     if (groups === undefined) {

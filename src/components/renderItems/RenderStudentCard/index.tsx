@@ -20,7 +20,7 @@ const RenderStudentCard: FC<RenderStudentCardProps> = ({
       <Styled.InfoContainer>
         <Styled.Name>{item.name}</Styled.Name>
         <Styled.InnerInfoContainer>
-          <Styled.Info>Group: {item.group} </Styled.Info>
+          {item.group && <Styled.Info>Group: {item.group} </Styled.Info>}
           {item.average && (
             <Styled.Info>
               | Average:
@@ -28,7 +28,7 @@ const RenderStudentCard: FC<RenderStudentCardProps> = ({
             </Styled.Info>
           )}
         </Styled.InnerInfoContainer>
-        <Styled.Contact>Phone: {item.phone}</Styled.Contact>
+        {item.phone && <Styled.Contact>Phone: {item.phone}</Styled.Contact>}
         <Styled.Contact>Email: {item.email}</Styled.Contact>
       </Styled.InfoContainer>
       <Styled.ButtonContainer>
