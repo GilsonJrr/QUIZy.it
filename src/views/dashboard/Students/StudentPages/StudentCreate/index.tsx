@@ -17,12 +17,13 @@ type StudentCreateProps = {};
 
 type TStudent = {
   name: string;
-  phone: string;
+  phone?: string;
   email: string;
   group?: string;
   about?: string;
   birthDate?: string;
   socialNetWork?: string;
+  address?: string;
 };
 
 const StudentCreate: FC<StudentCreateProps> = () => {
@@ -128,10 +129,10 @@ const StudentCreate: FC<StudentCreateProps> = () => {
             </Styled.SelectContainer>
             <Styled.SelectContainer>
               <SimpleInput
-                label={"Email"}
-                placeholder="Choose a email"
-                error={errors.email}
-                {...register("email")}
+                label={"Address"}
+                placeholder=""
+                error={errors.address}
+                {...register("address")}
               />
               <SelectInput
                 label={"Group"}
@@ -143,13 +144,13 @@ const StudentCreate: FC<StudentCreateProps> = () => {
             <Styled.SelectContainer>
               <SimpleInput
                 label={"BirthDate"}
-                placeholder="Choose a birthDate"
+                placeholder="DD/MM/YYYY"
                 error={errors.birthDate}
                 {...register("birthDate")}
               />
               <SimpleInput
-                label={"Social NetWork"}
-                placeholder="Choose a Social NetWork"
+                label={"Social Net Work"}
+                placeholder="@JonhDoe"
                 error={errors.socialNetWork}
                 {...register("socialNetWork")}
               />

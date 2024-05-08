@@ -19,6 +19,7 @@ import QuizCreate from "views/dashboard/Quizzes/QuizzesPages/QuizCreate";
 import StudentCreate from "views/dashboard/Students/StudentPages/StudentCreate";
 import GroupCreate from "views/dashboard/Students/StudentPages/GroupCreate";
 import StudentProfile from "views/dashboard/Students/StudentPages/StudentProfile";
+import LoadingImage from "components/LoadingImage";
 
 const Routers = () => {
   return (
@@ -28,6 +29,7 @@ const Routers = () => {
           <Route element={<Dashboard />}>
             <Route path="/" element={<QuizDashboard />} />
             <Route path="/quizzes" element={<Quizzes />} />
+            <Route path="/teste" element={<LoadingImage />} />
             <Route path="/quizzes/quiz-create" element={<QuizCreate />} />
             {userType !== "student" && (
               <>

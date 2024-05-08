@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { requestStudentList } from "Store/students/actions";
 import { RootState } from "Store/root-reducer";
+import LoadingImage from "components/LoadingImage";
 
 type StudentsProps = {};
 
@@ -69,9 +70,9 @@ const Students: FC<StudentsProps> = () => {
     }
   }, [dispatch, students]);
 
-  if (isLoading) {
-    return <>Loading...</>;
-  }
+  // if (isLoading) {
+  //   return <LoadingImage />;
+  // }
 
   console.log("students", students);
 
@@ -90,22 +91,26 @@ const Students: FC<StudentsProps> = () => {
         searchValue={search}
         setSearch={(e) => setSearch(e)}
       >
-        <Styled.CardInner>
-          <Tabs tabs={tabs} activeTab={(tab) => setTab(tab)} />
-          <Styled.MapRow>
-            {searchedStudents?.map((item) => {
-              return (
-                <RenderStudentCard
-                  item={item}
-                  width="49%"
-                  onClick={() =>
-                    navigate(`/students/student-profile?studentId=${item.id}`)
-                  }
-                />
-              );
-            })}
-          </Styled.MapRow>
-        </Styled.CardInner>
+        {isLoading ? (
+          <LoadingImage />
+        ) : (
+          <Styled.CardInner>
+            <Tabs tabs={tabs} activeTab={(tab) => setTab(tab)} />
+            <Styled.MapRow>
+              {searchedStudents?.map((item) => {
+                return (
+                  <RenderStudentCard
+                    item={item}
+                    width="49%"
+                    onClick={() =>
+                      navigate(`/students/student-profile?studentId=${item.id}`)
+                    }
+                  />
+                );
+              })}
+            </Styled.MapRow>
+          </Styled.CardInner>
+        )}
       </Card>
     </Styled.Container>
   );
