@@ -32,7 +32,12 @@ const Login: FC<LoginProps> = () => {
   const onSubmit = (data: TLogin) => {
     console.log("Data", data);
     dispatch(
-      // requestSignUpEmailPassword({ email: data.login, password: data.password })
+      // requestSignUpEmailPassword({
+      //   email: data.login,
+      //   password: data.password,
+      //   userType: "tutor",
+      //   name: "Gilson Cosme",
+      // })
       requestSignInEmailPassword({ email: data.login, password: data.password })
     );
   };

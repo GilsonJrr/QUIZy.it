@@ -784,8 +784,3 @@ export const TutorResults: TTutorResult[] = [
   { name: "Gabriel", quiz: "Art", score: "9/10" },
   { name: "Isabel", quiz: "Music", score: "6/10" },
 ];
-
-//TODO: Atualizar no firebase isso
-type TUserType = "tutor" | "student";
-
-export const userType: TUserType = "tutor";

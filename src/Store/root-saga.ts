@@ -4,7 +4,14 @@ import authSagas from "./auth/sagas";
 import exampleSagas from "./example/sagas";
 import studentSagas from "./students/sagas";
 import groupsSagas from "./group/sagas";
+import userSagas from "./user/sagas";
 
 export function* rootSagas() {
-  yield all([...authSagas, ...exampleSagas, ...studentSagas, ...groupsSagas]);
+  yield all([
+    ...authSagas,
+    ...exampleSagas,
+    ...studentSagas,
+    ...groupsSagas,
+    ...userSagas,
+  ]);
 }

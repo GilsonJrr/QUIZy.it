@@ -44,6 +44,8 @@ export interface AuthSignUpInput {
   email: string;
   password: string;
   userType?: "tutor" | "student";
+  name?: string;
+  tutorUID?: string;
 }
 
 //Agenda

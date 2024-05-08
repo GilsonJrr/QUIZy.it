@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useState } from "react";
+import React, { FC, ReactNode, useEffect, useState } from "react";
 import * as Styled from "./styled";
 import Sidebar from "components/Sidebar";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -7,7 +7,9 @@ import { RouterTitle } from "types";
 import Logo from "assets/images/Logo.png";
 
 import { GiHamburgerMenu } from "react-icons/gi";
-import { userType } from "assets/consts";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "Store/root-reducer";
+import { requestUser } from "Store/user/actions";
 
 type dashboardProps = {
   children?: ReactNode | ReactNode[];
@@ -16,11 +18,13 @@ type dashboardProps = {
 const Dashboard: FC<dashboardProps> = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: RootState) => state.userReducer);
 
   const [openMessages, setOpenMessages] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
 
-  const userName = "UserName";
+  // const userName = "UserName";
 
   const currentUrl = location.pathname;
 
@@ -35,6 +39,12 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
   };
 
   const messages: any[] = [];
+
+  const userId = localStorage.getItem("userId") || "";
+
+  useEffect(() => {
+    dispatch(requestUser({ uid: userId }));
+  }, [dispatch, userId]);
 
   return (
     <Styled.Container>
@@ -74,8 +84,8 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
         </Styled.HeaderMessage>
         <Styled.HeaderProfile>
           <Styled.ProfileTitles>
-            <Styled.ProfileName>{userName || ""}</Styled.ProfileName>
-            <Styled.UserType>{userType || ""}</Styled.UserType>
+            <Styled.ProfileName>{user?.info?.name || ""}</Styled.ProfileName>
+            <Styled.UserType>{user?.info?.userType || ""}</Styled.UserType>
           </Styled.ProfileTitles>
           {/* TODO:  "  Implementar profile aqui  "  */}
           {/* <Styled.ChevronLeft size={20} /> */}

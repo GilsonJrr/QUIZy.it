@@ -52,13 +52,14 @@ export function* setStudentSaga(props: StudentAction<StudentTypeValues>): any {
 
   try {
     if (uid && payload) {
-      yield call(setStudent, uid, payload);
-      const studentResponses = yield call(getStudentList, uid);
-      yield put(studentList(studentResponses));
       yield put(
+        //TODO: aqui vai ser criado o novo usuario
         requestSignUpEmailPassword({
           email: payload.email,
           password: "ABC1234D",
+          name: payload.name,
+          userType: "student",
+          tutorUID: payload.uid,
         })
       );
     }

@@ -22,11 +22,12 @@ import {
   AuthSignInInput,
   AuthSignUpInput,
   AuthTypes,
-  ErrorsArray,
   // UserRequest,
 } from "../types";
 
 import * as authSelectors from "../selectors";
+import { UseData } from "Store/user/types";
+import { setStudentToUser, setStudentUser, setUser } from "Store/user/actions";
 // import { setUser } from "../../user/actions";
 // import { UseData } from "../../user/types";
 
@@ -70,9 +71,7 @@ export function* requestSignOutSaga(): any {
 export function* requestSignUpEmailPasswordSaga(
   props: AuthAction<AuthSignUpInput>
 ): any {
-  const email = props.payload.email;
-  const password = props.payload.password;
-  const userType = props.payload.userType;
+  const { email, password, userType, name, tutorUID } = props.payload;
 
   try {
     if (email && password) {
@@ -83,19 +82,21 @@ export function* requestSignUpEmailPasswordSaga(
       );
       console.log("userCredentials", userCredentials);
       yield put(signUpSuccess(userCredentials));
-      //   const newUser: UseData = {
-      //     name: "",
-      //     age: "",
-      //     phone: "",
-      //     gender: "",
-      //     observation: "",
-      //     firstLogIn: true,
-      //     email: email,
-      //     uid: userCredentials.user.uid,
-      //     userType: "admin",
-      //     adminUid: "",
-      //   };
-      //   yield put(setUser(newUser));
+      const newUser: UseData = {
+        name: name || "",
+        age: "",
+        phone: "",
+        email: email,
+        uid: userCredentials.user.uid,
+        userType: userType || "",
+        tutorID: tutorUID || "",
+      };
+      if (userType === "tutor") {
+        yield put(setUser(newUser));
+      } else {
+        yield put(setStudentToUser(newUser));
+        yield put(setStudentUser(newUser));
+      }
     }
   } catch (err: any) {
     yield put(authError("cannot sign Up"));

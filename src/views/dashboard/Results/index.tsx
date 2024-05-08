@@ -4,11 +4,16 @@ import Card from "components/Card";
 import Table from "components/Table";
 import { THeader, TResult, TTutorResult } from "types/index";
 import RenderTable from "components/renderItems/RenderTable";
-import { TutorResults, userType } from "assets/consts";
+import { TutorResults } from "assets/consts";
+import { useSelector } from "react-redux";
+import { RootState } from "Store/root-reducer";
 
 type ResultsProps = {};
 
 const Results: FC<ResultsProps> = () => {
+  const { user } = useSelector((state: RootState) => state.userReducer);
+  const userType = user?.info?.userType;
+
   const TableHeaderTitles: THeader[] = [
     { label: "Title", width: 50 },
     { label: "Score", width: 20 },

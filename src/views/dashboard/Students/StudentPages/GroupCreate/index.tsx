@@ -62,7 +62,6 @@ const GroupCreate: FC<StudentCreateProps> = () => {
   return (
     <Styled.Container>
       <BreadCrumbs crumbs={crumbs} />
-      aqui: {userID}
       <Styled.ContainerInner>
         <Card title={"New Group"} isEmpty={false} gridName="newQuiz">
           <Styled.Form id="newStudentForm" onSubmit={handleSubmit(onSubmit)}>

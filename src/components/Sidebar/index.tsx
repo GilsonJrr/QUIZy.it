@@ -11,10 +11,9 @@ import { FaPeopleGroup } from "react-icons/fa6";
 import { IoMdExit } from "react-icons/io";
 import { useLocation, useNavigate } from "react-router-dom";
 import useDeviceType from "hooks/useDeviceType";
-import { userType } from "assets/consts";
-import { useDispatch } from "react-redux";
-import { signOut } from "Store/auth/actions";
+import { useSelector } from "react-redux";
 import { auth } from "lib/firebase";
+import { RootState } from "Store/root-reducer";
 
 type SidebarProps = {
   logo?: string;
@@ -23,7 +22,8 @@ type SidebarProps = {
 };
 
 const Sidebar: FC<SidebarProps> = ({ logo, display, onClose }) => {
-  const dispatch = useDispatch();
+  const { user } = useSelector((state: RootState) => state.userReducer);
+  const userType = user?.info?.userType;
   const location = useLocation();
   const navigate = useNavigate();
   const isMobile = useDeviceType();

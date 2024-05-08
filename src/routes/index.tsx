@@ -13,7 +13,6 @@ import Quizzes from "views/dashboard/Quizzes";
 import QuizResult from "views/quizPages/QuizResult";
 import Students from "views/dashboard/Students";
 import { ModalProvider } from "components/Modal/modalContext";
-import { userType } from "assets/consts";
 import NotFound from "views/NotFound";
 import QuizCreate from "views/dashboard/Quizzes/QuizzesPages/QuizCreate";
 import StudentCreate from "views/dashboard/Students/StudentPages/StudentCreate";
@@ -24,10 +23,13 @@ import AuthPages from "layout/AuthPages";
 import Login from "views/auth/Login";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
-import firebase, { auth } from "lib/firebase";
+import { auth } from "lib/firebase";
 
 const Routers = () => {
   const { isLoading } = useSelector((state: RootState) => state.authReducer);
+  const { user } = useSelector((state: RootState) => state.userReducer);
+  const userType = user?.info?.userType;
+
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | undefined>();
   const userID = localStorage.getItem("userId");
 

@@ -32,7 +32,7 @@ export const getStudent = async (uid: string, studentId: string) => {
 
 export const setStudent = async (_uid: string, data: StudentTypeValues) => {
   const { uid, ...rest } = data;
-  return set(ref(database, `user/${_uid}/students/${data.id}`), rest)
+  return set(ref(database, `students/${data.id}/info`), rest)
     .then((students) => students)
     .catch((err) => {
       throw new Error(err);

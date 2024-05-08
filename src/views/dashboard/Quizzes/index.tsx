@@ -1,12 +1,7 @@
 import React, { FC, useState } from "react";
 import * as Styled from "./styled";
 import Card from "components/Card";
-import {
-  easyQuizzes,
-  hardQuizzes,
-  mediumQuizzes,
-  userType,
-} from "assets/consts";
+import { easyQuizzes, hardQuizzes, mediumQuizzes } from "assets/consts";
 import RenderQuizCard from "components/renderItems/RenderQuizCard";
 
 import { GiCardRandom } from "react-icons/gi";
@@ -18,10 +13,14 @@ import { TCategories, TOptions } from "types/index";
 import OptionsButton from "components/OptionsButton";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { MdPlaylistAddCheck } from "react-icons/md";
+import { useSelector } from "react-redux";
+import { RootState } from "Store/root-reducer";
 
 type QuizzesProps = {};
 
 const Quizzes: FC<QuizzesProps> = () => {
+  const { user } = useSelector((state: RootState) => state.userReducer);
+  const userType = user?.info?.userType;
   const navigate = useNavigate();
   const lastQuiz = localStorage.getItem("lastQuiz") || "";
 
