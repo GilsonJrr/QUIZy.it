@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { requestStudentList } from "Store/students/actions";
 import { RootState } from "Store/root-reducer";
 import LoadingImage from "components/LoadingImage";
+import { requestGroupList } from "Store/group/actions";
 
 type StudentsProps = {};
 
@@ -19,6 +20,8 @@ const Students: FC<StudentsProps> = () => {
   const { students, isLoading } = useSelector(
     (state: RootState) => state.studentReducer
   );
+  const { groups } = useSelector((state: RootState) => state.groupReducer);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userID = "f76fd8s7f78sdf";
@@ -44,12 +47,11 @@ const Students: FC<StudentsProps> = () => {
   ];
   const [tab, setTab] = useState("All");
 
-  const tabs = [
-    { label: "All" },
-    { label: "Level 01" },
-    { label: "Level 02" },
-    { label: "Level 03" },
-  ];
+  const tabs = groups
+    ? groups.map((group) => {
+        return { label: group.title };
+      })
+    : [];
 
   const filterStudents = () => {
     switch (true) {
@@ -70,11 +72,11 @@ const Students: FC<StudentsProps> = () => {
     }
   }, [dispatch, students]);
 
-  // if (isLoading) {
-  //   return <LoadingImage />;
-  // }
-
-  console.log("students", students);
+  useEffect(() => {
+    if (groups === undefined) {
+      dispatch(requestGroupList({ uid: userID }));
+    }
+  }, [dispatch, groups]);
 
   return (
     <Styled.Container>
@@ -95,7 +97,10 @@ const Students: FC<StudentsProps> = () => {
           <LoadingImage />
         ) : (
           <Styled.CardInner>
-            <Tabs tabs={tabs} activeTab={(tab) => setTab(tab)} />
+            <Tabs
+              tabs={[{ label: "All" }, ...tabs]}
+              activeTab={(tab) => setTab(tab)}
+            />
             <Styled.MapRow>
               {searchedStudents?.map((item) => {
                 return (

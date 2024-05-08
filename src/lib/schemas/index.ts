@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
 export const GroupCreateSchema = Yup.object().shape({
-  groupTitle: Yup.string().required("You must add a title").min(3),
+  title: Yup.string().required("You must add a title").min(3),
   about: Yup.string(),
 });
 

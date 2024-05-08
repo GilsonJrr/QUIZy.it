@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Styled from "./styled";
@@ -12,6 +12,9 @@ import { StudentCreateSchema } from "lib/schemas";
 import { idGenerator } from "utils/index";
 import { useDispatch } from "react-redux";
 import { setStudent } from "Store/students/actions";
+import { useSelector } from "react-redux";
+import { RootState } from "Store/root-reducer";
+import { requestGroupList } from "Store/group/actions";
 
 type StudentCreateProps = {};
 
@@ -28,6 +31,7 @@ type TStudent = {
 
 const StudentCreate: FC<StudentCreateProps> = () => {
   const dispatch = useDispatch();
+  const { groups } = useSelector((state: RootState) => state.groupReducer);
   const userID = "f76fd8s7f78sdf";
 
   const [extraFields, setExtraFields] = useState<any[]>([]);
@@ -96,10 +100,19 @@ const StudentCreate: FC<StudentCreateProps> = () => {
     { label: "Add Students", path: "/students/student-create" },
   ];
 
-  const options: TOption[] = [
-    { value: "Multiple", label: "Multiple" },
-    { value: "TrueOrFalse", label: "True Or False" },
-  ];
+  const options: TOption[] = groups
+    ? groups?.map((group) => {
+        return { label: group.title, value: group.title };
+      })
+    : [];
+
+  console.log("groups", groups);
+
+  useEffect(() => {
+    if (groups === undefined) {
+      dispatch(requestGroupList({ uid: userID }));
+    }
+  }, [dispatch, groups]);
 
   return (
     <Styled.Container>
@@ -134,12 +147,17 @@ const StudentCreate: FC<StudentCreateProps> = () => {
                 error={errors.address}
                 {...register("address")}
               />
-              <SelectInput
-                label={"Group"}
-                options={options}
-                error={errors.group}
-                {...register("group")}
-              />
+              {groups?.length !== 0 && (
+                <SelectInput
+                  label={"Group"}
+                  options={[
+                    { label: "Select a Group", value: "groupLess" },
+                    ...options,
+                  ]}
+                  error={errors.group}
+                  {...register("group")}
+                />
+              )}
             </Styled.SelectContainer>
             <Styled.SelectContainer>
               <SimpleInput

@@ -23,8 +23,8 @@ export function* getStudentListSaga(props: StudentAction<StudentRequest>): any {
 
   try {
     if (uid) {
-      const userResponses = yield call(getStudentList, uid, limit);
-      yield put(studentList(userResponses));
+      const studentResponses = yield call(getStudentList, uid, limit);
+      yield put(studentList(studentResponses));
     }
   } catch (err: any) {
     yield put(err);
@@ -37,8 +37,8 @@ export function* getStudentSaga(props: StudentAction<StudentRequest>): any {
 
   try {
     if (uid) {
-      const userResponses = yield call(getStudent, uid, studentId);
-      yield put(student(userResponses));
+      const studentResponses = yield call(getStudent, uid, studentId);
+      yield put(student(studentResponses));
     }
   } catch (err: any) {
     yield put(err);
@@ -52,8 +52,8 @@ export function* setStudentSaga(props: StudentAction<StudentTypeValues>): any {
   try {
     if (uid && payload) {
       yield call(setStudent, uid, payload);
-      const userResponses = yield call(getStudentList, uid);
-      yield put(studentList(userResponses));
+      const studentResponses = yield call(getStudentList, uid);
+      yield put(studentList(studentResponses));
     }
   } catch (err: any) {
     yield put(err);
@@ -67,8 +67,8 @@ export function* removeStudentSaga(props: StudentAction<StudentRequest>): any {
   try {
     if (studentId && uid) {
       yield call(removeStudent, uid, studentId);
-      const userResponses = yield call(getStudentList, uid);
-      yield put(studentList(userResponses));
+      const studentResponses = yield call(getStudentList, uid);
+      yield put(studentList(studentResponses));
     }
   } catch (err: any) {
     yield put(err);

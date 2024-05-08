@@ -5,7 +5,6 @@ import {
   StudentTypeValues,
 } from "../types";
 
-//example function without payload
 export function studentCleanUp() {
   return {
     type: StudentTypes.STUDENT_CLEAN_UP,
