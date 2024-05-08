@@ -1,5 +1,6 @@
 import { Reducer } from "redux";
 import { AuthState, AuthTypes } from "../types";
+import { PersistPartial } from "redux-persist/es/persistReducer";
 
 // Define action interfaces
 interface SignInAction {
@@ -55,6 +56,7 @@ type AuthAction =
 
 const initialState: AuthState = {
   isLogged: false,
+  isLogOuted: false,
   isLoading: false,
   email: "",
   currentUser: undefined,
@@ -64,7 +66,7 @@ const initialState: AuthState = {
   firstLogIn: false,
 };
 
-const authReducer: Reducer<AuthState, AuthAction> = (
+const authReducer: Reducer<AuthState, AuthAction & PersistPartial> = (
   state = initialState,
   action
 ) => {
@@ -74,6 +76,7 @@ const authReducer: Reducer<AuthState, AuthAction> = (
         ...state,
         isLogged: true,
         isLoading: false,
+        isLogOuted: false,
         error: undefined,
         currentUser: action.payload.currentUser,
         email: action.payload.currentUser.email,
@@ -94,6 +97,7 @@ const authReducer: Reducer<AuthState, AuthAction> = (
         ...state,
         isLogged: false,
         isLoading: false,
+        isLogOuted: true,
         currentUser: undefined,
         error: undefined,
         email: "",

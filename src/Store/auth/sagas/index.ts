@@ -36,6 +36,7 @@ export function* requestSignInEmailPasswordSaga(
   const email = props.payload.email;
   const password = props.payload.password;
 
+  // console.log("datas", email, password);
   try {
     if (email && password) {
       const userCredentials = yield call(
@@ -43,8 +44,9 @@ export function* requestSignInEmailPasswordSaga(
         email,
         password
       );
-
-      yield put(signIn(userCredentials._user));
+      // console.log("datas", userCredentials);
+      localStorage.setItem("userId", userCredentials.uid);
+      yield put(signIn(userCredentials.uid));
     }
   } catch (err: any) {
     yield put(authError("cannot sign In"));
@@ -70,6 +72,7 @@ export function* requestSignUpEmailPasswordSaga(
 ): any {
   const email = props.payload.email;
   const password = props.payload.password;
+  const userType = props.payload.userType;
 
   try {
     if (email && password) {
@@ -113,6 +116,7 @@ export function* requestPasswordResetSaga(
   }
 }
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default [
   takeLatest(
     AuthTypes.REQUEST_SIGNIN_EMAIL_PASSWORD,

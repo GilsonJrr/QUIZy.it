@@ -20,6 +20,7 @@ export const Input = styled.input<Props>`
   font-size: 1.4rem;
   padding: 10px;
   border: 1px solid rgba(0, 0, 0, 0.5);
+  outline: none;
 `;
 
 export const Error = styled.p`

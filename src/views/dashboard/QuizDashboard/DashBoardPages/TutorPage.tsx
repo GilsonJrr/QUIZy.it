@@ -6,7 +6,6 @@ import {
   easyQuizzes,
   hardQuizzes,
   mediumQuizzes,
-  userID,
 } from "assets/consts";
 import Table from "components/Table";
 import Card from "components/Card";
@@ -24,6 +23,8 @@ export const TutorPage = () => {
   );
 
   const dispatch = useDispatch();
+
+  const userID = localStorage.getItem("userID") || "";
 
   const [search, setSearch] = useState<string>();
   const [searchStudents, setSearchStudents] = useState<string>();

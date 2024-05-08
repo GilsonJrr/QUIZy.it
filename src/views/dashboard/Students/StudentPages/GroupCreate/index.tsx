@@ -9,7 +9,6 @@ import TextAreaInput from "components/inputs/TextAreaInput";
 import { GroupCreateSchema } from "lib/schemas";
 import { useDispatch } from "react-redux";
 import { idGenerator } from "utils/index";
-import { userID } from "assets/consts";
 import { requestGroupList, setGroup } from "Store/group/actions";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
@@ -25,6 +24,7 @@ type TStudent = {
 const GroupCreate: FC<StudentCreateProps> = () => {
   const dispatch = useDispatch();
   const { groups } = useSelector((state: RootState) => state.groupReducer);
+  const userID = localStorage.getItem("userId");
 
   const {
     register,
@@ -38,7 +38,8 @@ const GroupCreate: FC<StudentCreateProps> = () => {
     console.log("data", data);
     const preparedData = {
       id: idGenerator(18),
-      uid: userID,
+      uid: userID || "",
+      userType: "student",
       ...data,
     };
 
@@ -46,10 +47,10 @@ const GroupCreate: FC<StudentCreateProps> = () => {
   };
 
   useEffect(() => {
-    if (groups === undefined) {
+    if (groups === undefined && userID) {
       dispatch(requestGroupList({ uid: userID }));
     }
-  }, [dispatch, groups]);
+  }, [dispatch, groups, userID]);
 
   console.log("groups grr", groups);
 
@@ -61,6 +62,7 @@ const GroupCreate: FC<StudentCreateProps> = () => {
   return (
     <Styled.Container>
       <BreadCrumbs crumbs={crumbs} />
+      aqui: {userID}
       <Styled.ContainerInner>
         <Card title={"New Group"} isEmpty={false} gridName="newQuiz">
           <Styled.Form id="newStudentForm" onSubmit={handleSubmit(onSubmit)}>

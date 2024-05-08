@@ -35,7 +35,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
   const navigate = useNavigate();
 
   const { groups } = useSelector((state: RootState) => state.groupReducer);
-  const userID = "f76fd8s7f78sdf";
+  const userID = localStorage.getItem("userId") || "";
 
   const [extraFields, setExtraFields] = useState<any[]>([]);
   const [extraField, setExtraField] = useState<string>();
@@ -113,9 +113,9 @@ const StudentCreate: FC<StudentCreateProps> = () => {
 
   useEffect(() => {
     if (groups === undefined) {
-      dispatch(requestGroupList({ uid: userID }));
+      dispatch(requestGroupList({ uid: userID || "" }));
     }
-  }, [dispatch, groups]);
+  }, [dispatch, groups, userID]);
 
   return (
     <Styled.Container>

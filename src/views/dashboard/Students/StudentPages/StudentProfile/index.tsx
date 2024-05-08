@@ -9,7 +9,6 @@ import {
   requestStudent,
   studentCleanUp,
 } from "Store/students/actions";
-import { userID } from "assets/consts";
 import { useLocation } from "react-router-dom";
 
 type StudentProfileProps = {};
@@ -20,6 +19,7 @@ const StudentProfile: FC<StudentProfileProps> = () => {
   );
   const dispatch = useDispatch();
   const location = useLocation();
+  const userID = localStorage.getItem("userId");
 
   const studentId = new URLSearchParams(location.search).get("studentId");
 
@@ -30,9 +30,11 @@ const StudentProfile: FC<StudentProfileProps> = () => {
 
   useEffect(() => {
     if (student === undefined && studentId) {
-      dispatch(requestStudent({ uid: userID, studentId: studentId || "" }));
+      dispatch(
+        requestStudent({ uid: userID || "", studentId: studentId || "" })
+      );
     }
-  }, [dispatch, student, studentId]);
+  }, [dispatch, student, studentId, userID]);
 
   useEffect(() => {
     return () => {
@@ -73,7 +75,7 @@ const StudentProfile: FC<StudentProfileProps> = () => {
           <button
             onClick={() => {
               dispatch(
-                removeStudent({ uid: userID, studentId: studentId || "" })
+                removeStudent({ uid: userID || "", studentId: studentId || "" })
               );
             }}
           >

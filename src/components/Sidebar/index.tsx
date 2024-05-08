@@ -12,6 +12,9 @@ import { IoMdExit } from "react-icons/io";
 import { useLocation, useNavigate } from "react-router-dom";
 import useDeviceType from "hooks/useDeviceType";
 import { userType } from "assets/consts";
+import { useDispatch } from "react-redux";
+import { signOut } from "Store/auth/actions";
+import { auth } from "lib/firebase";
 
 type SidebarProps = {
   logo?: string;
@@ -20,6 +23,7 @@ type SidebarProps = {
 };
 
 const Sidebar: FC<SidebarProps> = ({ logo, display, onClose }) => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const isMobile = useDeviceType();
@@ -85,7 +89,16 @@ const Sidebar: FC<SidebarProps> = ({ logo, display, onClose }) => {
           )}
         </Styled.MenuContainer>
         <Styled.ExitContainer>
-          <IoMdExit size={30} />
+          <IoMdExit
+            size={30}
+            // onClick={() => {
+            //   dispatch(signOut());
+            //   navigate("/login");
+            // }}
+            onClick={() => {
+              auth.signOut();
+            }}
+          />
           <Styled.MenuText exit>Exit</Styled.MenuText>
         </Styled.ExitContainer>
       </Styled.ContainerBackGround>

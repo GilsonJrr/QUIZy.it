@@ -15,6 +15,7 @@ import {
   StudentTypeValues,
   StudentTypes,
 } from "../types";
+import { requestSignUpEmailPassword } from "Store/auth/actions";
 
 //Student
 export function* getStudentListSaga(props: StudentAction<StudentRequest>): any {
@@ -54,6 +55,12 @@ export function* setStudentSaga(props: StudentAction<StudentTypeValues>): any {
       yield call(setStudent, uid, payload);
       const studentResponses = yield call(getStudentList, uid);
       yield put(studentList(studentResponses));
+      yield put(
+        requestSignUpEmailPassword({
+          email: payload.email,
+          password: "ABC1234D",
+        })
+      );
     }
   } catch (err: any) {
     yield put(err);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -20,8 +20,50 @@ import StudentCreate from "views/dashboard/Students/StudentPages/StudentCreate";
 import GroupCreate from "views/dashboard/Students/StudentPages/GroupCreate";
 import StudentProfile from "views/dashboard/Students/StudentPages/StudentProfile";
 import LoadingImage from "components/LoadingImage";
+import AuthPages from "layout/AuthPages";
+import Login from "views/auth/Login";
+import { useSelector } from "react-redux";
+import { RootState } from "Store/root-reducer";
+import firebase, { auth } from "lib/firebase";
 
 const Routers = () => {
+  const { isLoading } = useSelector((state: RootState) => state.authReducer);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | undefined>();
+  const userID = localStorage.getItem("userId");
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in.
+        setIsAuthenticated(true);
+      } else {
+        // No user is signed in.
+        setIsAuthenticated(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [userID]);
+
+  if (isLoading && isAuthenticated === true) {
+    return <div>Loading...</div>;
+  }
+
+  if (isAuthenticated === false) {
+    return (
+      <Router>
+        <ModalProvider>
+          <Routes>
+            <Route path="*" element={<Navigate to="/login" replace />} />
+            <Route element={<AuthPages />}>
+              <Route path="/login" element={<Login />} />
+            </Route>
+          </Routes>
+        </ModalProvider>
+      </Router>
+    );
+  }
+
   return (
     <Router>
       <ModalProvider>
@@ -55,6 +97,9 @@ const Routers = () => {
               path="/students"
               element={<Navigate to="/not-found" replace />}
             />
+          )}
+          {isAuthenticated && (
+            <Route path="/login" element={<Navigate to="/" replace />} />
           )}
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/quizResult" element={<QuizResult />} />

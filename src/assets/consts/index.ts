@@ -789,5 +789,3 @@ export const TutorResults: TTutorResult[] = [
 type TUserType = "tutor" | "student";
 
 export const userType: TUserType = "tutor";
-
-export const userID = "f76fd8s7f78sdf";

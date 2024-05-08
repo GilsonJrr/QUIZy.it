@@ -20,11 +20,14 @@ const Students: FC<StudentsProps> = () => {
   const { students, isLoading } = useSelector(
     (state: RootState) => state.studentReducer
   );
+
+  // const students: any[] = [];
+  // const isLoading = false;
   const { groups } = useSelector((state: RootState) => state.groupReducer);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userID = "f76fd8s7f78sdf";
+  const userID = localStorage.getItem("userId") || "";
 
   const [search, setSearch] = useState("");
 
@@ -70,16 +73,18 @@ const Students: FC<StudentsProps> = () => {
       : [];
 
   useEffect(() => {
-    if (students === undefined) {
+    if (students === undefined && userID) {
       dispatch(requestStudentList({ uid: userID }));
     }
-  }, [dispatch, students]);
+  }, [dispatch, students, userID]);
 
   useEffect(() => {
-    if (groups === undefined) {
+    if (groups === undefined && userID) {
       dispatch(requestGroupList({ uid: userID }));
     }
-  }, [dispatch, groups]);
+  }, [dispatch, groups, userID]);
+
+  console.log("userID", userID);
 
   return (
     <Styled.Container>

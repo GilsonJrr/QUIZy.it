@@ -12,6 +12,7 @@ export enum AuthTypes {
 export type AuthState = {
   isLogged: boolean;
   isLoading: boolean;
+  isLogOuted: boolean;
   email: string;
   currentUser: any | undefined;
   error?: string;
@@ -42,6 +43,7 @@ export interface AuthPasswordResetInput {
 export interface AuthSignUpInput {
   email: string;
   password: string;
+  userType?: "tutor" | "student";
 }
 
 //Agenda
