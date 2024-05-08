@@ -5,6 +5,12 @@ export const LoginSchema = Yup.object().shape({
   password: Yup.string().required("You must enter your password"),
 });
 
+export const SignUpSchema = Yup.object().shape({
+  login: Yup.string().required("You must enter your email"),
+  password: Yup.string().required("You must enter your password"),
+  name: Yup.string().required("You must enter your name"),
+});
+
 export const GroupCreateSchema = Yup.object().shape({
   title: Yup.string().required("You must add a title").min(3),
   about: Yup.string(),

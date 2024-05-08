@@ -36,6 +36,11 @@ const Sidebar: FC<SidebarProps> = ({ logo, display, onClose }) => {
     onClose?.();
   };
 
+  const handleSignOut = () => {
+    //TODO: aplicar o cleanUp aqui e apagar todos os dados
+    auth.signOut();
+  };
+
   return (
     <Styled.Container showMenu={display}>
       <Styled.ContainerBackGround onClick={onClose}>
@@ -89,16 +94,7 @@ const Sidebar: FC<SidebarProps> = ({ logo, display, onClose }) => {
           )}
         </Styled.MenuContainer>
         <Styled.ExitContainer>
-          <IoMdExit
-            size={30}
-            // onClick={() => {
-            //   dispatch(signOut());
-            //   navigate("/login");
-            // }}
-            onClick={() => {
-              auth.signOut();
-            }}
-          />
+          <IoMdExit size={30} onClick={handleSignOut} />
           <Styled.MenuText exit>Exit</Styled.MenuText>
         </Styled.ExitContainer>
       </Styled.ContainerBackGround>

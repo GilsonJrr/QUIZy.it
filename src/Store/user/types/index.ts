@@ -30,6 +30,12 @@ export type Info = {
   uid: string;
   userType: string;
   tutorID: string;
+  group?: string;
+  about?: string;
+  birthDate?: string;
+  socialNetWork?: string;
+  photo?: string;
+  average?: string;
 };
 
 export type UseData = {
@@ -40,6 +46,13 @@ export type UseData = {
   uid: string;
   userType: string;
   tutorID: string;
+  group?: string;
+  about?: string;
+  birthDate?: string;
+  socialNetWork?: string;
+  photo?: string;
+  average?: string;
+  //***/
   info?: Info;
   //adicionar os outros campos
 };

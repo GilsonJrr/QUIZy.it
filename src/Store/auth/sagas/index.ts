@@ -71,7 +71,7 @@ export function* requestSignOutSaga(): any {
 export function* requestSignUpEmailPasswordSaga(
   props: AuthAction<AuthSignUpInput>
 ): any {
-  const { email, password, userType, name, tutorUID } = props.payload;
+  const { email, password, userType, name, tutorUID, ...rest } = props.payload;
 
   try {
     if (email && password) {
@@ -90,6 +90,7 @@ export function* requestSignUpEmailPasswordSaga(
         uid: userCredentials.user.uid,
         userType: userType || "",
         tutorID: tutorUID || "",
+        ...rest,
       };
       if (userType === "tutor") {
         yield put(setUser(newUser));

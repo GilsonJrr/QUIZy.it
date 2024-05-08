@@ -24,6 +24,7 @@ import Login from "views/auth/Login";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { auth } from "lib/firebase";
+import SignUp from "views/auth/SignUp";
 
 const Routers = () => {
   const { isLoading } = useSelector((state: RootState) => state.authReducer);
@@ -59,6 +60,7 @@ const Routers = () => {
             <Route path="*" element={<Navigate to="/login" replace />} />
             <Route element={<AuthPages />}>
               <Route path="/login" element={<Login />} />
+              <Route path="/SignUp" element={<SignUp />} />
             </Route>
           </Routes>
         </ModalProvider>

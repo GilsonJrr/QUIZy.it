@@ -84,7 +84,7 @@ const Students: FC<StudentsProps> = () => {
     }
   }, [dispatch, groups, userID]);
 
-  console.log("userID", userID);
+  console.log("userID", groups);
 
   return (
     <Styled.Container>

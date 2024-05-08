@@ -63,6 +63,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
       ...rest,
     };
 
+    // console.log("data", preparedData);
     dispatch(setStudent(preparedData));
     navigate(-1);
   };

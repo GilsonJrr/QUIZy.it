@@ -50,16 +50,19 @@ export function* setStudentSaga(props: StudentAction<StudentTypeValues>): any {
   const uid = props.payload.uid;
   const payload = props.payload;
 
+  const { email, name, uid: tutorUID, ...rest } = payload;
+
   try {
     if (uid && payload) {
       yield put(
         //TODO: aqui vai ser criado o novo usuario
         requestSignUpEmailPassword({
-          email: payload.email,
+          email: email,
           password: "ABC1234D",
-          name: payload.name,
+          name: name,
           userType: "student",
-          tutorUID: payload.uid,
+          tutorUID: tutorUID,
+          ...rest,
         })
       );
     }
