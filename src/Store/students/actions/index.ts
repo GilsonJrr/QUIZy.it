@@ -62,3 +62,12 @@ export function setStudent(
     payload: { ...props },
   };
 }
+
+export function removeStudent(
+  props: StudentRequest
+): StudentAction<StudentRequest> {
+  return {
+    type: StudentTypes.REMOVE_STUDENT,
+    payload: { ...props },
+  };
+}

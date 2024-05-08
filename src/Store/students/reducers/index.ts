@@ -13,6 +13,10 @@ interface SetStudent {
   payload: StudentTypeValues[];
 }
 
+interface RemoveStudent {
+  type: StudentTypes.REMOVE_STUDENT;
+}
+
 interface requestStudentList {
   type: StudentTypes.REQUEST_STUDENT_LIST;
   payload: StudentTypeValues[];
@@ -40,7 +44,8 @@ type StudentAction =
   | requestStudentList
   | requestStudent
   | StudentList
-  | Student;
+  | Student
+  | RemoveStudent;
 
 const studentInitialState: StudentState = {
   isLoading: false,
@@ -109,6 +114,13 @@ const studentReducer: Reducer<StudentState, StudentAction> = (
         isLoading: false,
         error: undefined,
         students: action.payload,
+      };
+    }
+    case StudentTypes.REMOVE_STUDENT: {
+      return {
+        ...state,
+        isLoading: true,
+        error: undefined,
       };
     }
     default: {

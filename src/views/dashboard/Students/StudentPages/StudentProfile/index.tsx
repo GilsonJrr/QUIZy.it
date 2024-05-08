@@ -4,7 +4,11 @@ import BreadCrumbs from "components/BreadCrumbs";
 import Card from "components/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
-import { requestStudent, studentCleanUp } from "Store/students/actions";
+import {
+  removeStudent,
+  requestStudent,
+  studentCleanUp,
+} from "Store/students/actions";
 import { userID } from "assets/consts";
 import { useLocation } from "react-router-dom";
 
@@ -66,6 +70,15 @@ const StudentProfile: FC<StudentProfileProps> = () => {
         ></Card>
         <Card title={""} isEmpty={false} gridName="information">
           <h1>{student?.name}</h1>
+          <button
+            onClick={() => {
+              dispatch(
+                removeStudent({ uid: userID, studentId: studentId || "" })
+              );
+            }}
+          >
+            Delete
+          </button>
         </Card>
       </Styled.Container>
     </Styled.Wrapper>

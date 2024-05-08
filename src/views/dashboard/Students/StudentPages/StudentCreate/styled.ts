@@ -75,7 +75,7 @@ export const SelectContainer = styled.div`
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  gap: 30px;
+  gap: 10px;
 `;
 
 export const Form = styled.form<Props>`

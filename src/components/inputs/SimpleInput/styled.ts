@@ -7,7 +7,7 @@ export const Container = styled.div<Props>`
   flex-direction: column;
   gap: 4px;
   position: relative;
-  width: ${({ width }) => width};
+  width: ${({ width }) => width || "100%"};
 `;
 
 export const Label = styled.label<Props>`

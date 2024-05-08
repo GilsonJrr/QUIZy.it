@@ -12,7 +12,7 @@ const SearchInput: FC<SearchInputProps> = ({ setValue, value }) => {
   return (
     <Styled.Container>
       <Styled.Input value={value} onChange={(e) => setValue(e.target.value)} />
-      <FaSearch size={20} />
+      <FaSearch size={15} />
     </Styled.Container>
   );
 };

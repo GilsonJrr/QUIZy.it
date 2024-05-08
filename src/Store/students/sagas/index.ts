@@ -2,7 +2,12 @@ import { takeLatest, put, call } from "redux-saga/effects";
 
 import { student, studentList } from "../actions";
 
-import { getStudent, getStudentList, setStudent } from "../repository";
+import {
+  getStudent,
+  getStudentList,
+  setStudent,
+  removeStudent,
+} from "../repository";
 
 import {
   StudentAction,
@@ -55,9 +60,25 @@ export function* setStudentSaga(props: StudentAction<StudentTypeValues>): any {
   }
 }
 
+export function* removeStudentSaga(props: StudentAction<StudentRequest>): any {
+  const studentId = props.payload.studentId;
+  const uid = props.payload.uid;
+
+  try {
+    if (studentId && uid) {
+      yield call(removeStudent, uid, studentId);
+      const userResponses = yield call(getStudentList, uid);
+      yield put(studentList(userResponses));
+    }
+  } catch (err: any) {
+    yield put(err);
+  }
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default [
   takeLatest(StudentTypes.SET_STUDENT, setStudentSaga),
   takeLatest(StudentTypes.REQUEST_STUDENT_LIST, getStudentListSaga),
   takeLatest(StudentTypes.REQUEST_STUDENT, getStudentSaga),
+  takeLatest(StudentTypes.REMOVE_STUDENT, removeStudentSaga),
 ];

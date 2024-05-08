@@ -6,6 +6,7 @@ export enum StudentTypes {
   REQUEST_STUDENT = "REQUEST_STUDENT",
   STUDENT_LIST = "STUDENT_LIST",
   STUDENT = "STUDENT",
+  REMOVE_STUDENT = "REMOVE_STUDENT",
 }
 
 export type StudentAction<Payload> = {
