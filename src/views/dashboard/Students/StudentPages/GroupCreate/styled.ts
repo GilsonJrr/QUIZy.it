@@ -143,3 +143,24 @@ export const ExtraInfoContainer = styled.div`
 export const DeleteIcon = styled(FaTrashAlt)`
   margin-bottom: 12px;
 `;
+
+export const GroupCardContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+  overflow: auto;
+  padding-bottom: 150px;
+`;
+
+export const GroupCard = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 5px 15px 5px 10px;
+  cursor: pointer;
+`;
+
+export const GroupTitle = styled.h3``;

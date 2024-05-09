@@ -59,7 +59,7 @@ export const Form = styled.form`
 
 export const ButtonContainer = styled.div`
   display: flex;
-  align-items: baseline;
+  align-items: flex-end;
   justify-content: space-between;
   width: 100%;
 `;

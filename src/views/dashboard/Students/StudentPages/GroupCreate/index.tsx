@@ -86,20 +86,22 @@ const GroupCreate: FC<StudentCreateProps> = () => {
           </Styled.Form>
         </Card>
         <Card title={"All Groups"} isEmpty={false} gridName="newQuestion">
-          {groups &&
-            groups.length > 0 &&
-            groups?.map((group) => {
-              return (
-                <div>
-                  <Avatar
-                    size="medium"
-                    name={group.title}
-                    photo={group.image}
-                  />
-                  {group.title}
-                </div>
-              );
-            })}
+          <Styled.GroupCardContainer>
+            {groups &&
+              groups.length > 0 &&
+              groups?.map((group) => {
+                return (
+                  <Styled.GroupCard>
+                    <Avatar
+                      size="medium"
+                      name={group.title}
+                      photo={group.image}
+                    />
+                    <Styled.GroupTitle>{group.title}</Styled.GroupTitle>
+                  </Styled.GroupCard>
+                );
+              })}
+          </Styled.GroupCardContainer>
         </Card>
         <Styled.ButtonContainer>
           <Styled.SubmitButton type="submit" form="newStudentForm">
