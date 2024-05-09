@@ -11,14 +11,14 @@ enum ESize {
   "small" = "30px",
   "medium" = "60px",
   "big" = "120px",
-  "bigger" = "220px",
+  "bigger" = "170px",
 }
 
 enum ENameSize {
   "small" = "1rem",
   "medium" = "2rem",
   "big" = "3rem",
-  "bigger" = "4rem",
+  "bigger" = "5rem",
 }
 
 const Avatar: FC<AvatarProps> = ({ size = "medium", name, photo }) => {

@@ -1,5 +1,6 @@
 import React, { FC, useEffect } from "react";
 import * as Styled from "./styled";
+import * as Block from "blocks/studentProfile";
 import BreadCrumbs from "components/BreadCrumbs";
 import Card from "components/Card";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +11,7 @@ import {
   studentCleanUp,
 } from "Store/students/actions";
 import { useLocation } from "react-router-dom";
+import ProfileInfo from "blocks/studentProfile/ProfileInfo";
 
 type StudentProfileProps = {};
 
@@ -69,16 +71,7 @@ const StudentProfile: FC<StudentProfileProps> = () => {
           gridName="group"
         ></Card>
         <Card title={""} isEmpty={false} gridName="information">
-          <h1>{student?.name}</h1>
-          <button
-            onClick={() => {
-              dispatch(
-                removeStudent({ uid: userID || "", studentId: studentId || "" })
-              );
-            }}
-          >
-            Delete
-          </button>
+          {student && <Block.ProfileInfo student={student} />}
         </Card>
       </Styled.Container>
     </Styled.Wrapper>

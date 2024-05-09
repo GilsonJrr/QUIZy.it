@@ -11,11 +11,12 @@ import { TOption } from "types/index";
 import { StudentCreateSchema } from "lib/schemas";
 import { idGenerator } from "utils/index";
 import { useDispatch } from "react-redux";
-import { setStudent } from "Store/students/actions";
+import { requestStudent, setStudent, student } from "Store/students/actions";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { requestGroupList } from "Store/group/actions";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { requestStudentUser } from "Store/user/actions";
 
 type StudentCreateProps = {};
 
@@ -34,13 +35,19 @@ type TStudent = {
 const StudentCreate: FC<StudentCreateProps> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const studentId = new URLSearchParams(location.search).get("id");
 
   const { groups } = useSelector((state: RootState) => state.groupReducer);
+  const { userStudent } = useSelector((state: RootState) => state.userReducer);
   const userID = localStorage.getItem("userId") || "";
 
   const [extraFields, setExtraFields] = useState<any[]>([]);
   const [extraField, setExtraField] = useState<string>();
   const [editingField, setEditingField] = useState(0);
+
+  console.log("location", userStudent);
 
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
@@ -50,6 +57,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
     formState: { errors },
     watch,
     unregister,
+    reset,
   } = useForm<TStudent>({
     resolver: yupResolver(StudentCreateSchema),
   });
@@ -58,13 +66,12 @@ const StudentCreate: FC<StudentCreateProps> = () => {
     const { group, ...rest } = data;
 
     const preparedData = {
-      id: idGenerator(18),
       uid: userID,
       group: data.group === "groupLess" ? "" : data.group,
       ...rest,
     };
 
-    // console.log("data", preparedData);
+    console.log("data", preparedData);
     dispatch(setStudent(preparedData));
     navigate(-1);
   };
@@ -118,6 +125,20 @@ const StudentCreate: FC<StudentCreateProps> = () => {
       dispatch(requestGroupList({ uid: userID || "" }));
     }
   }, [dispatch, groups, userID]);
+
+  useEffect(() => {
+    if (userStudent === undefined) {
+      studentId && dispatch(requestStudentUser({ uid: studentId }));
+    }
+    reset(userStudent?.info);
+  }, [dispatch, reset, studentId, userStudent?.info]);
+
+  useEffect(() => {
+    return () => {
+      //TODO: add cleanup user aqui
+      reset();
+    };
+  }, [reset]);
 
   return (
     <Styled.Container>
@@ -255,7 +276,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
         </Card>
         <Styled.ButtonContainer>
           <Styled.SubmitButton type="submit" form="newStudentForm">
-            Add Student
+            {userStudent ? "Update Student" : "Add Student"}
           </Styled.SubmitButton>
         </Styled.ButtonContainer>
       </Styled.ContainerInner>

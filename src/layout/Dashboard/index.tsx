@@ -29,6 +29,9 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
   // const userName = "UserName";
 
   const currentUrl = location.pathname;
+  const search = location.search && location.search[0];
+
+  console.log("currentUrl", search[0]);
 
   const handleBlur = () => {
     setTimeout(() => {
@@ -59,7 +62,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
         </Styled.LogoContainer>
         <Styled.HeaderTitle>
           <Styled.HeaderTitleText>
-            {RouterTitle[currentUrl as keyof typeof RouterTitle]}
+            {RouterTitle[`${currentUrl}${search}` as keyof typeof RouterTitle]}
           </Styled.HeaderTitleText>
         </Styled.HeaderTitle>
         <Styled.HeaderMessage>
@@ -105,7 +108,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
         </Styled.LogoContainer>
         <Styled.HeaderTitle>
           <Styled.HeaderTitleText>
-            {RouterTitle[currentUrl as keyof typeof RouterTitle]}
+            {RouterTitle[`${currentUrl}${search}` as keyof typeof RouterTitle]}
           </Styled.HeaderTitleText>
         </Styled.HeaderTitle>
         <Styled.HeaderHamburgerMenu onClick={() => setShowMenu(!showMenu)}>
