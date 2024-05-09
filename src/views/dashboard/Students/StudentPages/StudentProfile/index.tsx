@@ -7,11 +7,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { requestStudent, studentCleanUp } from "Store/students/actions";
 import { useLocation } from "react-router-dom";
+import Avatar from "components/Avatar";
 
 type StudentProfileProps = {};
 
 const StudentProfile: FC<StudentProfileProps> = () => {
-  const { student, isLoading } = useSelector(
+  const { student, isLoading, students } = useSelector(
     (state: RootState) => state.studentReducer
   );
   const dispatch = useDispatch();
@@ -43,6 +44,15 @@ const StudentProfile: FC<StudentProfileProps> = () => {
     return <>Loading...</>;
   }
 
+  const sameGroupStudents = students?.filter((studentList) => {
+    return (
+      studentList.info?.group === student?.info?.group &&
+      studentList.info?.name !== student?.info?.name
+    );
+  });
+
+  console.log("students", sameGroupStudents);
+
   return (
     <Styled.Wrapper>
       <BreadCrumbs crumbs={crumbs} />
@@ -59,12 +69,19 @@ const StudentProfile: FC<StudentProfileProps> = () => {
           isEmpty={false}
           gridName="categories"
         ></Card>
-        <Card
-          title={"From the same group"}
-          children={undefined}
-          isEmpty={false}
-          gridName="group"
-        ></Card>
+        <Card title={"From the same group"} isEmpty={false} gridName="group">
+          <Styled.GroupContainer>
+            {sameGroupStudents?.map((group) => {
+              return (
+                <Avatar
+                  name={group.info?.name}
+                  photo={group.info?.photo}
+                  size="medium"
+                />
+              );
+            })}
+          </Styled.GroupContainer>
+        </Card>
         <Card title={""} isEmpty={false} gridName="information">
           {student && student?.info && (
             <Block.ProfileInfo student={student.info} />

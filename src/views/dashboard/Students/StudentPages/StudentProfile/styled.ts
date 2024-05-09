@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-type Props = {};
-
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -20,6 +18,7 @@ export const Container = styled.div`
       "results results categories information"
       "results results categories information"
       "results results categories information"
+      "group group group information"
       "group group group information";
   }
 `;
@@ -29,5 +28,10 @@ export const Wrapper = styled.div`
   padding: 20px 40px;
   display: flex;
   flex-direction: column;
+  gap: 10px;
+`;
+
+export const GroupContainer = styled.div`
+  display: flex;
   gap: 10px;
 `;
