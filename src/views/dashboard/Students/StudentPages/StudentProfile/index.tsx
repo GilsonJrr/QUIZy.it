@@ -55,8 +55,6 @@ const StudentProfile: FC<StudentProfileProps> = () => {
     );
   });
 
-  console.log("students", sameGroupStudents);
-
   return (
     <Styled.Wrapper>
       <BreadCrumbs crumbs={crumbs} />
@@ -64,16 +62,23 @@ const StudentProfile: FC<StudentProfileProps> = () => {
         <Card
           title={"All results"}
           children={undefined}
-          isEmpty={false}
           gridName="results"
+          isEmpty={true}
+          emptyMessage={`${student?.info?.name} has't completed any quiz yet`}
         ></Card>
         <Card
           title={"Categorie Result"}
           children={undefined}
-          isEmpty={false}
           gridName="categories"
+          isEmpty={true}
+          emptyMessage={`${student?.info?.name} has't completed any quiz yet`}
         ></Card>
-        <Card title={"From the same group"} isEmpty={false} gridName="group">
+        <Card
+          title={"From the same group"}
+          isEmpty={sameGroupStudents?.length === 0}
+          gridName="group"
+          emptyMessage={`${student?.info?.name} is alone here`}
+        >
           <Styled.GroupContainer>
             {sameGroupStudents?.map((group) => {
               return (

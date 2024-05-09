@@ -70,6 +70,21 @@ export const SubmitButton = styled.button`
   }
 `;
 
+export const DeleteButton = styled.button`
+  background-color: #c78788;
+  outline: none;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 40px;
+  font-size: 1.3rem;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+`;
+
 export const SelectContainer = styled.div`
   display: flex;
   width: 100%;
@@ -153,7 +168,9 @@ export const GroupCardContainer = styled.div`
   padding-bottom: 150px;
 `;
 
-export const GroupCard = styled.div`
+export const GroupTitle = styled.h3``;
+
+export const GroupCard = styled.div<Props>`
   display: flex;
   align-items: center;
   gap: 10px;
@@ -161,6 +178,10 @@ export const GroupCard = styled.div`
   border-radius: 10px;
   padding: 5px 15px 5px 10px;
   cursor: pointer;
-`;
 
-export const GroupTitle = styled.h3``;
+  background-color: ${({ active }) => (active ? "#4a4747" : "")};
+
+  ${GroupTitle} {
+    color: ${({ active }) => (active ? "#FFFFFF" : "#4a4747")};
+  }
+`;

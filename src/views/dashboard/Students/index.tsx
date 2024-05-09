@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import * as Styled from "./styled";
 import Card from "components/Card";
 import OptionsButton from "components/OptionsButton";
@@ -13,6 +13,7 @@ import { requestStudentList } from "Store/students/actions";
 import { RootState } from "Store/root-reducer";
 import LoadingImage from "components/LoadingImage";
 import { requestGroupList } from "Store/group/actions";
+import LoadingSpinner from "components/LoadingSpiner";
 
 type StudentsProps = {};
 
@@ -23,7 +24,9 @@ const Students: FC<StudentsProps> = () => {
 
   // const students: any[] = [];
   // const isLoading = false;
-  const { groups } = useSelector((state: RootState) => state.groupReducer);
+  const { groups, isLoading: groupLoading } = useSelector(
+    (state: RootState) => state.groupReducer
+  );
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -50,11 +53,16 @@ const Students: FC<StudentsProps> = () => {
   ];
   const [tab, setTab] = useState("All");
 
-  const tabs = groups
-    ? groups.map((group) => {
+  const tabs = useMemo(() => {
+    if (groups && groups.length > 0 && !groupLoading) {
+      return groups.map((group) => {
         return { label: group.title };
-      })
-    : [];
+      });
+      // return [];
+    } else {
+      return [];
+    }
+  }, [groupLoading, groups]);
 
   const filterStudents = () => {
     switch (true) {
@@ -83,6 +91,10 @@ const Students: FC<StudentsProps> = () => {
       dispatch(requestGroupList({ uid: userID }));
     }
   }, [dispatch, groups, userID]);
+
+  if (isLoading || groupLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <Styled.Container>

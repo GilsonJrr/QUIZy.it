@@ -12,7 +12,7 @@ export const SignUpSchema = Yup.object().shape({
 });
 
 export const GroupCreateSchema = Yup.object().shape({
-  title: Yup.string().required("You must add a title").min(3),
+  title: Yup.string().required("You must add a title").min(2),
   about: Yup.string(),
 });
 
