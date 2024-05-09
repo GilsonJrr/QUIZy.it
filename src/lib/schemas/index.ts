@@ -16,6 +16,11 @@ export const GroupCreateSchema = Yup.object().shape({
   about: Yup.string(),
 });
 
+export const CategoryCreateSchema = Yup.object().shape({
+  title: Yup.string().required("You must add a title").min(2),
+  about: Yup.string(),
+});
+
 export const StudentCreateSchema = Yup.object().shape({
   name: Yup.string().required("You must add a title").min(3),
   phone: Yup.string(),

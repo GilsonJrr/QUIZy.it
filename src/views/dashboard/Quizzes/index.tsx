@@ -71,7 +71,7 @@ const Quizzes: FC<QuizzesProps> = () => {
     {
       option: "Add category",
       optionIcon: <MdPlaylistAddCheck size={40} />,
-      // onClick: () => navigate(lastQuiz),
+      onClick: () => navigate("/quizzes/category-create"),
     },
   ];
 

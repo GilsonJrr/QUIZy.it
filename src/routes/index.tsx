@@ -25,6 +25,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { auth } from "lib/firebase";
 import SignUp from "views/auth/SignUp";
+import CategoryCreate from "views/dashboard/Quizzes/QuizzesPages/CategoryCreate";
 
 const Routers = () => {
   const { isLoading } = useSelector((state: RootState) => state.authReducer);
@@ -76,9 +77,13 @@ const Routers = () => {
             <Route path="/" element={<QuizDashboard />} />
             <Route path="/quizzes" element={<Quizzes />} />
             <Route path="/teste" element={<LoadingImage />} />
-            <Route path="/quizzes/quiz-create" element={<QuizCreate />} />
             {userType !== "student" && (
               <>
+                <Route path="/quizzes/quiz-create" element={<QuizCreate />} />
+                <Route
+                  path="/quizzes/category-create"
+                  element={<CategoryCreate />}
+                />
                 <Route path="/students" element={<Students />} />
                 <Route
                   path="/students/student-profile"

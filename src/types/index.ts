@@ -162,4 +162,6 @@ export enum RouterTitle {
   "/students/group-create" = "Add Group",
   "/students/group-create?" = "Edit Group",
   "/students/student-profile?" = "Student Profile",
+  "/quizzes/category-create" = "Add Category",
+  "/quizzes/category-create?" = "Edit Category",
 }
