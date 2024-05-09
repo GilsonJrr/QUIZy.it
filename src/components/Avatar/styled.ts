@@ -13,6 +13,7 @@ export const Container = styled.div<Props>`
   align-items: center;
   justify-content: center;
   border: 1px solid rgba(0, 0, 0, 0.5);
+  cursor: pointer;
 `;
 
 export const Name = styled.h2<Props>`
@@ -25,4 +26,5 @@ export const Photo = styled.img<Props>`
   width: ${({ size }) => size};
   border-radius: 100%;
   border: 1px solid rgba(0, 0, 0, 0.5);
+  cursor: pointer;
 `;

@@ -6,7 +6,10 @@ import Card from "components/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { requestStudent, studentCleanUp } from "Store/students/actions";
-import { useLocation } from "react-router-dom";
+import {
+  useLocation,
+  // useNavigate
+} from "react-router-dom";
 import Avatar from "components/Avatar";
 
 type StudentProfileProps = {};
@@ -17,6 +20,7 @@ const StudentProfile: FC<StudentProfileProps> = () => {
   );
   const dispatch = useDispatch();
   const location = useLocation();
+  // const navigate = useNavigate();
   const userID = localStorage.getItem("userId");
 
   const studentId = new URLSearchParams(location.search).get("studentId");
@@ -77,6 +81,11 @@ const StudentProfile: FC<StudentProfileProps> = () => {
                   name={group.info?.name}
                   photo={group.info?.photo}
                   size="medium"
+                  // onClick={() =>
+                  //   navigate(
+                  //     `/students/student-profile?studentId=${group.info?.uid}`
+                  //   )
+                  // }
                 />
               );
             })}

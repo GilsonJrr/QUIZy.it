@@ -5,6 +5,7 @@ type AvatarProps = {
   size?: "small" | "medium" | "big" | "bigger";
   name?: string;
   photo?: string;
+  onClick?: () => void;
 };
 
 enum ESize {
@@ -21,7 +22,7 @@ enum ENameSize {
   "bigger" = "5rem",
 }
 
-const Avatar: FC<AvatarProps> = ({ size = "medium", name, photo }) => {
+const Avatar: FC<AvatarProps> = ({ size = "medium", name, photo, onClick }) => {
   const handleSplitName = () => {
     const splitName = name?.split(" ");
 
@@ -36,12 +37,19 @@ const Avatar: FC<AvatarProps> = ({ size = "medium", name, photo }) => {
 
   if (photo) {
     return (
-      <Styled.Photo src={photo} size={ESize[size as keyof typeof ESize]} />
+      <Styled.Photo
+        src={photo}
+        size={ESize[size as keyof typeof ESize]}
+        onClick={onClick}
+      />
     );
   }
 
   return (
-    <Styled.Container size={ESize[size as keyof typeof ESize]}>
+    <Styled.Container
+      size={ESize[size as keyof typeof ESize]}
+      onClick={onClick}
+    >
       <Styled.Name size={ENameSize[size as keyof typeof ENameSize]}>
         {handleSplitName()}
       </Styled.Name>
