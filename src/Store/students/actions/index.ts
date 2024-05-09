@@ -62,6 +62,15 @@ export function setStudent(
   };
 }
 
+export function updateStudent(
+  props: StudentTypeValues
+): StudentAction<StudentTypeValues> {
+  return {
+    type: StudentTypes.UPDATE_STUDENT,
+    payload: { ...props },
+  };
+}
+
 export function removeStudent(
   props: StudentRequest
 ): StudentAction<StudentRequest> {

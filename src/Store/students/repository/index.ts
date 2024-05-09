@@ -30,9 +30,19 @@ export const getStudent = async (uid: string, studentId: string) => {
     });
 };
 
-export const setStudent = async (_uid: string, data: StudentTypeValues) => {
-  const { uid, ...rest } = data;
-  return set(ref(database, `students/${data.id}/info`), rest)
+export const updateStudent = async (data: StudentTypeValues) => {
+  return set(ref(database, `student/${data.uid}/info`), data)
+    .then((students) => students)
+    .catch((err) => {
+      throw new Error(err);
+    });
+};
+
+export const updateStudentList = async (data: StudentTypeValues) => {
+  return set(
+    ref(database, `user/${data.tutorID}/students/${data.uid}/info`),
+    data
+  )
     .then((students) => students)
     .catch((err) => {
       throw new Error(err);

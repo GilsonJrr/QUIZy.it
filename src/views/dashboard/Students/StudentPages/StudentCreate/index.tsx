@@ -9,14 +9,14 @@ import TextAreaInput from "components/inputs/TextAreaInput";
 import SelectInput from "components/inputs/SelectInput";
 import { TOption } from "types/index";
 import { StudentCreateSchema } from "lib/schemas";
-import { idGenerator } from "utils/index";
 import { useDispatch } from "react-redux";
-import { requestStudent, setStudent, student } from "Store/students/actions";
+import { setStudent, updateStudent } from "Store/students/actions";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { requestGroupList } from "Store/group/actions";
 import { useLocation, useNavigate } from "react-router-dom";
 import { requestStudentUser } from "Store/user/actions";
+import LoadingSpinner from "components/LoadingSpiner";
 
 type StudentCreateProps = {};
 
@@ -40,14 +40,14 @@ const StudentCreate: FC<StudentCreateProps> = () => {
   const studentId = new URLSearchParams(location.search).get("id");
 
   const { groups } = useSelector((state: RootState) => state.groupReducer);
-  const { userStudent } = useSelector((state: RootState) => state.userReducer);
+  const { userStudent, isLoading } = useSelector(
+    (state: RootState) => state.userReducer
+  );
   const userID = localStorage.getItem("userId") || "";
 
   const [extraFields, setExtraFields] = useState<any[]>([]);
   const [extraField, setExtraField] = useState<string>();
   const [editingField, setEditingField] = useState(0);
-
-  console.log("location", userStudent);
 
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
@@ -58,6 +58,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
     watch,
     unregister,
     reset,
+    setValue,
   } = useForm<TStudent>({
     resolver: yupResolver(StudentCreateSchema),
   });
@@ -65,15 +66,24 @@ const StudentCreate: FC<StudentCreateProps> = () => {
   const onSubmit = (data: TStudent) => {
     const { group, ...rest } = data;
 
-    const preparedData = {
+    const newStudentData = {
       uid: userID,
       group: data.group === "groupLess" ? "" : data.group,
       ...rest,
     };
 
-    console.log("data", preparedData);
-    dispatch(setStudent(preparedData));
-    navigate(-1);
+    const updateStudentData = {
+      uid: studentId || "",
+      group: data.group === "groupLess" ? "" : data.group,
+      tutorID: userID || "",
+      ...rest,
+    };
+
+    console.log("data", updateStudentData, newStudentData);
+    studentId !== null
+      ? dispatch(updateStudent(updateStudentData))
+      : dispatch(setStudent(newStudentData));
+    navigate("/students");
   };
 
   const handleAddField = () => {
@@ -85,6 +95,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
   };
 
   const handleChangeFieldName = (indexToUpdate: number) => {
+    //TODO: testar e ver se o valor nao e igual a um ja existente
     if (
       extraField === undefined ||
       extraField === extraFields[indexToUpdate] ||
@@ -111,7 +122,19 @@ const StudentCreate: FC<StudentCreateProps> = () => {
 
   const crumbs = [
     { label: "Students", path: "/students" },
-    { label: "Add Students", path: "/students/student-create" },
+    { label: "Add Students", path: "" },
+  ];
+
+  const fromProfileCrumbs = [
+    { label: "Students", path: "/students" },
+    {
+      label: "Student Profile",
+      path: `/students/student-profile?studentId=${studentId}`,
+    },
+    {
+      label: "Edit Students",
+      path: "",
+    },
   ];
 
   const options: TOption[] = groups
@@ -127,22 +150,66 @@ const StudentCreate: FC<StudentCreateProps> = () => {
   }, [dispatch, groups, userID]);
 
   useEffect(() => {
-    if (userStudent === undefined) {
+    if (studentId !== null) {
       studentId && dispatch(requestStudentUser({ uid: studentId }));
     }
-    reset(userStudent?.info);
-  }, [dispatch, reset, studentId, userStudent?.info]);
+  }, [dispatch, reset, studentId]);
 
   useEffect(() => {
-    return () => {
-      //TODO: add cleanup user aqui
+    if (userStudent && userStudent?.info && studentId !== null) {
+      const {
+        name,
+        phone,
+        photo,
+        email,
+        group,
+        about,
+        birthDate,
+        socialNetWork,
+        address,
+        //not used
+        age,
+        tutorID,
+        uid,
+        userType,
+        average,
+        ...rest
+      } = userStudent.info;
+
+      const extraKeys = Object.entries(rest).map((extra) => {
+        const [key] = extra;
+        return key;
+      });
+
+      setExtraFields(extraKeys);
+      setEditingField(extraKeys.length);
+
+      Object.entries(rest).map((extra) => {
+        const [key, value] = extra;
+        return setValue(key as keyof TStudent, value as string);
+      });
+
+      setValue("name", name);
+      setValue("phone", phone);
+      setValue("photo", photo);
+      setValue("email", email);
+      setValue("group", group);
+      setValue("birthDate", birthDate);
+      setValue("about", about);
+      setValue("socialNetWork", socialNetWork);
+      setValue("address", address);
+    } else {
       reset();
-    };
-  }, [reset]);
+    }
+  }, [extraField, reset, setValue, studentId, userStudent]);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <Styled.Container>
-      <BreadCrumbs crumbs={crumbs} />
+      <BreadCrumbs crumbs={studentId !== null ? fromProfileCrumbs : crumbs} />
       <Styled.ContainerInner>
         <Card title={"New Student"} isEmpty={false} gridName="newQuiz">
           <Styled.Form id="newStudentForm" onSubmit={handleSubmit(onSubmit)}>
@@ -224,7 +291,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
             >
               {extraFields.map((fieldName, index) => (
                 <Styled.ExtraInfoContainer>
-                  <SimpleInput
+                  <TextAreaInput
                     label={
                       <Styled.InputLabel
                         value={editingField === index ? extraField : fieldName}
@@ -276,7 +343,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
         </Card>
         <Styled.ButtonContainer>
           <Styled.SubmitButton type="submit" form="newStudentForm">
-            {userStudent ? "Update Student" : "Add Student"}
+            {studentId !== null ? "Update Student" : "Add Student"}
           </Styled.SubmitButton>
         </Styled.ButtonContainer>
       </Styled.ContainerInner>

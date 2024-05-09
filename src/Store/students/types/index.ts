@@ -7,6 +7,7 @@ export enum StudentTypes {
   STUDENT_LIST = "STUDENT_LIST",
   STUDENT = "STUDENT",
   REMOVE_STUDENT = "REMOVE_STUDENT",
+  UPDATE_STUDENT = "UPDATE_STUDENT",
 }
 
 export type StudentAction<Payload> = {
@@ -20,18 +21,37 @@ export type StudentRequest = {
   limit?: number;
 };
 
-export type StudentTypeValues = {
+export type TInfo = {
   id?: string;
   uid?: string;
   name: string;
-  phone: string;
+  phone?: string;
   email: string;
   group?: string;
   about?: string;
   birthDate?: string;
   socialNetWork?: string;
+  tutorID?: string;
   photo?: string;
   average?: string;
+};
+
+export type StudentTypeValues = {
+  id?: string;
+  uid?: string;
+  name: string;
+  phone?: string;
+  email: string;
+  group?: string;
+  about?: string;
+  birthDate?: string;
+  socialNetWork?: string;
+  tutorID?: string;
+  photo?: string;
+  average?: string;
+  //TODO: change here
+
+  info?: TInfo;
 };
 
 export type StudentState = {

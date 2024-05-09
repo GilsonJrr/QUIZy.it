@@ -16,7 +16,9 @@ const BreadCrumbs: FC<BreadCrumbsProps> = ({ crumbs }) => {
     <Styled.Container>
       {crumbs?.map((crumb, index) => {
         return (
-          <Styled.CrumbsContainer onClick={() => navigate(crumb.path)}>
+          <Styled.CrumbsContainer
+            onClick={() => (crumb.path ? navigate(crumb.path) : null)}
+          >
             <Styled.Crumbs>{crumb.label}</Styled.Crumbs>
             {index !== crumbs.length - 1 && <Styled.Arrows />}
           </Styled.CrumbsContainer>

@@ -61,14 +61,14 @@ const Students: FC<StudentsProps> = () => {
       case tab === "All":
         return students;
       default:
-        return students?.filter((student) => student.group === tab);
+        return students?.filter((student) => student?.info?.group === tab);
     }
   };
 
   const searchedStudents =
     students && students?.length > 0
       ? filterStudents()?.filter((student) =>
-          student.name.toUpperCase().includes(search.toUpperCase())
+          student.info?.name.toUpperCase().includes(search.toUpperCase())
         )
       : [];
 
@@ -83,8 +83,6 @@ const Students: FC<StudentsProps> = () => {
       dispatch(requestGroupList({ uid: userID }));
     }
   }, [dispatch, groups, userID]);
-
-  console.log("userID", groups);
 
   return (
     <Styled.Container>
@@ -111,17 +109,21 @@ const Students: FC<StudentsProps> = () => {
             />
             <Styled.MapRow>
               {searchedStudents?.map((item) => {
-                return (
-                  <RenderStudentCard
-                    item={item}
-                    width="49%"
-                    onClick={() =>
-                      navigate(
-                        `/students/student-profile?studentId=${item.uid}`
-                      )
-                    }
-                  />
-                );
+                if (item.info) {
+                  return (
+                    <RenderStudentCard
+                      item={item.info}
+                      width="49%"
+                      onClick={() =>
+                        navigate(
+                          `/students/student-profile?studentId=${item.info?.uid}`
+                        )
+                      }
+                    />
+                  );
+                }
+
+                return null;
               })}
             </Styled.MapRow>
           </Styled.CardInner>

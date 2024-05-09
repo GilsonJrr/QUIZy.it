@@ -1,12 +1,6 @@
 import { takeLatest, put, call, select } from "redux-saga/effects";
 
-import {
-  authError,
-  signIn,
-  signOut,
-  signUpSuccess,
-  // userAgenda,
-} from "../actions";
+import { authError, signIn, signOut, signUpSuccess } from "../actions";
 
 import {
   passwordResetFirebase,
@@ -22,7 +16,6 @@ import {
   AuthSignInInput,
   AuthSignUpInput,
   AuthTypes,
-  // UserRequest,
 } from "../types";
 
 import * as authSelectors from "../selectors";
@@ -34,9 +27,6 @@ import {
   setStudentUser,
   setUser,
 } from "Store/user/actions";
-import { getUser, getUserStudent } from "Store/user/repository";
-// import { setUser } from "../../user/actions";
-// import { UseData } from "../../user/types";
 
 export function* requestSignInEmailPasswordSaga(
   props: AuthAction<AuthSignInInput>

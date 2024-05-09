@@ -5,13 +5,8 @@ import BreadCrumbs from "components/BreadCrumbs";
 import Card from "components/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
-import {
-  removeStudent,
-  requestStudent,
-  studentCleanUp,
-} from "Store/students/actions";
+import { requestStudent, studentCleanUp } from "Store/students/actions";
 import { useLocation } from "react-router-dom";
-import ProfileInfo from "blocks/studentProfile/ProfileInfo";
 
 type StudentProfileProps = {};
 
@@ -71,7 +66,9 @@ const StudentProfile: FC<StudentProfileProps> = () => {
           gridName="group"
         ></Card>
         <Card title={""} isEmpty={false} gridName="information">
-          {student && <Block.ProfileInfo student={student} />}
+          {student && student?.info && (
+            <Block.ProfileInfo student={student.info} />
+          )}
         </Card>
       </Styled.Container>
     </Styled.Wrapper>

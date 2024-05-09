@@ -39,6 +39,7 @@ export type Info = {
   socialNetWork?: string;
   photo?: string;
   average?: string;
+  address?: string;
 };
 
 export type UseData = {

@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 type Props = {
   height?: string;
+  width?: string;
 };
 
 export const Container = styled.div<Props>`
@@ -9,6 +10,7 @@ export const Container = styled.div<Props>`
   flex-direction: column;
   gap: 4px;
   position: relative;
+  width: ${({ width }) => width || "100%"};
 `;
 
 export const Label = styled.label<Props>`

@@ -35,7 +35,7 @@ export const setStudentUser = async (uid: string, data: UseData) => {
 };
 
 export const setNewStudent = async (uid: string, data: UseData) => {
-  return set(ref(database, `user/${uid}/students/${data.uid}`), data)
+  return set(ref(database, `user/${uid}/students/${data.uid}/info`), data)
     .then((user) => user)
     .catch((err) => {
       throw new Error(err);
