@@ -110,17 +110,7 @@ const Students: FC<StudentsProps> = () => {
             <Styled.MapRow>
               {searchedStudents?.map((item) => {
                 if (item.info) {
-                  return (
-                    <RenderStudentCard
-                      item={item.info}
-                      width="49%"
-                      onClick={() =>
-                        navigate(
-                          `/students/student-profile?studentId=${item.info?.uid}`
-                        )
-                      }
-                    />
-                  );
+                  return <RenderStudentCard item={item.info} width="49%" />;
                 }
 
                 return null;

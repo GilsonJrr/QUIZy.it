@@ -2,20 +2,23 @@ import React, { FC } from "react";
 import * as Styled from "./styled";
 import { StudentTypeValues } from "Store/students/types";
 import Avatar from "components/Avatar";
+import { useNavigate } from "react-router-dom";
 
 type RenderStudentCardProps = {
   item: StudentTypeValues;
   width?: string;
-  onClick?: () => void;
 };
 
-const RenderStudentCard: FC<RenderStudentCardProps> = ({
-  item,
-  width,
-  onClick,
-}) => {
+const RenderStudentCard: FC<RenderStudentCardProps> = ({ item, width }) => {
+  const navigate = useNavigate();
+
   return (
-    <Styled.Container width={width} onClick={onClick}>
+    <Styled.Container
+      width={width}
+      onClick={() =>
+        navigate(`/students/student-profile?studentId=${item.uid}`)
+      }
+    >
       <Avatar size="big" name={item.name} photo={item.photo} />
       <Styled.InfoContainer>
         <Styled.Name>{item.name}</Styled.Name>

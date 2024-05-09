@@ -40,14 +40,14 @@ export const TutorPage = () => {
   );
 
   const filterStudents = students?.filter((e) =>
-    e.name.toUpperCase().includes(searchStudents?.toUpperCase() || "")
+    e.info?.name.toUpperCase().includes(searchStudents?.toUpperCase() || "")
   );
 
   useEffect(() => {
     if (students === undefined) {
       dispatch(requestStudentList({ uid: userID }));
     }
-  }, [dispatch, students]);
+  }, [dispatch, students, userID]);
 
   return (
     <Styled.Container>
@@ -91,7 +91,10 @@ export const TutorPage = () => {
           <>Loading...</>
         ) : (
           filterStudents?.map((item) => {
-            return <RenderStudentCard item={item} />;
+            if (item.info) {
+              return <RenderStudentCard item={item.info} />;
+            }
+            return null;
           })
         )}
       </Card>
