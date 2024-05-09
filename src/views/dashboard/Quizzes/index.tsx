@@ -19,8 +19,12 @@ import { RootState } from "Store/root-reducer";
 type QuizzesProps = {};
 
 const Quizzes: FC<QuizzesProps> = () => {
-  const { user } = useSelector((state: RootState) => state.userReducer);
-  const userType = user?.info?.userType;
+  const { user, userStudent } = useSelector(
+    (state: RootState) => state.userReducer
+  );
+  const userType = user?.info?.userType
+    ? user?.info?.userType
+    : userStudent?.info?.userType;
   const navigate = useNavigate();
   const lastQuiz = localStorage.getItem("lastQuiz") || "";
 

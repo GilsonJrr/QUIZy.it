@@ -5,12 +5,13 @@ import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 
 const QuizDashboard = () => {
-  const { user } = useSelector((state: RootState) => state.userReducer);
-  const userType = user?.info?.userType;
+  const { user, userStudent } = useSelector(
+    (state: RootState) => state.userReducer
+  );
 
-  if (userType === "student") return <StudentPage />;
+  if (userStudent?.info?.userType === "student") return <StudentPage />;
 
-  if (userType === "tutor") return <TutorPage />;
+  if (user?.info?.userType === "tutor") return <TutorPage />;
 
   return null;
 };

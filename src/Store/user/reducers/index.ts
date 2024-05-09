@@ -5,8 +5,17 @@ interface RequestUserAgenda {
   type: UserTypes.REQUEST_USER;
 }
 
+interface RequestUserStudent {
+  type: UserTypes.REQUEST_USER_STUDENT;
+}
+
 interface UserAgenda {
   type: UserTypes.USER;
+  payload: UseData;
+}
+
+interface UserStudent {
+  type: UserTypes.USER_STUDENT;
   payload: UseData;
 }
 
@@ -40,11 +49,14 @@ type AgendaAction =
   | SetUserAgenda
   | SetUserFeedback
   | SetUserStudent
-  | SetStudentToUser;
+  | SetStudentToUser
+  | RequestUserStudent
+  | UserStudent;
 
 const agendaInitialState: UserState = {
   isLoading: false,
   user: undefined,
+  userStudent: undefined,
 };
 
 const userReducer: Reducer<UserState, AgendaAction> = (
@@ -68,12 +80,28 @@ const userReducer: Reducer<UserState, AgendaAction> = (
         user: undefined,
       };
     }
+    case UserTypes.REQUEST_USER_STUDENT: {
+      return {
+        ...state,
+        isLoading: true,
+        error: undefined,
+        userStudent: undefined,
+      };
+    }
     case UserTypes.USER: {
       return {
         ...state,
         isLoading: false,
         error: undefined,
         user: action.payload,
+      };
+    }
+    case UserTypes.USER_STUDENT: {
+      return {
+        ...state,
+        isLoading: false,
+        error: undefined,
+        userStudent: action.payload,
       };
     }
     case UserTypes.SET_USER: {

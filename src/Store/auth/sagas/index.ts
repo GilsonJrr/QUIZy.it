@@ -27,7 +27,14 @@ import {
 
 import * as authSelectors from "../selectors";
 import { UseData } from "Store/user/types";
-import { setStudentToUser, setStudentUser, setUser } from "Store/user/actions";
+import {
+  requestStudentUser,
+  requestUser,
+  setStudentToUser,
+  setStudentUser,
+  setUser,
+} from "Store/user/actions";
+import { getUser, getUserStudent } from "Store/user/repository";
 // import { setUser } from "../../user/actions";
 // import { UseData } from "../../user/types";
 
@@ -45,9 +52,11 @@ export function* requestSignInEmailPasswordSaga(
         email,
         password
       );
-      // console.log("datas", userCredentials);
       localStorage.setItem("userId", userCredentials.uid);
       yield put(signIn(userCredentials.uid));
+
+      yield put(requestUser({ uid: userCredentials.uid }));
+      yield put(requestStudentUser({ uid: userCredentials.uid }));
     }
   } catch (err: any) {
     yield put(authError("cannot sign In"));

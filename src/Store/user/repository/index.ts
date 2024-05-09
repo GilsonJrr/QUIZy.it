@@ -10,8 +10,24 @@ export const getUser = async (uid: string) => {
     });
 };
 
+export const getUserStudent = async (uid: string) => {
+  return get(ref(database, `student/${uid}`))
+    .then((user) => user.val())
+    .catch((err) => {
+      throw new Error(err);
+    });
+};
+
 export const setUser = async (uid: string, data: UseData) => {
   return set(ref(database, `user/${uid}/info`), data)
+    .then((user) => user)
+    .catch((err) => {
+      throw new Error(err);
+    });
+};
+
+export const setStudentUser = async (uid: string, data: UseData) => {
+  return set(ref(database, `student/${uid}/info`), data)
     .then((user) => user)
     .catch((err) => {
       throw new Error(err);

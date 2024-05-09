@@ -9,7 +9,7 @@ import Logo from "assets/images/Logo.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
-import { requestUser } from "Store/user/actions";
+import { requestStudentUser, requestUser } from "Store/user/actions";
 
 type dashboardProps = {
   children?: ReactNode | ReactNode[];
@@ -19,7 +19,9 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state: RootState) => state.userReducer);
+  const { user, userStudent } = useSelector(
+    (state: RootState) => state.userReducer
+  );
 
   const [openMessages, setOpenMessages] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
@@ -41,10 +43,12 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
   const messages: any[] = [];
 
   const userId = localStorage.getItem("userId") || "";
+  const userType = localStorage.getItem("userType") || "";
 
   useEffect(() => {
     dispatch(requestUser({ uid: userId }));
-  }, [dispatch, userId]);
+    dispatch(requestStudentUser({ uid: userId }));
+  }, [dispatch, userId, userType]);
 
   return (
     <Styled.Container>
@@ -84,8 +88,12 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
         </Styled.HeaderMessage>
         <Styled.HeaderProfile>
           <Styled.ProfileTitles>
-            <Styled.ProfileName>{user?.info?.name || ""}</Styled.ProfileName>
-            <Styled.UserType>{user?.info?.userType || ""}</Styled.UserType>
+            <Styled.ProfileName>
+              {user?.info?.name || userStudent?.info?.name || ""}
+            </Styled.ProfileName>
+            <Styled.UserType>
+              {user?.info?.userType || userStudent?.info?.userType || ""}
+            </Styled.UserType>
           </Styled.ProfileTitles>
           {/* TODO:  "  Implementar profile aqui  "  */}
           {/* <Styled.ChevronLeft size={20} /> */}

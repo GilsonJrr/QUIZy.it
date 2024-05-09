@@ -1,6 +1,8 @@
 export enum UserTypes {
   REQUEST_USER = "REQUEST_USER",
+  REQUEST_USER_STUDENT = "REQUEST_USER_STUDENT",
   USER = "USER",
+  USER_STUDENT = "USER_STUDENT",
   CLEAN_UP_USER = "CLEAN_UP_USER",
   SET_USER = "SET_USER",
   SET_USER_STUDENT = "SET_USER_STUDENT",
@@ -11,6 +13,7 @@ export enum UserTypes {
 export type UserState = {
   isLoading: boolean;
   user: UseData | undefined;
+  userStudent: UseData | undefined;
 };
 
 export type UserAction<Payload> = {

@@ -1,14 +1,33 @@
 import { takeLatest, put, call } from "redux-saga/effects";
 
-import { user } from "../actions";
+import { user, userStudent } from "../actions";
 
-import { getUser, setNewStudent, setUser } from "../repository";
+import {
+  getUser,
+  getUserStudent,
+  setNewStudent,
+  setStudentUser,
+  setUser,
+} from "../repository";
 
 import { UserAction, UseData, UserTypes, UserRequest } from "../types";
 import { getStudentList } from "Store/students/repository";
 import { studentList } from "Store/students/actions";
 
-//agenda
+export function* requestUserStudentSaga(props: UserAction<UserRequest>): any {
+  const uid = props.payload.uid;
+
+  try {
+    if (uid) {
+      const userAgendaResponses = yield call(getUserStudent, uid);
+      console.log("userAgendaResponses", userAgendaResponses);
+      yield put(userStudent(userAgendaResponses));
+    }
+  } catch (err: any) {
+    // yield put(authError('cannot sign In'));
+  }
+}
+
 export function* requestUserSaga(props: UserAction<UserRequest>): any {
   const uid = props.payload.uid;
 
@@ -29,7 +48,7 @@ export function* setStudentUserSaga(props: UserAction<UseData>): any {
 
   try {
     if (uid && payload) {
-      yield call(setUser, uid, payload);
+      yield call(setStudentUser, uid, payload);
     }
   } catch (err: any) {
     // yield put(authError('cannot sign In'));
@@ -71,6 +90,7 @@ export function* setStudentToUserSaga(props: UserAction<UseData>): any {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default [
   takeLatest(UserTypes.REQUEST_USER, requestUserSaga),
+  takeLatest(UserTypes.REQUEST_USER_STUDENT, requestUserStudentSaga),
   takeLatest(UserTypes.SET_USER, setUserSaga),
   takeLatest(UserTypes.SET_STUDENT_TO_USER, setStudentToUserSaga),
   takeLatest(UserTypes.SET_USER_STUDENT, setStudentUserSaga),

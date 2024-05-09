@@ -22,6 +22,7 @@ type StudentCreateProps = {};
 type TStudent = {
   name: string;
   phone?: string;
+  photo?: string;
   email: string;
   group?: string;
   about?: string;
@@ -124,12 +125,20 @@ const StudentCreate: FC<StudentCreateProps> = () => {
       <Styled.ContainerInner>
         <Card title={"New Student"} isEmpty={false} gridName="newQuiz">
           <Styled.Form id="newStudentForm" onSubmit={handleSubmit(onSubmit)}>
-            <SimpleInput
-              label={"Name"}
-              placeholder="Enter the student Name"
-              error={errors.name}
-              {...register("name")}
-            />
+            <Styled.SelectContainer>
+              <SimpleInput
+                label={"Name"}
+                placeholder="Enter the student Name"
+                error={errors.name}
+                {...register("name")}
+              />
+              <SimpleInput
+                label={"Photo"}
+                placeholder="Enter the student photo"
+                error={errors.photo}
+                {...register("photo")}
+              />
+            </Styled.SelectContainer>
             <Styled.SelectContainer>
               <SimpleInput
                 label={"Phone"}

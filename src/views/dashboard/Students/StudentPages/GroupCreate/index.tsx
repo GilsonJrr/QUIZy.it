@@ -79,7 +79,7 @@ const GroupCreate: FC<StudentCreateProps> = () => {
             />
             <TextAreaInput
               label="About"
-              height="45vh"
+              height="40vh"
               error={errors.about}
               {...register("about")}
             />

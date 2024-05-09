@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import * as Styled from "./styled";
 import SimpleInput from "components/inputs/SimpleInput";
 import Logo from "assets/images/White_Logo.png";
@@ -33,9 +33,11 @@ const Login: FC<LoginProps> = () => {
   });
 
   const onSubmit = (data: TLogin) => {
-    console.log("Data", data);
     dispatch(
-      requestSignInEmailPassword({ email: data.login, password: data.password })
+      requestSignInEmailPassword({
+        email: data.login,
+        password: data.password,
+      })
     );
   };
 

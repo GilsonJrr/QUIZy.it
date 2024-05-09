@@ -2,12 +2,7 @@ import { takeLatest, put, call } from "redux-saga/effects";
 
 import { student, studentList } from "../actions";
 
-import {
-  getStudent,
-  getStudentList,
-  setStudent,
-  removeStudent,
-} from "../repository";
+import { getStudent, getStudentList, removeStudent } from "../repository";
 
 import {
   StudentAction,

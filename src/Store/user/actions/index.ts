@@ -13,6 +13,15 @@ export function requestUser(props: UserRequest): UserAction<UserRequest> {
   };
 }
 
+export function requestStudentUser(
+  props: UserRequest
+): UserAction<UserRequest> {
+  return {
+    type: UserTypes.REQUEST_USER_STUDENT,
+    payload: { ...props },
+  };
+}
+
 export function setUser(props: UseData): UserAction<UseData> {
   return {
     type: UserTypes.SET_USER,
@@ -44,6 +53,13 @@ export function setUserFeedback(props: FeedbackData): UserAction<FeedbackData> {
 export function user(props: UseData): UserAction<UseData> {
   return {
     type: UserTypes.USER,
+    payload: { ...props },
+  };
+}
+
+export function userStudent(props: UseData): UserAction<UseData> {
+  return {
+    type: UserTypes.USER_STUDENT,
     payload: { ...props },
   };
 }

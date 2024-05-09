@@ -72,7 +72,6 @@ const studentReducer: Reducer<StudentState, StudentAction> = (
         ...state,
         isLoading: true,
         error: undefined,
-        payload: undefined,
         students: undefined,
       };
     }

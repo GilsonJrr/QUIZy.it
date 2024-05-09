@@ -42,8 +42,6 @@ const StudentProfile: FC<StudentProfileProps> = () => {
     };
   }, [dispatch]);
 
-  console.log("unico estudante", student?.name);
-
   if (isLoading) {
     return <>Loading...</>;
   }

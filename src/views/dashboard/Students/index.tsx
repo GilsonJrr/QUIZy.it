@@ -116,7 +116,9 @@ const Students: FC<StudentsProps> = () => {
                     item={item}
                     width="49%"
                     onClick={() =>
-                      navigate(`/students/student-profile?studentId=${item.id}`)
+                      navigate(
+                        `/students/student-profile?studentId=${item.uid}`
+                      )
                     }
                   />
                 );
