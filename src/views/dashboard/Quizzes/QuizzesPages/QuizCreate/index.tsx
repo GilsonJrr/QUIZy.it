@@ -2,10 +2,14 @@ import React, { FC, useEffect, useState } from "react";
 import * as Styled from "./styled";
 import BreadCrumbs from "components/BreadCrumbs";
 import * as Block from "blocks/QuizCreate/index";
+import { QuizRequest, QuizTypeValues } from "Store/quiz/types";
+import { useDispatch } from "react-redux";
+import { setQuiz } from "Store/quiz/actions";
 
 type QuizCreateProps = {};
 
 const QuizCreate: FC<QuizCreateProps> = () => {
+  const dispatch = useDispatch();
   const [quizType, setQuizType] = useState<string>();
 
   const crumbs = [
@@ -25,11 +29,18 @@ const QuizCreate: FC<QuizCreateProps> = () => {
     };
   }, []);
 
+  const handleSendQuiz = (quiz: QuizTypeValues) => {
+    console.log("to be sent quiz", quiz);
+    dispatch(setQuiz(quiz as QuizRequest));
+  };
+
   return (
     <Styled.Container>
       <BreadCrumbs crumbs={!quizType ? crumbs : crumbsQuestion} />
       {!quizType && <Block.FormQuiz quizType={(e) => setQuizType(e)} />}
-      {quizType === "Multiple" && <Block.MultipleQuestion />}
+      {quizType === "Multiple" && (
+        <Block.MultipleQuestion sendQuiz={(quiz) => handleSendQuiz(quiz)} />
+      )}
       {quizType === "TrueOrFalse" && <Block.TrueOrFalseQuestion />}
     </Styled.Container>
   );

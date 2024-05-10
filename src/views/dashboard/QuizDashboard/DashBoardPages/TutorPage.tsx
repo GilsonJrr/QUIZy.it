@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import * as Styled from "../styled";
 import { TTutorResult } from "types/index";
-import {
-  TutorResults,
-  easyQuizzes,
-  hardQuizzes,
-  mediumQuizzes,
-} from "assets/consts";
+import { TutorResults } from "assets/consts";
 import Table from "components/Table";
 import Card from "components/Card";
 import RenderTable from "components/renderItems/RenderTable";
@@ -16,15 +11,17 @@ import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { useDispatch } from "react-redux";
 import { requestStudentList } from "Store/students/actions";
+import { requestQuizList } from "Store/quiz/actions";
 
 export const TutorPage = () => {
   const { students, isLoading } = useSelector(
     (state: RootState) => state.studentReducer
   );
+  const { quizzes } = useSelector((state: RootState) => state.quizReducer);
 
   const dispatch = useDispatch();
 
-  const userID = localStorage.getItem("userID") || "";
+  const userID = localStorage.getItem("userId") || "";
 
   const [search, setSearch] = useState<string>();
   const [searchStudents, setSearchStudents] = useState<string>();
@@ -34,10 +31,6 @@ export const TutorPage = () => {
     { label: "Score", width: 15 },
     { label: "", width: 15 },
   ];
-
-  const allQuizzes = [...easyQuizzes, ...mediumQuizzes, ...hardQuizzes].filter(
-    (e) => e.title.toUpperCase().includes(search?.toUpperCase() || "")
-  );
 
   const filterStudents = students?.filter((e) =>
     e.info?.name.toUpperCase().includes(searchStudents?.toUpperCase() || "")
@@ -49,12 +42,18 @@ export const TutorPage = () => {
     }
   }, [dispatch, students, userID]);
 
+  useEffect(() => {
+    dispatch(requestQuizList({ uid: userID || "", size: 50 }));
+  }, [dispatch, userID]);
+
+  console.log("quizzes", quizzes);
+
   return (
     <Styled.Container>
       <Card
         gridName="card1"
         title="All Quizes"
-        isEmpty={allQuizzes.length === 0}
+        isEmpty={quizzes?.length === 0}
         emptyMessage={
           search
             ? "Quiz not found"
@@ -67,7 +66,7 @@ export const TutorPage = () => {
         redirectTo="Quizzes"
         redirectPath="/quizzes"
       >
-        {allQuizzes?.map((item) => {
+        {quizzes?.map((item) => {
           return <RenderQuizCard item={item} editMode />;
         })}
       </Card>

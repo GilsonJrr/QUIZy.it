@@ -4,21 +4,23 @@ import { TCollection } from "types/index";
 import { useModalContext } from "components/Modal/modalContext";
 import PreQuizModal from "components/Modal/PreQuizModal";
 import EmptyImage from "assets/images/Empty_quiz_image_state.png";
+import { QuizTypeValues } from "Store/quiz/types";
 
-type RenderQuizCardProps = { item: TCollection; editMode?: boolean };
+type RenderQuizCardProps = { item: QuizTypeValues; editMode?: boolean };
 
 const RenderQuizCard: FC<RenderQuizCardProps> = ({ item, editMode }) => {
   const { handleModal } = useModalContext();
 
   return (
-    <Styled.QuizCard onClick={() => handleModal(<PreQuizModal item={item} />)}>
+    // <Styled.QuizCard onClick={() => handleModal(<PreQuizModal item={item} />)}>
+    <Styled.QuizCard>
       <Styled.QuizImage src={item.image ? item.image : EmptyImage} />
       <Styled.QuizTitlesContainer>
         <Styled.QuizTitle>{item.title}</Styled.QuizTitle>
         <Styled.QuizInfo>
-          {item.difficult} | {item.type}
+          {item.category} | {item.type}
         </Styled.QuizInfo>
-        <Styled.Description>{item.subTitle}</Styled.Description>
+        <Styled.Description>{item.description}</Styled.Description>
         <Styled.StartButton>{editMode ? "Edit" : "Start"}</Styled.StartButton>
       </Styled.QuizTitlesContainer>
     </Styled.QuizCard>

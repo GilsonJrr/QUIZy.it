@@ -5,8 +5,12 @@ import SimpleInput from "components/inputs/SimpleInput";
 import { multipleChosesSchema } from "lib/schemas";
 import { yupResolver } from "@hookform/resolvers/yup";
 import QuizForm from "layout/QuizForm";
+import { QuizTypeValues } from "Store/quiz/types";
+import { idGenerator } from "utils/index";
 
-type MultipleQuestionProps = {};
+type MultipleQuestionProps = {
+  sendQuiz: (data: QuizTypeValues) => void;
+};
 
 type TMultipleQuestions = {
   questions: {
@@ -19,7 +23,9 @@ type TMultipleQuestions = {
   }[];
 };
 
-const MultipleQuestion: FC<MultipleQuestionProps> = () => {
+const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
+  const userID = localStorage.getItem("userId");
+
   const [question, setQuestion] = useState([0]);
   const [selectedQuestion, setSelectedQuestion] = useState<number>(0);
 
@@ -46,11 +52,14 @@ const MultipleQuestion: FC<MultipleQuestionProps> = () => {
     };
 
     const dataPrepared = {
+      id: idGenerator(18),
+      uid: userID || "",
       ...JSON.parse(localStorage.getItem("preSendQuiz") || ""),
       ...addRightAnswer(),
     };
 
     console.log("data aqui", dataPrepared);
+    sendQuiz(dataPrepared);
   };
 
   const handleAddQuestion = () => {

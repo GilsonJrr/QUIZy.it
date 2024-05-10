@@ -6,6 +6,7 @@ import { studentReducer } from "./students/reducers";
 import { groupReducer } from "./group/reducers";
 import { userReducer } from "./user/reducers";
 import { categoryReducer } from "./category/reducers";
+import { quizReducer } from "./quiz/reducers";
 
 export const rootReducer = combineReducers({
   authReducer,
@@ -14,6 +15,7 @@ export const rootReducer = combineReducers({
   groupReducer,
   userReducer,
   categoryReducer,
+  quizReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer> & PersistedState;

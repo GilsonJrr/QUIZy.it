@@ -36,7 +36,9 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
   const { categories } = useSelector(
     (state: RootState) => state.categoryReducer
   );
-  const { students } = useSelector((state: RootState) => state.studentReducer);
+  const { quizzesCategory } = useSelector(
+    (state: RootState) => state.quizReducer
+  );
 
   const userID = localStorage.getItem("userId");
 
@@ -81,12 +83,11 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
 
   //TODO: Mudar para "hasQuiz" aqui
   const hasStudent = useMemo(() => {
-    return students?.some(
+    return quizzesCategory?.some(
       (a) =>
-        a.info?.group ===
-        categories?.filter((g) => g.id === categoryId)[0]?.title
+        a.category === categories?.filter((g) => g.id === categoryId)[0]?.title
     );
-  }, [categoryId, categories, students]);
+  }, [categoryId, categories, quizzesCategory]);
 
   const handleDelete = () => {
     dispatch(
@@ -109,7 +110,7 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
                   ? {
                       type: "custom",
                       message:
-                        "Category has active student, name can't be changed",
+                        "Category has active quiz, name can't be changed",
                     }
                   : errors.title
               }

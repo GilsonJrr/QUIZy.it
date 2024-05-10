@@ -1,13 +1,21 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import * as Styled from "../styled";
 import { TResult, TCollection, THeader } from "types/index";
-import { easyQuizzes } from "assets/consts";
 import Table from "components/Table";
 import Card from "components/Card";
 import RenderTable from "components/renderItems/RenderTable";
 import RenderQuizCard from "components/renderItems/RenderQuizCard";
+import { useSelector } from "react-redux";
+import { RootState } from "Store/root-reducer";
+import { useDispatch } from "react-redux";
+import { requestQuizList } from "Store/quiz/actions";
 
 export const StudentPage = () => {
+  const dispatch = useDispatch();
+  const { quizzes } = useSelector((state: RootState) => state.quizReducer);
+
+  const userID = localStorage.getItem("userId");
+
   const myList: TCollection[] = JSON.parse(
     localStorage.getItem("netQuiz_my_list") || "null"
   );
@@ -24,16 +32,20 @@ export const StudentPage = () => {
     return resultStorage ? JSON.parse(resultStorage).reverse() : [];
   }, []);
 
+  useEffect(() => {
+    dispatch(requestQuizList({ uid: userID || "", size: 50 }));
+  }, [dispatch, userID]);
+
   return (
     <Styled.Container>
       <Card
         gridName="card1"
         title="New Quizes"
-        isEmpty={easyQuizzes && easyQuizzes.length < 0}
+        isEmpty={quizzes?.length === 0}
         emptyMessage={"No new quiz available at this time. Please check later"}
         scrollable
       >
-        {easyQuizzes?.map((item) => {
+        {quizzes?.map((item) => {
           return <RenderQuizCard item={item} />;
         })}
       </Card>
@@ -46,9 +58,10 @@ export const StudentPage = () => {
         }
         scrollable
       >
-        {myList?.map((list) => {
+        {/* {myList?.map((list) => {
           return <RenderQuizCard item={list} />;
-        })}
+        })} */}
+        <></>
       </Card>
       <Card
         gridName="card2"

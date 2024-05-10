@@ -49,13 +49,10 @@ const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
     return (
       <RenderQuizCard
         item={{
-          id: 0,
-          uid: 0,
           title: watch("title"),
-          subTitle: watch("description") || "",
+          description: watch("description") || "",
           image: watch("image") || "",
-          info: undefined,
-          difficult: watch("category"),
+          category: watch("category"),
           type: watch("type"),
         }}
       />
