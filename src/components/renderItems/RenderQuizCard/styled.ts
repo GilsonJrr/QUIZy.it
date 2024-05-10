@@ -39,3 +39,16 @@ export const StartButton = styled.div`
   right: 30px;
   font-weight: 600;
 `;
+
+export const Description = styled.p`
+  width: 80%;
+  margin-top: 5px;
+  font-size: 0.9rem;
+  max-height: 6em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-weight: 400;
+`;

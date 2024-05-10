@@ -22,13 +22,14 @@ const ToggleInput: FC<ToggleInputProps> = ({
   const [active, setActive] = useState(0);
 
   const handleToggle = (value: boolean) => {
-    setValue(!value || true);
+    setValue(!value);
     active === 0 ? setActive(1) : setActive(0);
   };
 
   useEffect(() => {
     setValue(true);
-  }, [setValue]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Styled.Wrapper width={width}>

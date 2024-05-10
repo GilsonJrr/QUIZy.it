@@ -69,6 +69,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
     const newStudentData = {
       uid: userID,
       group: data.group === "groupLess" ? "" : data.group,
+      userType: "student",
       ...rest,
     };
 
@@ -76,6 +77,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
       uid: studentId || "",
       group: data.group === "groupLess" ? "" : data.group,
       tutorID: userID || "",
+      userType: "student",
       ...rest,
     };
 

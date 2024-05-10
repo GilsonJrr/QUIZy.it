@@ -31,26 +31,36 @@ export const StudentCreateSchema = Yup.object().shape({
   socialNetWork: Yup.string(),
 });
 
-export const MultipleChosesSchema = Yup.object().shape({
-  questionTitle: Yup.string().required("You must add a title"),
-  answer01: Yup.string().required("You must add a right answer"),
-  answer02: Yup.string().required("You must add at least one more answer"),
-  answer03: Yup.string(),
-  answer04: Yup.string(),
-  rightAnswer: Yup.string(),
+export const multipleChosesSchema = Yup.object().shape({
+  questions: Yup.array(
+    Yup.object().shape({
+      questionTitle: Yup.string().required("Question title is required"),
+      answer01: Yup.string().required("Answer 1 is required"),
+      answer02: Yup.string().required("Answer 2 is required"),
+      answer03: Yup.string().optional(), // Optional answer 3
+      answer04: Yup.string().optional(), // Optional answer 4
+      rightAnswer: Yup.string().optional(),
+    })
+  )
+    .min(1, "You need at least one question")
+    .required("Questions are required"),
 });
 
 export const trueOrFalseSchema = Yup.object().shape({
-  questionTitle: Yup.string().required("You must add a title"),
-  answer: Yup.boolean().required("You must add a right answer"),
+  questions: Yup.array(
+    Yup.object().shape({
+      questionTitle: Yup.string().required("Question title is required"),
+      rightAnswer: Yup.boolean(),
+    })
+  )
+    .min(1, "You need at least one question")
+    .required("Questions are required"),
 });
 
 export const NewQuizSchema = Yup.object().shape({
   title: Yup.string().required("You must add a title").min(3),
   description: Yup.string(),
-  image: Yup.string().required("You must add a image"),
+  image: Yup.string(),
   type: Yup.string().required("O tipo é obrigatório"),
   category: Yup.string().required("A categoria é obrigatória"),
-  questions: Yup.array().of(MultipleChosesSchema),
-  trueOrFalseQuestions: Yup.array().of(trueOrFalseSchema),
 });
