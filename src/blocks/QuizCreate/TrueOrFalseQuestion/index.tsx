@@ -6,8 +6,12 @@ import { trueOrFalseSchema } from "lib/schemas";
 import { yupResolver } from "@hookform/resolvers/yup";
 import QuizForm from "layout/QuizForm";
 import ToggleInput from "components/inputs/ToggleInput";
+import { QuizTypeValues } from "Store/quiz/types";
+import { idGenerator } from "utils/index";
 
-type TrueOrFalseQuestionProps = {};
+type TrueOrFalseQuestionProps = {
+  sendQuiz: (data: QuizTypeValues) => void;
+};
 
 type TTrueOrFalseQuestions = {
   questions: {
@@ -16,9 +20,11 @@ type TTrueOrFalseQuestions = {
   }[];
 };
 
-const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = () => {
+const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
   const [question, setQuestion] = useState([0]);
   const [selectedQuestion, setSelectedQuestion] = useState<number>(0);
+
+  const userID = localStorage.getItem("userId");
 
   const {
     register,
@@ -35,11 +41,14 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = () => {
     handleTestAllQuestions();
 
     const dataPrepared = {
+      id: idGenerator(18),
+      uid: userID || "",
       ...JSON.parse(localStorage.getItem("preSendQuiz") || ""),
       ...data,
     };
 
     console.log("data aqui e", dataPrepared);
+    sendQuiz(dataPrepared);
   };
 
   const handleAddQuestion = () => {

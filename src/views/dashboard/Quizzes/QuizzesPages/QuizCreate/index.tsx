@@ -5,10 +5,12 @@ import * as Block from "blocks/QuizCreate/index";
 import { QuizRequest, QuizTypeValues } from "Store/quiz/types";
 import { useDispatch } from "react-redux";
 import { setQuiz } from "Store/quiz/actions";
+import { useNavigate } from "react-router-dom";
 
 type QuizCreateProps = {};
 
 const QuizCreate: FC<QuizCreateProps> = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [quizType, setQuizType] = useState<string>();
 
@@ -32,6 +34,7 @@ const QuizCreate: FC<QuizCreateProps> = () => {
   const handleSendQuiz = (quiz: QuizTypeValues) => {
     console.log("to be sent quiz", quiz);
     dispatch(setQuiz(quiz as QuizRequest));
+    navigate("/quizzes");
   };
 
   return (
@@ -41,7 +44,9 @@ const QuizCreate: FC<QuizCreateProps> = () => {
       {quizType === "Multiple" && (
         <Block.MultipleQuestion sendQuiz={(quiz) => handleSendQuiz(quiz)} />
       )}
-      {quizType === "TrueOrFalse" && <Block.TrueOrFalseQuestion />}
+      {quizType === "TrueOrFalse" && (
+        <Block.TrueOrFalseQuestion sendQuiz={(quiz) => handleSendQuiz(quiz)} />
+      )}
     </Styled.Container>
   );
 };

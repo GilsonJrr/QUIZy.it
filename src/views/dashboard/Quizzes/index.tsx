@@ -33,6 +33,7 @@ const Quizzes: FC<QuizzesProps> = () => {
     (state: RootState) => state.quizReducer
   );
 
+  //TODO: lembrar que quando for estudante aqui ser chamado o id do tutor
   const userID = localStorage.getItem("userId");
 
   const userType = user?.info?.userType
@@ -45,12 +46,12 @@ const Quizzes: FC<QuizzesProps> = () => {
   const [search, setSearch] = useState<string>();
 
   const categories: TCategories[] = [
-    { title: "No category" },
     ...(cat && cat.length > 0
       ? cat?.map((c) => {
           return { title: c.title, image: c.image };
         })
       : []),
+    { title: "No category" },
   ];
 
   const StudentOptions: TOptions[] = [
@@ -123,9 +124,11 @@ const Quizzes: FC<QuizzesProps> = () => {
         searchValue={search}
         setSearch={(e) => setSearch(e)}
       >
-        {quizzes?.map((item) => {
-          return <RenderQuizCard item={item} />;
-        })}
+        {quizzes &&
+          quizzes?.length > 0 &&
+          quizzes?.map((item) => {
+            return <RenderQuizCard item={item} />;
+          })}
         <></>
       </Card>
       <Card
