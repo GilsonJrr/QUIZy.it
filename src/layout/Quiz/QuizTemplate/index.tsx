@@ -1,71 +1,26 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import he from "he";
+import React, { FC, useEffect, useState } from "react";
 import * as Styled from "./styled";
-import { Answer, EAnswerIndexation, QuestionFiltered } from "types";
-import { randomize } from "utils";
-import { useLocation, useNavigate } from "react-router-dom";
 
 import { FaCheck } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
+import { Answer, EAnswerIndexation } from "types/index";
 
-const Quiz = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
+type QuizTemplateProps = {
+  onClose?: () => void;
+  questions: any[];
+  onFinish?: () => void;
+};
 
-  const category = new URLSearchParams(location.search).get("category");
-  const difficulty = new URLSearchParams(location.search).get("difficulty");
-  const type = new URLSearchParams(location.search).get("type");
-  const amount = new URLSearchParams(location.search).get("amount");
-
-  const [questions, setQuestions] = useState<QuestionFiltered[]>();
+const QuizTemplate: FC<QuizTemplateProps> = ({
+  onClose,
+  questions,
+  onFinish,
+}) => {
   const [current, setCurrent] = useState(0);
-  const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<Answer>();
   const [showAnswer, setShowAnswer] = useState(false);
   const [showScore, setShowScore] = useState(false);
-
-  console.log("questions", questions);
-
-  useEffect(() => {
-    axios
-      .get(
-        `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&type=${type}`
-      )
-      .then((data: any) => {
-        setQuestions(
-          data.data.results.map((quiz: any) => {
-            return {
-              question: quiz.question,
-              answers: randomize([
-                { id: 1, answer: quiz.correct_answer, type: "correct" },
-                {
-                  id: 2,
-                  answer: quiz.incorrect_answers[0],
-                  type: "incorrect",
-                },
-                {
-                  id: 3,
-                  answer: quiz.incorrect_answers[1],
-                  type: "incorrect",
-                },
-                {
-                  id: 4,
-                  answer: quiz.incorrect_answers[2],
-                  type: "incorrect",
-                },
-              ]),
-              correctAnswers: quiz.correct_answer,
-            };
-          })
-        );
-      })
-      .catch((err) => console.error(err));
-  }, [amount, category, difficulty, type]);
-
-  useEffect(() => {
-    localStorage.setItem("lastQuiz", `${location.pathname}${location.search}`);
-  }, [location.pathname, location.search]);
+  const [score, setScore] = useState(0);
 
   const handleAnswer = () => {
     selectedAnswer?.type === "correct" && setScore(score + 1);
@@ -84,39 +39,16 @@ const Quiz = () => {
       : setCurrent(current + 1);
   };
 
-  console.log("questions", current + 1, questions?.length, showScore);
-
-  const DecodedText = (text: string) => {
-    const decodedText = he.decode(text);
-
-    return decodedText;
-  };
-
   const finishQuiz = () => {
     setShowScore(false);
-    navigate("/quizResult", {
-      state: {
-        score: score,
-        amount: amount,
-        quiz: {
-          category: category,
-          difficulty: difficulty,
-          type: type,
-          amount: amount,
-        },
-      },
-    });
+    onFinish?.();
   };
-
-  if (!questions) {
-    return <h1>Loading...</h1>;
-  }
 
   return (
     <Styled.Container>
       <Styled.QuizContainer>
         <Styled.Header>
-          <Styled.Close onClick={() => navigate(-1)}>
+          <Styled.Close onClick={onClose}>
             <IoClose size={20} />
           </Styled.Close>
           <Styled.ProgressContainer>
@@ -132,13 +64,11 @@ const Quiz = () => {
             </Styled.ProgressNumber>
           </Styled.ProgressContainer>
         </Styled.Header>
-        Split here in another component
+
         <Styled.QuestionContainer>
-          <Styled.Question>
-            {DecodedText(questions?.[current]?.question)}
-          </Styled.Question>
+          <Styled.Question>{questions?.[current]?.question}</Styled.Question>
           <Styled.OptionsContainer>
-            {questions?.[current]?.answers.map((answer, index: number) => {
+            {questions?.[current]?.answers.map((answer: any, index: number) => {
               const active = answer.answer === selectedAnswer?.answer;
               return (
                 <Styled.AnswerButton
@@ -150,14 +80,14 @@ const Quiz = () => {
                     {EAnswerIndexation[index]}
                   </Styled.AnswerIndex>
                   <Styled.AnswerText active={active}>
-                    {DecodedText(answer.answer || "")}
+                    {answer.answer || ""}
                   </Styled.AnswerText>
                 </Styled.AnswerButton>
               );
             })}
           </Styled.OptionsContainer>
+          {/* {children} */}
         </Styled.QuestionContainer>
-        Split here in another component
       </Styled.QuizContainer>
 
       <Styled.QuizCheckContainer
@@ -211,4 +141,4 @@ const Quiz = () => {
   );
 };
 
-export default Quiz;
+export default QuizTemplate;

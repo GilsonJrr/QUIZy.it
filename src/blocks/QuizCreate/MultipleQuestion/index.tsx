@@ -6,7 +6,8 @@ import { multipleChosesSchema } from "lib/schemas";
 import { yupResolver } from "@hookform/resolvers/yup";
 import QuizForm from "layout/QuizForm";
 import { QuizTypeValues } from "Store/quiz/types";
-import { idGenerator } from "utils/index";
+import { idGenerator, randomize } from "utils/index";
+import QuizTemplate from "layout/Quiz/QuizTemplate";
 
 type MultipleQuestionProps = {
   sendQuiz: (data: QuizTypeValues) => void;
@@ -96,9 +97,44 @@ const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
     }
   };
 
+  const questions = [
+    {
+      id: 1,
+      answer: watch(`questions.${selectedQuestion}.answer01`),
+      type: "correct",
+    },
+    {
+      id: 2,
+      answer: watch(`questions.${selectedQuestion}.answer02`),
+      type: "incorrect",
+    },
+    {
+      id: 3,
+      answer: watch(`questions.${selectedQuestion}.answer03`),
+      type: "incorrect",
+    },
+    {
+      id: 4,
+      answer: watch(`questions.${selectedQuestion}.answer04`),
+      type: "incorrect",
+    },
+  ];
+
+  const questionTest: any[] = [
+    {
+      question: watch(`questions.${selectedQuestion}.questionTitle`),
+      answers: randomize(questions.filter((a) => a.answer !== "")),
+      correctAnswers: watch(`questions.${selectedQuestion}.answer01`),
+    },
+  ];
+
   return (
     <QuizForm
-      preview={undefined}
+      preview={
+        <Styled.PreviewContainer>
+          <QuizTemplate questions={questionTest} />
+        </Styled.PreviewContainer>
+      }
       edit={false}
       formName={"FormMultipleQuestion"}
       title={"Multiple choices"}
