@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
-type Props = { width?: string };
+type Props = { width?: string; viewMode?: boolean };
 
 export const Container = styled.div<Props>`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${({ viewMode }) => (viewMode ? "row" : "column")};
   gap: 4px;
   position: relative;
+  align-items: ${({ viewMode }) => (viewMode ? "center" : "auto")};
+  justify-content: ${({ viewMode }) => (viewMode ? "center" : "auto")};
   width: ${({ width }) => width || "100%"};
 `;
 
@@ -19,7 +21,7 @@ export const Input = styled.input<Props>`
   border-radius: 10px;
   font-size: 1.4rem;
   padding: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border: ${({ viewMode }) => (viewMode ? 0 : 1)}px solid rgba(0, 0, 0, 0.5);
   outline: none;
 `;
 

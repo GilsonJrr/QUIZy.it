@@ -20,7 +20,7 @@ import LoadingSpinner from "components/LoadingSpiner";
 
 type StudentCreateProps = {};
 
-type TStudent = {
+export type TStudent = {
   name: string;
   phone?: string;
   photo?: string;
@@ -30,6 +30,9 @@ type TStudent = {
   birthDate?: string;
   socialNetWork?: string;
   address?: string;
+  userType?: string;
+  uid?: string;
+  tutorID?: string;
 };
 
 const StudentCreate: FC<StudentCreateProps> = () => {
@@ -170,7 +173,6 @@ const StudentCreate: FC<StudentCreateProps> = () => {
         socialNetWork,
         address,
         //not used
-        age,
         tutorID,
         uid,
         userType,

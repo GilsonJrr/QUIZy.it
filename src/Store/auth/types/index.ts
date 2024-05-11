@@ -57,12 +57,15 @@ export type UserRequest = {
 export type UseData = {
   email: string;
   name: string;
-  age: string;
+  birthDate: string;
   gender: string;
   phone: string;
   uid: string;
   observation: string;
   firstLogIn: boolean;
+  userType: string;
+  photo: string;
+  socialNetWork: string;
 };
 
 export enum ErrorsArray {

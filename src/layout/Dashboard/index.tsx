@@ -10,6 +10,8 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { requestStudentUser, requestUser } from "Store/user/actions";
+import { useModalContext } from "components/Modal/modalContext";
+import ProfileModal from "components/Modal/ProfileModal";
 
 type dashboardProps = {
   children?: ReactNode | ReactNode[];
@@ -23,10 +25,10 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
     (state: RootState) => state.userReducer
   );
 
+  const { handleModal } = useModalContext();
+
   const [openMessages, setOpenMessages] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
-
-  // const userName = "UserName";
 
   const currentUrl = location.pathname;
   const search = location.search && location.search[0];
@@ -41,6 +43,10 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
 
   const handleOpenMessages = () => {
     messages.length > 0 && setOpenMessages(!openMessages);
+  };
+
+  const handleOpenProfile = () => {
+    handleModal(<ProfileModal />);
   };
 
   const messages: any[] = [];
@@ -89,7 +95,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
             </Styled.DropDowContainer>
           </Styled.AlertContainer>
         </Styled.HeaderMessage>
-        <Styled.HeaderProfile>
+        <Styled.HeaderProfile onClick={handleOpenProfile}>
           <Styled.ProfileTitles>
             <Styled.ProfileName>
               {user?.info?.name || userStudent?.info?.name || ""}
@@ -98,8 +104,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
               {user?.info?.userType || userStudent?.info?.userType || ""}
             </Styled.UserType>
           </Styled.ProfileTitles>
-          {/* TODO:  "  Implementar profile aqui  "  */}
-          {/* <Styled.ChevronLeft size={20} /> */}
+          <Styled.ChevronLeft size={20} />
         </Styled.HeaderProfile>
       </Styled.Header>
       <Styled.HeaderMobile>

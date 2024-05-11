@@ -52,7 +52,8 @@ const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
           title: watch("title"),
           description: watch("description") || "",
           image: watch("image") || "",
-          category: watch("category"),
+          category:
+            watch("category") === "categoryLess" ? "" : watch("category"),
           type: watch("type"),
         }}
       />

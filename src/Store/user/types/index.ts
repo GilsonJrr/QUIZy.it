@@ -28,7 +28,6 @@ export type UserRequest = {
 export type Info = {
   email: string;
   name: string;
-  age: string;
   phone: string;
   uid: string;
   userType: string;
@@ -45,11 +44,10 @@ export type Info = {
 export type UseData = {
   email: string;
   name: string;
-  age: string;
-  phone: string;
-  uid: string;
-  userType: string;
-  tutorID: string;
+  phone?: string;
+  uid?: string;
+  userType?: string;
+  tutorID?: string;
   group?: string;
   about?: string;
   birthDate?: string;

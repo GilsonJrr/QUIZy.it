@@ -18,7 +18,7 @@ const RenderQuizCard: FC<RenderQuizCardProps> = ({ item, editMode }) => {
       <Styled.QuizTitlesContainer>
         <Styled.QuizTitle>{item.title}</Styled.QuizTitle>
         <Styled.QuizInfo>
-          {item.category} | {item.type}
+          {item.category ? `${item.category} | ` : ""} {item.type}
         </Styled.QuizInfo>
         <Styled.Description>{item.description}</Styled.Description>
         <Styled.StartButton>{editMode ? "Edit" : "Start"}</Styled.StartButton>

@@ -83,7 +83,6 @@ export function* requestSignUpEmailPasswordSaga(
       yield put(signUpSuccess(userCredentials));
       const newUser: UseData = {
         name: name || "",
-        age: "",
         phone: "",
         email: email,
         uid: userCredentials.user.uid,
