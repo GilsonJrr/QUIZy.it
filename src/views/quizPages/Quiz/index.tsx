@@ -11,6 +11,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { requestQuiz } from "Store/quiz/actions";
 
+type TQuizResume = {
+  question?: string;
+  rightAnswer?: string;
+  selectedAnswer?: string;
+};
+
 const Quiz = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -26,6 +32,8 @@ const Quiz = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<Answer>();
   const [showAnswer, setShowAnswer] = useState(false);
   const [showScore, setShowScore] = useState(false);
+
+  const [quizResume, setQuizResume] = useState<TQuizResume[]>([]);
 
   // console.log("questions", questions);
 
@@ -72,6 +80,14 @@ const Quiz = () => {
   const handleAnswer = () => {
     selectedAnswer?.type === "correct" && setScore(score + 1);
     setShowAnswer(true);
+    setQuizResume([
+      ...quizResume,
+      {
+        question: questions?.[current]?.question,
+        rightAnswer: questions?.[current]?.correctAnswers,
+        selectedAnswer: selectedAnswer?.answer,
+      },
+    ]);
   };
 
   useEffect(() => {

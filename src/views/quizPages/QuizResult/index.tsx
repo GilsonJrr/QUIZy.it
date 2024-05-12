@@ -15,26 +15,26 @@ const QuizResult: FC<QuizResultProps> = () => {
   console.log("state", location.state);
 
   const handleResults = () => {
-    let initialItems: TResult[] | null = JSON.parse(
-      localStorage.getItem("netQuiz_my_results") || "null"
-    );
+    // let initialItems: TResult[] | null = JSON.parse(
+    //   localStorage.getItem("netQuiz_my_results") || "null"
+    // );
 
-    if (!initialItems) {
-      initialItems = [];
-    }
+    // if (!initialItems) {
+    //   initialItems = [];
+    // }
 
-    initialItems.push({
-      score: `${score}/${amount}`,
-      quiz: quiz.category,
-      date: new Date().toISOString(),
-      quizInfo: {
-        difficulty: quiz.difficulty,
-        amount: quiz.amount,
-        type: quiz.type,
-      },
-    });
+    // initialItems.push({
+    //   score: `${score}/${amount}`,
+    //   quiz: quiz.category,
+    //   date: new Date().toISOString(),
+    //   quizInfo: {
+    //     difficulty: quiz.difficulty,
+    //     amount: quiz.amount,
+    //     type: quiz.type,
+    //   },
+    // });
 
-    localStorage.setItem("netQuiz_my_results", JSON.stringify(initialItems));
+    // localStorage.setItem("netQuiz_my_results", JSON.stringify(initialItems));
     navigate("/results");
   };
 
