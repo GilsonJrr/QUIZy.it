@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import * as Styled from "./styled";
 import Card from "components/Card";
-import { easyQuizzes, hardQuizzes, mediumQuizzes } from "assets/consts";
 import RenderQuizCard from "components/renderItems/RenderQuizCard";
 
 import { GiCardRandom } from "react-icons/gi";
@@ -36,10 +35,12 @@ const Quizzes: FC<QuizzesProps> = () => {
 
   //TODO: lembrar que quando for estudante aqui ser chamado o id do tutor
   const userID = localStorage.getItem("userId");
-
   const userType = user?.info?.userType
     ? user?.info?.userType
-    : student?.info?.userType;
+    : student?.info?.userType || localStorage.getItem("userType");
+  const requestUid =
+    userType === "tutor" ? userID || "" : userStudent?.tutorID || "";
+
   const navigate = useNavigate();
   const lastQuiz = localStorage.getItem("lastQuiz") || "";
 
@@ -59,12 +60,18 @@ const Quizzes: FC<QuizzesProps> = () => {
     {
       option: "Radon Quiz",
       optionIcon: <GiCardRandom size={40} />,
-      onClick: () => navigate(randomQuiz()),
+      onClick: () =>
+        navigate(
+          randomQuiz(
+            quizzes?.length || 0,
+            quizzes?.map((quiz) => quiz.id as string) || [""]
+          )
+        ),
     },
     {
       option: "Retry last Quiz",
       optionIcon: <FaFastBackward size={40} />,
-      onClick: () => navigate(lastQuiz),
+      onClick: () => navigate(`/quiz?quizId=${lastQuiz}`),
     },
   ];
 
@@ -81,31 +88,28 @@ const Quizzes: FC<QuizzesProps> = () => {
     },
   ];
 
-  const allQuizzes = [...easyQuizzes, ...mediumQuizzes, ...hardQuizzes].filter(
-    (e) => e.title.toUpperCase().includes(search?.toUpperCase() || "")
-  );
-
   useEffect(() => {
-    dispatch(requestCategoryList({ uid: userID || "" }));
-  }, [dispatch, userID]);
+    dispatch(requestCategoryList({ uid: requestUid }));
+  }, [dispatch, requestUid]);
 
   const handleDisplayCategories = (category: string) => {
     setCategory(category);
     if (category === "No category") {
       return dispatch(
-        requestQuizListCategory({ uid: userID || "", category: "categoryLess" })
+        requestQuizListCategory({ uid: requestUid, category: "categoryLess" })
       );
     }
-    dispatch(
-      requestQuizListCategory({ uid: userID || "", category: category })
-    );
+    dispatch(requestQuizListCategory({ uid: requestUid, category: category }));
   };
 
   useEffect(() => {
-    dispatch(
-      requestQuizList({ uid: userID || userStudent?.tutorID || "", size: 50 })
-    );
-  }, [dispatch, userID, userStudent?.tutorID]);
+    dispatch(requestQuizList({ uid: requestUid, size: 50 }));
+  }, [dispatch, requestUid, userID]);
+
+  console.log(
+    "requestes x",
+    quizzes?.map((quiz) => quiz.id)
+  );
 
   return (
     <Styled.Container>
@@ -116,7 +120,7 @@ const Quizzes: FC<QuizzesProps> = () => {
       <Card
         gridName="card2"
         title={userType === "student" ? "New Quizzes" : "All Quizzes"}
-        isEmpty={allQuizzes && allQuizzes.length === 0}
+        isEmpty={quizzes?.length === 0}
         emptyMessage={
           search
             ? "Quiz not found"

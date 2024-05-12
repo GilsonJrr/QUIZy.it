@@ -21,10 +21,16 @@ const Quiz = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { user, userStudent } = useSelector(
+    (state: RootState) => state.userReducer
+  );
   const { quiz } = useSelector((state: RootState) => state.quizReducer);
 
   const quizID = new URLSearchParams(location.search).get("quizId");
   const userId = localStorage.getItem("userId");
+  const userType = user?.info?.userType
+    ? user?.info?.userType
+    : userStudent?.userType || localStorage.getItem("userType");
 
   const [questions, setQuestions] = useState<QuestionFiltered[]>();
   const [current, setCurrent] = useState(0);
@@ -37,11 +43,14 @@ const Quiz = () => {
 
   // console.log("questions", questions);
 
+  const requestUid =
+    userType === "tutor" ? userId || "" : userStudent?.tutorID || "";
+
   useEffect(() => {
-    if (quizID && userId) {
-      dispatch(requestQuiz({ uid: userId, quizId: quizID }));
+    if (quizID && requestUid) {
+      dispatch(requestQuiz({ uid: requestUid, quizId: quizID }));
     }
-  }, [dispatch, quizID, userId]);
+  }, [dispatch, quizID, requestUid]);
 
   useEffect(() => {
     setQuestions(
@@ -74,8 +83,8 @@ const Quiz = () => {
   }, [quiz?.questions]);
 
   useEffect(() => {
-    localStorage.setItem("lastQuiz", `${location.pathname}${location.search}`);
-  }, [location.pathname, location.search]);
+    localStorage.setItem("lastQuiz", quiz?.id || "");
+  }, [quiz?.id]);
 
   const handleAnswer = () => {
     selectedAnswer?.type === "correct" && setScore(score + 1);

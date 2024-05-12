@@ -13,8 +13,7 @@ import { requestQuizList } from "Store/quiz/actions";
 export const StudentPage = () => {
   const dispatch = useDispatch();
   const { quizzes } = useSelector((state: RootState) => state.quizReducer);
-
-  const userID = localStorage.getItem("userId");
+  const { userStudent } = useSelector((state: RootState) => state.userReducer);
 
   const myList: TCollection[] = JSON.parse(
     localStorage.getItem("netQuiz_my_list") || "null"
@@ -33,8 +32,8 @@ export const StudentPage = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(requestQuizList({ uid: userID || "", size: 50 }));
-  }, [dispatch, userID]);
+    dispatch(requestQuizList({ uid: userStudent?.tutorID || "", size: 50 }));
+  }, [dispatch, userStudent]);
 
   return (
     <Styled.Container>
