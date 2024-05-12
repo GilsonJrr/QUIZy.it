@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { requestStudentList } from "Store/students/actions";
 import { RootState } from "Store/root-reducer";
-import LoadingImage from "components/LoadingImage";
 import { requestGroupList } from "Store/group/actions";
 import LoadingSpinner from "components/LoadingSpiner";
 
@@ -22,8 +21,6 @@ const Students: FC<StudentsProps> = () => {
     (state: RootState) => state.studentReducer
   );
 
-  // const students: any[] = [];
-  // const isLoading = false;
   const { groups, isLoading: groupLoading } = useSelector(
     (state: RootState) => state.groupReducer
   );
@@ -111,25 +108,21 @@ const Students: FC<StudentsProps> = () => {
         searchValue={search}
         setSearch={(e) => setSearch(e)}
       >
-        {isLoading ? (
-          <LoadingImage />
-        ) : (
-          <Styled.CardInner>
-            <Tabs
-              tabs={[{ label: "All" }, ...tabs]}
-              activeTab={(tab) => setTab(tab)}
-            />
-            <Styled.MapRow>
-              {searchedStudents?.map((item) => {
-                if (item.info) {
-                  return <RenderStudentCard item={item.info} width="49%" />;
-                }
+        <Styled.CardInner>
+          <Tabs
+            tabs={[{ label: "All" }, ...tabs]}
+            activeTab={(tab) => setTab(tab)}
+          />
+          <Styled.MapRow>
+            {searchedStudents?.map((item) => {
+              if (item.info) {
+                return <RenderStudentCard item={item.info} width="49%" />;
+              }
 
-                return null;
-              })}
-            </Styled.MapRow>
-          </Styled.CardInner>
-        )}
+              return null;
+            })}
+          </Styled.MapRow>
+        </Styled.CardInner>
       </Card>
     </Styled.Container>
   );

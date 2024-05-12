@@ -92,7 +92,7 @@ const studentReducer: Reducer<StudentState, StudentAction> = (
     case StudentTypes.REQUEST_STUDENT: {
       return {
         ...state,
-        isLoading: true,
+        // isLoading: true,
         error: undefined,
         student: undefined,
       };

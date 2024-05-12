@@ -45,7 +45,7 @@ export type QuizTypeValues = {
   image?: string;
   type: string;
   category: string;
-  questions?: TMultipleQuestions | TTrueOrFalseQuestions;
+  questions?: TMultipleQuestions[] | TTrueOrFalseQuestions[];
 };
 
 export type QuizState = {

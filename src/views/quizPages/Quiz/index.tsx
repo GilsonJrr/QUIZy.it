@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import he from "he";
 import * as Styled from "./styled";
 import { Answer, EAnswerIndexation, QuestionFiltered } from "types";
@@ -8,15 +7,18 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { FaCheck } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "Store/root-reducer";
+import { requestQuiz } from "Store/quiz/actions";
 
 const Quiz = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { quiz } = useSelector((state: RootState) => state.quizReducer);
 
-  const category = new URLSearchParams(location.search).get("category");
-  const difficulty = new URLSearchParams(location.search).get("difficulty");
-  const type = new URLSearchParams(location.search).get("type");
-  const amount = new URLSearchParams(location.search).get("amount");
+  const quizID = new URLSearchParams(location.search).get("quizId");
+  const userId = localStorage.getItem("userId");
 
   const [questions, setQuestions] = useState<QuestionFiltered[]>();
   const [current, setCurrent] = useState(0);
@@ -25,43 +27,43 @@ const Quiz = () => {
   const [showAnswer, setShowAnswer] = useState(false);
   const [showScore, setShowScore] = useState(false);
 
-  console.log("questions", questions);
+  // console.log("questions", questions);
 
   useEffect(() => {
-    axios
-      .get(
-        `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&type=${type}`
-      )
-      .then((data: any) => {
-        setQuestions(
-          data.data.results.map((quiz: any) => {
-            return {
-              question: quiz.question,
-              answers: randomize([
-                { id: 1, answer: quiz.correct_answer, type: "correct" },
-                {
-                  id: 2,
-                  answer: quiz.incorrect_answers[0],
-                  type: "incorrect",
-                },
-                {
-                  id: 3,
-                  answer: quiz.incorrect_answers[1],
-                  type: "incorrect",
-                },
-                {
-                  id: 4,
-                  answer: quiz.incorrect_answers[2],
-                  type: "incorrect",
-                },
-              ]),
-              correctAnswers: quiz.correct_answer,
-            };
-          })
-        );
+    if (quizID && userId) {
+      dispatch(requestQuiz({ uid: userId, quizId: quizID }));
+    }
+  }, [dispatch, quizID, userId]);
+
+  useEffect(() => {
+    setQuestions(
+      quiz?.questions?.map((quiz: any) => {
+        const answers = [
+          { id: 1, answer: quiz.answer01, type: "correct" },
+          {
+            id: 2,
+            answer: quiz.answer02,
+            type: "incorrect",
+          },
+          {
+            id: 3,
+            answer: quiz.answer03,
+            type: "incorrect",
+          },
+          {
+            id: 4,
+            answer: quiz.answer04,
+            type: "incorrect",
+          },
+        ];
+        return {
+          question: quiz.questionTitle,
+          answers: randomize(answers.filter((answer) => answer.answer !== "")),
+          correctAnswers: quiz.rightAnswer,
+        };
       })
-      .catch((err) => console.error(err));
-  }, [amount, category, difficulty, type]);
+    );
+  }, [quiz?.questions]);
 
   useEffect(() => {
     localStorage.setItem("lastQuiz", `${location.pathname}${location.search}`);
@@ -97,20 +99,14 @@ const Quiz = () => {
     navigate("/quizResult", {
       state: {
         score: score,
-        amount: amount,
-        quiz: {
-          category: category,
-          difficulty: difficulty,
-          type: type,
-          amount: amount,
-        },
+        amount: quiz?.questions?.length,
       },
     });
   };
 
-  if (!questions) {
-    return <h1>Loading...</h1>;
-  }
+  // if (!questions) {
+  //   return <h1>Loading...</h1>;
+  // }
 
   return (
     <Styled.Container>
@@ -132,11 +128,8 @@ const Quiz = () => {
             </Styled.ProgressNumber>
           </Styled.ProgressContainer>
         </Styled.Header>
-        Split here in another component
         <Styled.QuestionContainer>
-          <Styled.Question>
-            {DecodedText(questions?.[current]?.question)}
-          </Styled.Question>
+          <Styled.Question>{questions?.[current]?.question}</Styled.Question>
           <Styled.OptionsContainer>
             {questions?.[current]?.answers.map((answer, index: number) => {
               const active = answer.answer === selectedAnswer?.answer;
@@ -157,7 +150,6 @@ const Quiz = () => {
             })}
           </Styled.OptionsContainer>
         </Styled.QuestionContainer>
-        Split here in another component
       </Styled.QuizContainer>
 
       <Styled.QuizCheckContainer

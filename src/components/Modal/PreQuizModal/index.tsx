@@ -1,15 +1,15 @@
 import React, { FC } from "react";
 import * as Styled from "./styled";
-import { TCollection } from "types/index";
 import { useNavigate } from "react-router-dom";
 import { FaPlay } from "react-icons/fa";
 import { BsSubstack } from "react-icons/bs";
 import EmptyImage from "assets/images/Empty_quiz_image_state.png";
 import ModalTemplate from "../ModalTemplate";
 import { useModalContext } from "../modalContext";
+import { QuizTypeValues } from "Store/quiz/types";
 
 type PreQuizModalProps = {
-  item: TCollection;
+  item: QuizTypeValues;
 };
 
 const PreQuizModal: FC<PreQuizModalProps> = ({ item }) => {
@@ -17,7 +17,7 @@ const PreQuizModal: FC<PreQuizModalProps> = ({ item }) => {
   const { handleModal } = useModalContext();
 
   const handleMyList = () => {
-    let initialItems: TCollection[] | null = JSON.parse(
+    let initialItems: QuizTypeValues[] | null = JSON.parse(
       localStorage.getItem("netQuiz_my_list") || "null"
     );
 
@@ -37,9 +37,9 @@ const PreQuizModal: FC<PreQuizModalProps> = ({ item }) => {
         <Styled.Image src={item.image ? item.image : EmptyImage} />
         <Styled.Content>
           <Styled.Title>{item.title}</Styled.Title>
-          <Styled.SubTitle>{item.subTitle}</Styled.SubTitle>
+          <Styled.SubTitle>{item.description}</Styled.SubTitle>
           <Styled.InfoContainer>
-            <Styled.Info>{item.difficult} </Styled.Info>|
+            <Styled.Info>{item.category} </Styled.Info>|
             <Styled.Info> {item.type}</Styled.Info>
           </Styled.InfoContainer>
           <Styled.OptionContainer>
@@ -48,11 +48,7 @@ const PreQuizModal: FC<PreQuizModalProps> = ({ item }) => {
               <BsSubstack size={12} />
             </Styled.OptionButton>
             <Styled.OptionButton
-              onClick={() =>
-                navigate(
-                  `/quiz?amount=10&category=${item.uid}&difficulty=${item.difficult}&type=${item.type}`
-                )
-              }
+              onClick={() => navigate(`/quiz?quizId=${item.id}`)}
             >
               Start
               <FaPlay size={12} />

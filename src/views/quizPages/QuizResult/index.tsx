@@ -9,8 +9,10 @@ const QuizResult: FC<QuizResultProps> = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { score = 0, amount = 0, quiz, title = "history" } = location.state;
+  const { score = 0, amount = 0, quiz } = location.state;
   const finalScore = (score * 100) / amount;
+
+  console.log("state", location.state);
 
   const handleResults = () => {
     let initialItems: TResult[] | null = JSON.parse(
