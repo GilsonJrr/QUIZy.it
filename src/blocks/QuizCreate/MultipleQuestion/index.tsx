@@ -13,6 +13,8 @@ import { RootState } from "Store/root-reducer";
 import { useLocation } from "react-router-dom";
 import { useModalContext } from "components/Modal/modalContext";
 import DeleteModal from "components/Modal/DeleteModal";
+import { useDispatch } from "react-redux";
+import { removeQuiz } from "Store/quiz/actions";
 
 type MultipleQuestionProps = {
   sendQuiz: (data: QuizTypeValues) => void;
@@ -31,6 +33,7 @@ type TMultipleQuestionsForm = {
 
 const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const { handleModal } = useModalContext();
 
@@ -143,7 +146,14 @@ const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
 
   const handleDelete = () => {
     handleModal(
-      <DeleteModal deleteId={quizId || ""} deleteTitle={quiz?.title || ""} />
+      <DeleteModal
+        deleteTitle={quiz?.title || ""}
+        onDelete={() =>
+          dispatch(
+            removeQuiz({ uid: user?.info?.uid || "", quizId: quizId || "" })
+          )
+        }
+      />
     );
   };
 
@@ -167,13 +177,13 @@ const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
     <QuizForm
       preview={
         <Styled.PreviewContainer>
-          <QuizTemplate questions={questionTest} />
+          <QuizTemplate questions={questionTest} quizId={quiz?.id || ""} />
         </Styled.PreviewContainer>
       }
-      edit={!!quizId}
       formName={"FormMultipleQuestion"}
       title={"Multiple choices"}
       buttonTitle={quizId ? "Update" : "Save"}
+      edit={!!quizId}
       deleteTitle="Delete Quiz"
       handleDelete={handleDelete}
     >

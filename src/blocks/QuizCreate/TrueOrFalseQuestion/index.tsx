@@ -8,6 +8,13 @@ import QuizForm from "layout/QuizForm";
 import ToggleInput from "components/inputs/ToggleInput";
 import { QuizTypeValues } from "Store/quiz/types";
 import { idGenerator } from "utils/index";
+import QuizTemplate from "layout/Quiz/QuizTemplate";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "Store/root-reducer";
+import { useLocation } from "react-router-dom";
+import { useModalContext } from "components/Modal/modalContext";
+import DeleteModal from "components/Modal/DeleteModal";
+import { removeQuiz } from "Store/quiz/actions";
 
 type TrueOrFalseQuestionProps = {
   sendQuiz: (data: QuizTypeValues) => void;
@@ -21,10 +28,20 @@ type TTrueOrFalseQuestions = {
 };
 
 const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
+  const location = useLocation();
+  const dispatch = useDispatch();
+
+  const { handleModal } = useModalContext();
+
+  const { quiz } = useSelector((state: RootState) => state.quizReducer);
+  const { user } = useSelector((state: RootState) => state.userReducer);
+
   const [question, setQuestion] = useState([0]);
   const [selectedQuestion, setSelectedQuestion] = useState<number>(0);
 
   const userID = localStorage.getItem("userId");
+
+  const quizId = new URLSearchParams(location.search).get("quizId");
 
   const {
     register,
@@ -84,13 +101,55 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
     }
   };
 
+  const questions = [
+    {
+      id: 1,
+      answer:
+        watch(`questions.${selectedQuestion}.rightAnswer`)?.toString() || "",
+      type: "correct",
+    },
+    {
+      id: 1,
+      answer:
+        (!watch(`questions.${selectedQuestion}.rightAnswer`))?.toString() || "",
+      type: "incorrect",
+    },
+  ];
+
+  const questionTest: any[] = [
+    {
+      question: watch(`questions.${selectedQuestion}.questionTitle`),
+      answers: questions,
+      correctAnswers: watch(`questions.${selectedQuestion}.rightAnswer`),
+    },
+  ];
+
+  const handleDelete = () => {
+    handleModal(
+      <DeleteModal
+        deleteTitle={quiz?.title || ""}
+        onDelete={() =>
+          dispatch(
+            removeQuiz({ uid: user?.info?.uid || "", quizId: quizId || "" })
+          )
+        }
+      />
+    );
+  };
+
   return (
     <QuizForm
-      preview={undefined}
-      edit={false}
+      preview={
+        <Styled.PreviewContainer>
+          <QuizTemplate questions={questionTest} quizId={quiz?.id || ""} />
+        </Styled.PreviewContainer>
+      }
       formName={"FormTrueOrFalseQuestion"}
       title={"True Or False"}
       buttonTitle="Save"
+      edit={!!quizId}
+      deleteTitle="Delete Quiz"
+      handleDelete={handleDelete}
     >
       <Styled.Container>
         <Styled.Form

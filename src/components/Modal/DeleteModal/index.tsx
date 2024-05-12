@@ -2,32 +2,24 @@ import React, { FC, useEffect, useState } from "react";
 import * as Styled from "./styled";
 import ModalTemplate from "../ModalTemplate";
 import { useModalContext } from "../modalContext";
-import { useSelector } from "react-redux";
-import { RootState } from "Store/root-reducer";
-import { useDispatch } from "react-redux";
-import { removeQuiz } from "Store/quiz/actions";
 import { useNavigate } from "react-router-dom";
 import { GoAlertFill } from "react-icons/go";
 import LoadingSpinner from "components/LoadingSpiner";
 
 type DeleteModalProps = {
   deleteTitle: string;
-  deleteId: string;
+  onDelete: () => void;
 };
 
-const DeleteModal: FC<DeleteModalProps> = ({ deleteId, deleteTitle }) => {
-  const dispatch = useDispatch();
+const DeleteModal: FC<DeleteModalProps> = ({ deleteTitle, onDelete }) => {
   const navigate = useNavigate();
 
-  const { user } = useSelector((state: RootState) => state.userReducer);
   const { handleModal } = useModalContext();
 
   const [showDelete, setShowDelete] = useState(false);
 
   const handleDelete = () => {
-    dispatch(
-      removeQuiz({ uid: user?.info?.uid || "", quizId: deleteId || "" })
-    );
+    onDelete();
     navigate("/quizzes");
     handleModal("");
   };

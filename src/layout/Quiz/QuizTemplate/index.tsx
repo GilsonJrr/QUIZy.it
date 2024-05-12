@@ -3,28 +3,46 @@ import * as Styled from "./styled";
 
 import { FaCheck } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
-import { Answer, EAnswerIndexation } from "types/index";
+import { Answer, EAnswerIndexation, QuestionFiltered } from "types/index";
+import { useNavigate } from "react-router-dom";
 
 type QuizTemplateProps = {
   onClose?: () => void;
-  questions: any[];
-  onFinish?: () => void;
+  questions: QuestionFiltered[];
+  quizId: string;
+};
+
+type TQuizResume = {
+  question?: string;
+  rightAnswer?: string;
+  selectedAnswer?: string;
 };
 
 const QuizTemplate: FC<QuizTemplateProps> = ({
   onClose,
   questions,
-  onFinish,
+  quizId,
 }) => {
+  const navigate = useNavigate();
+
   const [current, setCurrent] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<Answer>();
   const [showAnswer, setShowAnswer] = useState(false);
   const [showScore, setShowScore] = useState(false);
   const [score, setScore] = useState(0);
+  const [quizResume, setQuizResume] = useState<TQuizResume[]>([]);
 
   const handleAnswer = () => {
     selectedAnswer?.type === "correct" && setScore(score + 1);
     setShowAnswer(true);
+    setQuizResume([
+      ...quizResume,
+      {
+        question: questions?.[current]?.question,
+        rightAnswer: questions?.[current]?.correctAnswers,
+        selectedAnswer: selectedAnswer?.answer,
+      },
+    ]);
   };
 
   useEffect(() => {
@@ -41,7 +59,14 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
 
   const finishQuiz = () => {
     setShowScore(false);
-    onFinish?.();
+    navigate("/quizResult", {
+      state: {
+        score: score,
+        amount: questions?.length,
+        quizResume: quizResume,
+        quizId: quizId,
+      },
+    });
   };
 
   return (

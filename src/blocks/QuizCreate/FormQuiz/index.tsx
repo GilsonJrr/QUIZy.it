@@ -64,6 +64,7 @@ const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
   const renderPreview = () => {
     return (
       <RenderQuizCard
+        editMode
         item={{
           title: watch("title"),
           description: watch("description") || "",
@@ -71,6 +72,7 @@ const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
           category:
             watch("category") === "categoryLess" ? "" : watch("category"),
           type: watch("type"),
+          id: quizId || "",
         }}
       />
     );

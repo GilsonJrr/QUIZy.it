@@ -91,3 +91,10 @@ export const QuestionTag = styled.button<Props>`
   font-size: 0.8rem;
   cursor: pointer;
 `;
+
+export const PreviewContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+`;

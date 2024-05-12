@@ -18,6 +18,8 @@ const RenderQuizCard: FC<RenderQuizCardProps> = ({ item, editMode }) => {
       : handleModal(<PreQuizModal item={item} />);
   };
 
+  // console.log("item", item);
+
   return (
     <Styled.QuizCard onClick={handleClick}>
       <Styled.QuizImage src={item.image ? item.image : EmptyImage} />
