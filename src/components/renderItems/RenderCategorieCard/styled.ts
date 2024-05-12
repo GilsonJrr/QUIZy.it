@@ -6,6 +6,7 @@ export const QuizCard = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.4);
   min-height: 80px;
   cursor: pointer;
+  height: 7rem;
 `;
 
 export const QuizImage = styled.img`
@@ -13,6 +14,7 @@ export const QuizImage = styled.img`
   height: 100%;
   background-color: #e6e6e6;
   border-radius: 20px 0 0 20px;
+  object-fit: cover;
 `;
 
 export const QuizTitlesContainer = styled.div`

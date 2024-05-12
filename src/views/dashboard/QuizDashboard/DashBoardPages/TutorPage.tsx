@@ -36,6 +36,10 @@ export const TutorPage = () => {
     e.info?.name.toUpperCase().includes(searchStudents?.toUpperCase() || "")
   );
 
+  const filterQuizzes = quizzes?.filter((e) =>
+    e.title.toUpperCase().includes(search?.toUpperCase() || "")
+  );
+
   useEffect(() => {
     if (students === undefined) {
       dispatch(requestStudentList({ uid: userID }));
@@ -46,14 +50,12 @@ export const TutorPage = () => {
     dispatch(requestQuizList({ uid: userID || "", size: 50 }));
   }, [dispatch, userID]);
 
-  console.log("quizzes", quizzes);
-
   return (
     <Styled.Container>
       <Card
         gridName="card1"
         title="All Quizes"
-        isEmpty={quizzes?.length === 0}
+        isEmpty={filterQuizzes?.length === 0}
         emptyMessage={
           search
             ? "Quiz not found"
@@ -66,7 +68,7 @@ export const TutorPage = () => {
         redirectTo="Quizzes"
         redirectPath="/quizzes"
       >
-        {quizzes?.map((item) => {
+        {filterQuizzes?.map((item) => {
           return <RenderQuizCard item={item} editMode />;
         })}
       </Card>

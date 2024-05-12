@@ -15,8 +15,8 @@ const spinAnimation = keyframes`
 `;
 
 export const Spinner = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
   border: 3px solid transparent;
   border-top-color: #4a4747;

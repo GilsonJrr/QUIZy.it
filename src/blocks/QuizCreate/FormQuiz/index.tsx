@@ -11,6 +11,10 @@ import RenderQuizCard from "components/renderItems/RenderQuizCard";
 import QuizForm from "layout/QuizForm";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
+import { useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { requestQuiz } from "Store/quiz/actions";
+import LoadingSpinner from "components/LoadingSpiner";
 
 type FormQuizProps = {
   quizType: (value: string) => void;
@@ -25,6 +29,14 @@ type TFormData = {
 };
 
 const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: RootState) => state.userReducer);
+  const { quiz, isLoading } = useSelector(
+    (state: RootState) => state.quizReducer
+  );
+  const quizId = new URLSearchParams(location.search).get("quizId");
+
   const { categories } = useSelector(
     (state: RootState) => state.categoryReducer
   );
@@ -44,6 +56,10 @@ const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
     quizType(watch("type"));
     localStorage.setItem("preSendQuiz", JSON.stringify(data));
   };
+
+  useEffect(() => {
+    dispatch(requestQuiz({ uid: user?.info?.uid || "", quizId: quizId || "" }));
+  }, [dispatch, quizId, user?.info?.uid]);
 
   const renderPreview = () => {
     return (
@@ -74,16 +90,29 @@ const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
 
   const getPeQuiz = JSON.parse(localStorage.getItem("preSendQuiz") || "null");
 
-  // const myList: TCollection[] = JSON.parse(
-  //   localStorage.getItem("netQuiz_my_list") || "null"
-  // );
+  useEffect(() => {
+    if (getPeQuiz || quiz) {
+      return reset(getPeQuiz || quiz);
+    }
+  }, [reset, getPeQuiz, quiz]);
 
   useEffect(() => {
-    if (getPeQuiz) {
-      reset(getPeQuiz);
+    if (quizId === null) {
+      const emptyState: TFormData = {
+        category: "categoryLess",
+        title: "",
+        type: "Multiple",
+        description: "",
+        image: "",
+      };
+      reset(emptyState);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reset]);
+  }, []);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <QuizForm
@@ -91,7 +120,7 @@ const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
       edit={false}
       formName={"FormQuiz"}
       title={"New Quiz"}
-      buttonTitle="Add Questions"
+      buttonTitle={quizId ? "Edit Questions" : "Add Questions"}
     >
       <Styled.Form id="FormQuiz" onSubmit={handleSubmit(onSubmit)}>
         <SimpleInput

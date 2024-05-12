@@ -4,14 +4,22 @@ import { useModalContext } from "components/Modal/modalContext";
 import PreQuizModal from "components/Modal/PreQuizModal";
 import EmptyImage from "assets/images/Empty_quiz_image_state.png";
 import { QuizTypeValues } from "Store/quiz/types";
+import { useNavigate } from "react-router-dom";
 
 type RenderQuizCardProps = { item: QuizTypeValues; editMode?: boolean };
 
 const RenderQuizCard: FC<RenderQuizCardProps> = ({ item, editMode }) => {
   const { handleModal } = useModalContext();
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    editMode
+      ? navigate(`/quizzes/quiz-create?quizId=${item.id}`)
+      : handleModal(<PreQuizModal item={item} />);
+  };
 
   return (
-    <Styled.QuizCard onClick={() => handleModal(<PreQuizModal item={item} />)}>
+    <Styled.QuizCard onClick={handleClick}>
       <Styled.QuizImage src={item.image ? item.image : EmptyImage} />
       <Styled.QuizTitlesContainer>
         <Styled.QuizTitle>{item.title}</Styled.QuizTitle>

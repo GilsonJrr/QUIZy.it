@@ -106,10 +106,10 @@ const Quizzes: FC<QuizzesProps> = () => {
     dispatch(requestQuizList({ uid: requestUid, size: 50 }));
   }, [dispatch, requestUid, userID]);
 
-  console.log(
-    "requestes x",
-    quizzes?.map((quiz) => quiz.id)
-  );
+  // console.log(
+  //   "requestes x",
+  //   quizzes?.map((quiz) => quiz.id)
+  // );
 
   return (
     <Styled.Container>
@@ -134,7 +134,9 @@ const Quizzes: FC<QuizzesProps> = () => {
         {quizzes &&
           quizzes?.length > 0 &&
           quizzes?.map((item) => {
-            return <RenderQuizCard item={item} />;
+            return (
+              <RenderQuizCard item={item} editMode={userType === "tutor"} />
+            );
           })}
         <></>
       </Card>
@@ -158,7 +160,9 @@ const Quizzes: FC<QuizzesProps> = () => {
             })
           : quizzesCategory?.map((item) => {
               console.log("item", item);
-              return <RenderQuizCard item={item} />;
+              return (
+                <RenderQuizCard item={item} editMode={userType === "tutor"} />
+              );
             })}
         {category && (
           <Styled.GoBackButton onClick={() => setCategory("")}>

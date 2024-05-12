@@ -10,6 +10,7 @@ type QuizFormProps = {
   formName: string;
   title: string;
   buttonTitle: string;
+  deleteTitle?: string;
 };
 
 const QuizForm: FC<QuizFormProps> = ({
@@ -20,6 +21,7 @@ const QuizForm: FC<QuizFormProps> = ({
   formName,
   title,
   buttonTitle,
+  deleteTitle,
 }) => {
   return (
     <Styled.Container>
@@ -32,7 +34,7 @@ const QuizForm: FC<QuizFormProps> = ({
       <Styled.ButtonContainer justify={edit ? "space-between" : "flex-end"}>
         {edit && (
           <Styled.DeleteButton type="button" onClick={handleDelete}>
-            Delete Group
+            {deleteTitle}
           </Styled.DeleteButton>
         )}
         <Styled.SubmitButton type="submit" form={formName}>

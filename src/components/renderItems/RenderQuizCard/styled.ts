@@ -13,6 +13,7 @@ export const QuizImage = styled.img`
   height: 100%;
   background-color: #e6e6e6;
   border-radius: 20px 0 0 20px;
+  object-fit: cover;
 `;
 
 export const QuizTitlesContainer = styled.div`

@@ -7,8 +7,13 @@ type ModalTemplateProps = {
 };
 
 const ModalTemplate: FC<ModalTemplateProps> = ({ children, onClick }) => {
+  const handleContainerClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+    onClick();
+  };
+
   return (
-    <Styled.ModalBackground onClick={onClick}>
+    <Styled.ModalBackground onClick={handleContainerClick}>
       {children}
     </Styled.ModalBackground>
   );

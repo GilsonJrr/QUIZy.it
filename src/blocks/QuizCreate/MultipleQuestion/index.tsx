@@ -1,19 +1,24 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as Styled from "./styled";
 import SimpleInput from "components/inputs/SimpleInput";
 import { multipleChosesSchema } from "lib/schemas";
 import { yupResolver } from "@hookform/resolvers/yup";
 import QuizForm from "layout/QuizForm";
-import { QuizTypeValues } from "Store/quiz/types";
+import { QuizTypeValues, TMultipleQuestions } from "Store/quiz/types";
 import { idGenerator, randomize } from "utils/index";
 import QuizTemplate from "layout/Quiz/QuizTemplate";
+import { useSelector } from "react-redux";
+import { RootState } from "Store/root-reducer";
+import { useLocation } from "react-router-dom";
+import { useModalContext } from "components/Modal/modalContext";
+import DeleteModal from "components/Modal/DeleteModal";
 
 type MultipleQuestionProps = {
   sendQuiz: (data: QuizTypeValues) => void;
 };
 
-type TMultipleQuestions = {
+type TMultipleQuestionsForm = {
   questions: {
     questionTitle: string;
     answer01: string;
@@ -25,9 +30,16 @@ type TMultipleQuestions = {
 };
 
 const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
-  const userID = localStorage.getItem("userId");
+  const location = useLocation();
 
-  const [question, setQuestion] = useState([0]);
+  const { handleModal } = useModalContext();
+
+  const { user } = useSelector((state: RootState) => state.userReducer);
+  const { quiz } = useSelector((state: RootState) => state.quizReducer);
+
+  const quizId = new URLSearchParams(location.search).get("quizId");
+
+  const [question, setQuestion] = useState<number[]>([0]);
   const [selectedQuestion, setSelectedQuestion] = useState<number>(0);
 
   const {
@@ -36,14 +48,15 @@ const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
     formState: { errors },
     watch,
     unregister,
-  } = useForm<TMultipleQuestions>({
+    setValue,
+  } = useForm<TMultipleQuestionsForm>({
     resolver: yupResolver(multipleChosesSchema),
   });
 
-  const onSubmit = (data: TMultipleQuestions) => {
+  const onSubmit = (data: TMultipleQuestionsForm) => {
     handleTestAllQuestions();
 
-    const addRightAnswer = (): TMultipleQuestions => {
+    const addRightAnswer = (): TMultipleQuestionsForm => {
       return {
         questions: data.questions.map((question) => ({
           ...question,
@@ -54,7 +67,7 @@ const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
 
     const dataPrepared = {
       id: idGenerator(18),
-      uid: userID || "",
+      uid: user?.info?.uid || "",
       ...JSON.parse(localStorage.getItem("preSendQuiz") || ""),
       ...addRightAnswer(),
     };
@@ -128,6 +141,28 @@ const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
     },
   ];
 
+  const handleDelete = () => {
+    handleModal(
+      <DeleteModal deleteId={quizId || ""} deleteTitle={quiz?.title || ""} />
+    );
+  };
+
+  useEffect(() => {
+    if (quiz) {
+      setQuestion(Object.keys(quiz?.questions || 0).map(Number) || [0]);
+      const questions = quiz?.questions as TMultipleQuestions[];
+
+      questions?.forEach((question, index) => {
+        setValue(`questions.${index}.questionTitle`, question.questionTitle);
+        setValue(`questions.${index}.answer01`, question.answer01);
+        setValue(`questions.${index}.answer02`, question.answer02);
+        setValue(`questions.${index}.answer03`, question.answer03);
+        setValue(`questions.${index}.answer04`, question.answer04);
+        setValue(`questions.${index}.rightAnswer`, question.rightAnswer);
+      });
+    }
+  }, [quiz, setValue]);
+
   return (
     <QuizForm
       preview={
@@ -135,10 +170,12 @@ const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
           <QuizTemplate questions={questionTest} />
         </Styled.PreviewContainer>
       }
-      edit={false}
+      edit={!!quizId}
       formName={"FormMultipleQuestion"}
       title={"Multiple choices"}
-      buttonTitle="Save"
+      buttonTitle={quizId ? "Update" : "Save"}
+      deleteTitle="Delete Quiz"
+      handleDelete={handleDelete}
     >
       <Styled.Container>
         <Styled.Form
