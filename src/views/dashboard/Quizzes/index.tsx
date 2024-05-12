@@ -26,6 +26,7 @@ const Quizzes: FC<QuizzesProps> = () => {
   const { user, userStudent } = useSelector(
     (state: RootState) => state.userReducer
   );
+  const { student } = useSelector((state: RootState) => state.studentReducer);
   const { categories: cat } = useSelector(
     (state: RootState) => state.categoryReducer
   );
@@ -38,7 +39,7 @@ const Quizzes: FC<QuizzesProps> = () => {
 
   const userType = user?.info?.userType
     ? user?.info?.userType
-    : userStudent?.info?.userType;
+    : student?.info?.userType;
   const navigate = useNavigate();
   const lastQuiz = localStorage.getItem("lastQuiz") || "";
 
@@ -101,8 +102,10 @@ const Quizzes: FC<QuizzesProps> = () => {
   };
 
   useEffect(() => {
-    dispatch(requestQuizList({ uid: userID || "", size: 50 }));
-  }, [dispatch, userID]);
+    dispatch(
+      requestQuizList({ uid: userID || userStudent?.tutorID || "", size: 50 })
+    );
+  }, [dispatch, userID, userStudent?.tutorID]);
 
   return (
     <Styled.Container>

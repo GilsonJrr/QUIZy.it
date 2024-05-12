@@ -4,6 +4,7 @@ import {
   UserRequest,
   UseData,
   FeedbackData,
+  UseStudentData,
 } from "../types";
 
 export function requestUser(props: UserRequest): UserAction<UserRequest> {
@@ -57,7 +58,7 @@ export function user(props: UseData): UserAction<UseData> {
   };
 }
 
-export function userStudent(props: UseData): UserAction<UseData> {
+export function userStudent(props: UseStudentData): UserAction<UseStudentData> {
   return {
     type: UserTypes.USER_STUDENT,
     payload: { ...props },

@@ -34,6 +34,8 @@ export type TInfo = {
   tutorID?: string;
   photo?: string;
   average?: string;
+  userType?: string;
+  address?: string;
 };
 
 export type StudentTypeValues = {
@@ -49,6 +51,7 @@ export type StudentTypeValues = {
   tutorID?: string;
   photo?: string;
   average?: string;
+  address?: string;
   //TODO: change here
 
   info?: TInfo;

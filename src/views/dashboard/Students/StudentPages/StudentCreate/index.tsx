@@ -10,12 +10,15 @@ import SelectInput from "components/inputs/SelectInput";
 import { TOption } from "types/index";
 import { StudentCreateSchema } from "lib/schemas";
 import { useDispatch } from "react-redux";
-import { setStudent, updateStudent } from "Store/students/actions";
+import {
+  requestStudent,
+  setStudent,
+  updateStudent,
+} from "Store/students/actions";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { requestGroupList } from "Store/group/actions";
 import { useLocation, useNavigate } from "react-router-dom";
-import { requestStudentUser } from "Store/user/actions";
 import LoadingSpinner from "components/LoadingSpiner";
 
 type StudentCreateProps = {};
@@ -43,9 +46,8 @@ const StudentCreate: FC<StudentCreateProps> = () => {
   const studentId = new URLSearchParams(location.search).get("id");
 
   const { groups } = useSelector((state: RootState) => state.groupReducer);
-  const { userStudent, isLoading } = useSelector(
-    (state: RootState) => state.userReducer
-  );
+  const { isLoading } = useSelector((state: RootState) => state.userReducer);
+  const { student } = useSelector((state: RootState) => state.studentReducer);
   const userID = localStorage.getItem("userId") || "";
 
   const [extraFields, setExtraFields] = useState<any[]>([]);
@@ -73,6 +75,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
       uid: userID,
       group: data.group === "groupLess" ? "" : data.group,
       userType: "student",
+
       ...rest,
     };
 
@@ -155,13 +158,14 @@ const StudentCreate: FC<StudentCreateProps> = () => {
   }, [dispatch, groups, userID]);
 
   useEffect(() => {
-    if (studentId !== null) {
-      studentId && dispatch(requestStudentUser({ uid: studentId }));
-    }
-  }, [dispatch, reset, studentId]);
+    requestStudent({
+      uid: userID || "",
+      studentId: studentId || "",
+    });
+  }, [dispatch, reset, userID, studentId]);
 
   useEffect(() => {
-    if (userStudent && userStudent?.info && studentId !== null) {
+    if (student && student?.info && studentId !== null) {
       const {
         name,
         phone,
@@ -178,7 +182,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
         userType,
         average,
         ...rest
-      } = userStudent.info;
+      } = student.info;
 
       const extraKeys = Object.entries(rest).map((extra) => {
         const [key] = extra;
@@ -205,7 +209,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
     } else {
       reset();
     }
-  }, [extraField, reset, setValue, studentId, userStudent]);
+  }, [extraField, reset, setValue, studentId, student]);
 
   if (isLoading) {
     return <LoadingSpinner />;

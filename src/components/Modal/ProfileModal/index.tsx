@@ -26,17 +26,17 @@ const ProfileModal: FC<ExampleProps> = () => {
     reset,
     handleSubmit,
     formState: { isDirty },
+    watch,
   } = useForm<TStudent>({});
 
   const { handleModal } = useModalContext();
-  const { user, userStudent } = useSelector(
-    (state: RootState) => state.userReducer
-  );
+  const { user } = useSelector((state: RootState) => state.userReducer);
+  const { student } = useSelector((state: RootState) => state.studentReducer);
 
   const [editMode, setEditMode] = useState(false);
 
   const tutorInfo = user?.info || ([] as unknown as UseData);
-  const studentInfo = userStudent?.info || ([] as unknown as UseData);
+  const studentInfo = student?.info || ([] as unknown as UseData);
 
   const handleContainerClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
@@ -54,11 +54,13 @@ const ProfileModal: FC<ExampleProps> = () => {
     }
   };
 
+  const userType = localStorage.getItem("userType") || "";
+
   useEffect(() => {
-    if (tutorInfo) {
+    if (userType === "tutor") {
       return reset(tutorInfo);
     }
-    if (studentInfo) {
+    if (userType === "student") {
       return reset(studentInfo);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -80,8 +82,8 @@ const ProfileModal: FC<ExampleProps> = () => {
         >
           <Styled.AvatarContainer>
             <Avatar
-              name={tutorInfo.name || studentInfo.name}
-              photo={tutorInfo.photo || studentInfo.photo}
+              name={watch("name")}
+              photo={watch("photo")}
               size={editMode ? "big" : "bigger"}
             />
             {editMode && (

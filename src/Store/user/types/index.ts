@@ -13,7 +13,7 @@ export enum UserTypes {
 export type UserState = {
   isLoading: boolean;
   user: UseData | undefined;
-  userStudent: UseData | undefined;
+  userStudent: UseStudentData | undefined;
 };
 
 export type UserAction<Payload> = {
@@ -39,6 +39,12 @@ export type Info = {
   photo?: string;
   average?: string;
   address?: string;
+};
+
+export type UseStudentData = {
+  uid?: string;
+  tutorID?: string;
+  userType?: string;
 };
 
 export type UseData = {

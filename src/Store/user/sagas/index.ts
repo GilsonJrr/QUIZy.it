@@ -20,7 +20,8 @@ export function* requestUserStudentSaga(props: UserAction<UserRequest>): any {
   try {
     if (uid) {
       const userAgendaResponses = yield call(getUserStudent, uid);
-      console.log("userAgendaResponses", userAgendaResponses);
+      console.log("userAgendaResponses 01", userAgendaResponses);
+      localStorage.setItem("userType", userAgendaResponses.userType);
       yield put(userStudent(userAgendaResponses));
     }
   } catch (err: any) {
@@ -34,7 +35,8 @@ export function* requestUserSaga(props: UserAction<UserRequest>): any {
   try {
     if (uid) {
       const userAgendaResponses = yield call(getUser, uid);
-      console.log("userAgendaResponses", userAgendaResponses);
+      console.log("userAgendaResponses 02", userAgendaResponses);
+      localStorage.setItem("userType", userAgendaResponses.info.userType);
       yield put(user(userAgendaResponses));
     }
   } catch (err: any) {

@@ -6,7 +6,6 @@ import {
   getStudent,
   getStudentList,
   removeStudent,
-  updateStudent,
   updateStudentList,
 } from "../repository";
 
@@ -79,7 +78,6 @@ export function* updateStudentSaga(
 
   try {
     if (payload) {
-      yield call(updateStudent, payload);
       yield call(updateStudentList, payload);
       const studentResponses = yield call(
         getStudent,

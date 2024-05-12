@@ -12,6 +12,7 @@ import { RootState } from "Store/root-reducer";
 import { requestStudentUser, requestUser } from "Store/user/actions";
 import { useModalContext } from "components/Modal/modalContext";
 import ProfileModal from "components/Modal/ProfileModal";
+import { requestStudent } from "Store/students/actions";
 
 type dashboardProps = {
   children?: ReactNode | ReactNode[];
@@ -24,6 +25,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
   const { user, userStudent } = useSelector(
     (state: RootState) => state.userReducer
   );
+  const { student } = useSelector((state: RootState) => state.studentReducer);
 
   const { handleModal } = useModalContext();
 
@@ -57,7 +59,16 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
   useEffect(() => {
     dispatch(requestUser({ uid: userId }));
     dispatch(requestStudentUser({ uid: userId }));
-  }, [dispatch, userId, userType]);
+  }, [dispatch, userId]);
+
+  useEffect(() => {
+    dispatch(
+      requestStudent({
+        uid: userStudent?.tutorID || "",
+        studentId: userStudent?.uid,
+      })
+    );
+  }, [dispatch, userStudent, userType]);
 
   return (
     <Styled.Container>
@@ -98,10 +109,10 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
         <Styled.HeaderProfile onClick={handleOpenProfile}>
           <Styled.ProfileTitles>
             <Styled.ProfileName>
-              {user?.info?.name || userStudent?.info?.name || ""}
+              {user?.info?.name || student?.info?.name}
             </Styled.ProfileName>
             <Styled.UserType>
-              {user?.info?.userType || userStudent?.info?.userType || ""}
+              {user?.info?.userType || student?.info?.userType || ""}
             </Styled.UserType>
           </Styled.ProfileTitles>
           <Styled.ChevronLeft size={20} />
