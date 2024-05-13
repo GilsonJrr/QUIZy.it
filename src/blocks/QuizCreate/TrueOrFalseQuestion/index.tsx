@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as Styled from "./styled";
 import SimpleInput from "components/inputs/SimpleInput";
@@ -6,7 +6,7 @@ import { trueOrFalseSchema } from "lib/schemas";
 import { yupResolver } from "@hookform/resolvers/yup";
 import QuizForm from "layout/QuizForm";
 import ToggleInput from "components/inputs/ToggleInput";
-import { QuizTypeValues } from "Store/quiz/types";
+import { QuizTypeValues, TTrueOrFalseQuestions } from "Store/quiz/types";
 import { idGenerator } from "utils/index";
 import QuizTemplate from "layout/Quiz/QuizTemplate";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,7 +20,7 @@ type TrueOrFalseQuestionProps = {
   sendQuiz: (data: QuizTypeValues) => void;
 };
 
-type TTrueOrFalseQuestions = {
+type TTrueOrFalseQuestionsFrom = {
   questions: {
     questionTitle: string;
     rightAnswer?: boolean;
@@ -50,11 +50,11 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
     watch,
     unregister,
     setValue,
-  } = useForm<TTrueOrFalseQuestions>({
+  } = useForm<TTrueOrFalseQuestionsFrom>({
     resolver: yupResolver(trueOrFalseSchema),
   });
 
-  const onSubmit = (data: TTrueOrFalseQuestions) => {
+  const onSubmit = (data: TTrueOrFalseQuestionsFrom) => {
     handleTestAllQuestions();
 
     const dataPrepared = {
@@ -136,6 +136,21 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
       />
     );
   };
+
+  useEffect(() => {
+    if (quiz) {
+      setQuestion(Object.keys(quiz?.questions || 0).map(Number) || [0]);
+      const questions = quiz?.questions as TTrueOrFalseQuestions[];
+
+      questions?.forEach((question, index) => {
+        setValue(`questions.${index}.questionTitle`, question.questionTitle);
+        setValue(
+          `questions.${index}.rightAnswer`,
+          question.rightAnswer || true
+        );
+      });
+    }
+  }, [quiz, setValue]);
 
   return (
     <QuizForm

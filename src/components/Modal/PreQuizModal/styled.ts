@@ -65,7 +65,6 @@ export const OptionButton = styled.button`
   border-radius: 20px;
   cursor: pointer;
   transition: 0.2s ease-in-out all;
-  width: 40%;
   font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;

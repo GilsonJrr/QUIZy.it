@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 import * as Styled from "../styled";
-import { TResult, TCollection, THeader } from "types/index";
+import { TResult, THeader } from "types/index";
 import Table from "components/Table";
 import Card from "components/Card";
 import RenderTable from "components/renderItems/RenderTable";
@@ -10,6 +10,8 @@ import { RootState } from "Store/root-reducer";
 import { useDispatch } from "react-redux";
 import { requestQuizList } from "Store/quiz/actions";
 import { requestResultList } from "Store/result/actions";
+import { requestMyListList } from "Store/myList/actions";
+import { MyListTypeValues } from "Store/myList/types";
 
 export const StudentPage = () => {
   const dispatch = useDispatch();
@@ -20,10 +22,16 @@ export const StudentPage = () => {
   const { results: studentResult, isLoading: resultLoading } = useSelector(
     (state: RootState) => state.resultReducer
   );
+  const { myLists } = useSelector((state: RootState) => state.myListReducer);
 
-  const myList: TCollection[] = JSON.parse(
-    localStorage.getItem("netQuiz_my_list") || "null"
-  );
+  const myList = useMemo(() => {
+    if (!quizzes || !Array.isArray(myLists)) {
+      return [];
+    }
+    return quizzes?.filter(
+      (item) => myLists && myLists?.includes(item.id as MyListTypeValues)
+    );
+  }, [myLists, quizzes]);
 
   const TableHeaderTitles: THeader[] = [
     { label: "Title", width: 50 },
@@ -62,6 +70,21 @@ export const StudentPage = () => {
     }
   }, [dispatch, studentResult, userStudent?.tutorID, userStudent?.uid]);
 
+  useEffect(() => {
+    const myListRequest = {
+      tutorUid: userStudent?.tutorID || "",
+      uid: userStudent?.tutorID || "",
+      studentUid: userStudent?.uid || "",
+      // quizUid: item?.id,
+    };
+    if (myLists === undefined) {
+      dispatch(requestMyListList(myListRequest));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, myLists]);
+
+  console.log("myLists", myList);
+
   return (
     <Styled.Container>
       <Card
@@ -79,16 +102,16 @@ export const StudentPage = () => {
       <Card
         gridName="card3"
         title="My list"
-        isEmpty={myList && myList.length < 0}
+        isEmpty={myList?.length === 0}
         emptyMessage={
           "Your List is empty add quizzes here to do it later or retry it"
         }
         scrollable
         // isLoading={listLoading}
       >
-        {/* {myList?.map((list) => {
+        {myList?.map((list) => {
           return <RenderQuizCard item={list} />;
-        })} */}
+        })}
         <></>
       </Card>
       <Card
