@@ -1,8 +1,11 @@
 import styled, { keyframes } from "styled-components";
 
-type Props = {};
+type Props = {
+  size?: number;
+  thinness?: number;
+};
 
-export const Container = styled.div<Props>`
+export const Container = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
@@ -14,11 +17,11 @@ const spinAnimation = keyframes`
   100% { transform: rotate(360deg); }
 `;
 
-export const Spinner = styled.div`
-  width: 25px;
-  height: 25px;
+export const Spinner = styled.div<Props>`
+  width: ${({ size }) => size}px;
+  height: ${({ size }) => size}px;
   border-radius: 50%;
-  border: 3px solid transparent;
+  border: ${({ thinness }) => thinness}px solid transparent;
   border-top-color: #4a4747;
   border-left-color: #4a4747;
   border-right-color: #4a4747;

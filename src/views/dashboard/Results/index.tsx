@@ -15,13 +15,15 @@ type ResultsProps = {};
 const Results: FC<ResultsProps> = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.userReducer);
-  const { student, students } = useSelector(
-    (state: RootState) => state.studentReducer
-  );
-  const { results: studentResult } = useSelector(
+  const {
+    student,
+    students,
+    isLoading: studentLoading,
+  } = useSelector((state: RootState) => state.studentReducer);
+  const { results: studentResult, isLoading: resultLoading } = useSelector(
     (state: RootState) => state.resultReducer
   );
-  const userType = user?.info?.userType;
+  const userType = user?.info?.userType || localStorage.getItem("userType");
 
   const TableHeaderTitles: THeader[] = [
     { label: "Title", width: 50 },
@@ -71,21 +73,25 @@ const Results: FC<ResultsProps> = () => {
   }, [students]);
 
   useEffect(() => {
-    dispatch(
-      requestResultList({
-        uid: student?.info?.tutorID || "",
-        studentUid: student?.info?.uid || "",
-      })
-    );
-  }, [dispatch, student?.info?.tutorID, student?.info?.uid]);
+    if (studentResult === undefined) {
+      dispatch(
+        requestResultList({
+          uid: student?.info?.tutorID || "",
+          studentUid: student?.info?.uid || "",
+        })
+      );
+    }
+  }, [dispatch, student, studentResult]);
 
   useEffect(() => {
-    dispatch(
-      requestStudentList({
-        uid: user?.info?.uid || "",
-      })
-    );
-  }, [dispatch, user?.info?.uid]);
+    if (students === undefined) {
+      dispatch(
+        requestStudentList({
+          uid: user?.info?.uid || "",
+        })
+      );
+    }
+  }, [dispatch, user, students]);
 
   return (
     <Styled.Container>
@@ -97,6 +103,7 @@ const Results: FC<ResultsProps> = () => {
             : results.length === 0
         }
         emptyMessage={"you have not completed any quiz so far"}
+        isLoading={userType === "tutor" ? studentLoading : resultLoading}
       >
         {userType === "tutor" ? (
           <Table<TTutorResult>

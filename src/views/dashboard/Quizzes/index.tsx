@@ -26,12 +26,15 @@ const Quizzes: FC<QuizzesProps> = () => {
     (state: RootState) => state.userReducer
   );
   const { student } = useSelector((state: RootState) => state.studentReducer);
-  const { categories: cat } = useSelector(
+  const { categories: cat, isLoading: categoryLoading } = useSelector(
     (state: RootState) => state.categoryReducer
   );
-  const { quizzes, quizzesCategory } = useSelector(
-    (state: RootState) => state.quizReducer
-  );
+  const {
+    quizzes,
+    quizzesCategory,
+    isLoading: quizzesLoading,
+    quizCategoryLoading,
+  } = useSelector((state: RootState) => state.quizReducer);
 
   //TODO: lembrar que quando for estudante aqui ser chamado o id do tutor
   const userID = localStorage.getItem("userId");
@@ -88,10 +91,6 @@ const Quizzes: FC<QuizzesProps> = () => {
     },
   ];
 
-  useEffect(() => {
-    dispatch(requestCategoryList({ uid: requestUid }));
-  }, [dispatch, requestUid]);
-
   const handleDisplayCategories = (category: string) => {
     setCategory(category);
     if (category === "No category") {
@@ -103,13 +102,16 @@ const Quizzes: FC<QuizzesProps> = () => {
   };
 
   useEffect(() => {
-    dispatch(requestQuizList({ uid: requestUid, size: 50 }));
-  }, [dispatch, requestUid, userID]);
+    if (cat === undefined) {
+      dispatch(requestCategoryList({ uid: requestUid }));
+    }
+  }, [dispatch, cat, requestUid]);
 
-  // console.log(
-  //   "requestes x",
-  //   quizzes?.map((quiz) => quiz.id)
-  // );
+  useEffect(() => {
+    if (quizzes === undefined) {
+      dispatch(requestQuizList({ uid: requestUid, size: 50 }));
+    }
+  }, [dispatch, quizzes, requestUid, userID]);
 
   return (
     <Styled.Container>
@@ -130,6 +132,7 @@ const Quizzes: FC<QuizzesProps> = () => {
         searchable
         searchValue={search}
         setSearch={(e) => setSearch(e)}
+        isLoading={quizzesLoading}
       >
         {quizzes &&
           quizzes?.length > 0 &&
@@ -146,6 +149,7 @@ const Quizzes: FC<QuizzesProps> = () => {
         isEmpty={categories.length === 0}
         emptyMessage={"No categories found. Please check later"}
         scrollable
+        isLoading={categoryLoading || quizCategoryLoading}
       >
         {!category
           ? categories?.map((category) => {
@@ -159,7 +163,6 @@ const Quizzes: FC<QuizzesProps> = () => {
               );
             })
           : quizzesCategory?.map((item) => {
-              console.log("item", item);
               return (
                 <RenderQuizCard item={item} editMode={userType === "tutor"} />
               );

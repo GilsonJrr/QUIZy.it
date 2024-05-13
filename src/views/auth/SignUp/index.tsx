@@ -34,7 +34,6 @@ const SignUp: FC<SignUpProps> = () => {
   });
 
   const onSubmit = (data: TSignUp) => {
-    console.log("Data", data);
     dispatch(
       requestSignUpEmailPassword({
         email: data.login,

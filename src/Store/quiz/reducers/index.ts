@@ -65,6 +65,7 @@ const quizInitialState: QuizState = {
   quiz: undefined,
   error: undefined,
   quizzesCategory: undefined,
+  quizCategoryLoading: false,
 };
 
 const quizReducer: Reducer<QuizState, QuizAction> = (
@@ -100,7 +101,7 @@ const quizReducer: Reducer<QuizState, QuizAction> = (
     case QuizTypes.REQUEST_QUIZ_LIST_CATEGORY: {
       return {
         ...state,
-        isLoading: true,
+        quizCategoryLoading: true,
         error: undefined,
         quizzesCategory: undefined,
       };
@@ -132,7 +133,7 @@ const quizReducer: Reducer<QuizState, QuizAction> = (
     case QuizTypes.QUIZ_LIST_CATEGORY: {
       return {
         ...state,
-        isLoading: false,
+        quizCategoryLoading: false,
         error: undefined,
         quizzesCategory: Object.values(action.payload),
       };

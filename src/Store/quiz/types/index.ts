@@ -50,6 +50,7 @@ export type QuizTypeValues = {
 
 export type QuizState = {
   isLoading: boolean;
+  quizCategoryLoading: boolean;
   error: string | undefined;
   quizzes: QuizTypeValues[] | undefined;
   quizzesCategory: QuizTypeValues[] | undefined;

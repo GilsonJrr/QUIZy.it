@@ -18,6 +18,7 @@ import {
   requestCategoryList,
   setCategory,
 } from "Store/category/actions";
+import { requestQuizListCategory } from "Store/quiz/actions";
 type StudentCreateProps = {};
 
 type TStudent = {
@@ -52,7 +53,6 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
   });
 
   const onSubmit = (data: TStudent) => {
-    console.log("data", data);
     const preparedData = {
       id: categoryId !== null ? categoryId : idGenerator(18),
       uid: userID || "",
@@ -65,10 +65,16 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
   };
 
   useEffect(() => {
-    if (categories === undefined && userID) {
-      dispatch(requestCategoryList({ uid: userID }));
+    if (categories === undefined) {
+      dispatch(requestCategoryList({ uid: userID || "" }));
     }
   }, [dispatch, categories, userID]);
+
+  useEffect(() => {
+    if (quizzesCategory === undefined) {
+      dispatch(requestQuizListCategory({ uid: userID || "" }));
+    }
+  }, [dispatch, quizzesCategory, userID]);
 
   const crumbs = [
     { label: "Quizzes", path: "/quizzes" },
@@ -81,8 +87,7 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
     }
   }, [categoryId, categories, reset]);
 
-  //TODO: Mudar para "hasQuiz" aqui
-  const hasStudent = useMemo(() => {
+  const hasQuiz = useMemo(() => {
     return quizzesCategory?.some(
       (a) =>
         a.category === categories?.filter((g) => g.id === categoryId)[0]?.title
@@ -106,7 +111,7 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
               label={"Category Title"}
               placeholder="Enter the category title"
               error={
-                hasStudent
+                hasQuiz
                   ? {
                       type: "custom",
                       message:
@@ -115,7 +120,7 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
                   : errors.title
               }
               {...register("title")}
-              disabled={hasStudent}
+              disabled={hasQuiz}
             />
             <SimpleInput
               label={"Category image"}
@@ -158,13 +163,13 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
         </Card>
         <Styled.ButtonContainer
           justify={
-            categoryId !== null && !hasStudent ? "space-between" : "flex-end"
+            categoryId !== null && !hasQuiz ? "space-between" : "flex-end"
           }
         >
-          {categoryId !== null && !hasStudent && (
+          {categoryId !== null && !hasQuiz && (
             <Styled.DeleteButton
               type="button"
-              disabled={hasStudent}
+              disabled={hasQuiz}
               onClick={handleDelete}
             >
               Delete Category

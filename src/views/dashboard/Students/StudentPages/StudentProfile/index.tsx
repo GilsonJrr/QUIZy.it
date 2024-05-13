@@ -6,27 +6,33 @@ import Card from "components/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { requestStudent } from "Store/students/actions";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Avatar from "components/Avatar";
 import Table from "components/Table";
 import { THeader, TResult } from "types/index";
 import RenderTable from "components/renderItems/RenderTable";
 import { requestResultList } from "Store/result/actions";
 import LoadingSpinner from "components/LoadingSpiner";
+import { LoadingContainerFullPage } from "components/Container/styled";
 
 type StudentProfileProps = {};
 
 const StudentProfile: FC<StudentProfileProps> = () => {
-  const { student, isLoading, students } = useSelector(
-    (state: RootState) => state.studentReducer
-  );
+  const {
+    student,
+    isLoading: studentLoading,
+    students,
+  } = useSelector((state: RootState) => state.studentReducer);
   const { results: studentResult, isLoading: resultLoading } = useSelector(
     (state: RootState) => state.resultReducer
   );
-  const { quizzes } = useSelector((state: RootState) => state.quizReducer);
+  const { quizzes, isLoading: quizLoading } = useSelector(
+    (state: RootState) => state.quizReducer
+  );
 
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
   const userID = localStorage.getItem("userId");
 
   const studentId = new URLSearchParams(location.search).get("studentId");
@@ -74,7 +80,7 @@ const StudentProfile: FC<StudentProfileProps> = () => {
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
+  }, [dispatch, studentId]);
 
   useEffect(() => {
     dispatch(
@@ -114,8 +120,12 @@ const StudentProfile: FC<StudentProfileProps> = () => {
     );
   });
 
-  if (isLoading || resultLoading) {
-    return <LoadingSpinner />;
+  if (studentLoading || resultLoading || quizLoading) {
+    return (
+      <LoadingContainerFullPage>
+        <LoadingSpinner size="big" />
+      </LoadingContainerFullPage>
+    );
   }
 
   return (
@@ -140,18 +150,18 @@ const StudentProfile: FC<StudentProfileProps> = () => {
           isEmpty={false}
           emptyMessage={`${student?.info?.name} has't completed any quiz yet`}
         >
-          <div>
+          <Styled.ProgressWrapper>
             {categoryTotal.map((category: any) => {
               const studentResult = studentTotal.filter(
                 (e: any) => e.category === category.category
               )[0]?.size;
               return (
                 <Styled.ProgressContainer>
-                  <h3>
+                  <Styled.ProgressTitle>
                     {category.category === "categoryLess"
                       ? "Uncategorized"
                       : category.category}
-                  </h3>
+                  </Styled.ProgressTitle>
                   <Styled.ProgressBar>
                     <Styled.ProgressBarFill
                       progress={(studentResult / category.size) * 100}
@@ -162,7 +172,7 @@ const StudentProfile: FC<StudentProfileProps> = () => {
                 </Styled.ProgressContainer>
               );
             })}
-          </div>
+          </Styled.ProgressWrapper>
         </Card>
         <Card
           title={"From the same group"}
@@ -177,11 +187,11 @@ const StudentProfile: FC<StudentProfileProps> = () => {
                   name={group.info?.name}
                   photo={group.info?.photo}
                   size="medium"
-                  // onClick={() =>
-                  //   navigate(
-                  //     `/students/student-profile?studentId=${group.info?.uid}`
-                  //   )
-                  // }
+                  onClick={() =>
+                    navigate(
+                      `/students/student-profile?studentId=${group.info?.uid}`
+                    )
+                  }
                 />
               );
             })}

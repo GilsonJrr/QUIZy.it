@@ -20,6 +20,7 @@ import { RootState } from "Store/root-reducer";
 import { requestGroupList } from "Store/group/actions";
 import { useLocation, useNavigate } from "react-router-dom";
 import LoadingSpinner from "components/LoadingSpiner";
+import { LoadingContainerFullPage } from "components/Container/styled";
 
 type StudentCreateProps = {};
 
@@ -86,8 +87,6 @@ const StudentCreate: FC<StudentCreateProps> = () => {
       userType: "student",
       ...rest,
     };
-
-    console.log("data", updateStudentData, newStudentData);
     studentId !== null
       ? dispatch(updateStudent(updateStudentData))
       : dispatch(setStudent(newStudentData));
@@ -212,7 +211,11 @@ const StudentCreate: FC<StudentCreateProps> = () => {
   }, [extraField, reset, setValue, studentId, student]);
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return (
+      <LoadingContainerFullPage>
+        <LoadingSpinner size="big" />
+      </LoadingContainerFullPage>
+    );
   }
 
   return (

@@ -40,7 +40,6 @@ const QuizCreate: FC<QuizCreateProps> = () => {
   }, []);
 
   const handleSendQuiz = (quiz: QuizTypeValues) => {
-    console.log("to be sent quiz", quiz);
     dispatch(setQuiz(quiz as QuizRequest));
     navigate("/quizzes");
   };

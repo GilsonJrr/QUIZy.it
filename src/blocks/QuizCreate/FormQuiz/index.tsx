@@ -15,6 +15,7 @@ import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { requestQuiz } from "Store/quiz/actions";
 import LoadingSpinner from "components/LoadingSpiner";
+import { LoadingContainerFullPage } from "components/Container/styled";
 
 type FormQuizProps = {
   quizType: (value: string) => void;
@@ -58,7 +59,11 @@ const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
   };
 
   useEffect(() => {
-    dispatch(requestQuiz({ uid: user?.info?.uid || "", quizId: quizId || "" }));
+    if (quizId) {
+      dispatch(
+        requestQuiz({ uid: user?.info?.uid || "", quizId: quizId || "" })
+      );
+    }
   }, [dispatch, quizId, user?.info?.uid]);
 
   const renderPreview = () => {
@@ -113,7 +118,11 @@ const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
   }, []);
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return (
+      <LoadingContainerFullPage>
+        <LoadingSpinner size="big" />
+      </LoadingContainerFullPage>
+    );
   }
 
   return (

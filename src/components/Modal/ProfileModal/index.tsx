@@ -16,6 +16,8 @@ import SimpleInput from "components/inputs/SimpleInput";
 import { TStudent } from "views/dashboard/Students/StudentPages/StudentCreate";
 
 import { FaCamera } from "react-icons/fa";
+import { LoadingContainerCard } from "components/Container/styled";
+import LoadingSpinner from "components/LoadingSpiner";
 
 type ExampleProps = {};
 
@@ -30,8 +32,12 @@ const ProfileModal: FC<ExampleProps> = () => {
   } = useForm<TStudent>({});
 
   const { handleModal } = useModalContext();
-  const { user } = useSelector((state: RootState) => state.userReducer);
-  const { student } = useSelector((state: RootState) => state.studentReducer);
+  const { user, isLoading } = useSelector(
+    (state: RootState) => state.userReducer
+  );
+  const { student, isLoading: studentLoading } = useSelector(
+    (state: RootState) => state.studentReducer
+  );
 
   const [editMode, setEditMode] = useState(false);
 
@@ -69,6 +75,18 @@ const ProfileModal: FC<ExampleProps> = () => {
   const handleClick = () => {
     setEditMode(!editMode);
   };
+
+  if (isLoading || studentLoading || watch("name") === undefined) {
+    return (
+      <Styled.Container onClick={handleContainerClick}>
+        <Styled.Content onClick={(event) => event.stopPropagation()}>
+          <LoadingContainerCard>
+            <LoadingSpinner size="medium" />
+          </LoadingContainerCard>
+        </Styled.Content>
+      </Styled.Container>
+    );
+  }
 
   return (
     <Styled.Container onClick={handleContainerClick}>

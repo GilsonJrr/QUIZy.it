@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { requestQuiz } from "Store/quiz/actions";
 import QuizTemplate from "layout/Quiz/QuizTemplate";
+import { LoadingContainerFullPage } from "components/Container/styled";
+import LoadingSpinner from "components/LoadingSpiner";
 
 const Quiz = () => {
   const location = useLocation();
@@ -16,7 +18,9 @@ const Quiz = () => {
   const { user, userStudent } = useSelector(
     (state: RootState) => state.userReducer
   );
-  const { quiz } = useSelector((state: RootState) => state.quizReducer);
+  const { quiz, isLoading } = useSelector(
+    (state: RootState) => state.quizReducer
+  );
 
   const quizID = new URLSearchParams(location.search).get("quizId");
   const userId = localStorage.getItem("userId");
@@ -85,7 +89,13 @@ const Quiz = () => {
     localStorage.setItem("lastQuiz", quiz?.id || "");
   }, [quiz?.id]);
 
-  console.log("quiz", quiz?.questions?.[0]?.rightAnswer?.toString());
+  if (isLoading) {
+    return (
+      <LoadingContainerFullPage>
+        <LoadingSpinner size="big" />
+      </LoadingContainerFullPage>
+    );
+  }
 
   return (
     <QuizTemplate

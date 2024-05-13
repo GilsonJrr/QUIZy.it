@@ -13,6 +13,8 @@ import { requestStudentUser, requestUser } from "Store/user/actions";
 import { useModalContext } from "components/Modal/modalContext";
 import ProfileModal from "components/Modal/ProfileModal";
 import { requestStudent } from "Store/students/actions";
+import LoadingSpinner from "components/LoadingSpiner";
+import { LoadingContainerFullPage } from "components/Container/styled";
 
 type dashboardProps = {
   children?: ReactNode | ReactNode[];
@@ -22,7 +24,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user, userStudent } = useSelector(
+  const { user, userStudent, isLoading } = useSelector(
     (state: RootState) => state.userReducer
   );
   const { student } = useSelector((state: RootState) => state.studentReducer);
@@ -69,6 +71,14 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
       })
     );
   }, [dispatch, userStudent, userType]);
+
+  if (isLoading) {
+    return (
+      <LoadingContainerFullPage>
+        <LoadingSpinner size="big" />
+      </LoadingContainerFullPage>
+    );
+  }
 
   return (
     <Styled.Container>

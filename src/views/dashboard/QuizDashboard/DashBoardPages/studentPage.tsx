@@ -9,12 +9,15 @@ import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { useDispatch } from "react-redux";
 import { requestQuizList } from "Store/quiz/actions";
+import { requestResultList } from "Store/result/actions";
 
 export const StudentPage = () => {
   const dispatch = useDispatch();
-  const { quizzes } = useSelector((state: RootState) => state.quizReducer);
+  const { quizzes, isLoading } = useSelector(
+    (state: RootState) => state.quizReducer
+  );
   const { userStudent } = useSelector((state: RootState) => state.userReducer);
-  const { results: studentResult } = useSelector(
+  const { results: studentResult, isLoading: resultLoading } = useSelector(
     (state: RootState) => state.resultReducer
   );
 
@@ -28,11 +31,6 @@ export const StudentPage = () => {
     { label: "Date", width: 20 },
     { label: "Option", width: 10, align: "center" },
   ];
-
-  // const results = useMemo(() => {
-  //   const resultStorage = localStorage.getItem("netQuiz_my_results");
-  //   return resultStorage ? JSON.parse(resultStorage).reverse() : [];
-  // }, []);
 
   const results = useMemo(() => {
     return studentResult
@@ -48,8 +46,21 @@ export const StudentPage = () => {
   }, [studentResult]);
 
   useEffect(() => {
-    dispatch(requestQuizList({ uid: userStudent?.tutorID || "", size: 50 }));
-  }, [dispatch, userStudent]);
+    if (quizzes === undefined) {
+      dispatch(requestQuizList({ uid: userStudent?.tutorID || "", size: 50 }));
+    }
+  }, [dispatch, quizzes, userStudent]);
+
+  useEffect(() => {
+    if (studentResult === undefined) {
+      dispatch(
+        requestResultList({
+          uid: userStudent?.tutorID || "",
+          studentUid: userStudent?.uid || "",
+        })
+      );
+    }
+  }, [dispatch, studentResult, userStudent?.tutorID, userStudent?.uid]);
 
   return (
     <Styled.Container>
@@ -59,6 +70,7 @@ export const StudentPage = () => {
         isEmpty={quizzes?.length === 0}
         emptyMessage={"No new quiz available at this time. Please check later"}
         scrollable
+        isLoading={isLoading}
       >
         {quizzes?.map((item) => {
           return <RenderQuizCard item={item} />;
@@ -72,6 +84,7 @@ export const StudentPage = () => {
           "Your List is empty add quizzes here to do it later or retry it"
         }
         scrollable
+        // isLoading={listLoading}
       >
         {/* {myList?.map((list) => {
           return <RenderQuizCard item={list} />;
@@ -85,6 +98,7 @@ export const StudentPage = () => {
         emptyMessage={"you have not completed any quiz so far"}
         redirectTo="Results"
         redirectPath="/results"
+        isLoading={resultLoading}
       >
         <Table<TResult>
           header={TableHeaderTitles}

@@ -29,7 +29,6 @@ const Sidebar: FC<SidebarProps> = ({ logo, display, onClose }) => {
   const isMobile = useDeviceType();
 
   const currentUrl = location.pathname.split("/")[1];
-  console.log("currentUrl", location);
 
   const handleRedirect = (navigatePath: string) => {
     navigate(navigatePath);

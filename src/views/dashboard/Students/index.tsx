@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { requestStudentList } from "Store/students/actions";
 import { RootState } from "Store/root-reducer";
 import { requestGroupList } from "Store/group/actions";
-import LoadingSpinner from "components/LoadingSpiner";
 
 type StudentsProps = {};
 
@@ -89,10 +88,6 @@ const Students: FC<StudentsProps> = () => {
     }
   }, [dispatch, groups, userID]);
 
-  if (isLoading || groupLoading) {
-    return <LoadingSpinner />;
-  }
-
   return (
     <Styled.Container>
       <OptionsButton options={Options} width="20%" />
@@ -107,6 +102,7 @@ const Students: FC<StudentsProps> = () => {
         searchable
         searchValue={search}
         setSearch={(e) => setSearch(e)}
+        isLoading={isLoading || groupLoading}
       >
         <Styled.CardInner>
           <Tabs

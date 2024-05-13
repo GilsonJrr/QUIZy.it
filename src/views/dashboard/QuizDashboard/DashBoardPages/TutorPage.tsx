@@ -16,7 +16,9 @@ export const TutorPage = () => {
   const { students, isLoading } = useSelector(
     (state: RootState) => state.studentReducer
   );
-  const { quizzes } = useSelector((state: RootState) => state.quizReducer);
+  const { quizzes, isLoading: quizLoading } = useSelector(
+    (state: RootState) => state.quizReducer
+  );
 
   const dispatch = useDispatch();
 
@@ -66,8 +68,10 @@ export const TutorPage = () => {
   }, [dispatch, students, userID]);
 
   useEffect(() => {
-    dispatch(requestQuizList({ uid: userID || "", size: 50 }));
-  }, [dispatch, userID]);
+    if (quizzes === undefined) {
+      dispatch(requestQuizList({ uid: userID || "", size: 50 }));
+    }
+  }, [dispatch, quizzes, userID]);
 
   return (
     <Styled.Container>
@@ -86,6 +90,7 @@ export const TutorPage = () => {
         setSearch={(e) => setSearch(e)}
         redirectTo="Quizzes"
         redirectPath="/quizzes"
+        isLoading={quizLoading}
       >
         {filterQuizzes?.map((item) => {
           return <RenderQuizCard item={item} editMode />;
@@ -106,17 +111,14 @@ export const TutorPage = () => {
         setSearch={(e) => setSearchStudents(e)}
         redirectTo="Students"
         redirectPath="/students"
+        isLoading={isLoading}
       >
-        {isLoading ? (
-          <>Loading...</>
-        ) : (
-          filterStudents?.map((item) => {
-            if (item.info) {
-              return <RenderStudentCard item={item.info} />;
-            }
-            return null;
-          })
-        )}
+        {filterStudents?.map((item) => {
+          if (item.info) {
+            return <RenderStudentCard item={item.info} />;
+          }
+          return null;
+        })}
       </Card>
       <Card
         gridName="card2"
@@ -125,6 +127,7 @@ export const TutorPage = () => {
         emptyMessage={"you have not completed any quiz so far"}
         redirectTo="Results"
         redirectPath="/results"
+        isLoading={isLoading}
       >
         <Table<TTutorResult>
           header={TableHeaderTitles}

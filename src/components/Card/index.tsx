@@ -3,6 +3,8 @@ import * as Styled from "./styled";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import SearchInput from "components/inputs/SearchInput";
+import { LoadingContainerCard } from "components/Container/styled";
+import LoadingSpinner from "components/LoadingSpiner";
 
 type CardProps = {
   title: string;
@@ -17,6 +19,7 @@ type CardProps = {
   searchable?: boolean;
   searchValue?: string;
   setSearch?: (search: string) => void;
+  isLoading?: boolean;
 };
 
 const Card: FC<CardProps> = ({
@@ -32,8 +35,19 @@ const Card: FC<CardProps> = ({
   searchable,
   searchValue = "",
   setSearch,
+  isLoading,
 }) => {
   const navigate = useNavigate();
+
+  if (isLoading) {
+    return (
+      <Styled.Card gridName={gridName} scrollable={scrollable} width={width}>
+        <LoadingContainerCard>
+          <LoadingSpinner size="medium" />
+        </LoadingContainerCard>
+      </Styled.Card>
+    );
+  }
 
   return (
     <Styled.Card gridName={gridName} scrollable={scrollable} width={width}>

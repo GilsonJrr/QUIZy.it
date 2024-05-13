@@ -44,7 +44,6 @@ const GroupCreate: FC<StudentCreateProps> = () => {
   });
 
   const onSubmit = (data: TStudent) => {
-    console.log("data", data);
     const preparedData = {
       id: groupId !== null ? groupId : idGenerator(18),
       uid: userID || "",
