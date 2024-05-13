@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useMemo } from "react";
 import * as Styled from "./styled";
 import * as Block from "blocks/studentProfile";
 import BreadCrumbs from "components/BreadCrumbs";
@@ -8,6 +8,11 @@ import { RootState } from "Store/root-reducer";
 import { requestStudent } from "Store/students/actions";
 import { useLocation } from "react-router-dom";
 import Avatar from "components/Avatar";
+import Table from "components/Table";
+import { THeader, TResult } from "types/index";
+import RenderTable from "components/renderItems/RenderTable";
+import { requestResultList } from "Store/result/actions";
+import LoadingSpinner from "components/LoadingSpiner";
 
 type StudentProfileProps = {};
 
@@ -15,6 +20,10 @@ const StudentProfile: FC<StudentProfileProps> = () => {
   const { student, isLoading, students } = useSelector(
     (state: RootState) => state.studentReducer
   );
+  const { results: studentResult, isLoading: resultLoading } = useSelector(
+    (state: RootState) => state.resultReducer
+  );
+
   const dispatch = useDispatch();
   const location = useLocation();
   const userID = localStorage.getItem("userId");
@@ -26,6 +35,26 @@ const StudentProfile: FC<StudentProfileProps> = () => {
     { label: "Students Profile", path: "/students/student-profile" },
   ];
 
+  const results = useMemo(() => {
+    return studentResult
+      ? studentResult?.map((res) => {
+          return {
+            date: res.date || "",
+            quiz: res.quizTitle || "",
+            score: `${res.score} / ${res.amount}`,
+            quizId: res.quizUid || "",
+          };
+        })
+      : [];
+  }, [studentResult]);
+
+  const TableHeaderTitles: THeader[] = [
+    { label: "Title", width: 50 },
+    { label: "Score", width: 20 },
+    { label: "Date", width: 20 },
+    { label: "Option", width: 10, align: "center" },
+  ];
+
   useEffect(() => {
     if (studentId) {
       dispatch(
@@ -35,8 +64,17 @@ const StudentProfile: FC<StudentProfileProps> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
-  if (isLoading) {
-    return <>Loading...</>;
+  useEffect(() => {
+    dispatch(
+      requestResultList({
+        uid: userID || "",
+        studentUid: studentId || "",
+      })
+    );
+  }, [dispatch, userID, studentId]);
+
+  if (isLoading || resultLoading) {
+    return <LoadingSpinner />;
   }
 
   const sameGroupStudents = students?.filter((studentList) => {
@@ -52,11 +90,16 @@ const StudentProfile: FC<StudentProfileProps> = () => {
       <Styled.Container>
         <Card
           title={"All results"}
-          children={undefined}
           gridName="results"
-          isEmpty={true}
+          isEmpty={results.length === 0}
           emptyMessage={`${student?.info?.name} has't completed any quiz yet`}
-        ></Card>
+        >
+          <Table<TResult>
+            header={TableHeaderTitles}
+            content={results}
+            renderItem={(item) => <RenderTable item={item} tutorView />}
+          />
+        </Card>
         <Card
           title={"Categorie Result"}
           children={undefined}

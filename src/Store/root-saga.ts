@@ -7,6 +7,7 @@ import groupsSagas from "./group/sagas";
 import userSagas from "./user/sagas";
 import categorySagas from "./category/sagas";
 import quizSagas from "./quiz/sagas";
+import resultSagas from "./result/sagas";
 
 export function* rootSagas() {
   yield all([
@@ -17,5 +18,6 @@ export function* rootSagas() {
     ...userSagas,
     ...categorySagas,
     ...quizSagas,
+    ...resultSagas,
   ]);
 }

@@ -1,17 +1,26 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useEffect, useMemo } from "react";
 import * as Styled from "./styled";
 import Card from "components/Card";
 import Table from "components/Table";
 import { THeader, TResult, TTutorResult } from "types/index";
 import RenderTable from "components/renderItems/RenderTable";
-import { TutorResults } from "assets/consts";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
+import { useDispatch } from "react-redux";
+import { requestResultList } from "Store/result/actions";
+import { requestStudentList } from "Store/students/actions";
 
 type ResultsProps = {};
 
 const Results: FC<ResultsProps> = () => {
+  const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.userReducer);
+  const { student, students } = useSelector(
+    (state: RootState) => state.studentReducer
+  );
+  const { results: studentResult } = useSelector(
+    (state: RootState) => state.resultReducer
+  );
   const userType = user?.info?.userType;
 
   const TableHeaderTitles: THeader[] = [
@@ -29,21 +38,70 @@ const Results: FC<ResultsProps> = () => {
   ];
 
   const results = useMemo(() => {
-    const resultStorage = localStorage.getItem("netQuiz_my_results");
-    return resultStorage ? JSON.parse(resultStorage).reverse() : [];
-  }, []);
+    return studentResult
+      ? studentResult?.map((res) => {
+          return {
+            date: res.date || "",
+            quiz: res.quizTitle || "",
+            score: `${res.score} / ${res.amount}`,
+            quizId: res.quizUid || "",
+          };
+        })
+      : [];
+  }, [studentResult]);
+
+  const tutorResults = useMemo(() => {
+    return students
+      ? students
+          // eslint-disable-next-line array-callback-return
+          ?.map((item) => {
+            const student = item.info;
+            const results = item.results;
+            if (results) {
+              return Object.values(results).map((result) => ({
+                name: student?.name || "",
+                quiz: result.quizTitle || "",
+                score: `${result.score} / ${result.amount}` || "",
+              }));
+            }
+          })
+          .flat()
+          .filter((u) => u !== undefined)
+      : [];
+  }, [students]);
+
+  useEffect(() => {
+    dispatch(
+      requestResultList({
+        uid: student?.info?.tutorID || "",
+        studentUid: student?.info?.uid || "",
+      })
+    );
+  }, [dispatch, student?.info?.tutorID, student?.info?.uid]);
+
+  useEffect(() => {
+    dispatch(
+      requestStudentList({
+        uid: user?.info?.uid || "",
+      })
+    );
+  }, [dispatch, user?.info?.uid]);
 
   return (
     <Styled.Container>
       <Card
         title="Completed Quizzes"
-        isEmpty={results.length === 0}
+        isEmpty={
+          userType === "tutor"
+            ? tutorResults.length === 0
+            : results.length === 0
+        }
         emptyMessage={"you have not completed any quiz so far"}
       >
         {userType === "tutor" ? (
           <Table<TTutorResult>
             header={TableHeaderTutorTitles}
-            content={TutorResults}
+            content={tutorResults as TTutorResult[]}
             renderItem={(item) => <RenderTable tutorResultTable={item} />}
           />
         ) : (

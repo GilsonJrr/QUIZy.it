@@ -1,13 +1,20 @@
 import React, { FC } from "react";
 import * as Styled from "./styled";
-import { EQuizTitle, TResult, TTutorResult } from "types/index";
+import { TResult, TTutorResult } from "types/index";
+import { useNavigate } from "react-router-dom";
 
 type RenderTableProps = {
   item?: TResult;
   tutorResultTable?: TTutorResult;
+  tutorView?: boolean;
 };
 
-const RenderTable: FC<RenderTableProps> = ({ item, tutorResultTable }) => {
+const RenderTable: FC<RenderTableProps> = ({
+  item,
+  tutorResultTable,
+  tutorView,
+}) => {
+  const navigate = useNavigate();
   const handleDate = (date?: string) => {
     const newDate = new Date(date || "");
 
@@ -18,11 +25,15 @@ const RenderTable: FC<RenderTableProps> = ({ item, tutorResultTable }) => {
     return `${mes}/${dia}/${ano}`;
   };
 
+  const handleRetry = () => {
+    navigate(`/quiz?quizId=${item?.quizId}`);
+  };
+
   if (item) {
     return (
       <Styled.TableContent>
         <Styled.TableBodyComponents width={50}>
-          {EQuizTitle[item?.quiz as keyof typeof EQuizTitle]}
+          {item?.quiz}
         </Styled.TableBodyComponents>
         <Styled.TableBodyComponents width={20}>
           {item?.score}
@@ -30,7 +41,9 @@ const RenderTable: FC<RenderTableProps> = ({ item, tutorResultTable }) => {
         <Styled.TableBodyComponents width={20}>
           {handleDate(item?.date)}
         </Styled.TableBodyComponents>
-        <Styled.Option>Retry</Styled.Option>
+        <Styled.Option onClick={handleRetry}>
+          {tutorView ? "Open" : "Retry"}
+        </Styled.Option>
       </Styled.TableContent>
     );
   }

@@ -1,3 +1,5 @@
+import { ResultTypeValues } from "Store/result/types";
+
 export enum StudentTypes {
   STUDENT_CLEAN_UP = "STUDENT_CLEAN_UP",
   STUDENT_LIST_CLEAN_UP = "STUDENT_LIST_CLEAN_UP",
@@ -55,6 +57,7 @@ export type StudentTypeValues = {
   //TODO: change here
 
   info?: TInfo;
+  results?: ResultTypeValues[];
 };
 
 export type StudentState = {

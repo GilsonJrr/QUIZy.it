@@ -5,6 +5,10 @@ import { FaCheck } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { Answer, EAnswerIndexation, QuestionFiltered } from "types/index";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setResult } from "Store/result/actions";
+import { useSelector } from "react-redux";
+import { RootState } from "Store/root-reducer";
 
 type QuizTemplateProps = {
   onClose?: () => void;
@@ -24,6 +28,10 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
   quizId,
 }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { quiz } = useSelector((state: RootState) => state.quizReducer);
+  const { student } = useSelector((state: RootState) => state.studentReducer);
 
   const [current, setCurrent] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<Answer>();
@@ -35,6 +43,7 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
   const handleAnswer = () => {
     selectedAnswer?.type === "correct" && setScore(score + 1);
     setShowAnswer(true);
+    //filtrar quando for correto
     setQuizResume([
       ...quizResume,
       {
@@ -59,6 +68,19 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
 
   const finishQuiz = () => {
     setShowScore(false);
+    const newResult = {
+      tutorUid: student?.info?.tutorID || "",
+      uid: student?.info?.uid || "",
+      studentUid: student?.info?.uid || "",
+      quizUid: quiz?.id,
+      quizTitle: quiz?.title,
+      quizCategory: quiz?.category,
+      amount: questions?.length.toString(),
+      score: score.toString(),
+      resume: quizResume,
+      date: new Date().toISOString(),
+    };
+    dispatch(setResult(newResult));
     navigate("/quizResult", {
       state: {
         score: score,
@@ -68,6 +90,8 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
       },
     });
   };
+
+  console.log("Result", student, quiz);
 
   return (
     <Styled.Container>

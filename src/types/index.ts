@@ -53,7 +53,8 @@ export type TResult = {
   quiz: string | number;
   score: string;
   date: string;
-  quizInfo: TQUiz;
+  quizId: string;
+  quizInfo?: TQUiz;
 };
 
 export type THeader = {
@@ -78,9 +79,9 @@ export type TStudentList = {
 };
 
 export type TTutorResult = {
-  name: string;
-  quiz: string;
-  score: string;
+  name?: string;
+  quiz?: string;
+  score?: string;
 };
 
 export type TOption = {

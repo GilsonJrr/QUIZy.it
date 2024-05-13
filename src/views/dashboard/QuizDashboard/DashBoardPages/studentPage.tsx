@@ -14,6 +14,9 @@ export const StudentPage = () => {
   const dispatch = useDispatch();
   const { quizzes } = useSelector((state: RootState) => state.quizReducer);
   const { userStudent } = useSelector((state: RootState) => state.userReducer);
+  const { results: studentResult } = useSelector(
+    (state: RootState) => state.resultReducer
+  );
 
   const myList: TCollection[] = JSON.parse(
     localStorage.getItem("netQuiz_my_list") || "null"
@@ -26,10 +29,23 @@ export const StudentPage = () => {
     { label: "Option", width: 10, align: "center" },
   ];
 
+  // const results = useMemo(() => {
+  //   const resultStorage = localStorage.getItem("netQuiz_my_results");
+  //   return resultStorage ? JSON.parse(resultStorage).reverse() : [];
+  // }, []);
+
   const results = useMemo(() => {
-    const resultStorage = localStorage.getItem("netQuiz_my_results");
-    return resultStorage ? JSON.parse(resultStorage).reverse() : [];
-  }, []);
+    return studentResult
+      ? studentResult?.map((res) => {
+          return {
+            date: res.date || "",
+            quiz: res.quizTitle || "",
+            score: `${res.score} / ${res.amount}`,
+            quizId: res.quizUid || "",
+          };
+        })
+      : [];
+  }, [studentResult]);
 
   useEffect(() => {
     dispatch(requestQuizList({ uid: userStudent?.tutorID || "", size: 50 }));
