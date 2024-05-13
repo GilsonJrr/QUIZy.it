@@ -11,6 +11,7 @@ import { TOption } from "types/index";
 import { StudentCreateSchema } from "lib/schemas";
 import { useDispatch } from "react-redux";
 import {
+  removeStudent,
   requestStudent,
   setStudent,
   updateStudent,
@@ -21,6 +22,8 @@ import { requestGroupList } from "Store/group/actions";
 import { useLocation, useNavigate } from "react-router-dom";
 import LoadingSpinner from "components/LoadingSpiner";
 import { LoadingContainerFullPage } from "components/Container/styled";
+import { useModalContext } from "components/Modal/modalContext";
+import DeleteModal from "components/Modal/DeleteModal";
 
 type StudentCreateProps = {};
 
@@ -43,6 +46,8 @@ const StudentCreate: FC<StudentCreateProps> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { handleModal } = useModalContext();
 
   const studentId = new URLSearchParams(location.search).get("id");
 
@@ -210,6 +215,20 @@ const StudentCreate: FC<StudentCreateProps> = () => {
     }
   }, [extraField, reset, setValue, studentId, student]);
 
+  const handleDelete = () => {
+    handleModal(
+      <DeleteModal
+        deleteTitle={watch("name") || ""}
+        onDelete={() => {
+          dispatch(
+            removeStudent({ uid: userID || "", studentId: student?.info?.uid })
+          );
+          navigate("/students");
+        }}
+      />
+    );
+  };
+
   if (isLoading) {
     return (
       <LoadingContainerFullPage>
@@ -352,7 +371,14 @@ const StudentCreate: FC<StudentCreateProps> = () => {
           </Styled.ButtonCardContainer>
           <div ref={bottomRef}></div>
         </Card>
-        <Styled.ButtonContainer>
+        <Styled.ButtonContainer
+          justify={studentId !== null ? "space-between" : "flex-end"}
+        >
+          {studentId !== null && (
+            <Styled.DeleteButton type="button" onClick={handleDelete}>
+              Delete Student
+            </Styled.DeleteButton>
+          )}
           <Styled.SubmitButton type="submit" form="newStudentForm">
             {studentId !== null ? "Update Student" : "Add Student"}
           </Styled.SubmitButton>

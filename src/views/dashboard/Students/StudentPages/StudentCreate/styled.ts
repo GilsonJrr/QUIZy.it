@@ -143,3 +143,18 @@ export const ExtraInfoContainer = styled.div`
 export const DeleteIcon = styled(FaTrashAlt)`
   margin-bottom: 12px;
 `;
+
+export const DeleteButton = styled.button`
+  background-color: #c78788;
+  outline: none;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 40px;
+  font-size: 1.3rem;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+`;

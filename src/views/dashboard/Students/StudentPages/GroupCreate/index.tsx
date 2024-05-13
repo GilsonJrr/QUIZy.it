@@ -14,6 +14,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import Avatar from "components/Avatar";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useModalContext } from "components/Modal/modalContext";
+import DeleteModal from "components/Modal/DeleteModal";
 type StudentCreateProps = {};
 
 type TStudent = {
@@ -27,6 +29,8 @@ const GroupCreate: FC<StudentCreateProps> = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const { handleModal } = useModalContext();
+
   const groupId = new URLSearchParams(location.search).get("id");
 
   const { groups } = useSelector((state: RootState) => state.groupReducer);
@@ -39,6 +43,7 @@ const GroupCreate: FC<StudentCreateProps> = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
   } = useForm<TStudent>({
     resolver: yupResolver(GroupCreateSchema),
   });
@@ -79,8 +84,15 @@ const GroupCreate: FC<StudentCreateProps> = () => {
   }, [groupId, groups, students]);
 
   const handleDelete = () => {
-    dispatch(removeGroup({ uid: userID || "", groupId: groupId || "" }));
-    navigate("/students");
+    handleModal(
+      <DeleteModal
+        deleteTitle={watch("title") || ""}
+        onDelete={() => {
+          dispatch(removeGroup({ uid: userID || "", groupId: groupId || "" }));
+          navigate("/students");
+        }}
+      />
+    );
   };
 
   return (

@@ -19,6 +19,8 @@ import {
   setCategory,
 } from "Store/category/actions";
 import { requestQuizListCategory } from "Store/quiz/actions";
+import DeleteModal from "components/Modal/DeleteModal";
+import { useModalContext } from "components/Modal/modalContext";
 type StudentCreateProps = {};
 
 type TStudent = {
@@ -31,6 +33,8 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { handleModal } = useModalContext();
 
   const categoryId = new URLSearchParams(location.search).get("id");
 
@@ -48,6 +52,7 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
   } = useForm<TStudent>({
     resolver: yupResolver(CategoryCreateSchema),
   });
@@ -95,10 +100,17 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
   }, [categoryId, categories, quizzesCategory]);
 
   const handleDelete = () => {
-    dispatch(
-      removeCategory({ uid: userID || "", categoryId: categoryId || "" })
+    handleModal(
+      <DeleteModal
+        deleteTitle={watch("title") || ""}
+        onDelete={() => {
+          dispatch(
+            removeCategory({ uid: userID || "", categoryId: categoryId || "" })
+          );
+          navigate("/quizzes");
+        }}
+      />
     );
-    navigate("/quizzes");
   };
 
   return (

@@ -10,7 +10,7 @@ import { idGenerator, randomize } from "utils/index";
 import QuizTemplate from "layout/Quiz/QuizTemplate";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useModalContext } from "components/Modal/modalContext";
 import DeleteModal from "components/Modal/DeleteModal";
 import { useDispatch } from "react-redux";
@@ -34,6 +34,7 @@ type TMultipleQuestionsForm = {
 const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { handleModal } = useModalContext();
 
@@ -148,11 +149,12 @@ const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
     handleModal(
       <DeleteModal
         deleteTitle={quiz?.title || ""}
-        onDelete={() =>
+        onDelete={() => {
           dispatch(
             removeQuiz({ uid: user?.info?.uid || "", quizId: quizId || "" })
-          )
-        }
+          );
+          navigate("/quizzes");
+        }}
       />
     );
   };

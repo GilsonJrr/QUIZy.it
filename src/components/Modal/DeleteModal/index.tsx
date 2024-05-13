@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState } from "react";
 import * as Styled from "./styled";
 import ModalTemplate from "../ModalTemplate";
 import { useModalContext } from "../modalContext";
-import { useNavigate } from "react-router-dom";
 import { GoAlertFill } from "react-icons/go";
 import LoadingSpinner from "components/LoadingSpiner";
 
@@ -12,15 +11,12 @@ type DeleteModalProps = {
 };
 
 const DeleteModal: FC<DeleteModalProps> = ({ deleteTitle, onDelete }) => {
-  const navigate = useNavigate();
-
   const { handleModal } = useModalContext();
 
   const [showDelete, setShowDelete] = useState(false);
 
   const handleDelete = () => {
     onDelete();
-    navigate("/quizzes");
     handleModal("");
   };
 
