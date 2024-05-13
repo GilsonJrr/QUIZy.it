@@ -23,6 +23,7 @@ const StudentProfile: FC<StudentProfileProps> = () => {
   const { results: studentResult, isLoading: resultLoading } = useSelector(
     (state: RootState) => state.resultReducer
   );
+  const { quizzes } = useSelector((state: RootState) => state.quizReducer);
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -43,6 +44,17 @@ const StudentProfile: FC<StudentProfileProps> = () => {
             quiz: res.quizTitle || "",
             score: `${res.score} / ${res.amount}`,
             quizId: res.quizUid || "",
+          };
+        })
+      : [];
+  }, [studentResult]);
+
+  const CategoryResults = useMemo(() => {
+    return studentResult
+      ? studentResult?.map((res) => {
+          return {
+            category: res.quizCategory,
+            size: parseInt(res.score || ""),
           };
         })
       : [];
@@ -73,9 +85,27 @@ const StudentProfile: FC<StudentProfileProps> = () => {
     );
   }, [dispatch, userID, studentId]);
 
-  if (isLoading || resultLoading) {
-    return <LoadingSpinner />;
-  }
+  const sumByCategory = (data: any[]) => {
+    return data?.reduce((acc, cur) => {
+      const categoryIndex = acc.findIndex(
+        (item: { category: any }) => item.category === cur.category
+      );
+      if (categoryIndex !== -1) {
+        acc[categoryIndex].size += cur.size;
+      } else {
+        acc.push({ category: cur.category, size: cur.size });
+      }
+      return acc;
+    }, []);
+  };
+
+  const categoryTotal = sumByCategory(
+    quizzes?.map((quiz) => {
+      return { category: quiz.category, size: quiz.questions?.length };
+    }) as any[]
+  );
+
+  const studentTotal = sumByCategory(CategoryResults);
 
   const sameGroupStudents = students?.filter((studentList) => {
     return (
@@ -83,6 +113,10 @@ const StudentProfile: FC<StudentProfileProps> = () => {
       studentList.info?.name !== student?.info?.name
     );
   });
+
+  if (isLoading || resultLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <Styled.Wrapper>
@@ -102,11 +136,34 @@ const StudentProfile: FC<StudentProfileProps> = () => {
         </Card>
         <Card
           title={"Categorie Result"}
-          children={undefined}
           gridName="categories"
-          isEmpty={true}
+          isEmpty={false}
           emptyMessage={`${student?.info?.name} has't completed any quiz yet`}
-        ></Card>
+        >
+          <div>
+            {categoryTotal.map((category: any) => {
+              const studentResult = studentTotal.filter(
+                (e: any) => e.category === category.category
+              )[0]?.size;
+              return (
+                <Styled.ProgressContainer>
+                  <h3>
+                    {category.category === "categoryLess"
+                      ? "Uncategorized"
+                      : category.category}
+                  </h3>
+                  <Styled.ProgressBar>
+                    <Styled.ProgressBarFill
+                      progress={(studentResult / category.size) * 100}
+                    >
+                      {((studentResult / category.size) * 100).toFixed(0)}%
+                    </Styled.ProgressBarFill>
+                  </Styled.ProgressBar>
+                </Styled.ProgressContainer>
+              );
+            })}
+          </div>
+        </Card>
         <Card
           title={"From the same group"}
           isEmpty={sameGroupStudents?.length === 0}

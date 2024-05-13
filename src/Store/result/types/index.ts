@@ -36,6 +36,7 @@ export type ResultTypeValues = {
   resume?: TQuizResume[];
   studentUid?: string;
   date?: string;
+  quizCategory?: string;
 };
 
 export type ResultState = {
