@@ -15,6 +15,7 @@ import ProfileModal from "components/Modal/ProfileModal";
 import { requestStudent } from "Store/students/actions";
 import LoadingSpinner from "components/LoadingSpiner";
 import { LoadingContainerFullPage } from "components/Container/styled";
+import MenuModal from "components/Modal/MenuModal";
 
 type dashboardProps = {
   children?: ReactNode | ReactNode[];
@@ -134,7 +135,9 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
             {RouterTitle[`${currentUrl}${search}` as keyof typeof RouterTitle]}
           </Styled.HeaderTitleText>
         </Styled.HeaderTitle>
-        <Styled.HeaderHamburgerMenu onClick={() => setShowMenu(!showMenu)}>
+        {/* handleModal */}
+        {/* <Styled.HeaderHamburgerMenu onClick={() => setShowMenu(!showMenu)}> */}
+        <Styled.HeaderHamburgerMenu onClick={() => handleModal(<MenuModal />)}>
           <GiHamburgerMenu size={25} />
         </Styled.HeaderHamburgerMenu>
       </Styled.HeaderMobile>
