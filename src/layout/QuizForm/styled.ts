@@ -8,23 +8,30 @@ type Props = {
 export const Container = styled.div<Props>`
   width: 100%;
   min-height: 100%;
-  padding: 20px 0px;
+  padding: 0px;
 
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 0.2fr;
-  grid-column-gap: 20px;
-  grid-row-gap: 20px;
-  grid-template-areas:
-    "newQuiz newQuestion"
-    "newQuiz newQuestion"
-    "newQuiz buttonContainer";
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (min-width: 600px) {
+    padding: 20px 0px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 0.2fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    grid-template-areas:
+      "newQuiz newQuestion"
+      "newQuiz newQuestion"
+      "newQuiz buttonContainer";
+  }
 `;
 
 export const ButtonContainer = styled.div<Props>`
   grid-area: "buttonContainer";
   display: flex;
   justify-content: ${({ justify }) => justify || "flex-end"};
+  margin-bottom: 5px;
 `;
 
 export const SubmitButton = styled.button`

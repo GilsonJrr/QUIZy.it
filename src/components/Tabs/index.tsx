@@ -10,9 +10,10 @@ type TabsProps = {
   tabs: TTabs[];
   activeTab: (tab: string) => void;
   radius?: number;
+  active?: string;
 };
 
-const Tabs: FC<TabsProps> = ({ tabs, activeTab, radius }) => {
+const Tabs: FC<TabsProps> = ({ tabs, activeTab, radius, active }) => {
   const [selectedTab, setSelectedTab] = useState(tabs[0].label);
 
   const handleTab = (tab: TTabs) => {
@@ -27,7 +28,7 @@ const Tabs: FC<TabsProps> = ({ tabs, activeTab, radius }) => {
         return (
           <Styled.Tab
             onClick={() => handleTab(tab)}
-            active={tab.label === selectedTab}
+            active={active ? active === tab.label : tab.label === selectedTab}
             radius={radius}
           >
             <h3>{tab.label}</h3>

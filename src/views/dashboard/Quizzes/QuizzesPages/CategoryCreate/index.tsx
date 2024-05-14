@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Styled from "./styled";
@@ -21,6 +21,8 @@ import {
 import { requestQuizListCategory } from "Store/quiz/actions";
 import DeleteModal from "components/Modal/DeleteModal";
 import { useModalContext } from "components/Modal/modalContext";
+import useDeviceType from "hooks/useDeviceType";
+import Tabs from "components/Tabs";
 type StudentCreateProps = {};
 
 type TStudent = {
@@ -33,6 +35,7 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const isMobile = useDeviceType();
 
   const { handleModal } = useModalContext();
 
@@ -46,6 +49,8 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
   );
 
   const userID = localStorage.getItem("userId");
+
+  const [tab, setTab] = useState("Category");
 
   const {
     register,
@@ -113,66 +118,93 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
     );
   };
 
+  const handleUpdateCategory = (id: string) => {
+    navigate(`/quizzes/category-create?id=${id}`);
+    setTab("Category");
+  };
+
   return (
     <Styled.Container>
       <BreadCrumbs crumbs={crumbs} />
+      {isMobile && (
+        <Styled.TabContainer>
+          <Tabs
+            tabs={[{ label: "Category" }, { label: "All Categories" }]}
+            activeTab={(tab) => setTab(tab)}
+            radius={5}
+            active={tab}
+          />
+        </Styled.TabContainer>
+      )}
       <Styled.ContainerInner>
-        <Card title={"New Category"} isEmpty={false} gridName="newQuiz">
-          <Styled.Form id="newStudentForm" onSubmit={handleSubmit(onSubmit)}>
-            <SimpleInput
-              label={"Category Title"}
-              placeholder="Enter the category title"
-              error={
-                hasQuiz
-                  ? {
-                      type: "custom",
-                      message:
-                        "Category has active quiz, name can't be changed",
-                    }
-                  : errors.title
-              }
-              {...register("title")}
-              disabled={hasQuiz}
-            />
-            <SimpleInput
-              label={"Category image"}
-              placeholder="Enter the category image"
-              error={errors.image}
-              {...register("image")}
-            />
-            <TextAreaInput
-              label="About"
-              height="40vh"
-              error={errors.about}
-              {...register("about")}
-            />
-          </Styled.Form>
-        </Card>
-        <Card title={"All Categories"} isEmpty={false} gridName="newQuestion">
-          <Styled.CategoryCardContainer>
-            {categories &&
-              categories.length > 0 &&
-              categories?.map((category) => {
-                return (
-                  <Styled.CategoryCard
-                    active={category.id === categoryId}
-                    onClick={() =>
-                      navigate(`/quizzes/category-create?id=${category.id}`)
-                    }
-                  >
-                    <Avatar
-                      size="medium"
-                      name={category.title}
-                      photo={category.image}
-                    />
-                    <Styled.CategoryTitle>
-                      {category.title}
-                    </Styled.CategoryTitle>
-                  </Styled.CategoryCard>
-                );
-              })}
-          </Styled.CategoryCardContainer>
-        </Card>
+        {(!isMobile || tab === "Category") && (
+          <Card
+            title={isMobile ? "" : "New Category"}
+            isEmpty={false}
+            gridName="newQuiz"
+            innerCard={isMobile}
+          >
+            <Styled.Form id="newStudentForm" onSubmit={handleSubmit(onSubmit)}>
+              <SimpleInput
+                label={"Category Title"}
+                placeholder="Enter the category title"
+                error={
+                  hasQuiz
+                    ? {
+                        type: "custom",
+                        message:
+                          "Category has active quiz, name can't be changed",
+                      }
+                    : errors.title
+                }
+                {...register("title")}
+                disabled={hasQuiz}
+              />
+              <SimpleInput
+                label={"Category image"}
+                placeholder="Enter the category image"
+                error={errors.image}
+                {...register("image")}
+              />
+              <TextAreaInput
+                label="About"
+                height="40vh"
+                error={errors.about}
+                {...register("about")}
+              />
+            </Styled.Form>
+          </Card>
+        )}
+        {(!isMobile || tab === "All Categories") && (
+          <Card
+            title={isMobile ? "" : "All Categories"}
+            isEmpty={false}
+            gridName="newQuestion"
+            innerCard={isMobile}
+          >
+            <Styled.CategoryCardContainer>
+              {categories &&
+                categories.length > 0 &&
+                categories?.map((category) => {
+                  return (
+                    <Styled.CategoryCard
+                      active={category.id === categoryId}
+                      onClick={() => handleUpdateCategory(category.id || "")}
+                    >
+                      <Avatar
+                        size="medium"
+                        name={category.title}
+                        photo={category.image}
+                      />
+                      <Styled.CategoryTitle>
+                        {category.title}
+                      </Styled.CategoryTitle>
+                    </Styled.CategoryCard>
+                  );
+                })}
+            </Styled.CategoryCardContainer>
+          </Card>
+        )}
         <Styled.ButtonContainer
           justify={
             categoryId !== null && !hasQuiz ? "space-between" : "flex-end"
@@ -184,11 +216,12 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
               disabled={hasQuiz}
               onClick={handleDelete}
             >
-              Delete Category
+              {isMobile ? "Delete" : "Delete Category"}
             </Styled.DeleteButton>
           )}
           <Styled.SubmitButton type="submit" form="newStudentForm">
-            {categoryId !== null ? "Update Category" : "Add Category"}
+            {categoryId !== null ? `Update ` : "Add "}{" "}
+            {isMobile ? "" : "Category"}
           </Styled.SubmitButton>
         </Styled.ButtonContainer>
       </Styled.ContainerInner>

@@ -15,6 +15,7 @@ import { useLocation } from "react-router-dom";
 import { useModalContext } from "components/Modal/modalContext";
 import DeleteModal from "components/Modal/DeleteModal";
 import { removeQuiz } from "Store/quiz/actions";
+import useDeviceType from "hooks/useDeviceType";
 
 type TrueOrFalseQuestionProps = {
   sendQuiz: (data: QuizTypeValues) => void;
@@ -30,6 +31,7 @@ type TTrueOrFalseQuestionsFrom = {
 const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const isMobile = useDeviceType();
 
   const { handleModal } = useModalContext();
 
@@ -50,6 +52,7 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
     watch,
     unregister,
     setValue,
+    reset,
   } = useForm<TTrueOrFalseQuestionsFrom>({
     resolver: yupResolver(trueOrFalseSchema),
   });
@@ -151,6 +154,22 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
     }
   }, [quiz, setValue]);
 
+  useEffect(() => {
+    if (quizId === null) {
+      const emptyState: TTrueOrFalseQuestionsFrom = {
+        questions: [
+          {
+            questionTitle: "",
+            rightAnswer: true,
+          },
+        ],
+      };
+      reset(emptyState);
+      setQuestion([0]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <QuizForm
       preview={
@@ -162,7 +181,7 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
       title={"True Or False"}
       buttonTitle="Save"
       edit={!!quizId}
-      deleteTitle="Delete Quiz"
+      deleteTitle={isMobile ? "Delete" : "Delete Quiz"}
       handleDelete={handleDelete}
     >
       <Styled.Container>

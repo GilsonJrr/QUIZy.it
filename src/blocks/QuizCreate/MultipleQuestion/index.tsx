@@ -15,6 +15,7 @@ import { useModalContext } from "components/Modal/modalContext";
 import DeleteModal from "components/Modal/DeleteModal";
 import { useDispatch } from "react-redux";
 import { removeQuiz } from "Store/quiz/actions";
+import useDeviceType from "hooks/useDeviceType";
 
 type MultipleQuestionProps = {
   sendQuiz: (data: QuizTypeValues) => void;
@@ -35,6 +36,7 @@ const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isMobile = useDeviceType();
 
   const { handleModal } = useModalContext();
 
@@ -53,6 +55,7 @@ const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
     watch,
     unregister,
     setValue,
+    reset,
   } = useForm<TMultipleQuestionsForm>({
     resolver: yupResolver(multipleChosesSchema),
   });
@@ -174,6 +177,26 @@ const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
     }
   }, [quiz, setValue]);
 
+  useEffect(() => {
+    if (quizId === null) {
+      const emptyState: TMultipleQuestionsForm = {
+        questions: [
+          {
+            questionTitle: "",
+            answer01: "",
+            answer02: "",
+            answer03: "",
+            answer04: "",
+            rightAnswer: "",
+          },
+        ],
+      };
+      reset(emptyState);
+      setQuestion([0]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <QuizForm
       preview={
@@ -185,7 +208,7 @@ const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
       title={"Multiple choices"}
       buttonTitle={quizId ? "Update" : "Save"}
       edit={!!quizId}
-      deleteTitle="Delete Quiz"
+      deleteTitle={isMobile ? "Delete" : "Delete Quiz"}
       handleDelete={handleDelete}
     >
       <Styled.Container>

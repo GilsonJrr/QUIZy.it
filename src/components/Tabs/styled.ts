@@ -8,6 +8,7 @@ type Props = {
 export const Container = styled.div<Props>`
   display: flex;
   gap: 10px;
+  width: 100%;
 `;
 
 export const Tab = styled.div<Props>`
@@ -17,4 +18,5 @@ export const Tab = styled.div<Props>`
   cursor: pointer;
   background-color: ${({ active }) => (active ? "#4a4747" : "#FFFFFF")};
   color: ${({ active }) => (active ? "#FFFFFF" : "#4a4747")};
+  font-size: 0.9rem;
 `;

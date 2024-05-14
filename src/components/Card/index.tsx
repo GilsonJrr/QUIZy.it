@@ -20,6 +20,7 @@ type CardProps = {
   searchValue?: string;
   setSearch?: (search: string) => void;
   isLoading?: boolean;
+  innerCard?: boolean;
 };
 
 const Card: FC<CardProps> = ({
@@ -36,12 +37,18 @@ const Card: FC<CardProps> = ({
   searchValue = "",
   setSearch,
   isLoading,
+  innerCard,
 }) => {
   const navigate = useNavigate();
 
   if (isLoading) {
     return (
-      <Styled.Card gridName={gridName} scrollable={scrollable} width={width}>
+      <Styled.Card
+        gridName={gridName}
+        scrollable={scrollable}
+        width={width}
+        innerCard={innerCard}
+      >
         <LoadingContainerCard>
           <LoadingSpinner size="medium" />
         </LoadingContainerCard>
@@ -50,7 +57,12 @@ const Card: FC<CardProps> = ({
   }
 
   return (
-    <Styled.Card gridName={gridName} scrollable={scrollable} width={width}>
+    <Styled.Card
+      gridName={gridName}
+      scrollable={scrollable}
+      width={width}
+      innerCard={innerCard}
+    >
       <Styled.CardHeader>
         <Styled.CardTitle>{title}</Styled.CardTitle>
         {searchable && (

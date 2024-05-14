@@ -82,6 +82,7 @@ export const TutorPage = () => {
           redirectTo="Quizzes"
           redirectPath="/quizzes"
           isLoading={quizLoading}
+          innerCard={isMobile}
         >
           {filterQuizzes?.map((item) => {
             return <RenderQuizCard item={item} editMode />;
@@ -105,6 +106,7 @@ export const TutorPage = () => {
           redirectTo="Students"
           redirectPath="/students"
           isLoading={isLoading}
+          innerCard={isMobile}
         >
           {filterStudents?.map((item) => {
             if (item.info) {
@@ -123,6 +125,7 @@ export const TutorPage = () => {
           redirectTo="Results"
           redirectPath="/results"
           isLoading={isLoading}
+          innerCard={isMobile}
         >
           <TutorResultTable
             dashBoard

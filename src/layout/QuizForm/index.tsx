@@ -1,6 +1,7 @@
 import React, { FC, ReactNode } from "react";
 import * as Styled from "./styled";
 import Card from "components/Card";
+import useDeviceType from "hooks/useDeviceType";
 
 type QuizFormProps = {
   children: ReactNode | ReactNode[];
@@ -23,14 +24,24 @@ const QuizForm: FC<QuizFormProps> = ({
   buttonTitle,
   deleteTitle,
 }) => {
+  const isMobile = useDeviceType();
+
   return (
     <Styled.Container>
-      <Card title={title} isEmpty={false} gridName="newQuiz">
+      <Card
+        title={isMobile ? "" : title}
+        isEmpty={false}
+        gridName={"newQuiz"}
+        innerCard={isMobile}
+        scrollable={isMobile}
+      >
         {children}
       </Card>
-      <Card title={"Preview"} isEmpty={false} gridName="newQuestion">
-        {preview}
-      </Card>
+      {!isMobile && (
+        <Card title={"Preview"} isEmpty={false} gridName="newQuestion">
+          {preview}
+        </Card>
+      )}
       <Styled.ButtonContainer justify={edit ? "space-between" : "flex-end"}>
         {edit && (
           <Styled.DeleteButton type="button" onClick={handleDelete}>

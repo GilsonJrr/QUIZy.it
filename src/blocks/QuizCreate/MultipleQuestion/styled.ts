@@ -78,7 +78,7 @@ export const QuestionsContainer = styled.div`
   gap: 10px;
   display: flex;
   flex-wrap: wrap;
-  margin-top: 15px;
+  margin-top: 35px;
 `;
 
 export const QuestionTag = styled.button<Props>`

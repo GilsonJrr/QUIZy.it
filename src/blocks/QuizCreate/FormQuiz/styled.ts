@@ -6,6 +6,10 @@ export const SelectContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 30px;
+  flex-direction: column;
+  @media screen and (min-width: 600px) {
+    flex-direction: row;
+  }
 `;
 
 export const Form = styled.form`

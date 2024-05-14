@@ -3,18 +3,24 @@ import styled from "styled-components";
 export const Container = styled.div`
   width: 100%;
   min-height: 100%;
-  padding: 20px 40px;
+  padding: 0 20px;
   height: calc(100vh - 9vh);
 
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  grid-column-gap: 20px;
-  grid-row-gap: 20px;
-  grid-template-areas:
-    "card1 card3"
-    "card2 card3"
-    "card2 card3";
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (min-width: 600px) {
+    padding: 20px 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    grid-template-areas:
+      "card1 card3"
+      "card2 card3"
+      "card2 card3";
+  }
 `;
 
 export const OptionButtonContainer = styled.div`
@@ -39,4 +45,11 @@ export const GoBackButton = styled.button`
   font-size: 1.3rem;
   cursor: pointer;
   z-index: 1000;
+`;
+
+export const TabContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
 `;

@@ -32,6 +32,7 @@ type TFormData = {
 const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
   const location = useLocation();
   const dispatch = useDispatch();
+
   const { user } = useSelector((state: RootState) => state.userReducer);
   const { quiz, isLoading } = useSelector(
     (state: RootState) => state.quizReducer
@@ -94,27 +95,24 @@ const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
         })
       : [];
 
-  const getPeQuiz = JSON.parse(localStorage.getItem("preSendQuiz") || "null");
-
   useEffect(() => {
-    if (getPeQuiz || quiz) {
+    const getPeQuiz = JSON.parse(localStorage.getItem("preSendQuiz") || "null");
+    const emptyState: TFormData = {
+      category: "categoryLess",
+      title: "",
+      type: "Multiple",
+      description: "",
+      image: "",
+    };
+
+    if ((quizId === null && getPeQuiz) || (quizId !== null && quiz)) {
       return reset(getPeQuiz || quiz);
     }
-  }, [reset, getPeQuiz, quiz]);
 
-  useEffect(() => {
-    if (quizId === null) {
-      const emptyState: TFormData = {
-        category: "categoryLess",
-        title: "",
-        type: "Multiple",
-        description: "",
-        image: "",
-      };
-      reset(emptyState);
+    if ((quizId === null && !getPeQuiz) || (quizId === null && quiz)) {
+      return reset(emptyState);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [quiz, quizId, reset]);
 
   if (isLoading) {
     return (

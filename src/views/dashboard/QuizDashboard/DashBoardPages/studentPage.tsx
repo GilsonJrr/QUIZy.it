@@ -115,6 +115,7 @@ export const StudentPage = () => {
           }
           scrollable
           isLoading={isLoading}
+          innerCard={isMobile}
         >
           {quizzes?.map((item) => {
             return <RenderQuizCard item={item} />;
@@ -130,6 +131,7 @@ export const StudentPage = () => {
             "Your List is empty add quizzes here to do it later or retry it"
           }
           scrollable
+          innerCard={isMobile}
         >
           {myList?.map((list) => {
             return <RenderQuizCard item={list} />;
@@ -145,6 +147,7 @@ export const StudentPage = () => {
           redirectTo="Results"
           redirectPath="/results"
           isLoading={resultLoading}
+          innerCard={isMobile}
         >
           <Table<TResult>
             header={TableHeaderTitles}

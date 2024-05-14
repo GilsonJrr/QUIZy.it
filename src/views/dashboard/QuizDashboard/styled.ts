@@ -4,9 +4,8 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  /* overflow: hidden; */
   height: calc(100vh - 9vh);
-  padding: 10px 0;
+  padding: 0 20px;
 
   @media screen and (min-width: 600px) {
     width: 100%;

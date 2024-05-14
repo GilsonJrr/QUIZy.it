@@ -17,11 +17,15 @@ import { RootState } from "Store/root-reducer";
 import { useDispatch } from "react-redux";
 import { requestCategoryList } from "Store/category/actions";
 import { requestQuizList, requestQuizListCategory } from "Store/quiz/actions";
+import useDeviceType from "hooks/useDeviceType";
+import Tabs from "components/Tabs";
 
 type QuizzesProps = {};
 
 const Quizzes: FC<QuizzesProps> = () => {
   const dispatch = useDispatch();
+  const isMobile = useDeviceType();
+
   const { user, userStudent } = useSelector(
     (state: RootState) => state.userReducer
   );
@@ -35,6 +39,8 @@ const Quizzes: FC<QuizzesProps> = () => {
     isLoading: quizzesLoading,
     quizCategoryLoading,
   } = useSelector((state: RootState) => state.quizReducer);
+
+  const [tab, setTab] = useState("Options");
 
   //TODO: lembrar que quando for estudante aqui ser chamado o id do tutor
   const userID = localStorage.getItem("userId");
@@ -115,64 +121,91 @@ const Quizzes: FC<QuizzesProps> = () => {
 
   return (
     <Styled.Container>
-      <OptionsButton
-        options={userType === "student" ? StudentOptions : TutorOptions}
-        width="45%"
-      />
-      <Card
-        gridName="card2"
-        title={userType === "student" ? "New Quizzes" : "All Quizzes"}
-        isEmpty={quizzes?.length === 0}
-        emptyMessage={
-          search
-            ? "Quiz not found"
-            : "No new quiz available at this time. Please check later"
-        }
-        scrollable
-        searchable
-        searchValue={search}
-        setSearch={(e) => setSearch(e)}
-        isLoading={quizzesLoading}
-      >
-        {quizzes &&
-          quizzes?.length > 0 &&
-          quizzes?.map((item) => {
-            return (
-              <RenderQuizCard item={item} editMode={userType === "tutor"} />
-            );
-          })}
-        <></>
-      </Card>
-      <Card
-        gridName="card3"
-        title={category ? category : "Categories"}
-        isEmpty={categories.length === 0}
-        emptyMessage={"No categories found. Please check later"}
-        scrollable
-        isLoading={categoryLoading || quizCategoryLoading}
-      >
-        {!category
-          ? categories?.map((category) => {
-              return (
-                <RenderCategoriesCard
-                  item={category}
-                  chosenCategory={(category) =>
-                    handleDisplayCategories(category)
-                  }
-                />
-              );
-            })
-          : quizzesCategory?.map((item) => {
+      {isMobile && (
+        <Styled.TabContainer>
+          <Tabs
+            tabs={[
+              { label: "Options" },
+              { label: "Quizzes" },
+              { label: "Categories" },
+            ]}
+            activeTab={(tab) => setTab(tab)}
+            radius={5}
+          />
+        </Styled.TabContainer>
+      )}
+      {(!isMobile || tab === "Options") && (
+        <OptionsButton
+          options={userType === "student" ? StudentOptions : TutorOptions}
+          width="45%"
+        />
+      )}
+      {(!isMobile || tab === "Quizzes") && (
+        <Card
+          gridName="card2"
+          title={
+            isMobile
+              ? ""
+              : userType === "student"
+              ? "New Quizzes"
+              : "All Quizzes"
+          }
+          isEmpty={quizzes?.length === 0}
+          emptyMessage={
+            search
+              ? "Quiz not found"
+              : "No new quiz available at this time. Please check later"
+          }
+          scrollable
+          searchable
+          searchValue={search}
+          setSearch={(e) => setSearch(e)}
+          isLoading={quizzesLoading}
+          innerCard={isMobile}
+        >
+          {quizzes &&
+            quizzes?.length > 0 &&
+            quizzes?.map((item) => {
               return (
                 <RenderQuizCard item={item} editMode={userType === "tutor"} />
               );
             })}
-        {category && (
-          <Styled.GoBackButton onClick={() => setCategory("")}>
-            See all Categories
-          </Styled.GoBackButton>
-        )}
-      </Card>
+          <></>
+        </Card>
+      )}
+      {(!isMobile || tab === "Categories") && (
+        <Card
+          gridName="card3"
+          title={isMobile ? "" : category ? category : "Categories"}
+          isEmpty={categories.length === 0}
+          emptyMessage={"No categories found. Please check later"}
+          scrollable
+          isLoading={categoryLoading || quizCategoryLoading}
+          innerCard={isMobile}
+        >
+          {!category
+            ? categories?.map((category) => {
+                return (
+                  <RenderCategoriesCard
+                    item={category}
+                    chosenCategory={(category) =>
+                      handleDisplayCategories(category)
+                    }
+                  />
+                );
+              })
+            : quizzesCategory?.map((item) => {
+                return (
+                  <RenderQuizCard item={item} editMode={userType === "tutor"} />
+                );
+              })}
+          {category && (
+            <Styled.GoBackButton onClick={() => setCategory("")}>
+              See all Categories
+            </Styled.GoBackButton>
+          )}
+        </Card>
+      )}
     </Styled.Container>
   );
 };

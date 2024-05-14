@@ -8,10 +8,15 @@ export const OptionButtonContainer = styled.div`
   grid-area: "card1";
   display: flex;
   gap: 30px;
-  padding: 30px;
+  /* padding: 30px; */
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
+  flex-direction: column;
+  @media screen and (min-width: 600px) {
+    flex-direction: row;
+    padding: 30px;
+  }
 `;
 
 export const OptionButton = styled.button<Props>`
@@ -20,7 +25,7 @@ export const OptionButton = styled.button<Props>`
   border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   padding: 50px 0;
-  width: ${({ width }) => width};
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,5 +38,9 @@ export const OptionButton = styled.button<Props>`
 
   &:hover {
     transform: scale(1.05);
+  }
+
+  @media screen and (min-width: 600px) {
+    width: ${({ width }) => width};
   }
 `;

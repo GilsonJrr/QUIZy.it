@@ -4,18 +4,19 @@ type Props = {
   gridName?: string;
   scrollable?: boolean;
   width?: string;
+  innerCard?: boolean;
 };
 
 export const Card = styled.div<Props>`
   border-radius: 20px;
   border: none;
-  padding: 15px 20px;
+  padding: ${({ innerCard }) => (innerCard ? "0px" : "15px 20px")};
   grid-area: ${({ gridName }) => gridName};
   display: flex;
   flex-direction: column;
   gap: 20px;
   position: relative;
-  transition: 0.3s ease-in-out all;
+
   height: 100vh;
   overflow: auto;
 
@@ -45,6 +46,7 @@ export const Card = styled.div<Props>`
   }
 
   @media screen and (min-width: 600px) {
+    transition: 0.3s ease-in-out all;
     border: 1px solid rgba(0, 0, 0, 0.4);
     height: 100%;
   }
