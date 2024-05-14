@@ -23,7 +23,8 @@ const Quiz = () => {
   );
 
   const quizID = new URLSearchParams(location.search).get("quizId");
-  const userId = localStorage.getItem("userId");
+  const userId = user?.info?.uid || userStudent?.uid;
+
   const userType = user?.info?.userType
     ? user?.info?.userType
     : userStudent?.userType || localStorage.getItem("userType");
@@ -88,6 +89,8 @@ const Quiz = () => {
   useEffect(() => {
     localStorage.setItem("lastQuiz", quiz?.id || "");
   }, [quiz?.id]);
+
+  //TODO: request user here
 
   if (isLoading) {
     return (

@@ -12,7 +12,7 @@ import { FaFileSignature } from "react-icons/fa6";
 import { MdOutlineQuiz } from "react-icons/md";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { IoMdExit } from "react-icons/io";
-import { HiBellAlert } from "react-icons/hi2";
+// import { HiBellAlert } from "react-icons/hi2";
 
 type MenuModalProps = {};
 
@@ -74,7 +74,7 @@ const MenuModal: FC<MenuModalProps> = () => {
               Results
             </Styled.MenuText>
           </Styled.IconContainer>
-          <Styled.IconContainer
+          {/* <Styled.IconContainer
             active={currentUrl === "message"}
             onClick={() => navigate("/message")}
           >
@@ -82,7 +82,7 @@ const MenuModal: FC<MenuModalProps> = () => {
             <Styled.MenuText active={currentUrl === "message"}>
               Messages
             </Styled.MenuText>
-          </Styled.IconContainer>
+          </Styled.IconContainer> */}
         </Styled.MenuContainer>
         <Styled.ExitContainer onClick={handleSignOut}>
           <IoMdExit size={30} />

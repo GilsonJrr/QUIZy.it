@@ -41,7 +41,7 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
   const [question, setQuestion] = useState([0]);
   const [selectedQuestion, setSelectedQuestion] = useState<number>(0);
 
-  const userID = localStorage.getItem("userId");
+  const userID = user?.info?.uid;
 
   const quizId = new URLSearchParams(location.search).get("quizId");
 

@@ -9,6 +9,7 @@ export const Container = styled.div<Props>`
   display: flex;
   gap: 10px;
   width: 100%;
+  flex-wrap: wrap;
 `;
 
 export const Tab = styled.div<Props>`

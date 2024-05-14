@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { requestStudentList } from "Store/students/actions";
 import { RootState } from "Store/root-reducer";
 import { requestGroupList } from "Store/group/actions";
+import useDeviceType from "hooks/useDeviceType";
 
 type StudentsProps = {};
 
@@ -26,6 +27,8 @@ const Students: FC<StudentsProps> = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isMobile = useDeviceType();
+
   const userID = localStorage.getItem("userId") || "";
 
   const [search, setSearch] = useState("");
@@ -48,6 +51,7 @@ const Students: FC<StudentsProps> = () => {
     // },
   ];
   const [tab, setTab] = useState("All");
+  const [menuTab, setMenuTab] = useState("Students");
 
   const tabs = useMemo(() => {
     if (groups && groups.length > 0 && !groupLoading) {
@@ -90,36 +94,55 @@ const Students: FC<StudentsProps> = () => {
 
   return (
     <Styled.Container>
-      <OptionsButton options={Options} width="20%" />
-      <Card
-        title={"Students list"}
-        isEmpty={students?.length === 0}
-        emptyMessage={
-          search
-            ? "Student not found"
-            : "you have not registered any student so far"
-        }
-        searchable
-        searchValue={search}
-        setSearch={(e) => setSearch(e)}
-        isLoading={isLoading || groupLoading}
-      >
-        <Styled.CardInner>
+      {isMobile && (
+        <Styled.TabContainer>
           <Tabs
-            tabs={[{ label: "All" }, ...tabs]}
-            activeTab={(tab) => setTab(tab)}
+            tabs={[{ label: "Students" }, { label: "Options" }]}
+            activeTab={(tab) => setMenuTab(tab)}
+            radius={5}
           />
-          <Styled.MapRow>
-            {searchedStudents?.map((item) => {
-              if (item.info) {
-                return <RenderStudentCard item={item.info} width="49%" />;
-              }
+        </Styled.TabContainer>
+      )}
+      {(!isMobile || menuTab === "Options") && (
+        <OptionsButton options={Options} width="20%" />
+      )}
+      {(!isMobile || menuTab === "Students") && (
+        <Card
+          title={isMobile ? "" : "Students list"}
+          isEmpty={students?.length === 0}
+          emptyMessage={
+            search
+              ? "Student not found"
+              : "you have not registered any student so far"
+          }
+          searchable
+          searchValue={search}
+          setSearch={(e) => setSearch(e)}
+          isLoading={isLoading || groupLoading}
+          innerCard={isMobile}
+        >
+          <Styled.CardInner>
+            <Tabs
+              tabs={[{ label: "All" }, ...tabs]}
+              activeTab={(tab) => setTab(tab)}
+            />
+            <Styled.MapRow>
+              {searchedStudents?.map((item) => {
+                if (item.info) {
+                  return (
+                    <RenderStudentCard
+                      item={item.info}
+                      width={isMobile ? "100%" : "49%"}
+                    />
+                  );
+                }
 
-              return null;
-            })}
-          </Styled.MapRow>
-        </Styled.CardInner>
-      </Card>
+                return null;
+              })}
+            </Styled.MapRow>
+          </Styled.CardInner>
+        </Card>
+      )}
     </Styled.Container>
   );
 };
