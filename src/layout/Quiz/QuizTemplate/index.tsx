@@ -48,7 +48,7 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
       ...quizResume,
       {
         question: questions?.[current]?.question,
-        rightAnswer: questions?.[current]?.correctAnswers,
+        rightAnswer: questions?.[current]?.correctAnswers.toString(),
         selectedAnswer: selectedAnswer?.answer,
       },
     ]);

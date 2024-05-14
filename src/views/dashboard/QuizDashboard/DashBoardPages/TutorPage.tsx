@@ -1,9 +1,6 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as Styled from "../styled";
-import { TTutorResult } from "types/index";
-import Table from "components/Table";
 import Card from "components/Card";
-import RenderTable from "components/renderItems/RenderTable";
 import RenderQuizCard from "components/renderItems/RenderQuizCard";
 import RenderStudentCard from "components/renderItems/RenderStudentCard";
 import { useSelector } from "react-redux";
@@ -11,6 +8,7 @@ import { RootState } from "Store/root-reducer";
 import { useDispatch } from "react-redux";
 import { requestStudentList } from "Store/students/actions";
 import { requestQuizList } from "Store/quiz/actions";
+import TutorResultTable from "components/Table/TutorResultTable";
 
 export const TutorPage = () => {
   const { students, isLoading } = useSelector(
@@ -26,12 +24,7 @@ export const TutorPage = () => {
 
   const [search, setSearch] = useState<string>();
   const [searchStudents, setSearchStudents] = useState<string>();
-  const TableHeaderTitles = [
-    { label: "Name", width: 40 },
-    { label: "Quiz", width: 40 },
-    { label: "Score", width: 15 },
-    { label: "", width: 15 },
-  ];
+  const [tableIsEmpty, setTableIsEmpty] = useState(false);
 
   const filterStudents = students?.filter((e) =>
     e.info?.name.toUpperCase().includes(searchStudents?.toUpperCase() || "")
@@ -40,26 +33,6 @@ export const TutorPage = () => {
   const filterQuizzes = quizzes?.filter((e) =>
     e.title.toUpperCase().includes(search?.toUpperCase() || "")
   );
-
-  const tutorResults = useMemo(() => {
-    return students
-      ? students
-          // eslint-disable-next-line array-callback-return
-          ?.map((item) => {
-            const student = item.info;
-            const results = item.results;
-            if (results) {
-              return Object.values(results).map((result) => ({
-                name: student?.name || "",
-                quiz: result.quizTitle || "",
-                score: `${result.score} / ${result.amount}` || "",
-              }));
-            }
-          })
-          .flat()
-          .filter((u) => u !== undefined)
-      : [];
-  }, [students]);
 
   useEffect(() => {
     if (students === undefined) {
@@ -123,16 +96,15 @@ export const TutorPage = () => {
       <Card
         gridName="card2"
         title="Last Completed Quizzes"
-        isEmpty={tutorResults?.length === 0}
+        isEmpty={tableIsEmpty}
         emptyMessage={"you have not completed any quiz so far"}
         redirectTo="Results"
         redirectPath="/results"
         isLoading={isLoading}
       >
-        <Table<TTutorResult>
-          header={TableHeaderTitles}
-          content={tutorResults.slice(0, 5) as TTutorResult[]}
-          renderItem={(item) => <RenderTable tutorResultTable={item} />}
+        <TutorResultTable
+          dashBoard
+          emptyState={(empty) => setTableIsEmpty(empty)}
         />
       </Card>
     </Styled.Container>

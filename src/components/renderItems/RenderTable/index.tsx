@@ -26,7 +26,27 @@ const RenderTable: FC<RenderTableProps> = ({
   };
 
   const handleRetry = () => {
-    navigate(`/quiz?quizId=${item?.quizId}`);
+    tutorView
+      ? navigate("/quizResult", {
+          state: {
+            score: item?.score,
+            amount: item?.amount,
+            quizResume: item?.quizResume,
+            quizId: item?.quizId,
+          },
+        })
+      : navigate(`/quiz?quizId=${item?.quizId}`);
+  };
+
+  const handleOpenResult = () => {
+    navigate("/quizResult", {
+      state: {
+        score: tutorResultTable?.extraInfo?.score,
+        amount: tutorResultTable?.extraInfo?.amount,
+        quizResume: tutorResultTable?.extraInfo?.resume,
+        quizId: tutorResultTable?.extraInfo?.quizUid,
+      },
+    });
   };
 
   if (item) {
@@ -36,7 +56,7 @@ const RenderTable: FC<RenderTableProps> = ({
           {item?.quiz}
         </Styled.TableBodyComponents>
         <Styled.TableBodyComponents width={20}>
-          {item?.score}
+          {item?.score} / {item?.amount}
         </Styled.TableBodyComponents>
         <Styled.TableBodyComponents width={20}>
           {handleDate(item?.date)}
@@ -60,7 +80,9 @@ const RenderTable: FC<RenderTableProps> = ({
         <Styled.TableBodyComponents width={15}>
           {tutorResultTable?.score}
         </Styled.TableBodyComponents>
-        <Styled.Option width={15}>Open</Styled.Option>
+        <Styled.Option width={15} onClick={handleOpenResult}>
+          Open
+        </Styled.Option>
       </Styled.TableContent>
     );
   }

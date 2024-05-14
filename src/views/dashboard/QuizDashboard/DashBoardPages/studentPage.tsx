@@ -18,6 +18,7 @@ export const StudentPage = () => {
   const { quizzes, isLoading } = useSelector(
     (state: RootState) => state.quizReducer
   );
+
   const { userStudent } = useSelector((state: RootState) => state.userReducer);
   const { results: studentResult, isLoading: resultLoading } = useSelector(
     (state: RootState) => state.resultReducer
@@ -60,7 +61,7 @@ export const StudentPage = () => {
   }, [dispatch, quizzes, userStudent]);
 
   useEffect(() => {
-    if (studentResult === undefined) {
+    if (userStudent && studentResult?.length === 0) {
       dispatch(
         requestResultList({
           uid: userStudent?.tutorID || "",
@@ -68,7 +69,7 @@ export const StudentPage = () => {
         })
       );
     }
-  }, [dispatch, studentResult, userStudent?.tutorID, userStudent?.uid]);
+  }, [dispatch, studentResult, userStudent]);
 
   useEffect(() => {
     const myListRequest = {
@@ -83,7 +84,7 @@ export const StudentPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, myLists]);
 
-  console.log("myLists", myList);
+  console.log("myLists", studentResult);
 
   return (
     <Styled.Container>
@@ -125,7 +126,7 @@ export const StudentPage = () => {
       >
         <Table<TResult>
           header={TableHeaderTitles}
-          content={results.slice(0, 5)}
+          content={results.slice(0, 5) as TResult[]}
           renderItem={(item) => <RenderTable item={item} />}
         />
       </Card>

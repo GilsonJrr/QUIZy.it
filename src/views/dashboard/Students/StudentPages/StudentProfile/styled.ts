@@ -1,9 +1,5 @@
 import styled from "styled-components";
 
-type Props = {
-  progress?: number;
-};
-
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -50,26 +46,4 @@ export const ProgressContainer = styled.div`
   flex-direction: column;
   gap: 2px;
   margin-bottom: 10px;
-`;
-
-export const ProgressBar = styled.div`
-  background-color: #ffffff;
-  border-radius: 50px;
-  width: 100%;
-  height: 30px;
-  position: relative;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-`;
-
-export const ProgressBarFill = styled.div<Props>`
-  position: absolute;
-  top: 0;
-  border-radius: 50px;
-  display: ${({ progress }) => (progress ? "flex" : "none")};
-  width: ${({ progress }) => (progress ? progress : 0)}%;
-  height: 100%;
-  background-color: #4a4747;
-  color: #ffff;
-  padding: 0 15px;
-  align-items: center;
 `;

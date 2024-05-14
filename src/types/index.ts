@@ -1,3 +1,4 @@
+import { ResultTypeValues, TQuizResume } from "Store/result/types";
 import { ReactNode } from "react";
 
 export type QuizQuestion = {
@@ -55,6 +56,9 @@ export type TResult = {
   date: string;
   quizId: string;
   quizInfo?: TQUiz;
+  extraInfo?: ResultTypeValues;
+  amount?: string;
+  quizResume?: TQuizResume[];
 };
 
 export type THeader = {
@@ -82,6 +86,7 @@ export type TTutorResult = {
   name?: string;
   quiz?: string;
   score?: string;
+  extraInfo?: ResultTypeValues;
 };
 
 export type TOption = {

@@ -1,14 +1,15 @@
-import React, { FC, useEffect, useMemo } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import * as Styled from "./styled";
 import Card from "components/Card";
 import Table from "components/Table";
-import { THeader, TResult, TTutorResult } from "types/index";
+import { THeader, TResult } from "types/index";
 import RenderTable from "components/renderItems/RenderTable";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { useDispatch } from "react-redux";
 import { requestResultList } from "Store/result/actions";
 import { requestStudentList } from "Store/students/actions";
+import TutorResultTable from "components/Table/TutorResultTable";
 
 type ResultsProps = {};
 
@@ -23,7 +24,8 @@ const Results: FC<ResultsProps> = () => {
   const { results: studentResult, isLoading: resultLoading } = useSelector(
     (state: RootState) => state.resultReducer
   );
-  const userType = user?.info?.userType || localStorage.getItem("userType");
+
+  const [tableTutorEmpty, setTableTutorEmpty] = useState(false);
 
   const TableHeaderTitles: THeader[] = [
     { label: "Title", width: 50 },
@@ -32,12 +34,7 @@ const Results: FC<ResultsProps> = () => {
     { label: "Option", width: 10, align: "center" },
   ];
 
-  const TableHeaderTutorTitles = [
-    { label: "Name", width: 40 },
-    { label: "Quiz", width: 40 },
-    { label: "Score", width: 15 },
-    { label: "", width: 15 },
-  ];
+  const userType = user?.info?.userType || localStorage.getItem("userType");
 
   const results = useMemo(() => {
     return studentResult
@@ -52,28 +49,8 @@ const Results: FC<ResultsProps> = () => {
       : [];
   }, [studentResult]);
 
-  const tutorResults = useMemo(() => {
-    return students
-      ? students
-          // eslint-disable-next-line array-callback-return
-          ?.map((item) => {
-            const student = item.info;
-            const results = item.results;
-            if (results) {
-              return Object.values(results).map((result) => ({
-                name: student?.name || "",
-                quiz: result.quizTitle || "",
-                score: `${result.score} / ${result.amount}` || "",
-              }));
-            }
-          })
-          .flat()
-          .filter((u) => u !== undefined)
-      : [];
-  }, [students]);
-
   useEffect(() => {
-    if (studentResult === undefined) {
+    if (student && studentResult?.length === 0) {
       dispatch(
         requestResultList({
           uid: student?.info?.tutorID || "",
@@ -97,19 +74,14 @@ const Results: FC<ResultsProps> = () => {
     <Styled.Container>
       <Card
         title="Completed Quizzes"
-        isEmpty={
-          userType === "tutor"
-            ? tutorResults.length === 0
-            : results.length === 0
-        }
+        isEmpty={userType === "tutor" ? tableTutorEmpty : results.length === 0}
         emptyMessage={"you have not completed any quiz so far"}
         isLoading={userType === "tutor" ? studentLoading : resultLoading}
       >
         {userType === "tutor" ? (
-          <Table<TTutorResult>
-            header={TableHeaderTutorTitles}
-            content={tutorResults as TTutorResult[]}
-            renderItem={(item) => <RenderTable tutorResultTable={item} />}
+          <TutorResultTable
+            dashBoard
+            emptyState={(empty) => setTableTutorEmpty(empty)}
           />
         ) : (
           <Table<TResult>

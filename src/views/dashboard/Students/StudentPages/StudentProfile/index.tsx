@@ -14,6 +14,8 @@ import RenderTable from "components/renderItems/RenderTable";
 import { requestResultList } from "Store/result/actions";
 import LoadingSpinner from "components/LoadingSpiner";
 import { LoadingContainerFullPage } from "components/Container/styled";
+import ProgressBar from "components/ProgressBar";
+import { requestQuizList } from "Store/quiz/actions";
 
 type StudentProfileProps = {};
 
@@ -48,8 +50,10 @@ const StudentProfile: FC<StudentProfileProps> = () => {
           return {
             date: res.date || "",
             quiz: res.quizTitle || "",
-            score: `${res.score} / ${res.amount}`,
+            score: res.score || "",
             quizId: res.quizUid || "",
+            amount: res?.amount,
+            quizResume: res?.resume,
           };
         })
       : [];
@@ -89,7 +93,13 @@ const StudentProfile: FC<StudentProfileProps> = () => {
         studentUid: studentId || "",
       })
     );
-  }, [dispatch, userID, studentId]);
+  }, [dispatch, studentId, userID]);
+
+  useEffect(() => {
+    if (quizzes === undefined) {
+      dispatch(requestQuizList({ uid: userID || "" }));
+    }
+  }, [dispatch, quizzes, userID]);
 
   const sumByCategory = (data: any[]) => {
     return data?.reduce((acc, cur) => {
@@ -151,7 +161,7 @@ const StudentProfile: FC<StudentProfileProps> = () => {
           emptyMessage={`${student?.info?.name} has't completed any quiz yet`}
         >
           <Styled.ProgressWrapper>
-            {categoryTotal.map((category: any) => {
+            {categoryTotal?.map((category: any) => {
               const studentResult = studentTotal.filter(
                 (e: any) => e.category === category.category
               )[0]?.size;
@@ -162,13 +172,9 @@ const StudentProfile: FC<StudentProfileProps> = () => {
                       ? "Uncategorized"
                       : category.category}
                   </Styled.ProgressTitle>
-                  <Styled.ProgressBar>
-                    <Styled.ProgressBarFill
-                      progress={(studentResult / category.size) * 100}
-                    >
-                      {((studentResult / category.size) * 100).toFixed(0)}%
-                    </Styled.ProgressBarFill>
-                  </Styled.ProgressBar>
+                  <ProgressBar
+                    progress={(studentResult / category.size) * 100}
+                  />
                 </Styled.ProgressContainer>
               );
             })}
