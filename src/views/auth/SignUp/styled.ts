@@ -7,7 +7,6 @@ export const Container = styled.div<Props>`
   flex-direction: column;
   width: 100%;
   align-items: center;
-  padding: 0 100px;
 
   input {
     border: 2px solid #f8f8f8;
@@ -27,6 +26,10 @@ export const LogoContainer = styled.div`
   width: 100%;
   gap: 8px;
   margin-bottom: 40px;
+  flex-direction: column;
+  @media screen and (min-width: 600px) {
+    flex-direction: row;
+  }
 `;
 
 export const Logo = styled.img`
@@ -70,7 +73,6 @@ export const LoginButton = styled.button`
   outline: none;
   border-radius: 20px;
   padding: 10px 30px;
-  width: 40%;
   font-size: 1.3rem;
   cursor: pointer;
   margin-top: 8px;

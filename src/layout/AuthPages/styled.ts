@@ -8,12 +8,19 @@ export const Container = styled.div<Props>`
   height: 100vh;
   background-color: #4a4747;
   gap: 60px;
-  padding: 60px 100px;
+  padding: 100px 20px 10px;
+  @media screen and (min-width: 600px) {
+    gap: 60px;
+    padding: 60px 200px;
+  }
 `;
 
 export const FormContainer = styled.div<Props>`
   display: flex;
-  width: 55%;
+  width: 100%;
+  @media screen and (min-width: 600px) {
+    width: 55%;
+  }
 `;
 
 export const ImageContainer = styled.img<Props>`
