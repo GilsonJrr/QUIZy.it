@@ -14,16 +14,17 @@ import Tabs from "components/Tabs";
 
 export const TutorPage = () => {
   const { students, isLoading } = useSelector(
-    (state: RootState) => state.studentReducer
+    (state: RootState) => state.student
   );
   const { quizzes, isLoading: quizLoading } = useSelector(
-    (state: RootState) => state.quizReducer
+    (state: RootState) => state.quiz
   );
+  const { user } = useSelector((state: RootState) => state.user);
 
   const dispatch = useDispatch();
   const isMobile = useDeviceType();
 
-  const userID = localStorage.getItem("userId") || "";
+  const userID = user?.info?.uid;
 
   const [search, setSearch] = useState<string>();
   const [searchStudents, setSearchStudents] = useState<string>();
@@ -40,7 +41,7 @@ export const TutorPage = () => {
 
   useEffect(() => {
     if (students === undefined) {
-      dispatch(requestStudentList({ uid: userID }));
+      dispatch(requestStudentList({ uid: userID || "" }));
     }
   }, [dispatch, students, userID]);
 

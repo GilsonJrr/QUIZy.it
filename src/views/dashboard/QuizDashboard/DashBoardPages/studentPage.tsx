@@ -19,15 +19,13 @@ export const StudentPage = () => {
   const dispatch = useDispatch();
   const isMobile = useDeviceType();
 
-  const { quizzes, isLoading } = useSelector(
-    (state: RootState) => state.quizReducer
-  );
+  const { quizzes, isLoading } = useSelector((state: RootState) => state.quiz);
 
-  const { userStudent } = useSelector((state: RootState) => state.userReducer);
+  const { userStudent } = useSelector((state: RootState) => state.user);
   const { results: studentResult, isLoading: resultLoading } = useSelector(
-    (state: RootState) => state.resultReducer
+    (state: RootState) => state.result
   );
-  const { myLists } = useSelector((state: RootState) => state.myListReducer);
+  const { myLists } = useSelector((state: RootState) => state.myList);
 
   const [tab, setTab] = useState("Quizzes");
 

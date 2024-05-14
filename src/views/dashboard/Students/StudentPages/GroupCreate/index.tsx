@@ -33,10 +33,11 @@ const GroupCreate: FC<StudentCreateProps> = () => {
 
   const groupId = new URLSearchParams(location.search).get("id");
 
-  const { groups } = useSelector((state: RootState) => state.groupReducer);
-  const { students } = useSelector((state: RootState) => state.studentReducer);
+  const { groups } = useSelector((state: RootState) => state.group);
+  const { students } = useSelector((state: RootState) => state.student);
+  const { user } = useSelector((state: RootState) => state.user);
 
-  const userID = localStorage.getItem("userId");
+  const userID = user?.info?.uid;
 
   const {
     register,

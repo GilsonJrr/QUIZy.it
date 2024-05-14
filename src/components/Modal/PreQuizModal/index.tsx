@@ -25,9 +25,9 @@ const PreQuizModal: FC<PreQuizModalProps> = ({ item }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { student } = useSelector((state: RootState) => state.studentReducer);
+  const { student } = useSelector((state: RootState) => state.student);
   const { myLists, isLoading } = useSelector(
-    (state: RootState) => state.myListReducer
+    (state: RootState) => state.myList
   );
 
   const { handleModal } = useModalContext();

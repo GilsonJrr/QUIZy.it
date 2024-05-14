@@ -70,6 +70,7 @@ const userReducer: Reducer<UserState, AgendaAction> = (
         isLoading: true,
         error: undefined,
         user: undefined,
+        userStudent: undefined,
       };
     }
     case UserTypes.REQUEST_USER: {

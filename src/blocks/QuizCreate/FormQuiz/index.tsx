@@ -33,15 +33,11 @@ const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const { user } = useSelector((state: RootState) => state.userReducer);
-  const { quiz, isLoading } = useSelector(
-    (state: RootState) => state.quizReducer
-  );
+  const { user } = useSelector((state: RootState) => state.user);
+  const { quiz, isLoading } = useSelector((state: RootState) => state.quiz);
   const quizId = new URLSearchParams(location.search).get("quizId");
 
-  const { categories } = useSelector(
-    (state: RootState) => state.categoryReducer
-  );
+  const { categories } = useSelector((state: RootState) => state.category);
 
   const {
     register,

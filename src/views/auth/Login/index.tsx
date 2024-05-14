@@ -22,7 +22,7 @@ type TLogin = {
 const Login: FC<LoginProps> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoading } = useSelector((state: RootState) => state.authReducer);
+  const { isLoading } = useSelector((state: RootState) => state.auth);
 
   const {
     register,

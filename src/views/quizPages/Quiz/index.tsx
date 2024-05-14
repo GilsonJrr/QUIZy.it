@@ -15,19 +15,15 @@ const Quiz = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user, userStudent } = useSelector(
-    (state: RootState) => state.userReducer
-  );
-  const { quiz, isLoading } = useSelector(
-    (state: RootState) => state.quizReducer
-  );
+  const { user, userStudent } = useSelector((state: RootState) => state.user);
+  const { quiz, isLoading } = useSelector((state: RootState) => state.quiz);
 
   const quizID = new URLSearchParams(location.search).get("quizId");
   const userId = user?.info?.uid || userStudent?.uid;
 
   const userType = user?.info?.userType
     ? user?.info?.userType
-    : userStudent?.userType || localStorage.getItem("userType");
+    : userStudent?.userType;
 
   const [questions, setQuestions] = useState<QuestionFiltered[]>();
 

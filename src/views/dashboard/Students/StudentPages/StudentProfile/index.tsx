@@ -24,18 +24,19 @@ const StudentProfile: FC<StudentProfileProps> = () => {
     student,
     isLoading: studentLoading,
     students,
-  } = useSelector((state: RootState) => state.studentReducer);
+  } = useSelector((state: RootState) => state.student);
   const { results: studentResult, isLoading: resultLoading } = useSelector(
-    (state: RootState) => state.resultReducer
+    (state: RootState) => state.result
   );
   const { quizzes, isLoading: quizLoading } = useSelector(
-    (state: RootState) => state.quizReducer
+    (state: RootState) => state.quiz
   );
+  const { user } = useSelector((state: RootState) => state.user);
 
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const userID = localStorage.getItem("userId");
+  const userID = user?.info?.uid;
 
   const studentId = new URLSearchParams(location.search).get("studentId");
 

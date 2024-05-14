@@ -9,7 +9,7 @@ export enum AuthTypes {
   REQUEST_PASSWORD_RESET = "REQUEST_PASSWORD_RESET",
 }
 
-export type AuthState = {
+export interface AuthState {
   isLogged: boolean;
   isLoading: boolean;
   isLogOuted: boolean;
@@ -19,7 +19,7 @@ export type AuthState = {
   uid?: string;
   dateUtc?: string;
   firstLogIn: boolean;
-};
+}
 
 export type AuthAction<Payload> = {
   type: AuthTypes;

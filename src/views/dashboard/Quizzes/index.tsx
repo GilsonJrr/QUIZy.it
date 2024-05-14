@@ -26,24 +26,22 @@ const Quizzes: FC<QuizzesProps> = () => {
   const dispatch = useDispatch();
   const isMobile = useDeviceType();
 
-  const { user, userStudent } = useSelector(
-    (state: RootState) => state.userReducer
-  );
-  const { student } = useSelector((state: RootState) => state.studentReducer);
+  const { user, userStudent } = useSelector((state: RootState) => state.user);
+  const { student } = useSelector((state: RootState) => state.student);
   const { categories: cat, isLoading: categoryLoading } = useSelector(
-    (state: RootState) => state.categoryReducer
+    (state: RootState) => state.category
   );
   const {
     quizzes,
     quizzesCategory,
     isLoading: quizzesLoading,
     quizCategoryLoading,
-  } = useSelector((state: RootState) => state.quizReducer);
+  } = useSelector((state: RootState) => state.quiz);
 
   const [tab, setTab] = useState("Options");
 
   //TODO: lembrar que quando for estudante aqui ser chamado o id do tutor
-  const userID = localStorage.getItem("userId");
+  const userID = user?.info?.uid || userStudent?.uid;
   const userType = user?.info?.userType
     ? user?.info?.userType
     : student?.info?.userType || localStorage.getItem("userType");

@@ -10,8 +10,9 @@ import { IoMdExit } from "react-icons/io";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { auth } from "lib/firebase";
 import { RootState } from "Store/root-reducer";
+import { useDispatch } from "react-redux";
+import { requestSignOut } from "Store/auth/actions";
 
 type SidebarProps = {
   logo?: string;
@@ -20,10 +21,11 @@ type SidebarProps = {
 };
 
 const Sidebar: FC<SidebarProps> = ({ logo, display, onClose }) => {
-  const { user } = useSelector((state: RootState) => state.userReducer);
+  const { user } = useSelector((state: RootState) => state.user);
   const userType = user?.info?.userType;
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const currentUrl = location.pathname.split("/")[1];
 
@@ -33,8 +35,7 @@ const Sidebar: FC<SidebarProps> = ({ logo, display, onClose }) => {
   };
 
   const handleSignOut = () => {
-    //TODO: aplicar o cleanUp aqui e apagar todos os dados
-    auth.signOut();
+    dispatch(requestSignOut());
   };
 
   return (

@@ -41,14 +41,11 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
 
   const categoryId = new URLSearchParams(location.search).get("id");
 
-  const { categories } = useSelector(
-    (state: RootState) => state.categoryReducer
-  );
-  const { quizzesCategory } = useSelector(
-    (state: RootState) => state.quizReducer
-  );
+  const { categories } = useSelector((state: RootState) => state.category);
+  const { quizzesCategory } = useSelector((state: RootState) => state.quiz);
+  const { user } = useSelector((state: RootState) => state.user);
 
-  const userID = localStorage.getItem("userId");
+  const userID = user?.info?.uid;
 
   const [tab, setTab] = useState("Category");
 

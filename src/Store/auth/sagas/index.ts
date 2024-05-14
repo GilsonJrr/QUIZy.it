@@ -1,4 +1,4 @@
-import { takeLatest, put, call, select } from "redux-saga/effects";
+import { takeLatest, put, call } from "redux-saga/effects";
 
 import { authError, signIn, signOut, signUpSuccess } from "../actions";
 
@@ -7,7 +7,6 @@ import {
   signInWithEmailPasswordFirebase,
   signOutFirebase,
   signUpWithEmailPasswordFirebase,
-  // getAgenda,
 } from "../repository";
 
 import {
@@ -18,15 +17,21 @@ import {
   AuthTypes,
 } from "../types";
 
-import * as authSelectors from "../selectors";
 import { UseData } from "Store/user/types";
 import {
+  cleanUpUser,
   requestStudentUser,
   requestUser,
   setStudentToUser,
   setStudentUser,
   setUser,
 } from "Store/user/actions";
+import { studentCleanUp, studentListCleanUp } from "Store/students/actions";
+import { resultCleanUp, resultListCleanUp } from "Store/result/actions";
+import { myListCleanUp, myListListCleanUp } from "Store/myList/actions";
+import { quizCleanUp, quizListCleanUp } from "Store/quiz/actions";
+import { categoryCleanUp, categoryListCleanUp } from "Store/category/actions";
+import { groupCleanUp, groupListCleanUp } from "Store/group/actions";
 
 export function* requestSignInEmailPasswordSaga(
   props: AuthAction<AuthSignInInput>
@@ -54,15 +59,26 @@ export function* requestSignInEmailPasswordSaga(
 
 export function* requestSignOutSaga(): any {
   try {
-    const isLogged = yield select(authSelectors.isLogged);
-
+    //TODO: see a better way to do it:
     yield call(signOutFirebase);
-    if (isLogged) {
-      //Update it maybe not necessary
-    }
+
+    yield put(cleanUpUser());
+    yield put(studentCleanUp());
+    yield put(studentListCleanUp());
+    yield put(resultCleanUp());
+    yield put(resultListCleanUp());
+    yield put(myListCleanUp());
+    yield put(myListListCleanUp());
+    yield put(quizCleanUp());
+    yield put(quizListCleanUp());
+    yield put(categoryCleanUp());
+    yield put(categoryListCleanUp());
+    yield put(groupCleanUp());
+    yield put(groupListCleanUp());
+
     yield put(signOut());
   } catch {
-    yield put(signOut());
+    // yield put(signOut());
   }
 }
 

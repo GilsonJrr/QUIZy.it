@@ -35,8 +35,8 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
 
   const { handleModal } = useModalContext();
 
-  const { quiz } = useSelector((state: RootState) => state.quizReducer);
-  const { user } = useSelector((state: RootState) => state.userReducer);
+  const { quiz } = useSelector((state: RootState) => state.quiz);
+  const { user } = useSelector((state: RootState) => state.user);
 
   const [question, setQuestion] = useState([0]);
   const [selectedQuestion, setSelectedQuestion] = useState<number>(0);

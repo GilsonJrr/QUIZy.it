@@ -18,7 +18,7 @@ const exampleInitialState: ExampleState = {
 };
 
 const exampleReducer: Reducer<ExampleState, ExampleAction> = (
-  state = exampleInitialState,
+  state = {},
   action
 ) => {
   switch (action.type) {

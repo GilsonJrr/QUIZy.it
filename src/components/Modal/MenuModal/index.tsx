@@ -22,7 +22,7 @@ const MenuModal: FC<MenuModalProps> = () => {
 
   const { handleModal } = useModalContext();
 
-  const { user } = useSelector((state: RootState) => state.userReducer);
+  const { user } = useSelector((state: RootState) => state.user);
 
   const userType = user?.info?.userType;
 

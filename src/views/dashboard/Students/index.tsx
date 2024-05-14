@@ -18,11 +18,11 @@ type StudentsProps = {};
 
 const Students: FC<StudentsProps> = () => {
   const { students, isLoading } = useSelector(
-    (state: RootState) => state.studentReducer
+    (state: RootState) => state.student
   );
 
   const { groups, isLoading: groupLoading } = useSelector(
-    (state: RootState) => state.groupReducer
+    (state: RootState) => state.group
   );
 
   const dispatch = useDispatch();

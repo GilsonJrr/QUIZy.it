@@ -31,8 +31,8 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { quiz } = useSelector((state: RootState) => state.quizReducer);
-  const { student } = useSelector((state: RootState) => state.studentReducer);
+  const { quiz } = useSelector((state: RootState) => state.quiz);
+  const { student } = useSelector((state: RootState) => state.student);
 
   const [current, setCurrent] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<Answer>();

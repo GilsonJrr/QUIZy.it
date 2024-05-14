@@ -32,10 +32,8 @@ const ProfileModal: FC<ExampleProps> = () => {
   } = useForm<TStudent>({});
 
   const { handleModal } = useModalContext();
-  const { user, isLoading } = useSelector(
-    (state: RootState) => state.userReducer
-  );
-  const { student } = useSelector((state: RootState) => state.studentReducer);
+  const { user, isLoading } = useSelector((state: RootState) => state.user);
+  const { student } = useSelector((state: RootState) => state.student);
 
   const [editMode, setEditMode] = useState(false);
 
@@ -58,7 +56,7 @@ const ProfileModal: FC<ExampleProps> = () => {
     }
   };
 
-  const userType = localStorage.getItem("userType") || "";
+  const userType = tutorInfo.userType || studentInfo.userType;
 
   useEffect(() => {
     if (userType === "tutor") {

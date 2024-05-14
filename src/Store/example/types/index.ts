@@ -13,11 +13,11 @@ export type ExampleRequest = {
 };
 
 export type ExampleTypeValues = {
-  uid: any;
-  id: string;
+  uid?: any;
+  id?: string;
 };
 
 export type ExampleState = {
-  isLoading: boolean;
-  example: ExampleTypeValues[] | undefined;
+  isLoading?: boolean;
+  example?: ExampleTypeValues[] | undefined;
 };

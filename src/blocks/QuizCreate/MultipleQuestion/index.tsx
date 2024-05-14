@@ -40,8 +40,8 @@ const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
 
   const { handleModal } = useModalContext();
 
-  const { user } = useSelector((state: RootState) => state.userReducer);
-  const { quiz } = useSelector((state: RootState) => state.quizReducer);
+  const { user } = useSelector((state: RootState) => state.user);
+  const { quiz } = useSelector((state: RootState) => state.quiz);
 
   const quizId = new URLSearchParams(location.search).get("quizId");
 

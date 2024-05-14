@@ -9,7 +9,6 @@ import Logo from "assets/images/Logo.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
-import { requestStudentUser, requestUser } from "Store/user/actions";
 import { useModalContext } from "components/Modal/modalContext";
 import ProfileModal from "components/Modal/ProfileModal";
 import { requestStudent } from "Store/students/actions";
@@ -26,9 +25,9 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, userStudent, isLoading } = useSelector(
-    (state: RootState) => state.userReducer
+    (state: RootState) => state.user
   );
-  const { student } = useSelector((state: RootState) => state.studentReducer);
+  const { student } = useSelector((state: RootState) => state.student);
 
   const { handleModal } = useModalContext();
 
@@ -53,13 +52,6 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
   };
 
   const messages: any[] = [];
-
-  const userId = localStorage.getItem("userId") || "";
-
-  useEffect(() => {
-    dispatch(requestUser({ uid: userId }));
-    dispatch(requestStudentUser({ uid: userId }));
-  }, [dispatch, userId]);
 
   useEffect(() => {
     dispatch(

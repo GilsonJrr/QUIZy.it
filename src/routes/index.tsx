@@ -28,12 +28,12 @@ import SignUp from "views/auth/SignUp";
 import CategoryCreate from "views/dashboard/Quizzes/QuizzesPages/CategoryCreate";
 
 const Routers = () => {
-  const { isLoading } = useSelector((state: RootState) => state.authReducer);
-  const { user } = useSelector((state: RootState) => state.userReducer);
+  const { isLoading } = useSelector((state: RootState) => state.auth);
+  const { user } = useSelector((state: RootState) => state.user);
   const userType = user?.info?.userType;
 
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | undefined>();
-  const userID = localStorage.getItem("userId");
+  const userID = user?.info?.uid;
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {

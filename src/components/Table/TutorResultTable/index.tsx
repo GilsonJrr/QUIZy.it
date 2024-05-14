@@ -14,7 +14,7 @@ const TutorResultTable: FC<TutorResultTableProps> = ({
   dashBoard,
   emptyState,
 }) => {
-  const { students } = useSelector((state: RootState) => state.studentReducer);
+  const { students } = useSelector((state: RootState) => state.student);
 
   const TableHeaderTitles = [
     { label: "Name", width: 40 },

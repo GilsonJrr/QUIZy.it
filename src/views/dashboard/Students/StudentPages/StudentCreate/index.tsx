@@ -51,9 +51,9 @@ const StudentCreate: FC<StudentCreateProps> = () => {
 
   const studentId = new URLSearchParams(location.search).get("id");
 
-  const { groups } = useSelector((state: RootState) => state.groupReducer);
-  const { isLoading } = useSelector((state: RootState) => state.userReducer);
-  const { student } = useSelector((state: RootState) => state.studentReducer);
+  const { groups } = useSelector((state: RootState) => state.group);
+  const { isLoading } = useSelector((state: RootState) => state.user);
+  const { student } = useSelector((state: RootState) => state.student);
   const userID = localStorage.getItem("userId") || "";
 
   const [extraFields, setExtraFields] = useState<any[]>([]);

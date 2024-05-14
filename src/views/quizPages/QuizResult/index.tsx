@@ -15,17 +15,10 @@ const QuizResult: FC<QuizResultProps> = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user, userStudent } = useSelector(
-    (state: RootState) => state.userReducer
-  );
-  const { quiz, isLoading } = useSelector(
-    (state: RootState) => state.quizReducer
-  );
+  const { user, userStudent } = useSelector((state: RootState) => state.user);
+  const { quiz, isLoading } = useSelector((state: RootState) => state.quiz);
 
-  const userType =
-    localStorage.getItem("userType") ||
-    user?.info?.userType ||
-    userStudent?.userType;
+  const userType = user?.info?.userType || userStudent?.userType;
 
   const { score = 0, amount = 0, quizResume, quizId } = location.state || "";
   const finalScore = (score * 100) / amount;

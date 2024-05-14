@@ -18,14 +18,14 @@ const Results: FC<ResultsProps> = () => {
   const dispatch = useDispatch();
   const isMobile = useDeviceType();
 
-  const { user } = useSelector((state: RootState) => state.userReducer);
+  const { user } = useSelector((state: RootState) => state.user);
   const {
     student,
     students,
     isLoading: studentLoading,
-  } = useSelector((state: RootState) => state.studentReducer);
+  } = useSelector((state: RootState) => state.student);
   const { results: studentResult, isLoading: resultLoading } = useSelector(
-    (state: RootState) => state.resultReducer
+    (state: RootState) => state.result
   );
 
   const [tableTutorEmpty, setTableTutorEmpty] = useState(false);

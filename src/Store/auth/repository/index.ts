@@ -6,7 +6,7 @@ import {
 } from "firebase/auth";
 import { auth } from "lib/firebase";
 import { database } from "lib/firebase";
-import { ref, set, get, remove } from "firebase/database";
+import { ref, get } from "firebase/database";
 
 export const signUpWithEmailPasswordFirebase = async (
   email: string,
