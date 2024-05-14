@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 type Props = {
   active?: boolean;
+  radius?: number;
 };
 
 export const Container = styled.div<Props>`
@@ -11,7 +12,7 @@ export const Container = styled.div<Props>`
 
 export const Tab = styled.div<Props>`
   border: 1px solid rgba(0, 0, 0, 0.5);
-  border-radius: 20px;
+  border-radius: ${({ radius }) => radius || 20}px;
   padding: 4px 20px;
   cursor: pointer;
   background-color: ${({ active }) => (active ? "#4a4747" : "#FFFFFF")};

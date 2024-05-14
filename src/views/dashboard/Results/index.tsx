@@ -10,11 +10,14 @@ import { useDispatch } from "react-redux";
 import { requestResultList } from "Store/result/actions";
 import { requestStudentList } from "Store/students/actions";
 import TutorResultTable from "components/Table/TutorResultTable";
+import useDeviceType from "hooks/useDeviceType";
 
 type ResultsProps = {};
 
 const Results: FC<ResultsProps> = () => {
   const dispatch = useDispatch();
+  const isMobile = useDeviceType();
+
   const { user } = useSelector((state: RootState) => state.userReducer);
   const {
     student,
@@ -73,7 +76,7 @@ const Results: FC<ResultsProps> = () => {
   return (
     <Styled.Container>
       <Card
-        title="Completed Quizzes"
+        title={isMobile ? "" : "Completed Quizzes"}
         isEmpty={userType === "tutor" ? tableTutorEmpty : results.length === 0}
         emptyMessage={"you have not completed any quiz so far"}
         isLoading={userType === "tutor" ? studentLoading : resultLoading}

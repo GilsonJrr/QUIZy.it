@@ -32,3 +32,39 @@ export const TableBodyComponents = styled.div<Props>`
     justify-content: flex-start;
   }
 `;
+
+export const ListContainer = styled.div`
+  display: flex;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  width: 100%;
+  padding: 12px 20px;
+  margin-bottom: 10px;
+`;
+
+export const List = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+export const ListInfoContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+  margin-top: 6px;
+`;
+
+export const InfoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-right: 10px;
+`;
+
+export const ListTitle = styled.h2``;
+
+export const InfoText = styled.h3`
+  font-weight: 500;
+`;

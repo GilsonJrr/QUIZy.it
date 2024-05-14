@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import * as Styled from "../styled";
 import { TResult, THeader } from "types/index";
 import Table from "components/Table";
@@ -12,9 +12,13 @@ import { requestQuizList } from "Store/quiz/actions";
 import { requestResultList } from "Store/result/actions";
 import { requestMyListList } from "Store/myList/actions";
 import { MyListTypeValues } from "Store/myList/types";
+import useDeviceType from "hooks/useDeviceType";
+import Tabs from "components/Tabs";
 
 export const StudentPage = () => {
   const dispatch = useDispatch();
+  const isMobile = useDeviceType();
+
   const { quizzes, isLoading } = useSelector(
     (state: RootState) => state.quizReducer
   );
@@ -24,6 +28,8 @@ export const StudentPage = () => {
     (state: RootState) => state.resultReducer
   );
   const { myLists } = useSelector((state: RootState) => state.myListReducer);
+
+  const [tab, setTab] = useState("Quizzes");
 
   const myList = useMemo(() => {
     if (!quizzes || !Array.isArray(myLists)) {
@@ -86,48 +92,67 @@ export const StudentPage = () => {
 
   return (
     <Styled.Container>
-      <Card
-        gridName="card1"
-        title="New Quizes"
-        isEmpty={quizzes?.length === 0}
-        emptyMessage={"No new quiz available at this time. Please check later"}
-        scrollable
-        isLoading={isLoading}
-      >
-        {quizzes?.map((item) => {
-          return <RenderQuizCard item={item} />;
-        })}
-      </Card>
-      <Card
-        gridName="card3"
-        title="My list"
-        isEmpty={myList?.length === 0}
-        emptyMessage={
-          "Your List is empty add quizzes here to do it later or retry it"
-        }
-        scrollable
-        // isLoading={listLoading}
-      >
-        {myList?.map((list) => {
-          return <RenderQuizCard item={list} />;
-        })}
-        <></>
-      </Card>
-      <Card
-        gridName="card2"
-        title="Last Completed Quizzes"
-        isEmpty={results?.length === 0}
-        emptyMessage={"you have not completed any quiz so far"}
-        redirectTo="Results"
-        redirectPath="/results"
-        isLoading={resultLoading}
-      >
-        <Table<TResult>
-          header={TableHeaderTitles}
-          content={results.slice(0, 5) as TResult[]}
-          renderItem={(item) => <RenderTable item={item} />}
-        />
-      </Card>
+      {isMobile && (
+        <Styled.TabContainer>
+          <Tabs
+            tabs={[
+              { label: "Quizzes" },
+              { label: "My list" },
+              { label: "Results" },
+            ]}
+            activeTab={(tab) => setTab(tab)}
+            radius={5}
+          />
+        </Styled.TabContainer>
+      )}
+      {(tab === "Quizzes" || !isMobile) && (
+        <Card
+          gridName="card1"
+          title={isMobile ? "" : "New Quizes"}
+          isEmpty={quizzes?.length === 0}
+          emptyMessage={
+            "No new quiz available at this time. Please check later"
+          }
+          scrollable
+          isLoading={isLoading}
+        >
+          {quizzes?.map((item) => {
+            return <RenderQuizCard item={item} />;
+          })}
+        </Card>
+      )}
+      {(tab === "My list" || !isMobile) && (
+        <Card
+          gridName="card3"
+          title={isMobile ? "" : "My list"}
+          isEmpty={myList?.length === 0}
+          emptyMessage={
+            "Your List is empty add quizzes here to do it later or retry it"
+          }
+          scrollable
+        >
+          {myList?.map((list) => {
+            return <RenderQuizCard item={list} />;
+          })}
+        </Card>
+      )}
+      {(tab === "Results" || !isMobile) && (
+        <Card
+          gridName="card2"
+          title={isMobile ? "" : "Last Completed Quizzes"}
+          isEmpty={results?.length === 0}
+          emptyMessage={"you have not completed any quiz so far"}
+          redirectTo="Results"
+          redirectPath="/results"
+          isLoading={resultLoading}
+        >
+          <Table<TResult>
+            header={TableHeaderTitles}
+            content={results.slice(0, 5) as TResult[]}
+            renderItem={(item) => <RenderTable item={item} />}
+          />
+        </Card>
+      )}
     </Styled.Container>
   );
 };

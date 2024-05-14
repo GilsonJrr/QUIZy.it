@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import * as Styled from "./styled";
 import { TResult, TTutorResult } from "types/index";
 import { useNavigate } from "react-router-dom";
+import useDeviceType from "hooks/useDeviceType";
 
 type RenderTableProps = {
   item?: TResult;
@@ -15,6 +16,8 @@ const RenderTable: FC<RenderTableProps> = ({
   tutorView,
 }) => {
   const navigate = useNavigate();
+  const isMobile = useDeviceType();
+
   const handleDate = (date?: string) => {
     const newDate = new Date(date || "");
 
@@ -50,7 +53,23 @@ const RenderTable: FC<RenderTableProps> = ({
   };
 
   if (item) {
-    return (
+    return isMobile ? (
+      <Styled.ListContainer onClick={handleRetry}>
+        <Styled.List>
+          <Styled.ListTitle>{item?.quiz}</Styled.ListTitle>
+          <Styled.ListInfoContainer>
+            <Styled.InfoContainer>
+              <Styled.InfoText>
+                {item?.score} {tutorView && `/ ${item?.amount}`}
+              </Styled.InfoText>
+            </Styled.InfoContainer>
+            <Styled.InfoContainer>
+              <Styled.InfoText>{handleDate(item?.date)}</Styled.InfoText>
+            </Styled.InfoContainer>
+          </Styled.ListInfoContainer>
+        </Styled.List>
+      </Styled.ListContainer>
+    ) : (
       <Styled.TableContent>
         <Styled.TableBodyComponents width={50}>
           {item?.quiz}
@@ -69,7 +88,21 @@ const RenderTable: FC<RenderTableProps> = ({
   }
 
   if (tutorResultTable) {
-    return (
+    return isMobile ? (
+      <Styled.ListContainer onClick={handleOpenResult}>
+        <Styled.List>
+          <Styled.ListTitle>{tutorResultTable?.name}</Styled.ListTitle>
+          <Styled.ListInfoContainer>
+            <Styled.InfoContainer>
+              <Styled.InfoText>{tutorResultTable?.quiz}</Styled.InfoText>
+            </Styled.InfoContainer>
+            <Styled.InfoContainer>
+              <Styled.InfoText>{tutorResultTable?.score}</Styled.InfoText>
+            </Styled.InfoContainer>
+          </Styled.ListInfoContainer>
+        </Styled.List>
+      </Styled.ListContainer>
+    ) : (
       <Styled.TableContent>
         <Styled.TableBodyComponents width={40}>
           {tutorResultTable?.name}

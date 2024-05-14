@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import * as Styled from "./styled";
 import { THeader } from "types/index";
+import useDeviceType from "hooks/useDeviceType";
 
 type TableProps<GenericProps> = {
   header: THeader[];
@@ -13,20 +14,24 @@ const Table = <GenericProps,>({
   content,
   renderItem,
 }: TableProps<GenericProps>) => {
+  const isMobile = useDeviceType();
+
   return (
     <Styled.Table>
-      <Styled.TableContent>
-        {header.map((titles) => {
-          return (
-            <Styled.TableHeaderComponents
-              width={titles.width || 10}
-              align={titles.align}
-            >
-              {titles.label}
-            </Styled.TableHeaderComponents>
-          );
-        })}
-      </Styled.TableContent>
+      {!isMobile && (
+        <Styled.TableContent>
+          {header.map((titles) => {
+            return (
+              <Styled.TableHeaderComponents
+                width={titles.width || 10}
+                align={titles.align}
+              >
+                {titles.label}
+              </Styled.TableHeaderComponents>
+            );
+          })}
+        </Styled.TableContent>
+      )}
       <Styled.TableBody>
         {content.map((result) => {
           return (

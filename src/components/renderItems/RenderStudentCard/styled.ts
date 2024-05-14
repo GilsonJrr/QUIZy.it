@@ -28,6 +28,11 @@ export const InfoContainer = styled.div`
 
 export const Name = styled.h1`
   font-size: 1.4rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 `;
 
 export const InnerInfoContainer = styled.div`
