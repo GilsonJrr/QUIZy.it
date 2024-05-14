@@ -50,7 +50,7 @@ const Results: FC<ResultsProps> = () => {
   }, [studentResult]);
 
   useEffect(() => {
-    if (student && studentResult?.length === 0) {
+    if (studentResult === undefined) {
       dispatch(
         requestResultList({
           uid: student?.info?.tutorID || "",

@@ -37,8 +37,6 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
   const currentUrl = location.pathname;
   const search = location.search && location.search[0];
 
-  console.log("currentUrl", search[0]);
-
   const handleBlur = () => {
     setTimeout(() => {
       setOpenMessages(false);
@@ -56,7 +54,6 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
   const messages: any[] = [];
 
   const userId = localStorage.getItem("userId") || "";
-  const userType = localStorage.getItem("userType") || "";
 
   useEffect(() => {
     dispatch(requestUser({ uid: userId }));
@@ -70,7 +67,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
         studentId: userStudent?.uid,
       })
     );
-  }, [dispatch, userStudent, userType]);
+  }, [dispatch, userStudent]);
 
   if (isLoading) {
     return (

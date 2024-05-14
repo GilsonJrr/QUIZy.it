@@ -53,7 +53,6 @@ const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
   });
 
   const onSubmit = (data: TFormData) => {
-    console.log("data", data);
     quizType(watch("type"));
     localStorage.setItem("preSendQuiz", JSON.stringify(data));
   };

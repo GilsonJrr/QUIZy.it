@@ -89,6 +89,8 @@ export const Button = styled.button`
 
   font-size: 1.2rem;
   font-weight: 500;
+
+  cursor: pointer;
 `;
 
 export const ResumeContainer = styled.div`

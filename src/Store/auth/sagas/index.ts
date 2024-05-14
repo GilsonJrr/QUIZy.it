@@ -34,7 +34,6 @@ export function* requestSignInEmailPasswordSaga(
   const email = props.payload.email;
   const password = props.payload.password;
 
-  // console.log("datas", email, password);
   try {
     if (email && password) {
       const userCredentials = yield call(
@@ -79,7 +78,6 @@ export function* requestSignUpEmailPasswordSaga(
         email,
         password
       );
-      console.log("userCredentials", userCredentials);
       yield put(signUpSuccess(userCredentials));
       const newUser: UseData = {
         name: name || "",

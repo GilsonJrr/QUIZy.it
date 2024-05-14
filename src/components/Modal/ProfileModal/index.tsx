@@ -35,9 +35,7 @@ const ProfileModal: FC<ExampleProps> = () => {
   const { user, isLoading } = useSelector(
     (state: RootState) => state.userReducer
   );
-  const { student, isLoading: studentLoading } = useSelector(
-    (state: RootState) => state.studentReducer
-  );
+  const { student } = useSelector((state: RootState) => state.studentReducer);
 
   const [editMode, setEditMode] = useState(false);
 
@@ -76,7 +74,7 @@ const ProfileModal: FC<ExampleProps> = () => {
     setEditMode(!editMode);
   };
 
-  if (isLoading || studentLoading || watch("name") === undefined) {
+  if (isLoading || watch("name") === undefined) {
     return (
       <Styled.Container onClick={handleContainerClick}>
         <Styled.Content onClick={(event) => event.stopPropagation()}>

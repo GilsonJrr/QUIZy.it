@@ -64,7 +64,6 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
       ...data,
     };
 
-    console.log("data aqui e", dataPrepared);
     sendQuiz(dataPrepared);
   };
 

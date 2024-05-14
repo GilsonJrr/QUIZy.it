@@ -27,7 +27,6 @@ export const getResult = async (
 
 export const setResult = async (_uid: string, data: ResultTypeValues) => {
   const { uid, ...rest } = data;
-  console.log("Result", data);
   return set(
     ref(
       database,

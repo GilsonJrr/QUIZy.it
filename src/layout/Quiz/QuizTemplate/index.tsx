@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { setResult } from "Store/result/actions";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
+import ProgressBar from "components/ProgressBar";
 
 type QuizTemplateProps = {
   onClose?: () => void;
@@ -70,7 +71,7 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
     setShowScore(false);
     const newResult = {
       tutorUid: student?.info?.tutorID || "",
-      uid: student?.info?.uid || "",
+      uid: student?.info?.tutorID || "",
       studentUid: student?.info?.uid || "",
       quizUid: quiz?.id,
       quizTitle: quiz?.title,
@@ -91,8 +92,6 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
     });
   };
 
-  console.log("Result", student, quiz);
-
   return (
     <Styled.Container>
       <Styled.QuizContainer>
@@ -101,13 +100,11 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
             <IoClose size={20} />
           </Styled.Close>
           <Styled.ProgressContainer>
-            <Styled.ProgressBar>
-              <Styled.ProgressBarFill
-                progress={
-                  questions && ((current + 1) / questions?.length) * 100
-                }
-              />
-            </Styled.ProgressBar>
+            <ProgressBar
+              progress={questions && ((current + 1) / questions?.length) * 100}
+              color={"#89c799"}
+              displayPercentage={false}
+            />
             <Styled.ProgressNumber>
               {current + 1}/{questions?.length}
             </Styled.ProgressNumber>

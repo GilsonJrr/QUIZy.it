@@ -45,7 +45,6 @@ export const removeMyList = async (
   studentId: string,
   myListId: string
 ) => {
-  console.log("MyList", uid, studentId, myListId);
   return remove(
     ref(database, `user/${uid}/students/${studentId}/myLists/${myListId}/`)
   )

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-type Props = { progress?: number; radius?: number };
+type Props = { progress?: number; radius?: number; color?: string };
 
 export const ProgressBar = styled.div<Props>`
   background-color: #ffffff;
@@ -18,7 +18,7 @@ export const ProgressBarFill = styled.div<Props>`
   display: ${({ progress }) => (progress ? "flex" : "none")};
   width: ${({ progress }) => (progress ? progress : 0)}%;
   height: 100%;
-  background-color: #4a4747;
+  background-color: ${({ color }) => (color ? color : "#4a4747")};
   color: #ffff;
   padding: 0 15px;
   align-items: center;

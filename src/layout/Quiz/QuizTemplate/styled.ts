@@ -126,24 +126,6 @@ export const ProgressContainer = styled.div`
   gap: 20px;
 `;
 
-export const ProgressBar = styled.div`
-  background-color: #ffffff;
-  border-radius: 50px;
-  width: 100%;
-  height: 20px;
-  position: relative;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-`;
-
-export const ProgressBarFill = styled.div<Props>`
-  position: absolute;
-  top: 0;
-  border-radius: 50px;
-  width: ${({ progress }) => progress}%;
-  height: 100%;
-  background-color: #89c799;
-`;
-
 export const ProgressNumber = styled.h3``;
 
 export const AnswerButton = styled.button<Props>`

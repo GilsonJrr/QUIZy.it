@@ -37,7 +37,7 @@ const DeleteModal: FC<DeleteModalProps> = ({ deleteTitle, onDelete }) => {
           <GoAlertFill size={20} />
           <Styled.Tile>Delete</Styled.Tile>
         </Styled.TitleContainer>
-        <Styled.SubTitle>Are you sure that you want to delete:</Styled.SubTitle>
+        <Styled.SubTitle>Are you sure that you want to delete</Styled.SubTitle>
         <Styled.ToBeDeletedTitle>{deleteTitle}</Styled.ToBeDeletedTitle>
         <Styled.ButtonContainer>
           <Styled.ConfirmButton onClick={handleDelete}>

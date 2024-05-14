@@ -76,7 +76,6 @@ const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
       ...addRightAnswer(),
     };
 
-    console.log("data aqui", dataPrepared);
     sendQuiz(dataPrepared);
   };
 

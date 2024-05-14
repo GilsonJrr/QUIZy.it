@@ -10,19 +10,8 @@ type ProfileInfoProps = {
 
 const ProfileInfo: FC<ProfileInfoProps> = ({ student }) => {
   const navigate = useNavigate();
-  const {
-    photo,
-    name,
-    socialNetWork,
-    birthDate,
-    email,
-    phone,
-    about,
-    uid,
-    ...rest
-  } = student;
-
-  console.log("rest", rest);
+  const { photo, name, socialNetWork, birthDate, email, phone, about, uid } =
+    student;
 
   return (
     <Styled.Container>

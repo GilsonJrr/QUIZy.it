@@ -56,7 +56,7 @@ const RenderTable: FC<RenderTableProps> = ({
           {item?.quiz}
         </Styled.TableBodyComponents>
         <Styled.TableBodyComponents width={20}>
-          {item?.score} / {item?.amount}
+          {item?.score} {tutorView && `/ ${item?.amount}`}
         </Styled.TableBodyComponents>
         <Styled.TableBodyComponents width={20}>
           {handleDate(item?.date)}

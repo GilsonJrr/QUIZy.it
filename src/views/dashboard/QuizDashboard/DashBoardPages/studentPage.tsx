@@ -61,7 +61,7 @@ export const StudentPage = () => {
   }, [dispatch, quizzes, userStudent]);
 
   useEffect(() => {
-    if (userStudent && studentResult?.length === 0) {
+    if (studentResult === undefined) {
       dispatch(
         requestResultList({
           uid: userStudent?.tutorID || "",
@@ -83,8 +83,6 @@ export const StudentPage = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, myLists]);
-
-  console.log("myLists", studentResult);
 
   return (
     <Styled.Container>
