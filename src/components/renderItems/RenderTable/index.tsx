@@ -54,8 +54,6 @@ const RenderTable: FC<RenderTableProps> = ({
     });
   };
 
-  console.log("name", item, tutorResultTable);
-
   if (item) {
     return isMobile ? (
       <Styled.ListContainer onClick={handleRetry}>

@@ -69,8 +69,6 @@ const QuizResult: FC<QuizResultProps> = () => {
     );
   }
 
-  console.log("location", location.state);
-
   return (
     <Styled.Container>
       <Styled.TitlesContainer>
