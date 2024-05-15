@@ -1,33 +1,27 @@
 import React, { useEffect, useMemo, useState } from "react";
 import * as Styled from "../styled";
-import { TResult, THeader } from "types/index";
-import Table from "components/Table";
 import Card from "components/Card";
-import RenderTable from "components/renderItems/RenderTable";
 import RenderQuizCard from "components/renderItems/RenderQuizCard";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { useDispatch } from "react-redux";
 import { requestQuizList } from "Store/quiz/actions";
-import { requestResultList } from "Store/result/actions";
 import { requestMyListList } from "Store/myList/actions";
 import { MyListTypeValues } from "Store/myList/types";
 import useDeviceType from "hooks/useDeviceType";
 import Tabs from "components/Tabs";
+import StudentResultTable from "components/Table/StudentResultTable";
 
 export const StudentPage = () => {
   const dispatch = useDispatch();
   const isMobile = useDeviceType();
 
   const { quizzes, isLoading } = useSelector((state: RootState) => state.quiz);
-
   const { userStudent } = useSelector((state: RootState) => state.user);
-  const { results: studentResult, isLoading: resultLoading } = useSelector(
-    (state: RootState) => state.result
-  );
   const { myLists } = useSelector((state: RootState) => state.myList);
 
   const [tab, setTab] = useState("Quizzes");
+  const [tableIsEmpty, setTableIsEmpty] = useState(false);
 
   const myList = useMemo(() => {
     if (!quizzes || !Array.isArray(myLists)) {
@@ -38,42 +32,11 @@ export const StudentPage = () => {
     );
   }, [myLists, quizzes]);
 
-  const TableHeaderTitles: THeader[] = [
-    { label: "Title", width: 50 },
-    { label: "Score", width: 20 },
-    { label: "Date", width: 20 },
-    { label: "Option", width: 10, align: "center" },
-  ];
-
-  const results = useMemo(() => {
-    return studentResult
-      ? studentResult?.map((res) => {
-          return {
-            date: res.date || "",
-            quiz: res.quizTitle || "",
-            score: `${res.score} / ${res.amount}`,
-            quizId: res.quizUid || "",
-          };
-        })
-      : [];
-  }, [studentResult]);
-
   useEffect(() => {
     if (quizzes === undefined) {
       dispatch(requestQuizList({ uid: userStudent?.tutorID || "", size: 50 }));
     }
   }, [dispatch, quizzes, userStudent]);
-
-  useEffect(() => {
-    if (studentResult === undefined) {
-      dispatch(
-        requestResultList({
-          uid: userStudent?.tutorID || "",
-          studentUid: userStudent?.uid || "",
-        })
-      );
-    }
-  }, [dispatch, studentResult, userStudent]);
 
   useEffect(() => {
     const myListRequest = {
@@ -140,17 +103,16 @@ export const StudentPage = () => {
         <Card
           gridName="card2"
           title={isMobile ? "" : "Last Completed Quizzes"}
-          isEmpty={results?.length === 0}
+          isEmpty={tableIsEmpty}
           emptyMessage={"you have not completed any quiz so far"}
           redirectTo="Results"
           redirectPath="/results"
-          isLoading={resultLoading}
+          isLoading={isLoading}
           innerCard={isMobile}
         >
-          <Table<TResult>
-            header={TableHeaderTitles}
-            content={results.slice(0, 5) as TResult[]}
-            renderItem={(item) => <RenderTable item={item} />}
+          <StudentResultTable
+            dashBoard
+            emptyState={(empty) => setTableIsEmpty(empty)}
           />
         </Card>
       )}

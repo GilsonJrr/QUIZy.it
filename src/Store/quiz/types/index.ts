@@ -1,3 +1,5 @@
+import { ResultTypeValues } from "Store/result/types";
+
 export enum QuizTypes {
   QUIZ_CLEAN_UP = "QUIZ_CLEAN_UP",
   QUIZ_LIST_CLEAN_UP = "QUIZ_LIST_CLEAN_UP",
@@ -46,6 +48,7 @@ export type QuizTypeValues = {
   type: string;
   category: string;
   questions?: TMultipleQuestions[] | TTrueOrFalseQuestions[];
+  results?: ResultTypeValues[];
 };
 
 export type QuizState = {

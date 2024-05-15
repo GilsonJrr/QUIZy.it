@@ -36,6 +36,7 @@ const RenderTable: FC<RenderTableProps> = ({
             amount: item?.amount,
             quizResume: item?.quizResume,
             quizId: item?.quizId,
+            studentName: item?.studentName,
           },
         })
       : navigate(`/quiz?quizId=${item?.quizId}`);
@@ -48,9 +49,12 @@ const RenderTable: FC<RenderTableProps> = ({
         amount: tutorResultTable?.extraInfo?.amount,
         quizResume: tutorResultTable?.extraInfo?.resume,
         quizId: tutorResultTable?.extraInfo?.quizUid,
+        studentName: tutorResultTable?.studentName,
       },
     });
   };
+
+  console.log("name", item, tutorResultTable);
 
   if (item) {
     return isMobile ? (
@@ -60,7 +64,7 @@ const RenderTable: FC<RenderTableProps> = ({
           <Styled.ListInfoContainer>
             <Styled.InfoContainer>
               <Styled.InfoText>
-                {item?.score} {tutorView && `/ ${item?.amount}`}
+                {item?.score} / {item?.amount}
               </Styled.InfoText>
             </Styled.InfoContainer>
             <Styled.InfoContainer>
@@ -75,7 +79,7 @@ const RenderTable: FC<RenderTableProps> = ({
           {item?.quiz}
         </Styled.TableBodyComponents>
         <Styled.TableBodyComponents width={20}>
-          {item?.score} {tutorView && `/ ${item?.amount}`}
+          {item?.score} / {item?.amount}
         </Styled.TableBodyComponents>
         <Styled.TableBodyComponents width={20}>
           {handleDate(item?.date)}
@@ -97,7 +101,9 @@ const RenderTable: FC<RenderTableProps> = ({
               <Styled.InfoText>{tutorResultTable?.quiz}</Styled.InfoText>
             </Styled.InfoContainer>
             <Styled.InfoContainer>
-              <Styled.InfoText>{tutorResultTable?.score}</Styled.InfoText>
+              <Styled.InfoText>
+                {tutorResultTable?.score} / {tutorResultTable?.amount}
+              </Styled.InfoText>
             </Styled.InfoContainer>
           </Styled.ListInfoContainer>
         </Styled.List>
@@ -111,7 +117,7 @@ const RenderTable: FC<RenderTableProps> = ({
           {tutorResultTable?.quiz}
         </Styled.TableBodyComponents>
         <Styled.TableBodyComponents width={15}>
-          {tutorResultTable?.score}
+          {tutorResultTable?.score} / {tutorResultTable?.amount}
         </Styled.TableBodyComponents>
         <Styled.Option width={15} onClick={handleOpenResult}>
           Open

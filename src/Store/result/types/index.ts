@@ -18,6 +18,7 @@ export type ResultRequest = {
   uid: string;
   resultId?: string;
   studentUid?: string;
+  quizUid?: string;
 };
 
 export type TQuizResume = {
@@ -37,6 +38,7 @@ export type ResultTypeValues = {
   studentUid?: string;
   date?: string;
   quizCategory?: string;
+  studentName?: string;
 };
 
 export type ResultState = {

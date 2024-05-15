@@ -81,6 +81,7 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
       score: score.toString(),
       resume: quizResume,
       date: new Date().toISOString(),
+      studentName: student?.info?.name,
     };
     dispatch(setResult(newResult));
     navigate("/quizResult", {

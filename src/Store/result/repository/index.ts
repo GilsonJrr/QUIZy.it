@@ -3,8 +3,14 @@ import { ref, set, get, remove } from "firebase/database";
 
 import { ResultTypeValues } from "../types";
 
-export const getResultList = async (uid: string, studentId: string) => {
-  return get(ref(database, `user/${uid}/students/${studentId}/results`))
+export const getResultList = async (uid: string) => {
+  return get(
+    ref(
+      database,
+      // `user/${uid}/students/${studentId}/results`
+      `user/${uid}/quiz/`
+    )
+  )
     .then((results) => results.val())
     .catch((err) => {
       throw new Error(err);
@@ -17,7 +23,11 @@ export const getResult = async (
   resultId: string
 ) => {
   return get(
-    ref(database, `user/${uid}/students/${studentId}/results/${resultId}/`)
+    ref(
+      database,
+      // `user/${uid}/students/${studentId}/results/${resultId}/`
+      `user/${uid}/quiz/${studentId}/results/${studentId}/`
+    )
   )
     .then((results) => results.val())
     .catch((err) => {
@@ -30,7 +40,8 @@ export const setResult = async (_uid: string, data: ResultTypeValues) => {
   return set(
     ref(
       database,
-      `user/${data.tutorUid}/students/${data.studentUid}/results/${data.quizUid}/`
+      // `user/${data.tutorUid}/students/${data.studentUid}/results/${data.quizUid}/`
+      `user/${data.tutorUid}/quiz/${data.quizUid}/results/${data.studentUid}/`
     ),
     rest
   )

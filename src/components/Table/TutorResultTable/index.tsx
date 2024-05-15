@@ -14,7 +14,7 @@ const TutorResultTable: FC<TutorResultTableProps> = ({
   dashBoard,
   emptyState,
 }) => {
-  const { students } = useSelector((state: RootState) => state.student);
+  const { quizzes } = useSelector((state: RootState) => state.quiz);
 
   const TableHeaderTitles = [
     { label: "Name", width: 40 },
@@ -24,25 +24,26 @@ const TutorResultTable: FC<TutorResultTableProps> = ({
   ];
 
   const tutorResults = useMemo(() => {
-    return students
-      ? students
-          // eslint-disable-next-line array-callback-return
-          ?.map((item) => {
-            const student = item.info;
-            const results = item.results;
-            if (results) {
-              return Object.values(results).map((result) => ({
-                name: student?.name || "",
-                quiz: result.quizTitle || "",
-                score: `${result.score} / ${result.amount}` || "",
-                extraInfo: result,
-              }));
-            }
+    const myResults = quizzes?.map((quiz) => ({
+      results: quiz.results,
+    }));
+    return myResults
+      ? Object.values(myResults)
+          ?.map((res) => {
+            return Object.values(res.results || "")?.map((innerQuiz) => {
+              return {
+                name: innerQuiz?.studentName || "",
+                quiz: innerQuiz.quizTitle || "",
+                score: innerQuiz.score,
+                amount: innerQuiz.amount,
+                extraInfo: innerQuiz,
+                studentName: innerQuiz?.studentName,
+              };
+            });
           })
-          .flat()
-          .filter((u) => u !== undefined)
+          .flatMap((innerArray) => innerArray)
       : [];
-  }, [students]);
+  }, [quizzes]);
 
   useEffect(() => {
     emptyState?.(tutorResults.length === 0);

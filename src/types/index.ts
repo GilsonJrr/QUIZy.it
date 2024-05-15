@@ -59,6 +59,7 @@ export type TResult = {
   extraInfo?: ResultTypeValues;
   amount?: string;
   quizResume?: TQuizResume[];
+  studentName?: string;
 };
 
 export type THeader = {
@@ -87,6 +88,8 @@ export type TTutorResult = {
   quiz?: string;
   score?: string;
   extraInfo?: ResultTypeValues;
+  studentName?: string;
+  amount?: string;
 };
 
 export type TOption = {

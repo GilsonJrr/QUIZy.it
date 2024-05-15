@@ -21,7 +21,13 @@ const QuizResult: FC<QuizResultProps> = () => {
 
   const userType = user?.info?.userType || userStudent?.userType;
 
-  const { score = 0, amount = 0, quizResume, quizId } = location.state || "";
+  const {
+    score = 0,
+    amount = 0,
+    quizResume,
+    quizId,
+    studentName,
+  } = location.state || "";
   const finalScore = (score * 100) / amount;
 
   const handleResults = () => {
@@ -63,10 +69,14 @@ const QuizResult: FC<QuizResultProps> = () => {
     );
   }
 
+  console.log("location", location.state);
+
   return (
     <Styled.Container>
       <Styled.TitlesContainer>
         <Styled.InfoContainer>
+          <Styled.Label>Student</Styled.Label>
+          <Styled.ScoreMessage>{studentName}</Styled.ScoreMessage>
           <Styled.Label>Quiz</Styled.Label>
           <Styled.ScoreMessage>{quiz?.title}</Styled.ScoreMessage>
           <Styled.Label>Quiz Info</Styled.Label>

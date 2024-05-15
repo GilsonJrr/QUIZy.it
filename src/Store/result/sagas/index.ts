@@ -15,15 +15,17 @@ import {
   ResultTypeValues,
   ResultTypes,
 } from "../types";
+import { quizList } from "Store/quiz/actions";
 
 //Result
 export function* getResultListSaga(props: ResultAction<ResultRequest>): any {
   const uid = props.payload.uid;
   const studentUid = props.payload.studentUid;
+  const quizUid = props.payload.quizUid;
 
   try {
-    if (uid && studentUid) {
-      const resultResponses = yield call(getResultList, uid, studentUid);
+    if (uid && studentUid && quizUid) {
+      const resultResponses = yield call(getResultList, uid);
       yield put(resultList(resultResponses));
     }
   } catch (err: any) {
@@ -54,8 +56,9 @@ export function* setResultSaga(props: ResultAction<ResultTypeValues>): any {
   try {
     if (uid && payload && studentUid) {
       yield call(setResult, uid, payload);
-      const resultResponses = yield call(getResultList, uid, studentUid);
+      const resultResponses = yield call(getResultList, uid);
       yield put(resultList(resultResponses));
+      yield put(quizList(resultResponses));
     }
   } catch (err: any) {
     yield put(err);
@@ -70,7 +73,7 @@ export function* removeResultSaga(props: ResultAction<ResultRequest>): any {
   try {
     if (resultId && uid && studentUid) {
       yield call(removeResult, uid, resultId, resultId);
-      const resultResponses = yield call(getResultList, uid, studentUid);
+      const resultResponses = yield call(getResultList, uid);
       yield put(resultList(resultResponses));
     }
   } catch (err: any) {

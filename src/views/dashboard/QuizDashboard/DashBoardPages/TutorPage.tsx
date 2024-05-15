@@ -125,7 +125,7 @@ export const TutorPage = () => {
           emptyMessage={"you have not completed any quiz so far"}
           redirectTo="Results"
           redirectPath="/results"
-          isLoading={isLoading}
+          isLoading={quizLoading}
           innerCard={isMobile}
         >
           <TutorResultTable

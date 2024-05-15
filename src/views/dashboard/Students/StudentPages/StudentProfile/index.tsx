@@ -8,9 +8,6 @@ import { RootState } from "Store/root-reducer";
 import { requestStudent } from "Store/students/actions";
 import { useLocation, useNavigate } from "react-router-dom";
 import Avatar from "components/Avatar";
-import Table from "components/Table";
-import { THeader, TResult } from "types/index";
-import RenderTable from "components/renderItems/RenderTable";
 import { requestResultList } from "Store/result/actions";
 import LoadingSpinner from "components/LoadingSpiner";
 import { LoadingContainerFullPage } from "components/Container/styled";
@@ -18,6 +15,7 @@ import ProgressBar from "components/ProgressBar";
 import { requestQuizList } from "Store/quiz/actions";
 import Tabs from "components/Tabs";
 import useDeviceType from "hooks/useDeviceType";
+import StudentResultTable from "components/Table/StudentResultTable";
 
 type StudentProfileProps = {};
 
@@ -27,9 +25,6 @@ const StudentProfile: FC<StudentProfileProps> = () => {
     isLoading: studentLoading,
     students,
   } = useSelector((state: RootState) => state.student);
-  const { results: studentResult, isLoading: resultLoading } = useSelector(
-    (state: RootState) => state.result
-  );
   const { quizzes, isLoading: quizLoading } = useSelector(
     (state: RootState) => state.quiz
   );
@@ -42,44 +37,34 @@ const StudentProfile: FC<StudentProfileProps> = () => {
 
   const studentId = new URLSearchParams(location.search).get("studentId");
   const [tab, setTab] = useState("Info");
+  const [emptyResult, setEmptyResult] = useState(false);
 
   const crumbs = [
     { label: "Students", path: "/students" },
     { label: "Students Profile", path: "" },
   ];
 
-  const results = useMemo(() => {
-    return studentResult
-      ? studentResult?.map((res) => {
-          return {
-            date: res.date || "",
-            quiz: res.quizTitle || "",
-            score: res.score || "",
-            quizId: res.quizUid || "",
-            amount: res?.amount,
-            quizResume: res?.resume,
-          };
-        })
-      : [];
-  }, [studentResult]);
-
   const CategoryResults = useMemo(() => {
-    return studentResult
-      ? studentResult?.map((res) => {
-          return {
-            category: res.quizCategory,
-            size: parseInt(res.score || ""),
-          };
-        })
+    const myResults = quizzes?.map((student) => ({
+      results: Object.fromEntries(
+        Object.entries(student.results || {}).filter(
+          ([key, value]) => key === studentId
+        )
+      ),
+    }));
+    return myResults
+      ? Object.values(myResults)
+          ?.map((res) => {
+            return Object.values(res.results)[0]
+              ? {
+                  category: Object.values(res.results)[0].quizCategory,
+                  size: parseInt(Object.values(res.results)[0].score || ""),
+                }
+              : undefined;
+          })
+          .filter((empty) => empty !== undefined)
       : [];
-  }, [studentResult]);
-
-  const TableHeaderTitles: THeader[] = [
-    { label: "Title", width: 50 },
-    { label: "Score", width: 20 },
-    { label: "Date", width: 20 },
-    { label: "Option", width: 10, align: "center" },
-  ];
+  }, [quizzes, studentId]);
 
   useEffect(() => {
     if (user && studentId) {
@@ -133,15 +118,13 @@ const StudentProfile: FC<StudentProfileProps> = () => {
     );
   });
 
-  if (studentLoading || resultLoading || quizLoading) {
+  if (studentLoading || quizLoading) {
     return (
       <LoadingContainerFullPage>
         <LoadingSpinner size="big" />
       </LoadingContainerFullPage>
     );
   }
-
-  console.log("aqui cara", user?.info?.uid, studentId);
 
   return (
     <Styled.Wrapper>
@@ -158,14 +141,14 @@ const StudentProfile: FC<StudentProfileProps> = () => {
           <Card
             title={isMobile ? "" : "All results"}
             gridName="results"
-            isEmpty={results.length === 0}
+            isEmpty={emptyResult}
             emptyMessage={`${student?.info?.name} has't completed any quiz yet`}
             innerCard={isMobile}
           >
-            <Table<TResult>
-              header={TableHeaderTitles}
-              content={results}
-              renderItem={(item) => <RenderTable item={item} tutorView />}
+            <StudentResultTable
+              studentID={studentId || ""}
+              emptyState={(empty) => setEmptyResult(empty)}
+              tutorView
             />
           </Card>
         )}
