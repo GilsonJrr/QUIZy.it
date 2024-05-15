@@ -106,17 +106,3 @@ export const Email = styled(MdEmail)`
 export const Phone = styled(FaPhoneSquare)`
   color: #ffffff;
 `;
-
-export const SeeMoreButton = styled.button`
-  background-color: #4a4747;
-  border: none;
-  outline: none;
-  color: #ffffff;
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  position: absolute;
-  bottom: 0;
-`;

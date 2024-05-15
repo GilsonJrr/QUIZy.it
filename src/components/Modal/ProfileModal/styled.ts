@@ -50,33 +50,20 @@ export const Spacer = styled.div<Props>`
   width: 100%;
 `;
 
-export const Button = styled.button`
-  background-color: #4a4747;
+export const ButtonContainer = styled.div`
   width: 90%;
-  border: none;
-  color: #ffffff;
-  outline: none;
   padding: 10px;
-  font-size: 1.3rem;
-  border-radius: 10px;
-  margin: 30px 0 0 0;
-  cursor: pointer;
+  margin: 0 5%;
   position: absolute;
   right: 0;
   bottom: 20px;
-  margin: 0 5%;
 `;
 
-export const AddPhotoButton = styled.button`
+export const PhotoButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #4a4747;
-  color: #ffffff;
-  padding: 6px;
-  border-radius: 100%;
   position: absolute;
   right: 0;
   bottom: 0;
-  cursor: pointer;
 `;

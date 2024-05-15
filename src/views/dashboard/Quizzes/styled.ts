@@ -30,21 +30,13 @@ export const OptionButtonContainer = styled.div`
   padding: 30px;
 `;
 
-export const GoBackButton = styled.button`
+export const ButtonContainer = styled.div`
   position: absolute;
   bottom: 20px;
   left: 20px;
   right: 20px;
-  width: calc(100% - 40px);
-  background-color: #4a4747;
-  outline: none;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  padding: 15px;
-  font-size: 1.3rem;
-  cursor: pointer;
   z-index: 1000;
+  width: calc(100% - 40px);
 `;
 
 export const TabContainer = styled.div`

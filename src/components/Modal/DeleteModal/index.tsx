@@ -4,6 +4,7 @@ import ModalTemplate from "../ModalTemplate";
 import { useModalContext } from "../modalContext";
 import { GoAlertFill } from "react-icons/go";
 import LoadingSpinner from "components/LoadingSpiner";
+import Button from "components/Button";
 
 type DeleteModalProps = {
   deleteTitle: string;
@@ -40,12 +41,14 @@ const DeleteModal: FC<DeleteModalProps> = ({ deleteTitle, onDelete }) => {
         <Styled.SubTitle>Are you sure that you want to delete</Styled.SubTitle>
         <Styled.ToBeDeletedTitle>{deleteTitle}</Styled.ToBeDeletedTitle>
         <Styled.ButtonContainer>
-          <Styled.ConfirmButton onClick={handleDelete}>
+          <Button
+            onClick={handleDelete}
+            variant="danger"
+            disabled={!showDelete}
+          >
             {showDelete ? "Delete" : <LoadingSpinner />}
-          </Styled.ConfirmButton>
-          <Styled.CancelButton onClick={() => handleModal("")}>
-            Cancel
-          </Styled.CancelButton>
+          </Button>
+          <Button onClick={() => handleModal("")}>Cancel</Button>
         </Styled.ButtonContainer>
       </Styled.Container>
     </ModalTemplate>

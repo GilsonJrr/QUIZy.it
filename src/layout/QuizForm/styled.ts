@@ -33,29 +33,3 @@ export const ButtonContainer = styled.div<Props>`
   justify-content: ${({ justify }) => justify || "flex-end"};
   margin-bottom: 5px;
 `;
-
-export const SubmitButton = styled.button`
-  background-color: #4a4747;
-  outline: none;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 40px;
-  font-size: 1.3rem;
-  cursor: pointer;
-`;
-
-export const DeleteButton = styled.button`
-  background-color: #c78788;
-  outline: none;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 40px;
-  font-size: 1.3rem;
-  cursor: pointer;
-
-  &:disabled {
-    opacity: 0.5;
-  }
-`;

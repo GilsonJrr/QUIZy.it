@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import SearchInput from "components/inputs/SearchInput";
 import { LoadingContainerCard } from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
+import Button from "components/Button";
 
 type CardProps = {
   title: string;
@@ -82,9 +83,14 @@ const Card: FC<CardProps> = ({
           <SearchInput value={searchValue} setValue={(e) => setSearch?.(e)} />
         )}
         {redirectTo && (
-          <Styled.RedirectButton onClick={() => navigate(redirectPath)}>
+          <Button
+            onClick={() => navigate(redirectPath)}
+            variant="anchor-dark"
+            size="small"
+            padding="0px"
+          >
             {redirectTo} <FaArrowRight />
-          </Styled.RedirectButton>
+          </Button>
         )}
       </Styled.CardHeader>
       <Styled.CardInner scrollable={scrollable}>

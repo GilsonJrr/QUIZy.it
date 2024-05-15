@@ -10,6 +10,7 @@ import { setResult } from "Store/result/actions";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import ProgressBar from "components/ProgressBar";
+import Button from "components/Button";
 
 type QuizTemplateProps = {
   onClose?: () => void;
@@ -117,22 +118,25 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
             {questions?.[current]?.answers.map((answer: any, index: number) => {
               const active = answer.answer === selectedAnswer?.answer;
               return (
-                <Styled.AnswerButton
-                  onClick={() => setSelectedAnswer(answer)}
-                  active={active}
-                  disabled={showAnswer}
-                >
-                  <Styled.AnswerIndex>
-                    {EAnswerIndexation[index]}
-                  </Styled.AnswerIndex>
-                  <Styled.AnswerText active={active}>
-                    {answer.answer || ""}
-                  </Styled.AnswerText>
-                </Styled.AnswerButton>
+                <Styled.ButtonContainer>
+                  <Button
+                    onClick={() => setSelectedAnswer(answer)}
+                    variant={active ? "success" : "secondary"}
+                    disabled={showAnswer}
+                    width="100%"
+                    padding="20px"
+                  >
+                    <Styled.AnswerIndex>
+                      {EAnswerIndexation[index]}
+                    </Styled.AnswerIndex>
+                    <Styled.AnswerText active={active}>
+                      {answer.answer || ""}
+                    </Styled.AnswerText>
+                  </Button>
+                </Styled.ButtonContainer>
               );
             })}
           </Styled.OptionsContainer>
-          {/* {children} */}
         </Styled.QuestionContainer>
       </Styled.QuizContainer>
 
@@ -150,7 +154,7 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
                   The right answer is:
                 </Styled.CheckedAnswerTitle>
                 <Styled.CheckedAnswerText>
-                  {questions?.[current]?.correctAnswers}!
+                  {questions?.[current]?.correctAnswers.toString()}!
                 </Styled.CheckedAnswerText>
               </Styled.CheckedAnswerTextContainer>
             </Styled.CheckedAnswerContainer>
@@ -165,23 +169,26 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
         ) : (
           <Styled.CheckedAnswerIcon checkType={""} />
         )}
-        <Styled.ContinueButton
-          onClick={
-            showAnswer && showScore
-              ? finishQuiz
+        <Styled.ContinueButtonContainer>
+          <Button
+            onClick={
+              showAnswer && showScore
+                ? finishQuiz
+                : showAnswer
+                ? nextQuestion
+                : handleAnswer
+            }
+            disabled={!selectedAnswer}
+            width="100%"
+            variant="secondary"
+          >
+            {showAnswer && showScore
+              ? "Finish"
               : showAnswer
-              ? nextQuestion
-              : handleAnswer
-          }
-          disabled={!selectedAnswer}
-          buttonType="primary"
-        >
-          {showAnswer && showScore
-            ? "Finish"
-            : showAnswer
-            ? "Continue"
-            : "Check"}
-        </Styled.ContinueButton>
+              ? "Continue"
+              : "Check"}
+          </Button>
+        </Styled.ContinueButtonContainer>
       </Styled.QuizCheckContainer>
     </Styled.Container>
   );

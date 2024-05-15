@@ -96,23 +96,6 @@ export const HeaderTitleText = styled.h1`
   font-size: 1.3rem;
 `;
 
-export const StartQuizButton = styled.button`
-  border: 1px solid #000000;
-  padding: 5px 10px;
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-weight: 800;
-  font-size: 0.9rem;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #b0d9d1;
-    border: 1px solid #b0d9d1;
-  }
-`;
-
 export const HeaderHamburgerMenu = styled.div`
   display: flex;
   align-items: center;

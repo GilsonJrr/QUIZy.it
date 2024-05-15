@@ -38,17 +38,6 @@ export const ButtonContainer = styled.div<Props>`
   justify-content: ${({ justify }) => justify || "flex-end"};
 `;
 
-export const SubmitButton = styled.button`
-  background-color: #4a4747;
-  outline: none;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 40px;
-  font-size: 1.3rem;
-  cursor: pointer;
-`;
-
 export const SelectContainer = styled.div`
   display: flex;
   width: 100%;
@@ -83,15 +72,4 @@ export const QuestionsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin-top: 15px;
-`;
-
-export const QuestionTag = styled.button<Props>`
-  background-color: ${({ active }) => (active ? "#4a4747" : "#FFFFFF")};
-  color: ${({ active }) => (!active ? "#4a4747" : "#FFFFFF")};
-  border: 1px solid ${({ active }) => (!active ? "#4a4747" : "#FFFFFF")};
-  outline: none;
-  border-radius: 20px;
-  padding: 10px 15px;
-  font-size: 0.8rem;
-  cursor: pointer;
 `;

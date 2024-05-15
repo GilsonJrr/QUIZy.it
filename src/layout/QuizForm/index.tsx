@@ -2,6 +2,7 @@ import React, { FC, ReactNode } from "react";
 import * as Styled from "./styled";
 import Card from "components/Card";
 import useDeviceType from "hooks/useDeviceType";
+import Button from "components/Button";
 
 type QuizFormProps = {
   children: ReactNode | ReactNode[];
@@ -44,13 +45,13 @@ const QuizForm: FC<QuizFormProps> = ({
       )}
       <Styled.ButtonContainer justify={edit ? "space-between" : "flex-end"}>
         {edit && (
-          <Styled.DeleteButton type="button" onClick={handleDelete}>
+          <Button type="button" onClick={handleDelete} variant="danger">
             {deleteTitle}
-          </Styled.DeleteButton>
+          </Button>
         )}
-        <Styled.SubmitButton type="submit" form={formName}>
+        <Button type="submit" form={formName}>
           {buttonTitle}
-        </Styled.SubmitButton>
+        </Button>
       </Styled.ButtonContainer>
     </Styled.Container>
   );

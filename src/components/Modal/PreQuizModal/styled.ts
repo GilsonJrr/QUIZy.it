@@ -58,22 +58,3 @@ export const OptionContainer = styled.div`
   width: 100%;
   margin: auto 0 0 0;
 `;
-
-export const OptionButton = styled.button`
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  padding: 10px 20px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: 0.2s ease-in-out all;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-
-  &:hover {
-    transform: scale(1.05);
-  }
-`;

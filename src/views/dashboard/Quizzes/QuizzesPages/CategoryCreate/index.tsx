@@ -23,6 +23,7 @@ import DeleteModal from "components/Modal/DeleteModal";
 import { useModalContext } from "components/Modal/modalContext";
 import useDeviceType from "hooks/useDeviceType";
 import Tabs from "components/Tabs";
+import Button from "components/Button";
 type StudentCreateProps = {};
 
 type TStudent = {
@@ -208,18 +209,19 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
           }
         >
           {categoryId !== null && !hasQuiz && (
-            <Styled.DeleteButton
+            <Button
               type="button"
               disabled={hasQuiz}
               onClick={handleDelete}
+              variant="danger"
             >
               {isMobile ? "Delete" : "Delete Category"}
-            </Styled.DeleteButton>
+            </Button>
           )}
-          <Styled.SubmitButton type="submit" form="newStudentForm">
+          <Button type="submit" form="newStudentForm">
             {categoryId !== null ? `Update ` : "Add "}{" "}
             {isMobile ? "" : "Category"}
-          </Styled.SubmitButton>
+          </Button>
         </Styled.ButtonContainer>
       </Styled.ContainerInner>
     </Styled.Container>

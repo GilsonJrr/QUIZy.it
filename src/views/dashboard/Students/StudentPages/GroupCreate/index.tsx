@@ -18,6 +18,7 @@ import { useModalContext } from "components/Modal/modalContext";
 import DeleteModal from "components/Modal/DeleteModal";
 import useDeviceType from "hooks/useDeviceType";
 import Tabs from "components/Tabs";
+import Button from "components/Button";
 type StudentCreateProps = {};
 
 type TStudent = {
@@ -192,17 +193,18 @@ const GroupCreate: FC<StudentCreateProps> = () => {
           }
         >
           {groupId !== null && !hasStudent && (
-            <Styled.DeleteButton
+            <Button
               type="button"
               disabled={hasStudent}
               onClick={handleDelete}
+              variant="danger"
             >
               {isMobile ? "Delete" : "Delete Group"}
-            </Styled.DeleteButton>
+            </Button>
           )}
-          <Styled.SubmitButton type="submit" form="newStudentForm">
+          <Button type="submit" form="newStudentForm">
             {groupId !== null ? "Update " : "Add "} {isMobile ? "" : "Group"}
-          </Styled.SubmitButton>
+          </Button>
         </Styled.ButtonContainer>
       </Styled.ContainerInner>
     </Styled.Container>

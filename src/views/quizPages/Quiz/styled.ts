@@ -147,29 +147,6 @@ export const ProgressBarFill = styled.div<Props>`
 
 export const ProgressNumber = styled.h3``;
 
-export const AnswerButton = styled.button<Props>`
-  border: none;
-  width: 90%;
-  background-color: ${({ active }) => (active ? "#89c799" : "#ffffff")};
-  margin-bottom: 15px;
-  padding: 10px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-
-  @media screen and (min-width: 600px) {
-    width: 100%;
-    padding: 20px 10px;
-  }
-`;
-
 export const AnswerIndex = styled.div`
   display: flex;
   align-items: center;
@@ -184,29 +161,6 @@ export const AnswerIndex = styled.div`
 
 export const AnswerText = styled.h3<Props>`
   color: #4a4747;
-`;
-
-export const ContinueButton = styled.button<Props>`
-  border: none;
-  background-color: transparent;
-  width: 90%;
-  padding: 10px;
-  border-radius: 10px;
-  text-transform: uppercase;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-
-  color: #4a4747;
-  font-weight: 800;
-
-  &:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-
-  @media screen and (min-width: 600px) {
-    margin: 0 0 0 auto;
-    width: 25%;
-  }
 `;
 
 export const QuizCheckContainer = styled.div<Props>`

@@ -82,13 +82,3 @@ export const EmptyListMessage = styled.h2`
   font-size: 1.1rem;
   font-weight: 500;
 `;
-
-export const RedirectButton = styled.button`
-  display: flex;
-  align-items: center;
-  background-color: transparent;
-  outline: none;
-  border: none;
-  gap: 6px;
-  cursor: pointer;
-`;

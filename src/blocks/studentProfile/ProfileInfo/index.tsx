@@ -3,6 +3,7 @@ import * as Styled from "./styled";
 import { StudentTypeValues } from "Store/students/types";
 import Avatar from "components/Avatar";
 import { useNavigate } from "react-router-dom";
+import Button from "components/Button";
 
 type ProfileInfoProps = {
   student: StudentTypeValues;
@@ -44,11 +45,12 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ student }) => {
         <Styled.Label>About</Styled.Label>
         <Styled.Paragraph>{about}</Styled.Paragraph>
       </Styled.AboutContainer>
-      <Styled.SeeMoreButton
+      <Button
         onClick={() => navigate(`/students/student-create?id=${uid}`)}
+        width="100%"
       >
         See More
-      </Styled.SeeMoreButton>
+      </Button>
     </Styled.Container>
   );
 };

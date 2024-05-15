@@ -99,19 +99,6 @@ export const ButtonContainer = styled.div`
   }
 `;
 
-export const Button = styled.button`
-  background-color: transparent;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  outline: none;
-  border-radius: 20px;
-  padding: 15px 40px;
-
-  font-size: 1.2rem;
-  font-weight: 500;
-
-  cursor: pointer;
-`;
-
 export const ResumeContainer = styled.div`
   overflow-y: scroll;
   overflow-x: hidden;

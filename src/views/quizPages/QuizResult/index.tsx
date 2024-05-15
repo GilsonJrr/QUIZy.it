@@ -7,6 +7,7 @@ import { requestQuiz } from "Store/quiz/actions";
 import { LoadingContainerFullPage } from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
 import ProgressBar from "components/ProgressBar";
+import Button from "components/Button";
 
 type QuizResultProps = {};
 
@@ -111,12 +112,14 @@ const QuizResult: FC<QuizResultProps> = () => {
       </Styled.ResumeContainer>
       {userType === "student" ? (
         <Styled.ButtonContainer>
-          <Styled.Button onClick={() => navigate(-1)}>Retry</Styled.Button>
-          <Styled.Button onClick={handleResults}>Go to results</Styled.Button>
+          <Button onClick={() => navigate(-1)} variant="secondary">
+            Retry
+          </Button>
+          <Button onClick={handleResults}>Go to results</Button>
         </Styled.ButtonContainer>
       ) : (
         <Styled.ButtonContainer>
-          <Styled.Button onClick={() => navigate(-1)}>Go Back</Styled.Button>
+          <Button onClick={() => navigate(-1)}>Go Back</Button>
         </Styled.ButtonContainer>
       )}
     </Styled.Container>

@@ -17,6 +17,7 @@ export const Container = styled.div`
 
   @media screen and (min-width: 600px) {
     padding: 0px;
+    overflow: hidden;
   }
 `;
 
@@ -71,6 +72,8 @@ export const QuestionContainer = styled.div`
     align-items: flex-start;
     justify-content: center;
     gap: 50px;
+    height: 100vh;
+    overflow: scroll;
   }
 `;
 
@@ -78,8 +81,11 @@ export const OptionsContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  overflow-y: scroll;
+  padding: 0 0 300px;
+
   @media screen and (min-width: 600px) {
     width: 50%;
   }
@@ -93,8 +99,10 @@ export const Question = styled.h3`
     width: 50%;
     text-align: top;
     font-size: 2rem;
-    margin: 10px;
+    margin: 0 10px;
     margin-bottom: 0px;
+    position: sticky;
+    top: 0;
   }
 `;
 
@@ -126,26 +134,15 @@ export const ProgressContainer = styled.div`
 
 export const ProgressNumber = styled.h3``;
 
-export const AnswerButton = styled.button<Props>`
-  border: none;
-  width: 90%;
-  background-color: ${({ active }) => (active ? "#89c799" : "#ffffff")};
-  margin-bottom: 15px;
-  padding: 10px;
-  border-radius: 10px;
+export const ButtonContainer = styled.div`
+  width: 100%;
   display: flex;
-  align-items: center;
-  gap: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  text-align: left;
 
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-
-  @media screen and (min-width: 600px) {
-    width: 100%;
-    padding: 20px 10px;
+  button {
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-bottom: 20px;
   }
 `;
 
@@ -163,28 +160,21 @@ export const AnswerIndex = styled.div`
 
 export const AnswerText = styled.h3<Props>`
   color: #4a4747;
+  width: 90%;
 `;
 
-export const ContinueButton = styled.button<Props>`
-  border: none;
-  background-color: transparent;
-  width: 90%;
-  padding: 10px;
-  border-radius: 10px;
-  text-transform: uppercase;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-
-  color: #4a4747;
-  font-weight: 800;
-
-  &:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-
+export const ContinueButtonContainer = styled.div`
+  bottom: 10px;
+  width: 100%;
+  padding: 25px 0px;
   @media screen and (min-width: 600px) {
-    margin: 0 0 0 auto;
-    width: 25%;
+    display: flex;
+    justify-content: flex-end;
+    right: 0;
+    width: 30%;
+    button {
+      width: 100%;
+    }
   }
 `;
 
@@ -198,13 +188,16 @@ export const QuizCheckContainer = styled.div<Props>`
       ? "#e3a6a7"
       : ""};
   display: flex;
-  padding: 50px 40px;
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
   gap: 40px;
+  position: fixed;
+  bottom: 0;
+  padding: 50px 20px 20px;
   @media screen and (min-width: 600px) {
     flex-direction: row;
+    padding: 50px 40px;
   }
 `;
 
@@ -213,6 +206,9 @@ export const CheckedAnswerContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 20px;
+  /* position: fixed;
+  z-index: 100000;
+  bottom: 0; */
 `;
 
 export const CheckedAnswerIcon = styled.div<Props>`

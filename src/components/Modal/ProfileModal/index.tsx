@@ -18,6 +18,7 @@ import { TStudent } from "views/dashboard/Students/StudentPages/StudentCreate";
 import { FaCamera } from "react-icons/fa";
 import { LoadingContainerCard } from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
+import Button from "components/Button";
 
 type ExampleProps = {};
 
@@ -101,9 +102,11 @@ const ProfileModal: FC<ExampleProps> = () => {
               size={editMode ? "big" : "bigger"}
             />
             {editMode && (
-              <Styled.AddPhotoButton>
-                <FaCamera />
-              </Styled.AddPhotoButton>
+              <Styled.PhotoButtonContainer>
+                <Button padding="10px" radius="100%">
+                  <FaCamera />
+                </Button>
+              </Styled.PhotoButtonContainer>
             )}
           </Styled.AvatarContainer>
           <Styled.Spacer editMode={editMode} />
@@ -144,13 +147,16 @@ const ProfileModal: FC<ExampleProps> = () => {
             {...register("userType")}
           />
         </Styled.ProfileEditContainer>
-        <Styled.Button
-          onClick={handleClick}
-          type={!editMode ? "submit" : "button"}
-          form={!editMode ? "profileUpdate" : "none"}
-        >
-          {editMode ? "Update Profile" : "Edit"}
-        </Styled.Button>
+        <Styled.ButtonContainer>
+          <Button
+            onClick={handleClick}
+            type={!editMode ? "submit" : "button"}
+            form={!editMode ? "profileUpdate" : "none"}
+            width="100%"
+          >
+            {editMode ? "Update Profile" : "Edit"}
+          </Button>
+        </Styled.ButtonContainer>
       </Styled.Content>
     </Styled.Container>
   );

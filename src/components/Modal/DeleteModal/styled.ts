@@ -39,30 +39,3 @@ export const ButtonContainer = styled.div`
   margin-top: 20px;
   padding-top: 20px;
 `;
-
-export const ConfirmButton = styled.button`
-  background-color: #c78788;
-  outline: none;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 40px;
-  font-size: 1.3rem;
-  cursor: pointer;
-  transition: 0.3s ease-in-out all;
-
-  &:disabled {
-    opacity: 0.5;
-  }
-`;
-
-export const CancelButton = styled.button`
-  background-color: #4a4747;
-  outline: none;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 40px;
-  font-size: 1.3rem;
-  cursor: pointer;
-`;

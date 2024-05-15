@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import * as Styled from "./styled";
 import SimpleInput from "components/inputs/SimpleInput";
 import Logo from "assets/images/White_Logo.png";
@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import LoadingSpinner from "components/LoadingSpiner";
 import { useNavigate } from "react-router-dom";
+import Button from "components/Button";
 
 type LoginProps = {};
 
@@ -64,12 +65,12 @@ const Login: FC<LoginProps> = () => {
           {...register("password")}
         />
         <Styled.ButtonContainer>
-          <Styled.LoginButton>
+          <Button variant="secondary" radius="30px">
             {isLoading ? <LoadingSpinner /> : "Login Now"}
-          </Styled.LoginButton>
-          <Styled.AnchorButton onClick={() => navigate("/signUp")}>
+          </Button>
+          <Button variant="anchor-white" onClick={() => navigate("/signUp")}>
             SignUp
-          </Styled.AnchorButton>
+          </Button>
         </Styled.ButtonContainer>
       </Styled.Form>
     </Styled.Container>

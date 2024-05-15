@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import LoadingSpinner from "components/LoadingSpiner";
 import { useNavigate } from "react-router-dom";
+import Button from "components/Button";
 
 type SignUpProps = {};
 
@@ -73,12 +74,12 @@ const SignUp: FC<SignUpProps> = () => {
           {...register("password")}
         />
         <Styled.ButtonContainer>
-          <Styled.LoginButton>
+          <Button variant="secondary" radius="30px">
             {isLoading ? <LoadingSpinner /> : "SignUp Now"}
-          </Styled.LoginButton>
-          <Styled.AnchorButton onClick={() => navigate("/login")}>
+          </Button>
+          <Button variant="anchor-white" onClick={() => navigate("/login")}>
             login
-          </Styled.AnchorButton>
+          </Button>
         </Styled.ButtonContainer>
       </Styled.Form>
     </Styled.Container>

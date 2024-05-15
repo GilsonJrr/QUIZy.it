@@ -26,6 +26,7 @@ import { useModalContext } from "components/Modal/modalContext";
 import DeleteModal from "components/Modal/DeleteModal";
 import useDeviceType from "hooks/useDeviceType";
 import Tabs from "components/Tabs";
+import Button from "components/Button";
 
 type StudentCreateProps = {};
 
@@ -387,7 +388,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
               </Styled.EmptyForm>
             )}
             <Styled.ButtonCardContainer>
-              <Styled.SubmitButton
+              <Button
                 type="button"
                 onClick={handleAddField}
                 disabled={
@@ -399,7 +400,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
                 }
               >
                 Add extra information
-              </Styled.SubmitButton>
+              </Button>
             </Styled.ButtonCardContainer>
             <div ref={bottomRef}></div>
           </Card>
@@ -408,14 +409,14 @@ const StudentCreate: FC<StudentCreateProps> = () => {
           justify={studentId !== null ? "space-between" : "flex-end"}
         >
           {studentId !== null && (
-            <Styled.DeleteButton type="button" onClick={handleDelete}>
-              {isMobile ? "Delete Student" : "Delete"}
-            </Styled.DeleteButton>
+            <Button type="button" onClick={handleDelete} variant="danger">
+              {isMobile ? "Delete" : "Delete Student"}
+            </Button>
           )}
-          <Styled.SubmitButton type="submit" form="newStudentForm">
+          <Button type="submit" form="newStudentForm">
             {studentId !== null ? "Update " : "Add "}{" "}
             {isMobile ? "" : "Student"}
-          </Styled.SubmitButton>
+          </Button>
         </Styled.ButtonContainer>
       </Styled.ContainerInner>
     </Styled.Container>

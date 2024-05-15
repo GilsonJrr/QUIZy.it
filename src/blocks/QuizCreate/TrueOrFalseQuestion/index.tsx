@@ -16,6 +16,8 @@ import { useModalContext } from "components/Modal/modalContext";
 import DeleteModal from "components/Modal/DeleteModal";
 import { removeQuiz } from "Store/quiz/actions";
 import useDeviceType from "hooks/useDeviceType";
+import Button from "components/Button";
+import { addLeadingZero } from "functions/index";
 
 type TrueOrFalseQuestionProps = {
   sendQuiz: (data: QuizTypeValues) => void;
@@ -217,28 +219,27 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
           }
         >
           {question.length > 1 && selectedQuestion !== 0 && (
-            <Styled.SubmitButton
-              onClick={() => handleDeleteQuestion(selectedQuestion)}
-            >
+            <Button onClick={() => handleDeleteQuestion(selectedQuestion)}>
               Delete
-            </Styled.SubmitButton>
+            </Button>
           )}
-          <Styled.SubmitButton
-            onClick={handleAddQuestion}
-            disabled={addButtonDisabled}
-          >
+          <Button onClick={handleAddQuestion} disabled={addButtonDisabled}>
             Add
-          </Styled.SubmitButton>
+          </Button>
         </Styled.ButtonContainer>
         <Styled.QuestionsContainer>
           {question.map((question, index) => {
             return (
-              <Styled.QuestionTag
+              <Button
                 onClick={() => setSelectedQuestion(question)}
-                active={selectedQuestion === question}
+                variant={
+                  selectedQuestion === question ? "primary" : "secondary"
+                }
+                padding="10px 15px"
+                radius="50px"
               >
-                Q {index + 1}
-              </Styled.QuestionTag>
+                Q {addLeadingZero(index + 1)}
+              </Button>
             );
           })}
         </Styled.QuestionsContainer>

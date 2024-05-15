@@ -71,21 +71,6 @@ export const ButtonCardContainer = styled.div<Props>`
   width: 100%;
 `;
 
-export const SubmitButton = styled.button`
-  background-color: #4a4747;
-  outline: none;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 40px;
-  font-size: 1.3rem;
-  cursor: pointer;
-
-  &:disabled {
-    opacity: 0.5;
-  }
-`;
-
 export const SelectContainer = styled.div`
   display: flex;
   width: 100%;
@@ -142,17 +127,6 @@ export const QuestionsContainer = styled.div`
   margin-top: 15px;
 `;
 
-export const QuestionTag = styled.button<Props>`
-  background-color: ${({ active }) => (active ? "#4a4747" : "#FFFFFF")};
-  color: ${({ active }) => (!active ? "#4a4747" : "#FFFFFF")};
-  border: 1px solid ${({ active }) => (!active ? "#4a4747" : "#FFFFFF")};
-  outline: none;
-  border-radius: 20px;
-  padding: 10px 15px;
-  font-size: 0.8rem;
-  cursor: pointer;
-`;
-
 export const InputLabel = styled.input`
   font-weight: 700;
   font-size: 1.1rem;
@@ -169,21 +143,6 @@ export const ExtraInfoContainer = styled.div`
 
 export const DeleteIcon = styled(FaTrashAlt)`
   margin-bottom: 12px;
-`;
-
-export const DeleteButton = styled.button`
-  background-color: #c78788;
-  outline: none;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 40px;
-  font-size: 1.3rem;
-  cursor: pointer;
-
-  &:disabled {
-    opacity: 0.5;
-  }
 `;
 
 export const TabContainer = styled.div`

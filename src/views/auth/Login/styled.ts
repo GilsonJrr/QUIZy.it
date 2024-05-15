@@ -67,17 +67,6 @@ export const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-export const LoginButton = styled.button`
-  background-color: #f8f8f8;
-  border: none;
-  outline: none;
-  border-radius: 20px;
-  padding: 10px 30px;
-  font-size: 1.3rem;
-  cursor: pointer;
-  margin-top: 8px;
-`;
-
 export const AnchorButton = styled.a`
   color: #f8f8f8;
   font-size: 1.2rem;

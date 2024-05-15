@@ -19,6 +19,7 @@ import { requestCategoryList } from "Store/category/actions";
 import { requestQuizList, requestQuizListCategory } from "Store/quiz/actions";
 import useDeviceType from "hooks/useDeviceType";
 import Tabs from "components/Tabs";
+import Button from "components/Button";
 
 type QuizzesProps = {};
 
@@ -198,9 +199,11 @@ const Quizzes: FC<QuizzesProps> = () => {
                 );
               })}
           {category && (
-            <Styled.GoBackButton onClick={() => setCategory("")}>
-              See all Categories
-            </Styled.GoBackButton>
+            <Styled.ButtonContainer>
+              <Button onClick={() => setCategory("")} width="100%">
+                See all Categories
+              </Button>
+            </Styled.ButtonContainer>
           )}
         </Card>
       )}

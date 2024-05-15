@@ -16,6 +16,7 @@ import {
 import { RootState } from "Store/root-reducer";
 import { MyListTypeValues } from "Store/myList/types";
 import LoadingSpinner from "components/LoadingSpiner";
+import Button from "components/Button";
 
 type PreQuizModalProps = {
   item: QuizTypeValues;
@@ -69,7 +70,12 @@ const PreQuizModal: FC<PreQuizModalProps> = ({ item }) => {
             <Styled.Info> {item.type}</Styled.Info>
           </Styled.InfoContainer>
           <Styled.OptionContainer>
-            <Styled.OptionButton onClick={handleMyList}>
+            <Button
+              onClick={handleMyList}
+              variant="secondary"
+              padding="10px 20px"
+              size="small"
+            >
               {isLoading ? (
                 <LoadingSpinner size="smaller" />
               ) : (
@@ -78,13 +84,16 @@ const PreQuizModal: FC<PreQuizModalProps> = ({ item }) => {
                   <BsSubstack size={12} />
                 </>
               )}
-            </Styled.OptionButton>
-            <Styled.OptionButton
+            </Button>
+            <Button
               onClick={() => navigate(`/quiz?quizId=${item.id}`)}
+              variant="secondary"
+              padding="10px 20px"
+              size="small"
             >
               Start
               <FaPlay size={12} />
-            </Styled.OptionButton>
+            </Button>
           </Styled.OptionContainer>
         </Styled.Content>
       </Styled.Container>

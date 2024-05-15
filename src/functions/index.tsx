@@ -3,3 +3,11 @@ export const randomQuiz = (size: number, array: string[]) => {
 
   return `/quiz?quizId=${array[index]}`;
 };
+
+export const addLeadingZero = (number: number) => {
+  if (number >= 1 && number <= 9) {
+    return "0" + number;
+  } else {
+    return number;
+  }
+};
