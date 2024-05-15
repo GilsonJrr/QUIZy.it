@@ -113,6 +113,7 @@ export const StudentPage = () => {
           <StudentResultTable
             dashBoard
             emptyState={(empty) => setTableIsEmpty(empty)}
+            studentID={userStudent?.uid}
           />
         </Card>
       )}

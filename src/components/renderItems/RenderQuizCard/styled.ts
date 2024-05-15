@@ -1,11 +1,16 @@
 import styled from "styled-components";
 
-export const QuizCard = styled.div`
+type Props = {
+  preview?: boolean;
+};
+
+export const QuizCard = styled.div<Props>`
   display: flex;
   border-radius: 20px;
   border: 1px solid rgba(0, 0, 0, 0.4);
   min-height: 110px;
-  cursor: pointer;
+  cursor: ${({ preview }) => (preview ? "auto" : "pointer")};
+  pointer-events: ${({ preview }) => (preview ? "none" : "all")};
 `;
 
 export const QuizImage = styled.img`

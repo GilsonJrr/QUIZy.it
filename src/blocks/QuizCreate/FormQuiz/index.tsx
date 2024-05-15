@@ -66,6 +66,7 @@ const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
     return (
       <RenderQuizCard
         editMode
+        preview
         item={{
           title: watch("title"),
           description: watch("description") || "",

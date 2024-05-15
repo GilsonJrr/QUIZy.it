@@ -79,6 +79,7 @@ const quizReducer: Reducer<QuizState, QuizAction> = (
         error: undefined,
         payload: undefined,
         quiz: undefined,
+        quizzesCategory: undefined,
       };
     }
     case QuizTypes.QUIZ_LIST_CLEAN_UP: {
@@ -88,6 +89,7 @@ const quizReducer: Reducer<QuizState, QuizAction> = (
         error: undefined,
         payload: undefined,
         quizzes: undefined,
+        quizzesCategory: undefined,
       };
     }
     case QuizTypes.REQUEST_QUIZ_LIST: {

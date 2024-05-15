@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useState } from "react";
+import React, { FC, ReactNode, useEffect, useState } from "react";
 import * as Styled from "./styled";
 import Sidebar from "components/Sidebar";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -7,10 +7,11 @@ import { RouterTitle } from "types";
 import Logo from "assets/images/Logo.png";
 
 import { GiHamburgerMenu } from "react-icons/gi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { useModalContext } from "components/Modal/modalContext";
 import ProfileModal from "components/Modal/ProfileModal";
+import { requestStudent } from "Store/students/actions";
 import LoadingSpinner from "components/LoadingSpiner";
 import { LoadingContainerFullPage } from "components/Container/styled";
 import MenuModal from "components/Modal/MenuModal";
@@ -22,7 +23,10 @@ type dashboardProps = {
 const Dashboard: FC<dashboardProps> = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, isLoading } = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
+  const { user, userStudent, isLoading } = useSelector(
+    (state: RootState) => state.user
+  );
   const { student } = useSelector((state: RootState) => state.student);
 
   const { handleModal } = useModalContext();
@@ -48,6 +52,17 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
   };
 
   const messages: any[] = [];
+
+  useEffect(() => {
+    if (userStudent) {
+      dispatch(
+        requestStudent({
+          uid: userStudent?.tutorID || "",
+          studentId: userStudent?.uid,
+        })
+      );
+    }
+  }, [dispatch, userStudent]);
 
   if (isLoading) {
     return (
@@ -114,6 +129,8 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
             {RouterTitle[`${currentUrl}${search}` as keyof typeof RouterTitle]}
           </Styled.HeaderTitleText>
         </Styled.HeaderTitle>
+        {/* handleModal */}
+        {/* <Styled.HeaderHamburgerMenu onClick={() => setShowMenu(!showMenu)}> */}
         <Styled.HeaderHamburgerMenu onClick={() => handleModal(<MenuModal />)}>
           <GiHamburgerMenu size={25} />
         </Styled.HeaderHamburgerMenu>

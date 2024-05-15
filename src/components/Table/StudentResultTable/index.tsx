@@ -18,7 +18,6 @@ const StudentResultTable: FC<StudentResultTableProps> = ({
   studentID,
   tutorView,
 }) => {
-  const { userStudent } = useSelector((state: RootState) => state.user);
   const { quizzes } = useSelector((state: RootState) => state.quiz);
 
   const TableHeaderTitles: THeader[] = [
@@ -30,8 +29,8 @@ const StudentResultTable: FC<StudentResultTableProps> = ({
   const results = useMemo(() => {
     const myResults = quizzes?.map((student) => ({
       results: Object.fromEntries(
-        Object.entries(student.results || {}).filter(([key, value]) =>
-          key === studentID ? studentID : userStudent?.uid
+        Object.entries(student.results || {}).filter(
+          ([key, value]) => key === studentID
         )
       ),
     }));
@@ -52,7 +51,7 @@ const StudentResultTable: FC<StudentResultTableProps> = ({
           })
           .filter((empty) => empty !== undefined)
       : [];
-  }, [quizzes, userStudent?.uid, studentID]);
+  }, [quizzes, studentID]);
 
   useEffect(() => {
     emptyState?.(results.length === 0);

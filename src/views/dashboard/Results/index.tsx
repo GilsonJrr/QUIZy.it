@@ -16,6 +16,7 @@ const Results: FC<ResultsProps> = () => {
   const dispatch = useDispatch();
   const isMobile = useDeviceType();
 
+  const { userStudent } = useSelector((state: RootState) => state.user);
   const { user, isLoading: userLoading } = useSelector(
     (state: RootState) => state.user
   );
@@ -70,6 +71,7 @@ const Results: FC<ResultsProps> = () => {
           <StudentResultTable
             dashBoard
             emptyState={(empty) => setTableTutorEmpty(empty)}
+            studentID={userStudent?.uid}
           />
         )}
       </Card>
