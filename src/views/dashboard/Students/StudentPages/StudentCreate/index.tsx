@@ -24,6 +24,8 @@ import LoadingSpinner from "components/LoadingSpiner";
 import { LoadingContainerFullPage } from "components/Container/styled";
 import { useModalContext } from "components/Modal/modalContext";
 import DeleteModal from "components/Modal/DeleteModal";
+import useDeviceType from "hooks/useDeviceType";
+import Tabs from "components/Tabs";
 
 type StudentCreateProps = {};
 
@@ -46,6 +48,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const isMobile = useDeviceType();
 
   const { handleModal } = useModalContext();
 
@@ -59,6 +62,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
   const [extraFields, setExtraFields] = useState<any[]>([]);
   const [extraField, setExtraField] = useState<string>();
   const [editingField, setEditingField] = useState(0);
+  const [tab, setTab] = useState("Information");
 
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
@@ -240,147 +244,177 @@ const StudentCreate: FC<StudentCreateProps> = () => {
   return (
     <Styled.Container>
       <BreadCrumbs crumbs={studentId !== null ? fromProfileCrumbs : crumbs} />
+      {isMobile && (
+        <Styled.TabContainer>
+          <Tabs
+            tabs={[{ label: "Information" }, { label: "Extra Information" }]}
+            activeTab={(tab) => setTab(tab)}
+            radius={10}
+          />
+        </Styled.TabContainer>
+      )}
       <Styled.ContainerInner>
-        <Card title={"New Student"} isEmpty={false} gridName="newQuiz">
-          <Styled.Form id="newStudentForm" onSubmit={handleSubmit(onSubmit)}>
-            <Styled.SelectContainer>
-              <SimpleInput
-                label={"Name"}
-                placeholder="Enter the student Name"
-                error={errors.name}
-                {...register("name")}
-              />
-              <SimpleInput
-                label={"Photo"}
-                placeholder="Enter the student photo"
-                error={errors.photo}
-                {...register("photo")}
-              />
-            </Styled.SelectContainer>
-            <Styled.SelectContainer>
-              <SimpleInput
-                label={"Phone"}
-                placeholder="Choose a phone"
-                error={errors.phone}
-                {...register("phone")}
-              />
-              <SimpleInput
-                label={"Email"}
-                placeholder="Choose a email"
-                error={errors.email}
-                {...register("email")}
-              />
-            </Styled.SelectContainer>
-            <Styled.SelectContainer>
-              <SimpleInput
-                label={"Address"}
-                placeholder=""
-                error={errors.address}
-                {...register("address")}
-              />
-              {groups?.length !== 0 && (
-                <SelectInput
-                  label={"Group"}
-                  options={[
-                    { label: "Select a Group", value: "groupLess" },
-                    ...options,
-                  ]}
-                  error={errors.group}
-                  {...register("group")}
-                />
-              )}
-            </Styled.SelectContainer>
-            <Styled.SelectContainer>
-              <SimpleInput
-                label={"BirthDate"}
-                placeholder="DD/MM/YYYY"
-                error={errors.birthDate}
-                {...register("birthDate")}
-              />
-              <SimpleInput
-                label={"Social Net Work"}
-                placeholder="@JonhDoe"
-                error={errors.socialNetWork}
-                {...register("socialNetWork")}
-              />
-            </Styled.SelectContainer>
-            <TextAreaInput
-              label="About"
-              height="15vh"
-              error={errors.about}
-              {...register("about")}
-            />
-          </Styled.Form>
-        </Card>
-        <Card title={`Extra info`} isEmpty={false} gridName="newQuestion">
-          {extraFields.length ? (
+        {(!isMobile || tab === "Information") && (
+          <Card
+            title={isMobile ? "" : "New Student"}
+            innerCard={isMobile}
+            isEmpty={false}
+            gridName="newQuiz"
+          >
             <Styled.Form
               id="newStudentForm"
               onSubmit={handleSubmit(onSubmit)}
-              padding
+              padding={isMobile}
             >
-              {extraFields.map((fieldName, index) => (
-                <Styled.ExtraInfoContainer>
-                  <TextAreaInput
-                    label={
-                      <Styled.InputLabel
-                        value={editingField === index ? extraField : fieldName}
-                        onBlur={(e) => {
-                          handleChangeFieldName(index);
-                          setEditingField(index + 1);
-                        }}
-                        onChange={(e) => {
-                          setExtraField(e.target.value);
-                          setEditingField(index);
-                        }}
-                        placeholder="Enter value name"
-                        //TODO: ver um forma de manter tudo editavel
-                        disabled={index < extraFields.length - 1}
-                      />
-                    }
-                    width={"100%"}
-                    placeholder="Enter question title"
-                    {...register(fieldName)}
+              <Styled.SelectContainer>
+                <SimpleInput
+                  label={"Name"}
+                  placeholder="Enter the student Name"
+                  error={errors.name}
+                  {...register("name")}
+                />
+                <SimpleInput
+                  label={"Photo"}
+                  placeholder="Enter the student photo"
+                  error={errors.photo}
+                  {...register("photo")}
+                />
+              </Styled.SelectContainer>
+              <Styled.SelectContainer>
+                <SimpleInput
+                  label={"Phone"}
+                  placeholder="Choose a phone"
+                  error={errors.phone}
+                  {...register("phone")}
+                />
+                <SimpleInput
+                  label={"Email"}
+                  placeholder="Choose a email"
+                  error={errors.email}
+                  {...register("email")}
+                />
+              </Styled.SelectContainer>
+              <Styled.SelectContainer>
+                <SimpleInput
+                  label={"Address"}
+                  placeholder=""
+                  error={errors.address}
+                  {...register("address")}
+                />
+                {groups?.length !== 0 && (
+                  <SelectInput
+                    label={"Group"}
+                    options={[
+                      { label: "Select a Group", value: "groupLess" },
+                      ...options,
+                    ]}
+                    error={errors.group}
+                    {...register("group")}
                   />
-                  <Styled.DeleteIcon
-                    size={25}
-                    onClick={() => handleDeleteField(index)}
-                  />
-                </Styled.ExtraInfoContainer>
-              ))}
+                )}
+              </Styled.SelectContainer>
+              <Styled.SelectContainer>
+                <SimpleInput
+                  label={"BirthDate"}
+                  placeholder="DD/MM/YYYY"
+                  error={errors.birthDate}
+                  {...register("birthDate")}
+                />
+                <SimpleInput
+                  label={"Social Net Work"}
+                  placeholder="@JonhDoe"
+                  error={errors.socialNetWork}
+                  {...register("socialNetWork")}
+                />
+              </Styled.SelectContainer>
+              <TextAreaInput
+                label="About"
+                height="15vh"
+                error={errors.about}
+                {...register("about")}
+              />
             </Styled.Form>
-          ) : (
-            <Styled.EmptyForm>
-              <h2>Add here extra info about you student</h2>
-            </Styled.EmptyForm>
-          )}
-          <Styled.ButtonCardContainer>
-            <Styled.SubmitButton
-              type="button"
-              onClick={handleAddField}
-              disabled={
-                !(
-                  extraFields.length === 0 ||
-                  (extraFields[extraFields.length - 1] !== "Change here" &&
-                    watch(extraFields[extraFields.length - 1]))
-                )
-              }
-            >
-              Add
-            </Styled.SubmitButton>
-          </Styled.ButtonCardContainer>
-          <div ref={bottomRef}></div>
-        </Card>
+          </Card>
+        )}
+        {(!isMobile || tab === "Extra Information") && (
+          <Card
+            isEmpty={false}
+            gridName="newQuestion"
+            title={isMobile ? "" : "Extra info"}
+            innerCard={isMobile}
+          >
+            {extraFields.length ? (
+              <Styled.Form
+                id="newStudentForm"
+                onSubmit={handleSubmit(onSubmit)}
+                padding
+              >
+                {extraFields.map((fieldName, index) => (
+                  <Styled.ExtraInfoContainer>
+                    <TextAreaInput
+                      label={
+                        <Styled.InputLabel
+                          value={
+                            editingField === index ? extraField : fieldName
+                          }
+                          onBlur={(e) => {
+                            handleChangeFieldName(index);
+                            setEditingField(index + 1);
+                          }}
+                          onChange={(e) => {
+                            setExtraField(e.target.value);
+                            setEditingField(index);
+                          }}
+                          placeholder="Enter value name"
+                          //TODO: ver um forma de manter tudo editavel
+                          disabled={index < extraFields.length - 1}
+                        />
+                      }
+                      width={"100%"}
+                      placeholder="Enter question title"
+                      {...register(fieldName)}
+                    />
+                    <Styled.DeleteIcon
+                      size={25}
+                      onClick={() => handleDeleteField(index)}
+                    />
+                  </Styled.ExtraInfoContainer>
+                ))}
+              </Styled.Form>
+            ) : (
+              <Styled.EmptyForm>
+                <h2>Add here extra info about you student</h2>
+              </Styled.EmptyForm>
+            )}
+            <Styled.ButtonCardContainer>
+              <Styled.SubmitButton
+                type="button"
+                onClick={handleAddField}
+                disabled={
+                  !(
+                    extraFields.length === 0 ||
+                    (extraFields[extraFields.length - 1] !== "Change here" &&
+                      watch(extraFields[extraFields.length - 1]))
+                  )
+                }
+              >
+                Add extra information
+              </Styled.SubmitButton>
+            </Styled.ButtonCardContainer>
+            <div ref={bottomRef}></div>
+          </Card>
+        )}
         <Styled.ButtonContainer
           justify={studentId !== null ? "space-between" : "flex-end"}
         >
           {studentId !== null && (
             <Styled.DeleteButton type="button" onClick={handleDelete}>
-              Delete Student
+              {isMobile ? "Delete Student" : "Delete"}
             </Styled.DeleteButton>
           )}
           <Styled.SubmitButton type="submit" form="newStudentForm">
-            {studentId !== null ? "Update Student" : "Add Student"}
+            {studentId !== null ? "Update " : "Add "}{" "}
+            {isMobile ? "" : "Student"}
           </Styled.SubmitButton>
         </Styled.ButtonContainer>
       </Styled.ContainerInner>

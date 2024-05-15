@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import * as Styled from "./styled";
 import * as Block from "blocks/studentProfile";
 import BreadCrumbs from "components/BreadCrumbs";
@@ -16,6 +16,8 @@ import LoadingSpinner from "components/LoadingSpiner";
 import { LoadingContainerFullPage } from "components/Container/styled";
 import ProgressBar from "components/ProgressBar";
 import { requestQuizList } from "Store/quiz/actions";
+import Tabs from "components/Tabs";
+import useDeviceType from "hooks/useDeviceType";
 
 type StudentProfileProps = {};
 
@@ -36,13 +38,14 @@ const StudentProfile: FC<StudentProfileProps> = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const userID = user?.info?.uid;
+  const isMobile = useDeviceType();
 
   const studentId = new URLSearchParams(location.search).get("studentId");
+  const [tab, setTab] = useState("Info");
 
   const crumbs = [
     { label: "Students", path: "/students" },
-    { label: "Students Profile", path: "/students/student-profile" },
+    { label: "Students Profile", path: "" },
   ];
 
   const results = useMemo(() => {
@@ -79,28 +82,27 @@ const StudentProfile: FC<StudentProfileProps> = () => {
   ];
 
   useEffect(() => {
-    if (studentId) {
+    if (user && studentId) {
       dispatch(
-        requestStudent({ uid: userID || "", studentId: studentId || "" })
+        requestStudent({ uid: user?.info?.uid || "", studentId: studentId })
       );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, studentId]);
+  }, [dispatch, studentId, user]);
 
   useEffect(() => {
     dispatch(
       requestResultList({
-        uid: userID || "",
+        uid: user?.info?.uid || "",
         studentUid: studentId || "",
       })
     );
-  }, [dispatch, studentId, userID]);
+  }, [dispatch, studentId, user]);
 
   useEffect(() => {
     if (quizzes === undefined) {
-      dispatch(requestQuizList({ uid: userID || "" }));
+      dispatch(requestQuizList({ uid: user?.info?.uid || "" }));
     }
-  }, [dispatch, quizzes, userID]);
+  }, [dispatch, quizzes, user]);
 
   const sumByCategory = (data: any[]) => {
     return data?.reduce((acc, cur) => {
@@ -139,76 +141,101 @@ const StudentProfile: FC<StudentProfileProps> = () => {
     );
   }
 
+  console.log("aqui cara", user?.info?.uid, studentId);
+
   return (
     <Styled.Wrapper>
       <BreadCrumbs crumbs={crumbs} />
+      {isMobile && (
+        <Tabs
+          tabs={[{ label: "Info" }, { label: "Result" }, { label: "Category" }]}
+          activeTab={(tab) => setTab(tab)}
+          radius={10}
+        />
+      )}
       <Styled.Container>
-        <Card
-          title={"All results"}
-          gridName="results"
-          isEmpty={results.length === 0}
-          emptyMessage={`${student?.info?.name} has't completed any quiz yet`}
-        >
-          <Table<TResult>
-            header={TableHeaderTitles}
-            content={results}
-            renderItem={(item) => <RenderTable item={item} tutorView />}
-          />
-        </Card>
-        <Card
-          title={"Categorie Result"}
-          gridName="categories"
-          isEmpty={false}
-          emptyMessage={`${student?.info?.name} has't completed any quiz yet`}
-        >
-          <Styled.ProgressWrapper>
-            {categoryTotal?.map((category: any) => {
-              const studentResult = studentTotal.filter(
-                (e: any) => e.category === category.category
-              )[0]?.size;
-              return (
-                <Styled.ProgressContainer>
-                  <Styled.ProgressTitle>
-                    {category.category === "categoryLess"
-                      ? "Uncategorized"
-                      : category.category}
-                  </Styled.ProgressTitle>
-                  <ProgressBar
-                    progress={(studentResult / category.size) * 100}
-                  />
-                </Styled.ProgressContainer>
-              );
-            })}
-          </Styled.ProgressWrapper>
-        </Card>
-        <Card
-          title={"From the same group"}
-          isEmpty={sameGroupStudents?.length === 0}
-          gridName="group"
-          emptyMessage={`${student?.info?.name} is alone here`}
-        >
-          <Styled.GroupContainer>
-            {sameGroupStudents?.map((group) => {
-              return (
-                <Avatar
-                  name={group.info?.name}
-                  photo={group.info?.photo}
-                  size="medium"
-                  onClick={() =>
-                    navigate(
-                      `/students/student-profile?studentId=${group.info?.uid}`
-                    )
-                  }
-                />
-              );
-            })}
-          </Styled.GroupContainer>
-        </Card>
-        <Card title={""} isEmpty={false} gridName="information">
-          {student && student?.info && (
-            <Block.ProfileInfo student={student.info} />
-          )}
-        </Card>
+        {(!isMobile || tab === "Result") && (
+          <Card
+            title={isMobile ? "" : "All results"}
+            gridName="results"
+            isEmpty={results.length === 0}
+            emptyMessage={`${student?.info?.name} has't completed any quiz yet`}
+            innerCard={isMobile}
+          >
+            <Table<TResult>
+              header={TableHeaderTitles}
+              content={results}
+              renderItem={(item) => <RenderTable item={item} tutorView />}
+            />
+          </Card>
+        )}
+        {(!isMobile || tab === "Category") && (
+          <>
+            <Card
+              title={isMobile ? "" : "Categorie Result"}
+              gridName="categories"
+              isEmpty={false}
+              emptyMessage={`${student?.info?.name} has't completed any quiz yet`}
+              innerCard={isMobile}
+            >
+              <Styled.ProgressWrapper>
+                {categoryTotal?.map((category: any) => {
+                  const studentResult = studentTotal.filter(
+                    (e: any) => e.category === category.category
+                  )[0]?.size;
+                  return (
+                    <Styled.ProgressContainer>
+                      <Styled.ProgressTitle>
+                        {category.category === "categoryLess"
+                          ? "Uncategorized"
+                          : category.category}
+                      </Styled.ProgressTitle>
+                      <ProgressBar
+                        progress={(studentResult / category.size) * 100}
+                      />
+                    </Styled.ProgressContainer>
+                  );
+                })}
+              </Styled.ProgressWrapper>
+            </Card>
+            <Card
+              title={"From the same group"}
+              isEmpty={sameGroupStudents?.length === 0}
+              gridName="group"
+              emptyMessage={`${student?.info?.name} is alone here`}
+              innerCard={isMobile}
+            >
+              <Styled.GroupContainer>
+                {sameGroupStudents?.map((group) => {
+                  return (
+                    <Avatar
+                      name={group.info?.name}
+                      photo={group.info?.photo}
+                      size="medium"
+                      onClick={() =>
+                        navigate(
+                          `/students/student-profile?studentId=${group.info?.uid}`
+                        )
+                      }
+                    />
+                  );
+                })}
+              </Styled.GroupContainer>
+            </Card>
+          </>
+        )}
+        {(!isMobile || tab === "Info") && (
+          <Card
+            title={""}
+            isEmpty={false}
+            gridName="information"
+            innerCard={isMobile}
+          >
+            {student && student?.info && (
+              <Block.ProfileInfo student={student.info} />
+            )}
+          </Card>
+        )}
       </Styled.Container>
     </Styled.Wrapper>
   );

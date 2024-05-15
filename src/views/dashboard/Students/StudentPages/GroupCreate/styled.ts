@@ -13,8 +13,11 @@ export const Container = styled.div<Props>`
   flex-direction: column;
   width: 100%;
   height: calc(100vh - 9vh);
-  padding: 20px 40px;
   position: relative;
+  padding: 20px;
+  @media screen and (min-width: 600px) {
+    padding: 20px 40px;
+  }
 `;
 
 export const ContainerInner = styled.div`
@@ -22,21 +25,34 @@ export const ContainerInner = styled.div`
   min-height: 100%;
   padding: 20px 0px;
 
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 0.2fr;
-  grid-column-gap: 20px;
-  grid-row-gap: 20px;
-  grid-template-areas:
-    "newQuiz newQuestion"
-    "newQuiz newQuestion"
-    "newQuiz buttonContainer";
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 9vh);
+  padding: 10px 0;
+
+  @media screen and (min-width: 600px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 0.2fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    grid-template-areas:
+      "newQuiz newQuestion"
+      "newQuiz newQuestion"
+      "newQuiz buttonContainer";
+  }
 `;
 
 export const ButtonContainer = styled.div<Props>`
   grid-area: "buttonContainer";
   display: flex;
   justify-content: ${({ justify }) => justify || "flex-end"};
+
+  margin-bottom: 45px;
+
+  @media screen and (min-width: 600px) {
+    margin-bottom: 0px;
+  }
 `;
 
 export const ButtonCardContainer = styled.div<Props>`
@@ -179,9 +195,20 @@ export const GroupCard = styled.div<Props>`
   padding: 5px 15px 5px 10px;
   cursor: pointer;
 
+  width: 100%;
+
   background-color: ${({ active }) => (active ? "#4a4747" : "")};
 
   ${GroupTitle} {
     color: ${({ active }) => (active ? "#FFFFFF" : "#4a4747")};
   }
+
+  @media screen and (min-width: 600px) {
+    width: 48%;
+  }
+`;
+
+export const TabContainer = styled.div`
+  display: flex;
+  margin: 20px 0 0;
 `;

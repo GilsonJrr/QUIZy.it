@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Styled from "./styled";
@@ -16,6 +16,8 @@ import Avatar from "components/Avatar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useModalContext } from "components/Modal/modalContext";
 import DeleteModal from "components/Modal/DeleteModal";
+import useDeviceType from "hooks/useDeviceType";
+import Tabs from "components/Tabs";
 type StudentCreateProps = {};
 
 type TStudent = {
@@ -28,6 +30,7 @@ const GroupCreate: FC<StudentCreateProps> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const isMobile = useDeviceType();
 
   const { handleModal } = useModalContext();
 
@@ -38,6 +41,8 @@ const GroupCreate: FC<StudentCreateProps> = () => {
   const { user } = useSelector((state: RootState) => state.user);
 
   const userID = user?.info?.uid;
+
+  const [tab, setTab] = useState("Group");
 
   const {
     register,
@@ -96,64 +101,91 @@ const GroupCreate: FC<StudentCreateProps> = () => {
     );
   };
 
+  const handleUpdateCategory = (id: string) => {
+    navigate(`/students/group-create?id=${id}`);
+    setTab("Group");
+  };
+
   return (
     <Styled.Container>
       <BreadCrumbs crumbs={crumbs} />
+      {isMobile && (
+        <Styled.TabContainer>
+          <Tabs
+            tabs={[{ label: "Group" }, { label: "Groups" }]}
+            activeTab={(tab) => setTab(tab)}
+            radius={5}
+            active={tab}
+          />
+        </Styled.TabContainer>
+      )}
       <Styled.ContainerInner>
-        <Card title={"New Group"} isEmpty={false} gridName="newQuiz">
-          <Styled.Form id="newStudentForm" onSubmit={handleSubmit(onSubmit)}>
-            <SimpleInput
-              label={"Group Title"}
-              placeholder="Enter the group title"
-              error={
-                hasStudent
-                  ? {
-                      type: "custom",
-                      message:
-                        "Group has active student, name can't be changed",
-                    }
-                  : errors.title
-              }
-              {...register("title")}
-              disabled={hasStudent}
-            />
-            <SimpleInput
-              label={"Group image"}
-              placeholder="Enter the group image"
-              error={errors.image}
-              {...register("image")}
-            />
-            <TextAreaInput
-              label="About"
-              height="40vh"
-              error={errors.about}
-              {...register("about")}
-            />
-          </Styled.Form>
-        </Card>
-        <Card title={"All Groups"} isEmpty={false} gridName="newQuestion">
-          <Styled.GroupCardContainer>
-            {groups &&
-              groups.length > 0 &&
-              groups?.map((group) => {
-                return (
-                  <Styled.GroupCard
-                    active={group.id === groupId}
-                    onClick={() =>
-                      navigate(`/students/group-create?id=${group.id}`)
-                    }
-                  >
-                    <Avatar
-                      size="medium"
-                      name={group.title}
-                      photo={group.image}
-                    />
-                    <Styled.GroupTitle>{group.title}</Styled.GroupTitle>
-                  </Styled.GroupCard>
-                );
-              })}
-          </Styled.GroupCardContainer>
-        </Card>
+        {(!isMobile || tab === "Group") && (
+          <Card
+            title={isMobile ? "" : "New Group"}
+            isEmpty={false}
+            gridName="newQuiz"
+            innerCard={isMobile}
+          >
+            <Styled.Form id="newStudentForm" onSubmit={handleSubmit(onSubmit)}>
+              <SimpleInput
+                label={"Group Title"}
+                placeholder="Enter the group title"
+                error={
+                  hasStudent
+                    ? {
+                        type: "custom",
+                        message:
+                          "Group has active student, name can't be changed",
+                      }
+                    : errors.title
+                }
+                {...register("title")}
+                disabled={hasStudent}
+              />
+              <SimpleInput
+                label={"Group image"}
+                placeholder="Enter the group image"
+                error={errors.image}
+                {...register("image")}
+              />
+              <TextAreaInput
+                label="About"
+                height="40vh"
+                error={errors.about}
+                {...register("about")}
+              />
+            </Styled.Form>
+          </Card>
+        )}
+        {(!isMobile || tab === "Groups") && (
+          <Card
+            title={isMobile ? "" : "All Groups"}
+            isEmpty={false}
+            gridName="newQuestion"
+            innerCard={isMobile}
+          >
+            <Styled.GroupCardContainer>
+              {groups &&
+                groups.length > 0 &&
+                groups?.map((group) => {
+                  return (
+                    <Styled.GroupCard
+                      active={group.id === groupId}
+                      onClick={() => handleUpdateCategory(group.id || "")}
+                    >
+                      <Avatar
+                        size="medium"
+                        name={group.title}
+                        photo={group.image}
+                      />
+                      <Styled.GroupTitle>{group.title}</Styled.GroupTitle>
+                    </Styled.GroupCard>
+                  );
+                })}
+            </Styled.GroupCardContainer>
+          </Card>
+        )}
         <Styled.ButtonContainer
           justify={
             groupId !== null && !hasStudent ? "space-between" : "flex-end"
@@ -165,11 +197,11 @@ const GroupCreate: FC<StudentCreateProps> = () => {
               disabled={hasStudent}
               onClick={handleDelete}
             >
-              Delete Group
+              {isMobile ? "Delete" : "Delete Group"}
             </Styled.DeleteButton>
           )}
           <Styled.SubmitButton type="submit" form="newStudentForm">
-            {groupId !== null ? "Update Group" : "Add Group"}
+            {groupId !== null ? "Update " : "Add "} {isMobile ? "" : "Group"}
           </Styled.SubmitButton>
         </Styled.ButtonContainer>
       </Styled.ContainerInner>

@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import * as Styled from "./styled";
 import { useNavigate } from "react-router-dom";
+import useDeviceType from "hooks/useDeviceType";
 
 type CrumbsType = {
   label: string;
@@ -12,6 +13,7 @@ type BreadCrumbsProps = { crumbs: CrumbsType[] };
 
 const BreadCrumbs: FC<BreadCrumbsProps> = ({ crumbs }) => {
   const navigate = useNavigate();
+  const isMobile = useDeviceType();
 
   const handleClick = (crumb: CrumbsType) => {
     if (crumb.onClick) {
@@ -22,12 +24,18 @@ const BreadCrumbs: FC<BreadCrumbsProps> = ({ crumbs }) => {
     }
   };
 
+  const mobileCrumbs = crumbs.slice(-3);
+
   return (
-    <Styled.Container>
-      {crumbs?.map((crumb, index) => {
+    <Styled.Container showFade={isMobile && mobileCrumbs.length >= 3}>
+      {(isMobile ? mobileCrumbs : crumbs).map((crumb, index) => {
         return (
           <Styled.CrumbsContainer onClick={() => handleClick(crumb)}>
-            <Styled.Crumbs>{crumb.label}</Styled.Crumbs>
+            <Styled.Crumbs>
+              {isMobile && index === crumbs.length - 3
+                ? crumb.label.slice(-3)
+                : crumb.label}
+            </Styled.Crumbs>
             {index !== crumbs.length - 1 && <Styled.Arrows />}
           </Styled.CrumbsContainer>
         );

@@ -13,30 +13,46 @@ export const Container = styled.div<Props>`
   flex-direction: column;
   width: 100%;
   height: calc(100vh - 9vh);
-  padding: 20px 40px;
+  padding: 20px;
   position: relative;
+
+  @media screen and (min-width: 600px) {
+    padding: 20px 40px;
+  }
 `;
 
 export const ContainerInner = styled.div`
   width: 100%;
   min-height: 100%;
-  padding: 20px 0px;
 
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 0.2fr;
-  grid-column-gap: 20px;
-  grid-row-gap: 20px;
-  grid-template-areas:
-    "newQuiz newQuestion"
-    "newQuiz newQuestion"
-    "newQuiz buttonContainer";
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (min-width: 600px) {
+    padding: 20px 0px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 0.2fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    grid-template-areas:
+      "newQuiz newQuestion"
+      "newQuiz newQuestion"
+      "newQuiz buttonContainer";
+  }
 `;
 
 export const ButtonContainer = styled.div<Props>`
   grid-area: "buttonContainer";
   display: flex;
   justify-content: ${({ justify }) => justify || "flex-end"};
+
+  margin-bottom: 55px;
+  background-color: #ffffff;
+  padding-top: 10px;
+  @media screen and (min-width: 600px) {
+    margin-bottom: 0;
+  }
 `;
 
 export const ButtonCardContainer = styled.div<Props>`
@@ -76,6 +92,10 @@ export const SelectContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 10px;
+  flex-direction: column;
+  @media screen and (min-width: 600px) {
+    flex-direction: row;
+  }
 `;
 
 export const Form = styled.form<Props>`
@@ -83,6 +103,7 @@ export const Form = styled.form<Props>`
   flex-direction: column;
   gap: 25px;
   padding-bottom: ${({ padding }) => (padding ? "150" : "")}px;
+  overflow-y: scroll;
 `;
 
 export const EmptyForm = styled.div`
@@ -91,6 +112,12 @@ export const EmptyForm = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
+
+  h2 {
+    font-size: 1.3rem;
+    text-align: center;
+    font-weight: 500;
+  }
 `;
 
 export const AnswerContainer = styled.div<Props>`
@@ -157,4 +184,9 @@ export const DeleteButton = styled.button`
   &:disabled {
     opacity: 0.5;
   }
+`;
+
+export const TabContainer = styled.div`
+  display: flex;
+  margin: 20px 0 0;
 `;

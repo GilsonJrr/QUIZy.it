@@ -8,7 +8,7 @@ type Props = {
 };
 
 export const Card = styled.div<Props>`
-  border-radius: 20px;
+  border-radius: 0px;
   border: none;
   padding: ${({ innerCard }) => (innerCard ? "0px" : "15px 20px")};
   grid-area: ${({ gridName }) => gridName};
@@ -46,6 +46,7 @@ export const Card = styled.div<Props>`
   }
 
   @media screen and (min-width: 600px) {
+    border-radius: 20px;
     transition: 0.3s ease-in-out all;
     border: 1px solid rgba(0, 0, 0, 0.4);
     height: 100%;
