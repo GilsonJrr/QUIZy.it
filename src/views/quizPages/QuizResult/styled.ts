@@ -15,28 +15,45 @@ export const Container = styled.div<Props>`
   width: 100vw;
   display: flex;
   flex-direction: column;
-  padding: 30px 60px;
+  padding: 20px;
   overflow: hidden;
+  @media screen and (min-width: 600px) {
+    padding: 30px 60px;
+  }
 `;
 
 export const TitlesContainer = styled.div`
   width: 100%;
   border-bottom: 1px solid rgba(0, 0, 0, 0.4);
   display: flex;
-  gap: 50px;
+  flex-direction: column-reverse;
+  padding-bottom: 30px;
+  @media screen and (min-width: 600px) {
+    gap: 50px;
+    flex-direction: row;
+    padding-bottom: 0px;
+  }
 `;
 
 export const InfoContainer = styled.div`
-  width: 50%;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0 20px 30px;
+  padding: 0;
+  @media screen and (min-width: 600px) {
+    padding: 0 20px 30px;
+    width: 50%;
+  }
 `;
 
 export const MessageContainer = styled.div`
-  width: 50%;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  @media screen and (min-width: 600px) {
+    padding: 0 20px 30px;
+    width: 50%;
+  }
 `;
 
 export const Title = styled.h1`
@@ -59,25 +76,27 @@ export const Score = styled.h2`
 `;
 
 export const ScoreMessage = styled.p`
-  text-align: center;
-  padding: 0 30px;
+  text-align: left;
+  padding: 0px;
   font-size: 0.8rem;
   font-weight: 500;
   @media screen and (min-width: 600px) {
-    /* width: 40%; */
+    text-align: center;
     font-size: 1.5rem;
     text-align: left;
     font-weight: 600;
-    padding: 0;
   }
 `;
 
 export const ButtonContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   width: 100%;
   gap: 20px;
   margin: auto 0 0 0;
+  @media screen and (min-width: 600px) {
+    justify-content: flex-end;
+  }
 `;
 
 export const Button = styled.button`
@@ -94,7 +113,7 @@ export const Button = styled.button`
 `;
 
 export const ResumeContainer = styled.div`
-  overflow-y: hidden;
+  overflow-y: scroll;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
@@ -116,12 +135,15 @@ export const ResumeContainerInner = styled.div`
 
 export const ResumeTextContainer = styled.div<Props>`
   display: flex;
-  align-items: center;
   gap: 5px;
   background-color: ${({ answer }) => (answer ? "#f8f8f8" : "transparent")};
   padding: ${({ answer }) => (answer ? "10" : "0")}px;
   border: ${({ answer }) => (answer ? "1" : "0")}px solid rgba(0, 0, 0, 0.4);
   border-radius: 4px;
+  @media screen and (min-width: 600px) {
+    align-items: center;
+    flex-direction: row;
+  }
 `;
 
 export const CheckIcon = styled(FaCheck)`

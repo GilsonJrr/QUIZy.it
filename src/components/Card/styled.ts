@@ -5,6 +5,7 @@ type Props = {
   scrollable?: boolean;
   width?: string;
   innerCard?: boolean;
+  justify?: string;
 };
 
 export const Card = styled.div<Props>`
@@ -53,10 +54,10 @@ export const Card = styled.div<Props>`
   }
 `;
 
-export const CardHeader = styled.div`
+export const CardHeader = styled.div<Props>`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: ${({ justify }) => justify || "space-between"};
   width: 100%;
   margin-bottom: 10px;
 `;

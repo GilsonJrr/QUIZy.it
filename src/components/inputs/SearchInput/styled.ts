@@ -12,6 +12,10 @@ export const Container = styled.div<Props>`
   justify-content: space-between;
   gap: 10px;
   margin: 0 10px;
+  width: 100%;
+  @media screen and (min-width: 600px) {
+    width: auto;
+  }
 `;
 
 export const Input = styled.input`

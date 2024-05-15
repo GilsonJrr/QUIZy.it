@@ -11,10 +11,8 @@ type Props = {
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   height: 100vh;
   padding: 0px;
-  box-sizing: border-box;
   width: 100%;
 
   @media screen and (min-width: 600px) {

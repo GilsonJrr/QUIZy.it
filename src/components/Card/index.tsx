@@ -56,6 +56,19 @@ const Card: FC<CardProps> = ({
     );
   }
 
+  const handleJustify = () => {
+    switch (true) {
+      case (searchable && !!redirectTo) ||
+        (!!title && searchable) ||
+        (!!title && !!redirectTo):
+        return "space-between";
+      case !!redirectTo:
+        return "flex-end";
+      case searchable && !redirectTo && !title:
+        return "center";
+    }
+  };
+
   return (
     <Styled.Card
       gridName={gridName}
@@ -63,7 +76,7 @@ const Card: FC<CardProps> = ({
       width={width}
       innerCard={innerCard}
     >
-      <Styled.CardHeader>
+      <Styled.CardHeader justify={handleJustify()}>
         <Styled.CardTitle>{title}</Styled.CardTitle>
         {searchable && (
           <SearchInput value={searchValue} setValue={(e) => setSearch?.(e)} />
