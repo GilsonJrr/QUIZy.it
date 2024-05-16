@@ -20,6 +20,12 @@ export const theme: DefaultTheme = {
       wrongPrimary: "#e3a6a7",
       wrongSecondary: "#996868",
     },
+    alert: {
+      error: "#c78788",
+      success: "#89c799",
+      warning: "#ccc67e",
+      info: "#4a4747",
+    },
   },
 };
 

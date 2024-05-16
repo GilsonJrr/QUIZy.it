@@ -4,6 +4,7 @@ import {
   BackgroundType,
   MainType,
   QuizType,
+  AlertType,
 } from "lib/styled-components/models";
 
 declare module "styled-components" {
@@ -12,6 +13,7 @@ declare module "styled-components" {
       background: Record<BackgroundType, string>;
       main: Record<MainType, string>;
       quiz: Record<QuizType, string>;
+      alert: Record<AlertType, string>;
     };
   }
   export const styled = styledModule;

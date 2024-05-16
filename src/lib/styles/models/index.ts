@@ -12,3 +12,5 @@ export type BackgroundType = "default" | "secondary" | "highlight";
 export type MainType = "default";
 
 export type QuizType = "right" | "wrong";
+
+export type AlertType = "Error" | "Success" | "Warning" | "Info";
