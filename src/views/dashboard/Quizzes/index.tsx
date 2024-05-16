@@ -182,22 +182,30 @@ const Quizzes: FC<QuizzesProps> = () => {
           isLoading={categoryLoading || quizCategoryLoading}
           innerCard={isMobile}
         >
-          {!category
-            ? categories?.map((category) => {
-                return (
-                  <RenderCategoriesCard
-                    item={category}
-                    chosenCategory={(category) =>
-                      handleDisplayCategories(category)
-                    }
-                  />
-                );
-              })
-            : quizzesCategory?.map((item) => {
-                return (
-                  <RenderQuizCard item={item} editMode={userType === "tutor"} />
-                );
-              })}
+          {!category ? (
+            categories?.map((category) => {
+              return (
+                <RenderCategoriesCard
+                  item={category}
+                  chosenCategory={(category) =>
+                    handleDisplayCategories(category)
+                  }
+                />
+              );
+            })
+          ) : quizzesCategory?.length === 0 ? (
+            <Styled.EmptyContainer>
+              <Styled.EmptyText>
+                No quiz found on this category
+              </Styled.EmptyText>
+            </Styled.EmptyContainer>
+          ) : (
+            quizzesCategory?.map((item) => {
+              return (
+                <RenderQuizCard item={item} editMode={userType === "tutor"} />
+              );
+            })
+          )}
           {category && (
             <Styled.ButtonContainer>
               <Button onClick={() => setCategory("")} width="100%">

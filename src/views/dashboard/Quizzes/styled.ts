@@ -45,3 +45,14 @@ export const TabContainer = styled.div`
   justify-content: center;
   margin: 20px 0;
 `;
+
+export const EmptyContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+`;
+
+export const EmptyText = styled.h3`
+  font-weight: 500;
+`;
