@@ -1,7 +1,26 @@
-import { createGlobalStyle } from "styled-components";
+import { DefaultTheme, createGlobalStyle } from "styled-components";
+
+export const theme: DefaultTheme = {
+  colors: {
+    background: {
+      default: "#f8f8f8",
+      secondary: "#FAFAFA",
+      tertiary: "#FFFFFF",
+      highlight: "#d9dadb",
+    },
+    main: {
+      default: "#4a4747",
+    },
+    quiz: {
+      right: "#89c799",
+      wrong: "#c78788",
+    },
+  },
+};
+
+// ${({ theme }) => theme.colors.background.default}
 
 const GlobalStyle = createGlobalStyle`
-  /* Defina seu estilo global aqui */
   *{
     margin: 0;
     padding: 0;
@@ -13,34 +32,23 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
   }
-  /* Estilo para todos os elementos com barra de rolagem */
   *::-webkit-scrollbar {
-      width: 4px; /* largura da barra de rolagem */
+      width: 4px;
   }
-
-  /* Estilizando o botão de rolagem para cima e para baixo */
   *::-webkit-scrollbar-button {
-      background-color: #ccc; /* cor do botão de rolagem */
+      background-color: ${({ theme }) => theme.colors.background.highlight};
       height: 0px;
   }
-
-  /* Estilizando a pista (trilha) da barra de rolagem */
   *::-webkit-scrollbar-track {
-      background-color: transparent; /* cor da pista da barra de rolagem */
+      background-color: transparent;
   }
-
-  /* Estilizando o polegar da barra de rolagem */
   *::-webkit-scrollbar-thumb {
-      background-color: #888; /* cor do polegar da barra de rolagem */
-      border-radius: 5px; /* borda arredondada */
+      background-color: ${({ theme }) => theme.colors.main.default};
+      border-radius: 5px;
   }
-
-  /* Estilizando o canto da barra de rolagem */
   *::-webkit-scrollbar-corner {
-      background-color: transparent; /* cor do canto da barra de rolagem */
+      background-color: transparent;
   }
-
-  /* Adicione mais estilos globais conforme necessário */
 `;
 
 export default GlobalStyle;
