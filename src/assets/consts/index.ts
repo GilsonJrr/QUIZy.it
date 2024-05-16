@@ -784,3 +784,22 @@ export const TutorResults: TTutorResult[] = [
   { name: "Gabriel", quiz: "Art", score: "9/10" },
   { name: "Isabel", quiz: "Music", score: "6/10" },
 ];
+
+export const example = {
+  category: "categoryName",
+  description: "description here",
+  id: "id here",
+  image: "",
+  questions: [
+    {
+      answer01: "a",
+      answer02: "b",
+      answer03: "c",
+      answer04: "d",
+      questionTitle: "questionTitle",
+      rightAnswer: "a",
+    },
+  ],
+  title: "quizTitle",
+  type: "Multiple",
+};

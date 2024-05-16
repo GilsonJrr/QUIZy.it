@@ -51,7 +51,11 @@ const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
 
   const onSubmit = (data: TFormData) => {
     quizType(watch("type"));
-    localStorage.setItem("preSendQuiz", JSON.stringify(data));
+    const dataWithDate = {
+      date: new Date().toISOString(),
+      ...data,
+    };
+    localStorage.setItem("preSendQuiz", JSON.stringify(dataWithDate));
   };
 
   useEffect(() => {

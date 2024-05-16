@@ -49,6 +49,7 @@ export type QuizTypeValues = {
   category: string;
   questions?: TMultipleQuestions[] | TTrueOrFalseQuestions[];
   results?: ResultTypeValues[];
+  date?: string;
 };
 
 export type QuizState = {
