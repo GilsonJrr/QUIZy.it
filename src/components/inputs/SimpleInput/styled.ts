@@ -21,7 +21,8 @@ export const Input = styled.input<Props>`
   border-radius: 10px;
   font-size: 1.4rem;
   padding: 10px;
-  border: ${({ viewMode }) => (viewMode ? 0 : 1)}px solid rgba(0, 0, 0, 0.5);
+  border: ${({ viewMode }) => (viewMode ? 0 : 1)}px solid
+    ${({ theme }) => theme.colors.main.default};
   outline: none;
 `;
 

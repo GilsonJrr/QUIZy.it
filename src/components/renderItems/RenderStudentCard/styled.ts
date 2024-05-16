@@ -5,7 +5,7 @@ type Props = { width?: string };
 
 export const Container = styled.div<Props>`
   display: flex;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
   border-radius: 100px 20px 20px 100px;
   position: relative;
   width: ${({ width }) => width || "100%"};
@@ -15,8 +15,8 @@ export const PhotoContainer = styled.img`
   height: 110px;
   width: 110px;
   border-radius: 100%;
-  background-color: #e6e6e6;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  background-color: ${({ theme }) => theme.colors.main.secondary};
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
   object-fit: cover;
 `;
 
@@ -59,7 +59,7 @@ export const ButtonContainer = styled.div`
 `;
 
 export const ActionButton = styled.div`
-  background-color: #4a4747;
+  background-color: ${({ theme }) => theme.colors.main.default};
   width: 40px;
   height: 40px;
   display: flex;
@@ -70,5 +70,5 @@ export const ActionButton = styled.div`
 `;
 
 export const Arrow = styled(FaArrowRight)`
-  color: #ffffff;
+  color: ${({ theme }) => theme.colors.background.tertiary};
 `;

@@ -24,7 +24,6 @@ export const Container = styled.div<Props>`
       rgba(255, 255, 255, 1) 20%,
       rgba(255, 255, 255, 0) 100%
     );
-    /* background-color: #f8f8; */
     bottom: 0;
     left: 0;
   }

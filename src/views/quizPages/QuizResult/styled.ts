@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const Container = styled.div<Props>`
-  background-color: #d9dadb;
+  background-color: ${({ theme }) => theme.colors.background.highlight};
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -24,7 +24,7 @@ export const Container = styled.div<Props>`
 
 export const TitlesContainer = styled.div`
   width: 100%;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid ${({ theme }) => theme.colors.main.default};
   display: flex;
   flex-direction: column-reverse;
   padding-bottom: 30px;
@@ -116,16 +116,18 @@ export const ResumeContainerInner = styled.div`
   flex-direction: column;
   gap: 5px;
   padding: 20px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid ${({ theme }) => theme.colors.main.default};
   align-items: flex-start;
 `;
 
 export const ResumeTextContainer = styled.div<Props>`
   display: flex;
   gap: 5px;
-  background-color: ${({ answer }) => (answer ? "#f8f8f8" : "transparent")};
+  background-color: ${({ answer, theme }) =>
+    answer ? theme.colors.background.default : "transparent"};
   padding: ${({ answer }) => (answer ? "10" : "0")}px;
-  border: ${({ answer }) => (answer ? "1" : "0")}px solid rgba(0, 0, 0, 0.4);
+  border: ${({ answer }) => (answer ? "1" : "0")}px solid
+    ${({ theme }) => theme.colors.main.default};
   border-radius: 4px;
   @media screen and (min-width: 600px) {
     align-items: center;
@@ -134,13 +136,14 @@ export const ResumeTextContainer = styled.div<Props>`
 `;
 
 export const CheckIcon = styled(FaCheck)`
-  color: #89c799;
+  color: ${({ theme }) => theme.colors.quiz.right};
 `;
 
 export const CloseIcon = styled(AiOutlineClose)`
-  color: #c78788;
+  color: ${({ theme }) => theme.colors.quiz.wrong};
 `;
 
 export const CircleIcon = styled(FaCircle)<Props>`
-  color: ${({ right }) => (right ? "#89c799" : "#c78788")};
+  color: ${({ right, theme }) =>
+    right ? theme.colors.quiz.right : theme.colors.quiz.wrong};
 `;

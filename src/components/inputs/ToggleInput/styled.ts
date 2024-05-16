@@ -13,8 +13,8 @@ export const Wrapper = styled.div<Props>`
 `;
 
 export const Container = styled.div<Props>`
-  background-color: #f5f6fa;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  background-color: ${({ theme }) => theme.colors.background.default};
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
   border-radius: 50px;
   display: flex;
   align-items: center;
@@ -36,7 +36,7 @@ export const Label = styled.label<Props>`
 export const Toggle = styled.div`
   width: 40px;
   height: 40px;
-  background-color: #4a4747;
+  background-color: ${({ theme }) => theme.colors.main.default};
   border-radius: 100%;
 `;
 

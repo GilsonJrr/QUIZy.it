@@ -3,7 +3,7 @@ import styled from "styled-components";
 type Props = {};
 
 export const Container = styled.div<Props>`
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.colors.background.tertiary};
   border-radius: 20px;
   min-width: 30vw;
   display: flex;
@@ -16,8 +16,8 @@ export const Image = styled.img`
   height: 50%;
   border-radius: 20px 20px 0 0;
   object-fit: cover;
-  background-color: #e6e6e6;
-  border: 5px solid #ffffff;
+  background-color: ${({ theme }) => theme.colors.main.secondary};
+  border: 5px solid ${({ theme }) => theme.colors.background.tertiary};
 `;
 
 export const Content = styled.div`

@@ -5,8 +5,8 @@ type Props = {};
 export const Container = styled.div<Props>`
   padding: 8px 20px;
   border-radius: 30px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  background-color: #ffffff;
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
+  background-color: ${({ theme }) => theme.colors.background.tertiary};
   display: flex;
   align-items: center;
   justify-content: space-between;

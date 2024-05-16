@@ -7,7 +7,7 @@ type Props = {
 export const QuizCard = styled.div<Props>`
   display: flex;
   border-radius: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.4);
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
   min-height: 110px;
   cursor: ${({ preview }) => (preview ? "auto" : "pointer")};
   pointer-events: ${({ preview }) => (preview ? "none" : "all")};
@@ -16,7 +16,7 @@ export const QuizCard = styled.div<Props>`
 export const QuizImage = styled.img`
   width: 25%;
   height: 100%;
-  background-color: #e6e6e6;
+  background-color: ${({ theme }) => theme.colors.main.secondary};
   border-radius: 20px 0 0 20px;
   object-fit: cover;
 `;

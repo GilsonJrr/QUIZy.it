@@ -55,22 +55,6 @@ export const ButtonContainer = styled.div<Props>`
   }
 `;
 
-export const ButtonCardContainer = styled.div<Props>`
-  grid-area: "buttonContainer";
-  display: flex;
-  justify-content: ${({ justify }) => justify || "flex-end"};
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  padding: 30px;
-  background: linear-gradient(
-    0deg,
-    rgba(255, 255, 255, 1) 20%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  width: 100%;
-`;
-
 export const SelectContainer = styled.div`
   display: flex;
   width: 100%;
@@ -149,17 +133,19 @@ export const GroupCard = styled.div<Props>`
   display: flex;
   align-items: center;
   gap: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
   border-radius: 10px;
   padding: 5px 15px 5px 10px;
   cursor: pointer;
 
   width: 100%;
 
-  background-color: ${({ active }) => (active ? "#4a4747" : "")};
+  background-color: ${({ active, theme }) =>
+    active ? theme.colors.main.default : ""};
 
   ${GroupTitle} {
-    color: ${({ active }) => (active ? "#FFFFFF" : "#4a4747")};
+    color: ${({ active, theme }) =>
+      active ? theme.colors.background.tertiary : theme.colors.main.default};
   }
 
   @media screen and (min-width: 600px) {

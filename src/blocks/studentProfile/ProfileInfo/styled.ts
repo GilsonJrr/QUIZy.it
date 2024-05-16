@@ -71,12 +71,12 @@ export const InfosContainer = styled.div`
   gap: 3px;
   width: 100%;
   padding: 15px 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.5);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  border-top: 1px solid ${({ theme }) => theme.colors.main.default};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.main.default};
 `;
 
 export const TagBackGround = styled.div`
-  background-color: #4a4747;
+  background-color: ${({ theme }) => theme.colors.main.default};
   border-radius: 5px;
   padding: 8px;
   display: flex;
@@ -96,13 +96,13 @@ export const AboutContainer = styled.div`
 `;
 
 export const BirthDate = styled(BsCalendarDateFill)`
-  color: #ffffff;
+  color: ${({ theme }) => theme.colors.background.tertiary};
 `;
 
 export const Email = styled(MdEmail)`
-  color: #ffffff;
+  color: ${({ theme }) => theme.colors.background.tertiary};
 `;
 
 export const Phone = styled(FaPhoneSquare)`
-  color: #ffffff;
+  color: ${({ theme }) => theme.colors.background.tertiary};
 `;

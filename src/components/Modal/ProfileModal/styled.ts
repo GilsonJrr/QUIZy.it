@@ -18,7 +18,7 @@ export const Container = styled.div<Props>`
 `;
 
 export const Content = styled.div<Props>`
-  background-color: #f8f8f8;
+  background-color: ${({ theme }) => theme.colors.background.default};
   width: 100vw;
   height: 100vh;
   position: fixed;
@@ -26,7 +26,7 @@ export const Content = styled.div<Props>`
   top: 0;
 
   padding: 9vh 40px 30px;
-  border-left: 1px solid rgba(0, 0, 0, 0.5);
+  border-left: 1px solid ${({ theme }) => theme.colors.main.default};
   @media screen and (min-width: 600px) {
     padding: 30px 40px 30px;
     width: 30vw;
@@ -61,7 +61,8 @@ export const ProfileEditContainer = styled.form`
 `;
 
 export const Spacer = styled.div<Props>`
-  border-top: ${({ editMode }) => (editMode ? 0 : 1)}px solid rgba(0, 0, 0, 0.5);
+  border-top: ${({ editMode }) => (editMode ? 0 : 1)}px solid
+    ${({ theme }) => theme.colors.main.default};
   width: 100%;
 `;
 

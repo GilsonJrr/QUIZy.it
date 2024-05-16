@@ -22,8 +22,8 @@ export const Spinner = styled.div<Props>`
   height: ${({ size }) => size}px;
   border-radius: 50%;
   border: ${({ thinness }) => thinness}px solid transparent;
-  border-top-color: #4a4747;
-  border-left-color: #4a4747;
-  border-right-color: #4a4747;
+  border-top-color: ${({ theme }) => theme.colors.main.default};
+  border-left-color: ${({ theme }) => theme.colors.main.default};
+  border-right-color: ${({ theme }) => theme.colors.main.default};
   animation: ${spinAnimation} 0.8s linear infinite;
 `;

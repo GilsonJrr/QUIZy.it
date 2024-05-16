@@ -37,7 +37,7 @@ export const Header = styled.div`
     display: flex;
     top: 0;
     width: 100%;
-    background-color: #f8f8f8;
+    background-color: ${({ theme }) => theme.colors.background.default};
     z-index: 10000;
     height: 9vh;
   }
@@ -48,7 +48,7 @@ export const HeaderMobile = styled.div`
   display: flex;
   top: 0;
   width: 100%;
-  background-color: #f8f8f8;
+  background-color: ${({ theme }) => theme.colors.background.default};
   z-index: 10000;
   height: 6vh;
   @media screen and (min-width: 600px) {
@@ -188,8 +188,8 @@ export const DropDowContainer = styled.div<Props>`
   position: absolute;
   top: 100%;
   margin-top: 110%;
-  background-color: #f8f8f8;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  background-color: ${({ theme }) => theme.colors.background.default};
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
   border-radius: 20px;
   padding: 20px;
   min-width: 30vw;
@@ -202,7 +202,7 @@ export const MessageContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid ${({ theme }) => theme.colors.main.default};
   padding-bottom: 6px;
   margin-bottom: 2px;
   &:last-child {

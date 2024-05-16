@@ -22,7 +22,7 @@ export const OptionButtonContainer = styled.div`
 export const OptionButton = styled.button<Props>`
   background-color: transparent;
   outline: none;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
   border-radius: 10px;
   padding: 50px 0;
   width: 100%;

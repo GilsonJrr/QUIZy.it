@@ -13,11 +13,13 @@ export const Container = styled.div<Props>`
 `;
 
 export const Tab = styled.div<Props>`
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
   border-radius: ${({ radius }) => radius || 20}px;
   padding: 4px 20px;
   cursor: pointer;
-  background-color: ${({ active }) => (active ? "#4a4747" : "#FFFFFF")};
-  color: ${({ active }) => (active ? "#FFFFFF" : "#4a4747")};
+  background-color: ${({ active, theme }) =>
+    active ? theme.colors.main.default : theme.colors.background.tertiary};
+  color: ${({ active, theme }) =>
+    active ? theme.colors.background.tertiary : theme.colors.main.default};
   font-size: 0.9rem;
 `;

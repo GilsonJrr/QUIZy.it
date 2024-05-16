@@ -36,7 +36,7 @@ export const SideScroller = styled.div`
 export const ScrollerItem = styled.div<Props>`
   width: calc(100% / ${({ displayQuantity }) => displayQuantity || 5});
   height: 100%;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.colors.background.tertiary};
   margin-bottom: 20px;
   &:hover {
     transition: 0.3s ease-in-out all;
@@ -63,7 +63,9 @@ export const ScrollButtons = styled.div<Props>`
   width: 200px;
   background: linear-gradient(
     ${({ side }) => (side === "left" ? "90deg" : "270deg")},
-    ${({ backgroundColor }) => backgroundColor || "#ffffff"} 0%,
+    ${({ backgroundColor, theme }) =>
+        backgroundColor || theme.colors.background.tertiary}
+      0%,
     rgba(0, 212, 255, 0) 100%
   );
   align-items: center;

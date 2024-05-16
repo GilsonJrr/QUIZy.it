@@ -13,9 +13,8 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  /* padding: 30px 10px 10px; */
   padding: 0px;
-  background-color: #f5f6fa;
+  background-color: ${({ theme }) => theme.colors.main.primary};
   box-sizing: border-box;
 
   @media screen and (min-width: 600px) {
@@ -46,7 +45,7 @@ export const Header = styled.div`
 `;
 
 export const Coins = styled.div`
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.colors.background.tertiary};
   padding: 5px;
   border-radius: 8px;
   display: flex;
@@ -90,7 +89,7 @@ export const OptionsContainer = styled.div`
 
 export const Question = styled.h3`
   text-align: center;
-  color: #4a4747;
+  color: ${({ theme }) => theme.colors.main.default};
   margin-bottom: 30px;
   @media screen and (min-width: 600px) {
     width: 50%;
@@ -114,8 +113,8 @@ export const Close = styled.div`
   font-weight: 800;
   cursor: pointer;
   @media screen and (min-width: 600px) {
-    background-color: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.5);
+    background-color: ${({ theme }) => theme.colors.background.tertiary};
+    border: 1px solid ${({ theme }) => theme.colors.main.default};
   }
 `;
 
@@ -128,12 +127,12 @@ export const ProgressContainer = styled.div`
 `;
 
 export const ProgressBar = styled.div`
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.colors.background.tertiary};
   border-radius: 50px;
   width: 100%;
   height: 20px;
   position: relative;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
 `;
 
 export const ProgressBarFill = styled.div<Props>`
@@ -142,7 +141,7 @@ export const ProgressBarFill = styled.div<Props>`
   border-radius: 50px;
   width: ${({ progress }) => progress}%;
   height: 100%;
-  background-color: #89c799;
+  background-color: ${({ theme }) => theme.colors.quiz.right};
 `;
 
 export const ProgressNumber = styled.h3``;
@@ -151,7 +150,7 @@ export const AnswerIndex = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f5f6fa;
+  background-color: ${({ theme }) => theme.colors.main.primary};
   height: 30px;
   width: 30px;
   border-radius: 100%;
@@ -160,17 +159,17 @@ export const AnswerIndex = styled.div`
 `;
 
 export const AnswerText = styled.h3<Props>`
-  color: #4a4747;
+  color: ${({ theme }) => theme.colors.main.default};
 `;
 
 export const QuizCheckContainer = styled.div<Props>`
   width: 100%;
   margin: auto 0 0 0;
-  background-color: ${({ checkType }) =>
+  background-color: ${({ checkType, theme }) =>
     checkType === "correct"
-      ? "#a6e3b6"
+      ? theme.colors.quiz.rightSecondary
       : checkType === "incorrect"
-      ? "#e3a6a7"
+      ? theme.colors.quiz.wrongPrimary
       : ""};
   display: flex;
   padding: 50px 40px;
@@ -197,11 +196,11 @@ export const CheckedAnswerIcon = styled.div<Props>`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${({ checkType }) =>
+  background-color: ${({ checkType, theme }) =>
     checkType === "correct"
-      ? "#89c799"
+      ? theme.colors.quiz.right
       : checkType === "incorrect"
-      ? "#c78788"
+      ? theme.colors.quiz.wrong
       : ""};
 `;
 
@@ -238,5 +237,5 @@ export const Modal = styled.div<Props>`
   flex-direction: column;
   align-items: center;
   z-index: 20;
-  color: #ffffff;
+  color: ${({ theme }) => theme.colors.background.tertiary};
 `;

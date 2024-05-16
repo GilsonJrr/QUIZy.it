@@ -27,7 +27,7 @@ export const Card = styled.div<Props>`
 
   &:hover {
     ::-webkit-scrollbar-thumb {
-      background-color: #888;
+      background-color: ${({ theme }) => theme.colors.main.default};
     }
   }
 
@@ -49,7 +49,7 @@ export const Card = styled.div<Props>`
   @media screen and (min-width: 600px) {
     border-radius: 20px;
     transition: 0.3s ease-in-out all;
-    border: 1px solid rgba(0, 0, 0, 0.4);
+    border: 1px solid ${({ theme }) => theme.colors.main.default};
     height: 100%;
   }
 `;

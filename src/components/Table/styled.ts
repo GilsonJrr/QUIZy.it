@@ -35,7 +35,7 @@ export const TableBodyContent = styled.div`
 
 export const TableHeaderComponents = styled.div<Props>`
   width: ${({ width }) => width}%;
-  background-color: #4a4747;
+  background-color: ${({ theme }) => theme.colors.main.default};
   color: white;
   padding: 5px 10px;
   border-radius: 3px;

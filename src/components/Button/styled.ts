@@ -1,3 +1,4 @@
+import { theme } from "lib/styles/globalStyles";
 import styled from "styled-components";
 
 type VariantProps =
@@ -17,36 +18,66 @@ type Props = {
 };
 
 enum EVariantBackGround {
-  "primary" = "#4a4747",
-  "secondary" = "#f8f8f8",
-  "danger" = "#c78788",
-  "success" = "#89c799",
-  "anchor-dark" = "transparent",
-  "anchor-white" = "transparent",
+  primary,
+  secondary,
+  danger,
+  success,
+  "anchor-dark",
+  "anchor-white",
 }
+
+const backgroundColors: string[] = [
+  theme.colors.main.default,
+  theme.colors.background.default,
+  theme.colors.quiz.wrong,
+  theme.colors.quiz.right,
+  "transparent",
+  "transparent",
+];
+
+enum EVariantBorder {
+  primary,
+  secondary,
+  danger,
+  "anchor-dark",
+  "anchor-white",
+}
+
+const borderColors: string[] = [
+  theme.colors.main.default,
+  theme.colors.main.default,
+  theme.colors.quiz.wrong,
+  "transparent",
+  "transparent",
+];
+
+enum EVariantColor {
+  primary,
+  secondary,
+  danger,
+  "anchor-dark",
+  "anchor-white",
+}
+
+const colors: string[] = [
+  theme.colors.background.default,
+  theme.colors.main.default,
+  theme.colors.background.default,
+  theme.colors.main.default,
+  theme.colors.background.default,
+];
 
 export const Button = styled.button<Props>`
   border: 1px solid
     ${({ variant }) =>
-      variant === "primary"
-        ? "#4a4747"
-        : variant === "secondary"
-        ? "#4a4747"
-        : variant === "danger"
-        ? "#c78788"
-        : (variant === "anchor-dark" || variant === "anchor-white") &&
-          "transparent"};
+      borderColors[EVariantBorder[variant as keyof typeof EVariantBorder]]};
   background-color: ${({ variant }) =>
-    EVariantBackGround[variant as VariantProps]};
+    backgroundColors[
+      EVariantBackGround[variant as keyof typeof EVariantBackGround]
+    ]};
   outline: none;
   color: ${({ variant }) =>
-    variant === "primary" || variant === "anchor-white"
-      ? "#f8f8f8"
-      : variant === "secondary"
-      ? "#4a4747"
-      : variant === "danger"
-      ? "#f8f8f8"
-      : variant === "anchor-dark" && "#4a4747"};
+    colors[EVariantColor[variant as keyof typeof EVariantColor]]};
   border-radius: ${({ radius }) => radius || "10px"};
   padding: ${({ padding }) => padding || "10px 40px"};
   width: ${({ width }) => width};

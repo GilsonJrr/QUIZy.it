@@ -19,14 +19,14 @@ export const Select = styled.select<Props>`
   border-radius: 10px;
   font-size: 1.4rem;
   padding: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
 `;
 
 export const Option = styled.option<Props>`
   border-radius: 10px;
   font-size: 1.4rem;
   padding: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
 `;
 
 export const Error = styled.p`

@@ -7,18 +7,22 @@ export const theme: DefaultTheme = {
       secondary: "#FAFAFA",
       tertiary: "#FFFFFF",
       highlight: "#d9dadb",
+      gradient: "rgba(255, 255, 255, 1) 20%,rgba(255, 255, 255, 0) 100%",
     },
     main: {
       default: "#4a4747",
+      primary: "#f5f6fa",
+      secondary: "#e6e6e6",
     },
     quiz: {
       right: "#89c799",
+      rightSecondary: "#a6e3b6",
       wrong: "#c78788",
+      wrongPrimary: "#e3a6a7",
+      wrongSecondary: "#996868",
     },
   },
 };
-
-// ${({ theme }) => theme.colors.background.default}
 
 const GlobalStyle = createGlobalStyle`
   *{

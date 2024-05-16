@@ -8,7 +8,7 @@ type Props = {
 
 export const Container = styled.div<Props>`
   display: ${({ showMenu }) => (showMenu ? "flex" : "none")};
-  background-color: #f8f8f8;
+  background-color: ${({ theme }) => theme.colors.background.default};
   flex-direction: column;
   align-items: center;
   width: 100%;
@@ -26,7 +26,7 @@ export const Container = styled.div<Props>`
 export const ContainerBackGround = styled.div<Props>`
   width: 100%;
   height: calc(100vh - 9vh);
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: ${({ theme }) => theme.colors.main.default};
   position: fixed;
   left: 0;
   bottom: 0;
@@ -50,7 +50,7 @@ export const MenuContainer = styled.div`
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-top: none;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.colors.background.tertiary};
   height: auto;
   @media screen and (min-width: 600px) {
     padding: 20px 20px 0 20px;
@@ -59,10 +59,12 @@ export const MenuContainer = styled.div`
 `;
 
 export const IconContainer = styled.div<Props>`
-  color: ${({ active }) => (active ? "#f8f8f8" : "#4a4747")};
+  color: ${({ active, theme }) =>
+    active ? theme.colors.background.default : theme.colors.main.default};
   padding: 15px;
   cursor: pointer;
-  background-color: ${({ active }) => (active ? "#4a4747" : "transparent")};
+  background-color: ${({ active, theme }) =>
+    active ? theme.colors.main.default : "transparent"};
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -71,8 +73,8 @@ export const IconContainer = styled.div<Props>`
   gap: 20px;
 
   &:hover {
-    background-color: #4a4747;
-    color: #f8f8f8;
+    background-color: ${({ theme }) => theme.colors.main.default};
+    color: ${({ theme }) => theme.colors.background.default};
   }
 
   @media screen and (min-width: 600px) {
@@ -85,8 +87,10 @@ export const MenuText = styled.h2<Props>`
   display: flex;
   margin: 0;
   font-size: 1.3rem;
-  color: ${({ active, exit }) =>
-    active ? "#f8f8f8" : exit ? "#996868" : "#b0d9d1"};
+  color: ${({ active, exit, theme }) =>
+    active
+      ? theme.colors.background.default
+      : exit && theme.colors.quiz.wrongSecondary};
   @media screen and (min-width: 600px) {
     display: none;
   }
@@ -98,12 +102,12 @@ export const ExitContainer = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #996868;
+  color: ${({ theme }) => theme.colors.quiz.wrongSecondary};
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-top: none;
   padding: 35px;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.colors.background.tertiary};
   display: flex;
   align-items: center;
   justify-content: flex-start;

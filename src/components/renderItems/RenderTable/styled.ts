@@ -4,8 +4,8 @@ type Props = { width?: number };
 
 export const Option = styled.div<Props>`
   display: flex;
-  background-color: #4a4747;
-  color: #ffffff;
+  background-color: ${({ theme }) => theme.colors.main.default};
+  color: ${({ theme }) => theme.colors.background.tertiary};
   justify-content: center;
   border-radius: 3px;
   cursor: pointer;

@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import ProgressBar from "components/ProgressBar";
 import Button from "components/Button";
+import { theme } from "lib/styles/globalStyles";
 
 type QuizTemplateProps = {
   onClose?: () => void;
@@ -104,7 +105,7 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
           <Styled.ProgressContainer>
             <ProgressBar
               progress={questions && ((current + 1) / questions?.length) * 100}
-              color={"#89c799"}
+              color={theme.colors.quiz.right}
               displayPercentage={false}
             />
             <Styled.ProgressNumber>

@@ -3,7 +3,7 @@ import styled from "styled-components";
 type Props = {};
 
 export const Container = styled.div<Props>`
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.colors.background.tertiary};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,7 +19,7 @@ export const TitleContainer = styled.div`
   gap: 8px;
   padding-bottom: 20px;
   width: 100%;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid ${({ theme }) => theme.colors.main.default};
 `;
 
 export const Tile = styled.h2``;
@@ -31,7 +31,7 @@ export const SubTitle = styled.h3`
 export const ToBeDeletedTitle = styled.h1``;
 
 export const ButtonContainer = styled.div`
-  border-top: 1px solid rgba(0, 0, 0, 0.5);
+  border-top: 1px solid ${({ theme }) => theme.colors.main.default};
   width: 100%;
   display: flex;
   align-items: center;

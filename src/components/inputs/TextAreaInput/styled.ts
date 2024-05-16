@@ -22,7 +22,7 @@ export const Textarea = styled.textarea<Props>`
   border-radius: 10px;
   font-size: 1.4rem;
   padding: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
   height: ${({ height }) => height};
   resize: none;
 `;

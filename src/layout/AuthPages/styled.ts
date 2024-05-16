@@ -6,7 +6,7 @@ export const Container = styled.div<Props>`
   display: flex;
   width: 100%;
   height: 100vh;
-  background-color: #4a4747;
+  background-color: ${({ theme }) => theme.colors.main.default};
   gap: 60px;
   padding: 100px 20px 10px;
   @media screen and (min-width: 600px) {
@@ -28,7 +28,7 @@ export const ImageContainer = styled.img<Props>`
   width: 45%;
   align-items: center;
   justify-content: center;
-  background-color: #f8f8f8;
+  background-color: ${({ theme }) => theme.colors.background.default};
   border-radius: 20px;
   object-fit: cover;
 `;

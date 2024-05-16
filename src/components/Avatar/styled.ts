@@ -7,12 +7,12 @@ type Props = {
 export const Container = styled.div<Props>`
   height: ${({ size }) => size};
   width: ${({ size }) => size};
-  background-color: #e6e6e6;
+  background-color: ${({ theme }) => theme.colors.main.secondary};
   border-radius: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
   cursor: pointer;
 `;
 
@@ -25,6 +25,6 @@ export const Photo = styled.img<Props>`
   height: ${({ size }) => size};
   width: ${({ size }) => size};
   border-radius: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
   cursor: pointer;
 `;

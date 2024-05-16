@@ -9,14 +9,14 @@ export const Container = styled.div<Props>`
   align-items: center;
 
   input {
-    border: 2px solid #f8f8f8;
+    border: 2px solid ${({ theme }) => theme.colors.background.default};
     background-color: transparent;
-    color: #f8f8f8;
+    color: ${({ theme }) => theme.colors.background.default};
   }
 `;
 
 export const Label = styled.label`
-  color: #f8f8f8;
+  color: ${({ theme }) => theme.colors.background.default};
 `;
 
 export const LogoContainer = styled.div`
@@ -37,16 +37,16 @@ export const Logo = styled.img`
 `;
 
 export const LogoText = styled.h3`
-  color: #f8f8f8;
+  color: ${({ theme }) => theme.colors.background.default};
 `;
 
 export const Title = styled.h1`
-  color: #f8f8f8;
+  color: ${({ theme }) => theme.colors.background.default};
   margin: 0 0 10px 0;
 `;
 
 export const SubTitle = styled.h2`
-  color: #f8f8f8;
+  color: ${({ theme }) => theme.colors.background.default};
   margin: 0;
   font-size: 1.2rem;
   font-weight: 500;
@@ -68,7 +68,7 @@ export const ButtonContainer = styled.div`
 `;
 
 export const AnchorButton = styled.a`
-  color: #f8f8f8;
+  color: ${({ theme }) => theme.colors.background.default};
   font-size: 1.2rem;
   font-weight: 500;
   text-decoration: none;
