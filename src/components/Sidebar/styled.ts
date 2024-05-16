@@ -50,8 +50,9 @@ export const MenuContainer = styled.div`
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-top: none;
-  background-color: ${({ theme }) => theme.colors.background.tertiary};
+  /* background-color: ${({ theme }) => theme.colors.background.tertiary}; */
   height: auto;
+  background-color: ${({ theme }) => theme.colors.background.default};
   @media screen and (min-width: 600px) {
     padding: 20px 20px 0 20px;
     height: 100%;
@@ -107,7 +108,7 @@ export const ExitContainer = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-top: none;
   padding: 35px;
-  background-color: ${({ theme }) => theme.colors.background.tertiary};
+  background-color: ${({ theme }) => theme.colors.background.default};
   display: flex;
   align-items: center;
   justify-content: flex-start;

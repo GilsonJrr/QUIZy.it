@@ -6,6 +6,7 @@ type Props = {
   buttonType?: "primary" | "secondary";
   modalType?: string;
   checkType?: string;
+  preview?: boolean;
 };
 
 export const Container = styled.div`
@@ -21,14 +22,15 @@ export const Container = styled.div`
   }
 `;
 
-export const QuizContainer = styled.div`
+export const QuizContainer = styled.div<Props>`
   padding: 20px 15px;
   @media screen and (min-width: 600px) {
-    padding: 30px;
+    padding: ${({ preview }) => (preview ? 0 : 30)}px;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    height: 100%;
   }
 `;
 
@@ -72,8 +74,8 @@ export const QuestionContainer = styled.div`
     align-items: flex-start;
     justify-content: center;
     gap: 50px;
-    height: 100vh;
-    overflow: scroll;
+    height: 100%;
+    overflow-y: scroll;
   }
 `;
 
@@ -84,7 +86,6 @@ export const OptionsContainer = styled.div`
   align-items: flex-start;
   justify-content: center;
   overflow-y: scroll;
-  padding: 0 0 300px;
 
   @media screen and (min-width: 600px) {
     width: 50%;
@@ -206,9 +207,6 @@ export const CheckedAnswerContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 20px;
-  /* position: fixed;
-  z-index: 100000;
-  bottom: 0; */
 `;
 
 export const CheckedAnswerIcon = styled.div<Props>`

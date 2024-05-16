@@ -176,7 +176,11 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
     <QuizForm
       preview={
         <Styled.PreviewContainer>
-          <QuizTemplate questions={questionTest} quizId={quiz?.id || ""} />
+          <QuizTemplate
+            questions={questionTest}
+            quizId={quiz?.id || ""}
+            preview
+          />
         </Styled.PreviewContainer>
       }
       formName={"FormTrueOrFalseQuestion"}

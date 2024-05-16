@@ -203,7 +203,11 @@ const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
     <QuizForm
       preview={
         <Styled.PreviewContainer>
-          <QuizTemplate questions={questionTest} quizId={quiz?.id || ""} />
+          <QuizTemplate
+            questions={questionTest}
+            quizId={quiz?.id || ""}
+            preview
+          />
         </Styled.PreviewContainer>
       }
       formName={"FormMultipleQuestion"}

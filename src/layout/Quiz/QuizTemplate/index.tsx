@@ -17,6 +17,7 @@ type QuizTemplateProps = {
   onClose?: () => void;
   questions: QuestionFiltered[];
   quizId: string;
+  preview?: boolean;
 };
 
 type TQuizResume = {
@@ -29,6 +30,7 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
   onClose,
   questions,
   quizId,
+  preview,
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -97,7 +99,7 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
 
   return (
     <Styled.Container>
-      <Styled.QuizContainer>
+      <Styled.QuizContainer preview={preview}>
         <Styled.Header>
           <Styled.Close onClick={onClose}>
             <IoClose size={20} />
@@ -142,56 +144,62 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
         </Styled.QuestionContainer>
       </Styled.QuizContainer>
 
-      <Styled.QuizCheckContainer
-        checkType={showAnswer ? selectedAnswer?.type : ""}
-      >
-        {showAnswer ? (
-          selectedAnswer?.type === "incorrect" ? (
-            <Styled.CheckedAnswerContainer>
-              <Styled.CheckedAnswerIcon checkType={selectedAnswer?.type || ""}>
-                <IoClose size={50} />
-              </Styled.CheckedAnswerIcon>
-              <Styled.CheckedAnswerTextContainer>
-                <Styled.CheckedAnswerTitle>
-                  The right answer is:
-                </Styled.CheckedAnswerTitle>
-                <Styled.CheckedAnswerText>
-                  {questions?.[current]?.correctAnswers.toString()}!
-                </Styled.CheckedAnswerText>
-              </Styled.CheckedAnswerTextContainer>
-            </Styled.CheckedAnswerContainer>
+      {!preview && (
+        <Styled.QuizCheckContainer
+          checkType={showAnswer ? selectedAnswer?.type : ""}
+        >
+          {showAnswer ? (
+            selectedAnswer?.type === "incorrect" ? (
+              <Styled.CheckedAnswerContainer>
+                <Styled.CheckedAnswerIcon
+                  checkType={selectedAnswer?.type || ""}
+                >
+                  <IoClose size={50} />
+                </Styled.CheckedAnswerIcon>
+                <Styled.CheckedAnswerTextContainer>
+                  <Styled.CheckedAnswerTitle>
+                    The right answer is:
+                  </Styled.CheckedAnswerTitle>
+                  <Styled.CheckedAnswerText>
+                    {questions?.[current]?.correctAnswers.toString()}!
+                  </Styled.CheckedAnswerText>
+                </Styled.CheckedAnswerTextContainer>
+              </Styled.CheckedAnswerContainer>
+            ) : (
+              <Styled.CheckedAnswerContainer>
+                <Styled.CheckedAnswerIcon
+                  checkType={selectedAnswer?.type || ""}
+                >
+                  <FaCheck size={50} />
+                </Styled.CheckedAnswerIcon>
+                <Styled.CheckedAnswerText>Grate job!</Styled.CheckedAnswerText>
+              </Styled.CheckedAnswerContainer>
+            )
           ) : (
-            <Styled.CheckedAnswerContainer>
-              <Styled.CheckedAnswerIcon checkType={selectedAnswer?.type || ""}>
-                <FaCheck size={50} />
-              </Styled.CheckedAnswerIcon>
-              <Styled.CheckedAnswerText>Grate job!</Styled.CheckedAnswerText>
-            </Styled.CheckedAnswerContainer>
-          )
-        ) : (
-          <Styled.CheckedAnswerIcon checkType={""} />
-        )}
-        <Styled.ContinueButtonContainer>
-          <Button
-            onClick={
-              showAnswer && showScore
-                ? finishQuiz
+            <Styled.CheckedAnswerIcon checkType={""} />
+          )}
+          <Styled.ContinueButtonContainer>
+            <Button
+              onClick={
+                showAnswer && showScore
+                  ? finishQuiz
+                  : showAnswer
+                  ? nextQuestion
+                  : handleAnswer
+              }
+              disabled={!selectedAnswer}
+              width="100%"
+              variant="secondary"
+            >
+              {showAnswer && showScore
+                ? "Finish"
                 : showAnswer
-                ? nextQuestion
-                : handleAnswer
-            }
-            disabled={!selectedAnswer}
-            width="100%"
-            variant="secondary"
-          >
-            {showAnswer && showScore
-              ? "Finish"
-              : showAnswer
-              ? "Continue"
-              : "Check"}
-          </Button>
-        </Styled.ContinueButtonContainer>
-      </Styled.QuizCheckContainer>
+                ? "Continue"
+                : "Check"}
+            </Button>
+          </Styled.ContinueButtonContainer>
+        </Styled.QuizCheckContainer>
+      )}
     </Styled.Container>
   );
 };
