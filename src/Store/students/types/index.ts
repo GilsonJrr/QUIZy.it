@@ -15,12 +15,14 @@ export enum StudentTypes {
 export type StudentAction<Payload> = {
   type: StudentTypes;
   payload: Payload;
+  onSuccess?: () => void;
 };
 
 export type StudentRequest = {
   uid: string;
   studentId?: string;
   limit?: number;
+  onSuccess?: () => void;
 };
 
 export type TInfo = {
@@ -38,6 +40,7 @@ export type TInfo = {
   average?: string;
   userType?: string;
   address?: string;
+  onSuccess?: () => void;
 };
 
 export type StudentTypeValues = {
@@ -54,6 +57,7 @@ export type StudentTypeValues = {
   photo?: string;
   average?: string;
   address?: string;
+  onSuccess?: () => void;
   //TODO: change here
 
   info?: TInfo;

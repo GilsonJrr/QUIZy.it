@@ -19,6 +19,7 @@ import DeleteModal from "components/Modal/DeleteModal";
 import useDeviceType from "hooks/useDeviceType";
 import Tabs from "components/Tabs";
 import Button from "components/Button";
+import AlertModal from "components/Modal/AlertModal";
 type StudentCreateProps = {};
 
 type TStudent = {
@@ -63,7 +64,20 @@ const GroupCreate: FC<StudentCreateProps> = () => {
       ...data,
     };
 
-    dispatch(setGroup(preparedData));
+    dispatch(
+      setGroup(preparedData, () =>
+        handleModal(
+          <AlertModal
+            type={"success"}
+            message={
+              groupId !== null
+                ? "Group update successfully"
+                : "Group created successfully"
+            }
+          />
+        )
+      )
+    );
     navigate("/students");
   };
 
@@ -95,7 +109,13 @@ const GroupCreate: FC<StudentCreateProps> = () => {
       <DeleteModal
         deleteTitle={watch("title") || ""}
         onDelete={() => {
-          dispatch(removeGroup({ uid: userID || "", groupId: groupId || "" }));
+          dispatch(
+            removeGroup({ uid: userID || "", groupId: groupId || "" }, () =>
+              handleModal(
+                <AlertModal type={"info"} message={"Group Removed"} />
+              )
+            )
+          );
           navigate("/students");
         }}
       />

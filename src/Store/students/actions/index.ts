@@ -54,28 +54,34 @@ export function student(
 }
 
 export function setStudent(
-  props: StudentRequest
-): StudentAction<StudentRequest> {
+  props: StudentTypeValues,
+  onSuccess?: () => void
+): StudentAction<StudentTypeValues> {
   return {
     type: StudentTypes.SET_STUDENT,
     payload: { ...props },
+    onSuccess,
   };
 }
 
 export function updateStudent(
-  props: StudentTypeValues
+  props: StudentTypeValues,
+  onSuccess?: () => void
 ): StudentAction<StudentTypeValues> {
   return {
     type: StudentTypes.UPDATE_STUDENT,
     payload: { ...props },
+    onSuccess,
   };
 }
 
 export function removeStudent(
-  props: StudentRequest
+  props: StudentRequest,
+  onSuccess?: () => void
 ): StudentAction<StudentRequest> {
   return {
     type: StudentTypes.REMOVE_STUDENT,
     payload: { ...props },
+    onSuccess,
   };
 }

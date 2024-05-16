@@ -41,27 +41,31 @@ export function* getGroupSaga(props: GroupAction<GroupRequest>): any {
 export function* setGroupSaga(props: GroupAction<GroupTypeValues>): any {
   const uid = props.payload.uid;
   const payload = props.payload;
+  const onSuccess = props.onSuccess;
 
   try {
     if (uid && payload) {
       yield call(setGroup, uid, payload);
       const groupResponses = yield call(getGroupList, uid);
       yield put(groupList(groupResponses));
+      yield put(() => onSuccess?.());
     }
   } catch (err: any) {
     yield put(err);
   }
 }
 
-export function* removeGroupSaga(props: GroupAction<GroupRequest>): any {
+export function* removeGroupSaga(props: GroupAction<GroupTypeValues>): any {
   const groupId = props.payload.groupId;
   const uid = props.payload.uid;
+  const onSuccess = props.onSuccess;
 
   try {
     if (groupId && uid) {
       yield call(removeGroup, uid, groupId);
       const groupResponses = yield call(getGroupList, uid);
       yield put(groupList(groupResponses));
+      yield put(() => onSuccess?.());
     }
   } catch (err: any) {
     yield put(err);

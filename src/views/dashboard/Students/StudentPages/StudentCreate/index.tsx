@@ -27,6 +27,7 @@ import DeleteModal from "components/Modal/DeleteModal";
 import useDeviceType from "hooks/useDeviceType";
 import Tabs from "components/Tabs";
 import Button from "components/Button";
+import AlertModal from "components/Modal/AlertModal";
 
 type StudentCreateProps = {};
 
@@ -98,8 +99,24 @@ const StudentCreate: FC<StudentCreateProps> = () => {
       ...rest,
     };
     studentId !== null
-      ? dispatch(updateStudent(updateStudentData))
-      : dispatch(setStudent(newStudentData));
+      ? dispatch(
+          updateStudent(updateStudentData),
+          handleModal(
+            <AlertModal
+              type={"success"}
+              message={"Student updated successfully"}
+            />
+          )
+        )
+      : dispatch(
+          setStudent(newStudentData),
+          handleModal(
+            <AlertModal
+              type={"success"}
+              message={"Student added successfully"}
+            />
+          )
+        );
     navigate("/students");
   };
 
@@ -226,7 +243,13 @@ const StudentCreate: FC<StudentCreateProps> = () => {
         deleteTitle={watch("name") || ""}
         onDelete={() => {
           dispatch(
-            removeStudent({ uid: userID || "", studentId: student?.info?.uid })
+            removeStudent(
+              { uid: userID || "", studentId: student?.info?.uid },
+              () =>
+                handleModal(
+                  <AlertModal type={"info"} message={"Student removed"} />
+                )
+            )
           );
           navigate("/students");
         }}

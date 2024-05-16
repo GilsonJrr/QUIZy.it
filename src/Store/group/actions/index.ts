@@ -49,16 +49,24 @@ export function group(props: GroupTypeValues): GroupAction<GroupTypeValues> {
   };
 }
 
-export function setGroup(props: GroupRequest): GroupAction<GroupRequest> {
+export function setGroup(
+  props: GroupRequest,
+  onSuccess?: () => void
+): GroupAction<GroupRequest> {
   return {
     type: GroupTypes.SET_GROUP,
     payload: { ...props },
+    onSuccess,
   };
 }
 
-export function removeGroup(props: GroupRequest): GroupAction<GroupRequest> {
+export function removeGroup(
+  props: GroupRequest,
+  onSuccess?: () => void
+): GroupAction<GroupRequest> {
   return {
     type: GroupTypes.REMOVE_GROUP,
     payload: { ...props },
+    onSuccess,
   };
 }

@@ -50,12 +50,14 @@ export function* setCategorySaga(
 ): any {
   const uid = props.payload.uid;
   const payload = props.payload;
+  const onSuccess = props.onSuccess;
 
   try {
     if (uid && payload) {
       yield call(setCategory, uid, payload);
       const categoryResponses = yield call(getCategoryList, uid);
       yield put(categoryList(categoryResponses));
+      yield call(() => onSuccess?.());
     }
   } catch (err: any) {
     yield put(err);
@@ -63,16 +65,18 @@ export function* setCategorySaga(
 }
 
 export function* removeCategorySaga(
-  props: CategoryAction<CategoryRequest>
+  props: CategoryAction<CategoryTypeValues>
 ): any {
   const categoryId = props.payload.categoryId;
   const uid = props.payload.uid;
+  const onSuccess = props.onSuccess;
 
   try {
     if (categoryId && uid) {
       yield call(removeCategory, uid, categoryId);
       const categoryResponses = yield call(getCategoryList, uid);
       yield put(categoryList(categoryResponses));
+      yield call(() => onSuccess?.());
     }
   } catch (err: any) {
     yield put(err);

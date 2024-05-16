@@ -24,6 +24,7 @@ import { useModalContext } from "components/Modal/modalContext";
 import useDeviceType from "hooks/useDeviceType";
 import Tabs from "components/Tabs";
 import Button from "components/Button";
+import AlertModal from "components/Modal/AlertModal";
 type StudentCreateProps = {};
 
 type TStudent = {
@@ -64,11 +65,22 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
     const preparedData = {
       id: categoryId !== null ? categoryId : idGenerator(18),
       uid: userID || "",
-      userType: "student",
       ...data,
     };
 
-    dispatch(setCategory(preparedData));
+    dispatch(
+      setCategory(preparedData),
+      handleModal(
+        <AlertModal
+          type={"success"}
+          message={
+            categoryId !== null
+              ? "Category update successfully"
+              : "Category created successfully"
+          }
+        />
+      )
+    );
     navigate("/quizzes");
   };
 
@@ -108,7 +120,13 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
         deleteTitle={watch("title") || ""}
         onDelete={() => {
           dispatch(
-            removeCategory({ uid: userID || "", categoryId: categoryId || "" })
+            removeCategory(
+              { uid: userID || "", categoryId: categoryId || "" },
+              () =>
+                handleModal(
+                  <AlertModal type={"info"} message={"Category removed"} />
+                )
+            )
           );
           navigate("/quizzes");
         }}

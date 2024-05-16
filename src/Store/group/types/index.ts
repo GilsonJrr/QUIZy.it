@@ -12,14 +12,18 @@ export enum GroupTypes {
 export type GroupAction<Payload> = {
   type: GroupTypes;
   payload: Payload;
+  onSuccess?: () => void;
 };
 
 export type GroupRequest = {
   uid: string;
   groupId?: string;
+  onSuccess?: () => void;
 };
 
 export type GroupTypeValues = {
+  onSuccess?: () => void;
+  groupId?: string;
   id?: string;
   uid?: string;
   title: string;

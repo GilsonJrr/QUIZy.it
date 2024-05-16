@@ -49,13 +49,13 @@ export function* getStudentSaga(props: StudentAction<StudentRequest>): any {
 export function* setStudentSaga(props: StudentAction<StudentTypeValues>): any {
   const uid = props.payload.uid;
   const payload = props.payload;
+  const onSuccess = props.onSuccess;
 
   const { email, name, uid: tutorUID, ...rest } = payload;
 
   try {
     if (uid && payload) {
       yield put(
-        //TODO: aqui vai ser criado o novo usuario
         requestSignUpEmailPassword({
           email: email,
           password: "ABC1234D",
@@ -65,6 +65,7 @@ export function* setStudentSaga(props: StudentAction<StudentTypeValues>): any {
           ...rest,
         })
       );
+      yield put(() => onSuccess?.());
     }
   } catch (err: any) {
     yield put(err);
@@ -75,6 +76,7 @@ export function* updateStudentSaga(
   props: StudentAction<StudentTypeValues>
 ): any {
   const payload = props.payload;
+  const onSuccess = props.onSuccess;
 
   try {
     if (payload) {
@@ -90,6 +92,7 @@ export function* updateStudentSaga(
         payload.tutorID || ""
       );
       yield put(studentList(studentListResponses));
+      yield put(() => onSuccess?.());
     }
   } catch (err: any) {
     yield put(err);
@@ -99,12 +102,14 @@ export function* updateStudentSaga(
 export function* removeStudentSaga(props: StudentAction<StudentRequest>): any {
   const studentId = props.payload.studentId;
   const uid = props.payload.uid;
+  const onSuccess = props.onSuccess;
 
   try {
     if (studentId && uid) {
       yield call(removeStudent, uid, studentId);
       const studentResponses = yield call(getStudentList, uid);
       yield put(studentList(studentResponses));
+      yield put(() => onSuccess?.());
     }
   } catch (err: any) {
     yield put(err);

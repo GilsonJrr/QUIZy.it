@@ -12,14 +12,18 @@ export enum CategoryTypes {
 export type CategoryAction<Payload> = {
   type: CategoryTypes;
   payload: Payload;
+  onSuccess?: () => void;
 };
 
 export type CategoryRequest = {
   uid: string;
   categoryId?: string;
+  onSuccess?: () => void;
 };
 
 export type CategoryTypeValues = {
+  onSuccess?: () => void;
+  categoryId?: string;
   id?: string;
   uid?: string;
   title: string;

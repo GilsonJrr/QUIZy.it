@@ -54,19 +54,23 @@ export function category(
 }
 
 export function setCategory(
-  props: CategoryRequest
+  props: CategoryRequest,
+  onSuccess?: () => void
 ): CategoryAction<CategoryRequest> {
   return {
     type: CategoryTypes.SET_CATEGORY,
     payload: { ...props },
+    onSuccess,
   };
 }
 
 export function removeCategory(
-  props: CategoryRequest
+  props: CategoryRequest,
+  onSuccess?: () => void
 ): CategoryAction<CategoryRequest> {
   return {
     type: CategoryTypes.REMOVE_CATEGORY,
     payload: { ...props },
+    onSuccess,
   };
 }

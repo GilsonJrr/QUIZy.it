@@ -18,7 +18,7 @@ const AlertModal: FC<AlertModalProps> = ({
   useEffect(() => {
     setTimeout(() => {
       handleModal("");
-    }, 4000);
+    }, 2000);
   });
 
   return (
