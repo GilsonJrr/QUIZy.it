@@ -5,20 +5,23 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { useModalContext } from "../modalContext";
-import { auth } from "lib/firebase";
 
 import { IoMdHome } from "react-icons/io";
 import { FaFileSignature } from "react-icons/fa6";
 import { MdOutlineQuiz } from "react-icons/md";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { IoMdExit } from "react-icons/io";
-// import { HiBellAlert } from "react-icons/hi2";
+
+import { CgProfile } from "react-icons/cg";
+import { useDispatch } from "react-redux";
+import { requestSignOut } from "Store/auth/actions";
 
 type MenuModalProps = {};
 
 const MenuModal: FC<MenuModalProps> = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { handleModal } = useModalContext();
 
@@ -29,12 +32,15 @@ const MenuModal: FC<MenuModalProps> = () => {
   const currentUrl = location.pathname.split("/")[1];
 
   const handleSignOut = () => {
-    //TODO: aplicar o cleanUp aqui e apagar todos os dados
-    auth.signOut();
+    dispatch(requestSignOut());
+  };
+
+  const handleCloseProfile = () => {
+    handleModal("");
   };
 
   return (
-    <ModalTemplate onClick={() => handleModal("")}>
+    <ModalTemplate onClick={handleCloseProfile}>
       <Styled.Container>
         <Styled.DragClose />
         <Styled.MenuContainer>
@@ -74,15 +80,15 @@ const MenuModal: FC<MenuModalProps> = () => {
               Results
             </Styled.MenuText>
           </Styled.IconContainer>
-          {/* <Styled.IconContainer
-            active={currentUrl === "message"}
-            onClick={() => navigate("/message")}
+          <Styled.IconContainer
+            active={currentUrl === "profile"}
+            onClick={() => navigate("/profile")}
           >
-            <HiBellAlert size={30} />
-            <Styled.MenuText active={currentUrl === "message"}>
-              Messages
+            <CgProfile size={30} />
+            <Styled.MenuText active={currentUrl === "profile"}>
+              Profile
             </Styled.MenuText>
-          </Styled.IconContainer> */}
+          </Styled.IconContainer>
         </Styled.MenuContainer>
         <Styled.ExitContainer onClick={handleSignOut}>
           <IoMdExit size={30} />

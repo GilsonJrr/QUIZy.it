@@ -6,30 +6,45 @@ type Props = { editMode?: boolean };
 export const Container = styled.div<Props>`
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: relative;
   right: 0;
   top: 0;
-  z-index: 100000;
+
   background-color: rgba(0, 0, 0, 0.15);
+  @media screen and (min-width: 600px) {
+    position: absolute;
+    z-index: 100000;
+  }
 `;
 
 export const Content = styled.div<Props>`
   background-color: #f8f8f8;
-  width: 30vw;
+  width: 100vw;
   height: 100vh;
   position: fixed;
   right: 0;
   top: 0;
-  z-index: 100000;
-  padding: 30px 40px 30px;
+
+  padding: 9vh 40px 30px;
   border-left: 1px solid rgba(0, 0, 0, 0.5);
+  @media screen and (min-width: 600px) {
+    padding: 30px 40px 30px;
+    width: 30vw;
+    position: absolute;
+    z-index: 100000;
+  }
 `;
 
 export const ChevronRight = styled(FaChevronRight)`
   cursor: pointer;
 `;
 
-export const IconContainer = styled.div``;
+export const IconContainer = styled.div`
+  display: none;
+  @media screen and (min-width: 600px) {
+    display: block;
+  }
+`;
 
 export const AvatarContainer = styled.div`
   margin: 10px 0 20px;

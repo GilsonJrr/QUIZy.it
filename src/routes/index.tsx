@@ -26,6 +26,7 @@ import { RootState } from "Store/root-reducer";
 import { auth } from "lib/firebase";
 import SignUp from "views/auth/SignUp";
 import CategoryCreate from "views/dashboard/Quizzes/QuizzesPages/CategoryCreate";
+import ProfileModal from "components/Modal/ProfileModal";
 
 const Routers = () => {
   const { isLoading } = useSelector((state: RootState) => state.auth);
@@ -100,6 +101,7 @@ const Routers = () => {
               </>
             )}
             <Route path="/results" element={<Results />} />
+            <Route path="/profile" element={<ProfileModal />} />
           </Route>
           {userType === "student" && (
             <Route
@@ -110,6 +112,7 @@ const Routers = () => {
           {isAuthenticated && (
             <Route path="/login" element={<Navigate to="/" replace />} />
           )}
+
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/quizResult" element={<QuizResult />} />
           <Route path="/not-found" element={<NotFound />} />

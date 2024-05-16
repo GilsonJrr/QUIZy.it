@@ -63,7 +63,7 @@ export const LogoContainer = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-top: none;
   cursor: pointer;
-
+  width: 20%;
   @media screen and (min-width: 600px) {
     width: 7vw;
     padding: 10px 20px;
@@ -81,7 +81,7 @@ export const HeaderTitle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 60%;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-top: none;
   border-left: none;
@@ -105,6 +105,7 @@ export const HeaderHamburgerMenu = styled.div`
   border-top: none;
   border-left: none;
   padding: 10px 20px;
+  width: 20%;
 `;
 
 export const HeaderMessage = styled.div`

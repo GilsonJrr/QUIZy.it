@@ -129,8 +129,6 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
             {RouterTitle[`${currentUrl}${search}` as keyof typeof RouterTitle]}
           </Styled.HeaderTitleText>
         </Styled.HeaderTitle>
-        {/* handleModal */}
-        {/* <Styled.HeaderHamburgerMenu onClick={() => setShowMenu(!showMenu)}> */}
         <Styled.HeaderHamburgerMenu onClick={() => handleModal(<MenuModal />)}>
           <GiHamburgerMenu size={25} />
         </Styled.HeaderHamburgerMenu>
