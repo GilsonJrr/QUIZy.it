@@ -11,6 +11,7 @@ import { requestQuizList } from "Store/quiz/actions";
 import TutorResultTable from "components/Table/TutorResultTable";
 import useDeviceType from "hooks/useDeviceType";
 import Tabs from "components/Tabs";
+import { useTranslation } from "react-i18next";
 
 export const TutorPage = () => {
   const { students, isLoading } = useSelector(
@@ -20,6 +21,7 @@ export const TutorPage = () => {
     (state: RootState) => state.quiz
   );
   const { user } = useSelector((state: RootState) => state.user);
+  const { t } = useTranslation();
 
   const dispatch = useDispatch();
   const isMobile = useDeviceType();
@@ -57,24 +59,22 @@ export const TutorPage = () => {
         <Styled.TabContainer>
           <Tabs
             tabs={[
-              { label: "Quizzes" },
-              { label: "Students" },
-              { label: "Results" },
+              { label: t("dashboard.labelQuizzes") },
+              { label: t("dashboard.labelStudents") },
+              { label: t("dashboard.labelResults") },
             ]}
             activeTab={(tab) => setTab(tab)}
             radius={5}
           />
         </Styled.TabContainer>
       )}
-      {(tab === "Quizzes" || !isMobile) && (
+      {(tab === t("dashboard.labelQuizzes") || !isMobile) && (
         <Card
           gridName="card1"
-          title={isMobile ? "" : "All Quizes"}
+          title={isMobile ? "" : t("dashboard.allQuizzes")}
           isEmpty={filterQuizzes?.length === 0}
           emptyMessage={
-            search
-              ? "Quiz not found"
-              : "No new quiz available at this time. Please check later"
+            search ? t("dashboard.emptyQuiz") : t("dashboard.emptyNoQuiz")
           }
           scrollable
           searchable
@@ -90,15 +90,15 @@ export const TutorPage = () => {
           })}
         </Card>
       )}
-      {(tab === "Students" || !isMobile) && (
+      {(tab === t("dashboard.labelStudents") || !isMobile) && (
         <Card
           gridName="card3"
-          title={isMobile ? "" : "My students"}
+          title={isMobile ? "" : t("dashboard.students")}
           isEmpty={filterStudents?.length === 0}
           emptyMessage={
             searchStudents
-              ? "Student not found"
-              : "you have not registered any student so far"
+              ? t("dashboard.emptyStudent")
+              : t("dashboard.emptyNoStudent")
           }
           scrollable
           searchable
@@ -117,12 +117,12 @@ export const TutorPage = () => {
           })}
         </Card>
       )}
-      {(tab === "Results" || !isMobile) && (
+      {(tab === t("dashboard.labelResults") || !isMobile) && (
         <Card
           gridName="card2"
-          title={isMobile ? "" : "Last Completed Quizzes"}
+          title={isMobile ? "" : t("dashboard.results")}
           isEmpty={tableIsEmpty}
-          emptyMessage={"you have not completed any quiz so far"}
+          emptyMessage={t("dashboard.emptyResult")}
           redirectTo="Results"
           redirectPath="/results"
           isLoading={quizLoading}

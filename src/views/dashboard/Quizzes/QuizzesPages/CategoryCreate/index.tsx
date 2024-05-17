@@ -135,8 +135,19 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
   };
 
   const handleUpdateCategory = (id: string) => {
-    navigate(`/quizzes/category-create?id=${id}`);
-    setTab("Category");
+    const emptyState = {
+      title: "",
+      about: "",
+      image: "",
+    };
+    if (id === categoryId) {
+      navigate(`/quizzes/category-create`);
+      setTab("Category");
+      reset(emptyState);
+    } else {
+      navigate(`/quizzes/category-create?id=${id}`);
+      setTab("Category");
+    }
   };
 
   return (

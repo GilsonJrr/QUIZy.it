@@ -123,8 +123,19 @@ const GroupCreate: FC<StudentCreateProps> = () => {
   };
 
   const handleUpdateCategory = (id: string) => {
-    navigate(`/students/group-create?id=${id}`);
-    setTab("Group");
+    const emptyState = {
+      title: "",
+      about: "",
+      image: "",
+    };
+    if (id === groupId) {
+      navigate(`/students/group-create`);
+      setTab("Group");
+      reset(emptyState);
+    } else {
+      navigate(`/students/group-create?id=${id}`);
+      setTab("Group");
+    }
   };
 
   return (

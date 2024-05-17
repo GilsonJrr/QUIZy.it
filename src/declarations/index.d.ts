@@ -6,6 +6,8 @@ import {
   QuizType,
   AlertType,
 } from "lib/styled-components/models";
+import translationEN from "locales/pt.json";
+import translationPT from "locales/pt.json";
 
 declare module "styled-components" {
   export interface DefaultTheme {
@@ -17,4 +19,14 @@ declare module "styled-components" {
     };
   }
   export const styled = styledModule;
+}
+
+declare module "i18next" {
+  interface CustomTypeOptions {
+    defaultNS: "en";
+    resources: {
+      en: typeof translationEN;
+      pt: typeof translationPT;
+    };
+  }
 }

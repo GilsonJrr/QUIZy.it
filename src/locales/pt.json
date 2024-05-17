@@ -1,0 +1,26 @@
+{
+  "dashboard": {
+    "allQuizzes": "Todos os Quizzes",
+    "emptyQuiz": "Quiz não encontrado",
+    "emptyNoQuiz": "Nenhum novo quiz disponível no momento. Por favor, verifique mais tarde",
+    "students": "Meus alunos",
+    "emptyStudent": "Aluno não encontrado",
+    "emptyNoStudent": "Você ainda não cadastrou nenhum aluno",
+    "results": "Últimos Quizzes Completados",
+    "emptyResult": "Você ainda não completou nenhum quiz",
+    "labelQuizzes": "Quizzes",
+    "labelStudents": "Alunos",
+    "labelResults": "Resultados"
+  },
+  "welcome": "Welcome to our app!",
+  "intro": "This is a sample introduction.",
+  "button": {
+    "submit": "Submit",
+    "cancel": "Cancel"
+  },
+  "errors": {
+    "required": "This field is required.",
+    "invalidEmail": "Invalid email address.",
+    "maxLength": "Maximum length exceeded."
+  }
+}
