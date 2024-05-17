@@ -24,6 +24,7 @@ export const InfoContainer = styled.div`
   padding: 10px 0 10px 20px;
   display: flex;
   flex-direction: column;
+  width: 70%;
 `;
 
 export const Name = styled.h1`

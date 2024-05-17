@@ -462,13 +462,15 @@ const StudentCreate: FC<StudentCreateProps> = () => {
               <Button
                 type="button"
                 onClick={handleAddField}
-                disabled={
-                  !(
-                    extraFields.length === 0 ||
-                    (extraFields[extraFields.length - 1] !== "Change here" &&
-                      watch(extraFields[extraFields.length - 1]))
-                  )
-                }
+                //TODO: fix this: quando adiciona o valor da chave ele some
+                // disabled={
+                //   !(
+                //     extraFields.length === 0 ||
+                //     (extraFields[extraFields.length - 1] !== "Change here" &&
+                //       watch(extraFields[extraFields.length - 1]))
+                //   )
+                // }
+                disabled
               >
                 Add extra information
               </Button>

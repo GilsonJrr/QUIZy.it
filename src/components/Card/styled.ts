@@ -17,7 +17,7 @@ export const Card = styled.div<Props>`
   flex-direction: column;
   gap: 20px;
   position: relative;
-  background-color: ${({ theme }) => theme.colors.background.default};
+  background-color: ${({ theme }) => theme.colors.background.highlight};
 
   height: 100vh;
   overflow: auto;
@@ -32,26 +32,27 @@ export const Card = styled.div<Props>`
     }
   }
 
-  &::after {
-    content: "";
-    position: absolute;
-    width: ${({ scrollable }) => (scrollable ? "100" : "0")}%;
-    height: 50px;
-    background: linear-gradient(
-      0deg,
-      ${({ theme }) => theme.colors.background.default} 20%,
-      rgba(255, 255, 255, 0) 100%
-    );
-    bottom: 0;
-    left: 0;
-    border-radius: 0 0 20px 20px;
-  }
-
   @media screen and (min-width: 600px) {
     border-radius: 20px;
     transition: 0.3s ease-in-out all;
     border: 1px solid ${({ theme }) => theme.colors.main.default};
+    background-color: ${({ theme }) => theme.colors.background.default};
     height: 100%;
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: ${({ scrollable }) => (scrollable ? "100" : "0")}%;
+      height: 50px;
+      background: linear-gradient(
+        0deg,
+        ${({ theme }) => theme.colors.background.default} 20%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      bottom: 0;
+      left: 0;
+      border-radius: 0 0 20px 20px;
+    }
   }
 `;
 
@@ -77,9 +78,13 @@ export const CardInner = styled.div<Props>`
 `;
 
 export const EmptyListMessage = styled.h2`
-  margin: auto;
   text-align: center;
-  width: 50%;
   font-size: 1.1rem;
   font-weight: 500;
+  width: 100%;
+  margin: auto;
+  @media screen and (min-width: 600px) {
+    margin: auto;
+    width: 50%;
+  }
 `;

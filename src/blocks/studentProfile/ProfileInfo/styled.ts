@@ -106,3 +106,8 @@ export const Email = styled(MdEmail)`
 export const Phone = styled(FaPhoneSquare)`
   color: ${({ theme }) => theme.colors.background.tertiary};
 `;
+
+export const ButtonContainer = styled.div`
+  width: 100%;
+  margin: auto 0 0 0;
+`;

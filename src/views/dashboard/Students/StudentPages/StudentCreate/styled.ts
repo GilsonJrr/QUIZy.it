@@ -57,17 +57,21 @@ export const ButtonContainer = styled.div<Props>`
 export const ButtonCardContainer = styled.div<Props>`
   grid-area: "buttonContainer";
   display: flex;
-  justify-content: ${({ justify }) => justify || "flex-end"};
   position: absolute;
   bottom: 0;
   right: 0;
   padding: 30px;
-  background: linear-gradient(
-    0deg,
-    rgba(255, 255, 255, 1) 20%,
-    rgba(255, 255, 255, 0) 100%
-  );
   width: 100%;
+  justify-content: center;
+
+  @media screen and (min-width: 600px) {
+    justify-content: ${({ justify }) => justify || "flex-end"};
+    background: linear-gradient(
+      0deg,
+      ${({ theme }) => theme.colors.background.default} 20%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
 `;
 
 export const SelectContainer = styled.div`

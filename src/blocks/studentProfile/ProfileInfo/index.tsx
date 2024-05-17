@@ -45,12 +45,14 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ student }) => {
         <Styled.Label>About</Styled.Label>
         <Styled.Paragraph>{about}</Styled.Paragraph>
       </Styled.AboutContainer>
-      <Button
-        onClick={() => navigate(`/students/student-create?id=${uid}`)}
-        width="100%"
-      >
-        See More
-      </Button>
+      <Styled.ButtonContainer>
+        <Button
+          onClick={() => navigate(`/students/student-create?id=${uid}`)}
+          width="100%"
+        >
+          See More
+        </Button>
+      </Styled.ButtonContainer>
     </Styled.Container>
   );
 };

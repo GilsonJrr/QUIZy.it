@@ -4,11 +4,13 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: calc(100vh - 9vh);
+  height: 100vh;
   padding: 0 20px;
+  overflow: hidden;
 
   @media screen and (min-width: 600px) {
     width: 100%;
+    height: calc(100vh - 9vh);
     min-height: 100%;
     padding: 20px 40px;
 

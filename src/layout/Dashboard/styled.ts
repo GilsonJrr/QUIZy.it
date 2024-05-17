@@ -12,11 +12,11 @@ export const Container = styled.div`
   position: relative;
   overflow: hidden;
   background-color: ${({ theme }) => theme.colors.background.highlight};
+  height: 100vh;
 `;
 
 export const Content = styled.div`
   margin-top: 6vh;
-  height: 91%;
   margin-left: 0px;
   width: 100%;
   overflow: hidden;
@@ -25,6 +25,7 @@ export const Content = styled.div`
   align-items: center;
   justify-content: center;
   @media screen and (min-width: 600px) {
+    height: 91%;
     width: calc(100vw - 7vw);
     margin-left: 7vw;
     margin-top: 9vh;

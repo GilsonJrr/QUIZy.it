@@ -21,11 +21,21 @@ export const Container = styled.div<Props>`
     height: ${({ showFade }) => (showFade ? 50 : 0)}px;
     background: linear-gradient(
       90deg,
-      rgba(255, 255, 255, 1) 20%,
+      ${({ theme }) => theme.colors.background.highlight} 20%,
       rgba(255, 255, 255, 0) 100%
     );
     bottom: 0;
     left: 0;
+  }
+
+  @media screen and (min-width: 600px) {
+    &::after {
+      background: linear-gradient(
+        90deg,
+        ${({ theme }) => theme.colors.background.default} 20%,
+        rgba(255, 255, 255, 0) 100%
+      );
+    }
   }
 `;
 
