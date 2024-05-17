@@ -10,10 +10,12 @@ import { requestSignInEmailPassword } from "Store/auth/actions";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import LoadingSpinner from "components/LoadingSpiner";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Button from "components/Button";
 import { useModalContext } from "components/Modal/modalContext";
 import AlertModal from "components/Modal/AlertModal";
+import { confirmPasswordReset } from "firebase/auth";
+import { auth } from "lib/firebase";
 
 type TResetPassword = {
   password: string;
@@ -23,9 +25,12 @@ type TResetPassword = {
 const ResetPassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { isLoading } = useSelector((state: RootState) => state.auth);
 
   const { handleModal } = useModalContext();
+
+  const oobCode = new URLSearchParams(location.search).get("oobCode");
 
   const {
     register,
@@ -41,12 +46,9 @@ const ResetPassword = () => {
       handleModal(<AlertModal type="error" message="Passwords do not match" />);
       return;
     }
-    // dispatch(
-    //   requestSignInEmailPassword({
-    //     email: data.confirmPassword,
-    //     password: data.password,
-    //   })
-    // );
+
+    //TODO: add this on Saga
+    confirmPasswordReset(auth, oobCode || "", data.password);
   };
 
   return (
