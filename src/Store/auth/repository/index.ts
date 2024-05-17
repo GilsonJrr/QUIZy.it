@@ -48,3 +48,11 @@ export const createUser = async (uid: string, data: any[]) => {
       throw new Error(err);
     });
 };
+
+export const resetPassword = async (oobCode: string, password: string) => {
+  return confirmPasswordReset(auth, oobCode, password)
+    .then((user) => user)
+    .catch((err) => {
+      throw new Error(err);
+    });
+};

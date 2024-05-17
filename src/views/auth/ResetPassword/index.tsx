@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ResetPasswordSchema } from "lib/schemas";
 import { useDispatch } from "react-redux";
-import { requestSignInEmailPassword } from "Store/auth/actions";
+import { resetPassword } from "Store/auth/actions";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import LoadingSpinner from "components/LoadingSpiner";
@@ -14,8 +14,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Button from "components/Button";
 import { useModalContext } from "components/Modal/modalContext";
 import AlertModal from "components/Modal/AlertModal";
-import { confirmPasswordReset } from "firebase/auth";
-import { auth } from "lib/firebase";
 
 type TResetPassword = {
   password: string;
@@ -46,9 +44,10 @@ const ResetPassword = () => {
       handleModal(<AlertModal type="error" message="Passwords do not match" />);
       return;
     }
-
-    //TODO: add this on Saga
-    confirmPasswordReset(auth, oobCode || "", data.password);
+    dispatch(
+      resetPassword({ oobCode: oobCode || "", password: data.password }),
+      navigate("/login")
+    );
   };
 
   return (
@@ -58,7 +57,6 @@ const ResetPassword = () => {
         <Styled.LogoText>QUIZy.it</Styled.LogoText>
       </Styled.LogoContainer>
       <Styled.Title>RESET PASSWORD</Styled.Title>
-      {/* <Styled.SubTitle>Start your guide to knowledge</Styled.SubTitle> */}
       <Styled.Form onSubmit={handleSubmit(onSubmit)}>
         <SimpleInput
           label={<Styled.Label>Password</Styled.Label>}
@@ -78,9 +76,6 @@ const ResetPassword = () => {
           <Button variant="secondary" radius="30px">
             {isLoading ? <LoadingSpinner /> : "Reset Password"}
           </Button>
-          {/* <Button variant="anchor-white" onClick={() => navigate("/login")}>
-            login
-          </Button> */}
         </Styled.ButtonContainer>
       </Styled.Form>
     </Styled.Container>

@@ -37,6 +37,17 @@ export function requestSignInEmailPassword(
   };
 }
 
+export function resetPassword(
+  props: AuthSignInInput,
+  onSuccess?: () => void
+): AuthAction<AuthSignInInput> {
+  return {
+    type: AuthTypes.PASSWORD_RESET,
+    payload: { ...props },
+    onSuccess,
+  };
+}
+
 export function requestPasswordReset(
   props: AuthPasswordResetInput
 ): AuthAction<AuthPasswordResetInput> {

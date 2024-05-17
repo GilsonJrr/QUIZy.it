@@ -7,6 +7,7 @@ export enum AuthTypes {
   SIGNUP_SUCCESS = "@auth/SIGNUP_SUCCESS",
   AUTH_ERROR = "@auth/AUTH_ERROR",
   REQUEST_PASSWORD_RESET = "REQUEST_PASSWORD_RESET",
+  PASSWORD_RESET = "PASSWORD_RESET",
 }
 
 export interface AuthState {
@@ -33,8 +34,9 @@ export type AuthReducer = (
 ) => AuthState;
 
 export interface AuthSignInInput {
-  email: string;
+  email?: string;
   password: string;
+  oobCode?: string;
   onSuccess?: () => void;
 }
 

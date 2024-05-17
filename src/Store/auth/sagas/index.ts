@@ -10,6 +10,7 @@ import {
 
 import {
   passwordResetFirebase,
+  resetPassword,
   signInWithEmailPasswordFirebase,
   signOutFirebase,
   signUpWithEmailPasswordFirebase,
@@ -131,6 +132,21 @@ export function* requestSignUpEmailPasswordSaga(
   }
 }
 
+export function* resetPasswordSaga(props: AuthAction<AuthSignInInput>): any {
+  const password = props.payload.password;
+  const oobCode = props.payload.oobCode;
+  const onSuccess = props.payload.onSuccess;
+
+  try {
+    if (password && oobCode) {
+      yield call(resetPassword, oobCode, password);
+    }
+    yield put(() => onSuccess?.());
+  } catch (err: any) {
+    yield put(authError("cannot sign In"));
+  }
+}
+
 export function* requestPasswordResetSaga(
   props: AuthAction<AuthPasswordResetInput>
 ): any {
@@ -157,4 +173,5 @@ export default [
     requestSignUpEmailPasswordSaga
   ),
   takeLatest(AuthTypes.REQUEST_PASSWORD_RESET, requestPasswordResetSaga),
+  takeLatest(AuthTypes.PASSWORD_RESET, resetPasswordSaga),
 ];

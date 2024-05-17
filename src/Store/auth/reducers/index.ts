@@ -31,6 +31,10 @@ interface RequestRequestSigninEmailPassword {
   type: AuthTypes.REQUEST_SIGNIN_EMAIL_PASSWORD;
 }
 
+interface resetPassword {
+  type: AuthTypes.PASSWORD_RESET;
+}
+
 interface RequestRequestSignupEmailPassword {
   type: AuthTypes.REQUEST_SIGNUP_EMAIL_PASSWORD;
 }
@@ -52,7 +56,8 @@ type AuthAction =
   | RequestRequestSigninEmailPassword
   | RequestRequestSignupEmailPassword
   | RequestRequestSignupSucces
-  | RequestPasswordReset;
+  | RequestPasswordReset
+  | resetPassword;
 
 const initialState: AuthState = {
   isLogged: false,
@@ -108,6 +113,13 @@ const authReducer: Reducer<AuthState, AuthAction & PersistPartial> = (
         ...state,
         isLoading: false,
         error: action.payload.error,
+      };
+    }
+    case AuthTypes.PASSWORD_RESET: {
+      return {
+        ...state,
+        isLoading: true,
+        error: undefined,
       };
     }
     case AuthTypes.REQUEST_SIGNIN_EMAIL_PASSWORD: {
