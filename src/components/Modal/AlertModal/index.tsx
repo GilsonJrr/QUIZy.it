@@ -22,7 +22,7 @@ const AlertModal: FC<AlertModalProps> = ({
       () => {
         handleModal("");
       },
-      totalTime ? totalTime : 2000
+      totalTime ? totalTime : 3000
     );
   });
 

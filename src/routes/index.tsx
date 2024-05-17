@@ -30,6 +30,7 @@ import ProfileModal from "components/Modal/ProfileModal";
 import { LoadingContainerFullPage } from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
 import ResetPassword from "views/auth/ResetPassword";
+import RequestReset from "views/auth/RequestReset";
 
 const Routers = () => {
   const { isLoading } = useSelector((state: RootState) => state.auth);
@@ -68,6 +69,7 @@ const Routers = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/SignUp" element={<SignUp />} />
               <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/request-reset" element={<RequestReset />} />
               <Route path="*" element={<Navigate to="/login" replace />} />
             </Route>
           </Routes>

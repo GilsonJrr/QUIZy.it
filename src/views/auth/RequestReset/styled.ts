@@ -65,12 +65,6 @@ export const ButtonContainer = styled.div`
   align-items: flex-end;
   justify-content: space-between;
   width: 100%;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  @media screen and (min-width: 600px) {
-    flex-direction: row;
-  }
 `;
 
 export const AnchorButton = styled.a`
@@ -79,6 +73,12 @@ export const AnchorButton = styled.a`
   font-weight: 500;
   text-decoration: none;
   cursor: pointer;
+`;
+
+export const PasswordLabelContainer = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 `;
 
 export const ForgotPasswordText = styled.label`

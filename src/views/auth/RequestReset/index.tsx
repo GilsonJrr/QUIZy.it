@@ -1,45 +1,50 @@
-import React, { FC } from "react";
+import React from "react";
 import * as Styled from "./styled";
 import SimpleInput from "components/inputs/SimpleInput";
 import Logo from "assets/images/White_Logo.png";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { LoginSchema } from "lib/schemas";
+import { RequestResetSchema } from "lib/schemas";
 import { useDispatch } from "react-redux";
-import { requestSignInEmailPassword } from "Store/auth/actions";
+import { requestPasswordReset } from "Store/auth/actions";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import LoadingSpinner from "components/LoadingSpiner";
 import { useNavigate } from "react-router-dom";
 import Button from "components/Button";
+import AlertModal from "components/Modal/AlertModal";
+import { useModalContext } from "components/Modal/modalContext";
+import { validateEmail } from "utils/index";
 
-type LoginProps = {};
-
-type TLogin = {
+type TRequestReset = {
   login: string;
-  password: string;
 };
 
-const Login: FC<LoginProps> = () => {
+const RequestReset = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const { isLoading } = useSelector((state: RootState) => state.auth);
+  const { handleModal } = useModalContext();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<TLogin>({
-    resolver: yupResolver(LoginSchema),
+  } = useForm<TRequestReset>({
+    resolver: yupResolver(RequestResetSchema),
   });
 
-  const onSubmit = (data: TLogin) => {
-    dispatch(
-      requestSignInEmailPassword({
-        email: data.login,
-        password: data.password,
-      })
-    );
+  const onSubmit = (data: TRequestReset) => {
+    if (validateEmail(data.login)) {
+      dispatch(requestPasswordReset({ email: data.login }));
+      handleModal(
+        <AlertModal type="success" message="Reset email send successfully" />
+      );
+      navigate("/login");
+      return;
+    }
+    handleModal(<AlertModal type="error" message="Email is not valid" />);
   };
 
   return (
@@ -48,8 +53,7 @@ const Login: FC<LoginProps> = () => {
         <Styled.Logo src={Logo} alt="Logo image" />
         <Styled.LogoText>QUIZy.it</Styled.LogoText>
       </Styled.LogoContainer>
-      <Styled.Title>LOGIN</Styled.Title>
-      <Styled.SubTitle>Start your guide to knowledge</Styled.SubTitle>
+      <Styled.Title>RESET PASSWORD</Styled.Title>
       <Styled.Form onSubmit={handleSubmit(onSubmit)}>
         <SimpleInput
           label={<Styled.Label>User Name</Styled.Label>}
@@ -57,34 +61,17 @@ const Login: FC<LoginProps> = () => {
           error={errors.login}
           {...register("login")}
         />
-        <SimpleInput
-          label={
-            <Styled.PasswordLabelContainer>
-              <Styled.Label>Password</Styled.Label>
-              <Styled.ForgotPasswordText
-                onClick={() => navigate("/request-reset")}
-              >
-                Forgot password?
-              </Styled.ForgotPasswordText>
-            </Styled.PasswordLabelContainer>
-          }
-          placeholder="Type your password"
-          type="password"
-          error={errors.password}
-          {...register("password")}
-        />
         <Styled.ButtonContainer>
           <Button variant="secondary" radius="30px">
-            {isLoading ? <LoadingSpinner /> : "Login Now"}
+            {isLoading ? <LoadingSpinner /> : "Send"}
           </Button>
           <Button
             variant="anchor-white"
-            onClick={() => navigate("/signUp")}
+            onClick={() => navigate("/login")}
             padding="0"
             size="small"
           >
-            Don't have a account?,
-            <Styled.ForgotPasswordText>SignUp</Styled.ForgotPasswordText>
+            Back to Login
           </Button>
         </Styled.ButtonContainer>
       </Styled.Form>
@@ -92,4 +79,4 @@ const Login: FC<LoginProps> = () => {
   );
 };
 
-export default Login;
+export default RequestReset;

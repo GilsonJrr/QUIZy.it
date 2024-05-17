@@ -77,8 +77,14 @@ const SignUp: FC<SignUpProps> = () => {
           <Button variant="secondary" radius="30px">
             {isLoading ? <LoadingSpinner /> : "SignUp Now"}
           </Button>
-          <Button variant="anchor-white" onClick={() => navigate("/login")}>
-            login
+          <Button
+            variant="anchor-white"
+            onClick={() => navigate("/login")}
+            padding="0"
+            size="small"
+          >
+            Already have a account?,
+            <Styled.ForgotPasswordText>Login</Styled.ForgotPasswordText>
           </Button>
         </Styled.ButtonContainer>
       </Styled.Form>
