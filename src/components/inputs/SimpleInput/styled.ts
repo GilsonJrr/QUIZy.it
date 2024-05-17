@@ -24,6 +24,7 @@ export const Input = styled.input<Props>`
   border: ${({ viewMode }) => (viewMode ? 0 : 1)}px solid
     ${({ theme }) => theme.colors.main.default};
   outline: none;
+  background-color: ${({ theme }) => theme.colors.background.highlight};
 `;
 
 export const Error = styled.p`

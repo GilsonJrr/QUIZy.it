@@ -17,6 +17,7 @@ export const Card = styled.div<Props>`
   flex-direction: column;
   gap: 20px;
   position: relative;
+  background-color: ${({ theme }) => theme.colors.background.default};
 
   height: 100vh;
   overflow: auto;
@@ -38,7 +39,7 @@ export const Card = styled.div<Props>`
     height: 50px;
     background: linear-gradient(
       0deg,
-      rgba(255, 255, 255, 1) 20%,
+      ${({ theme }) => theme.colors.background.default} 20%,
       rgba(255, 255, 255, 0) 100%
     );
     bottom: 0;

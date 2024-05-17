@@ -48,7 +48,6 @@ export const ButtonContainer = styled.div<Props>`
   justify-content: ${({ justify }) => justify || "flex-end"};
 
   margin-bottom: 55px;
-  background-color: ${({ theme }) => theme.colors.background.tertiary};
   padding-top: 10px;
   @media screen and (min-width: 600px) {
     margin-bottom: 0;

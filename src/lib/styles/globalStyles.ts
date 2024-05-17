@@ -6,7 +6,7 @@ export const theme: DefaultTheme = {
       default: "#f8f8f8",
       secondary: "#FAFAFA",
       tertiary: "#FFFFFF",
-      highlight: "#d9dadb",
+      highlight: "#F0F0F0",
     },
     main: {
       default: "#4a4747",

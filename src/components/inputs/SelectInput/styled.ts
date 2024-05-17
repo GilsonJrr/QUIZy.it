@@ -20,6 +20,8 @@ export const Select = styled.select<Props>`
   font-size: 1.4rem;
   padding: 10px;
   border: 1px solid ${({ theme }) => theme.colors.main.default};
+  background-color: ${({ theme }) => theme.colors.background.highlight};
+  outline: none;
 `;
 
 export const Option = styled.option<Props>`

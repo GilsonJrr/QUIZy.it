@@ -11,7 +11,7 @@ type Props = {
 export const Container = styled.div`
   position: relative;
   overflow: hidden;
-  background-color: ${({ theme }) => theme.colors.background.tertiary};
+  background-color: ${({ theme }) => theme.colors.background.highlight};
 `;
 
 export const Content = styled.div`

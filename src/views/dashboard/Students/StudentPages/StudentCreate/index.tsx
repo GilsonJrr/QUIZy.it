@@ -336,7 +336,6 @@ const StudentCreate: FC<StudentCreateProps> = () => {
             <Styled.Form
               id="newStudentForm"
               onSubmit={handleSubmit(onSubmit)}
-              // onSubmit={handleSubmit(handleNewUserAlert)}
               padding={isMobile}
             >
               <Styled.SelectContainer>
@@ -485,12 +484,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
               {isMobile ? "Delete" : "Delete Student"}
             </Button>
           )}
-          {/* <Button type="button" onClick={handleNewUserAlert}> */}
-          <Button
-            type="submit"
-            form="newStudentForm"
-            // onClick={handleNewUserAlert}
-          >
+          <Button type="submit" form="newStudentForm">
             {studentId !== null ? "Update " : "Add "}{" "}
             {isMobile ? "" : "Student"}
           </Button>

@@ -25,6 +25,8 @@ export const Textarea = styled.textarea<Props>`
   border: 1px solid ${({ theme }) => theme.colors.main.default};
   height: ${({ height }) => height};
   resize: none;
+  background-color: ${({ theme }) => theme.colors.background.highlight};
+  outline: none;
 `;
 
 export const Error = styled.p`
