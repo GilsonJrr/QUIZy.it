@@ -27,6 +27,8 @@ import { auth } from "lib/firebase";
 import SignUp from "views/auth/SignUp";
 import CategoryCreate from "views/dashboard/Quizzes/QuizzesPages/CategoryCreate";
 import ProfileModal from "components/Modal/ProfileModal";
+import { LoadingContainerFullPage } from "components/Container/styled";
+import LoadingSpinner from "components/LoadingSpiner";
 
 const Routers = () => {
   const { isLoading } = useSelector((state: RootState) => state.auth);
@@ -39,10 +41,8 @@ const Routers = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        // User is signed in.
         setIsAuthenticated(true);
       } else {
-        // No user is signed in.
         setIsAuthenticated(false);
       }
     });
@@ -51,7 +51,11 @@ const Routers = () => {
   }, [userID]);
 
   if (isLoading && isAuthenticated === true) {
-    return <div>Loading...</div>;
+    return (
+      <LoadingContainerFullPage>
+        <LoadingSpinner size="big" />
+      </LoadingContainerFullPage>
+    );
   }
 
   if (isAuthenticated === false) {
@@ -116,7 +120,7 @@ const Routers = () => {
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/quizResult" element={<QuizResult />} />
           <Route path="/not-found" element={<NotFound />} />
-          <Route path="*" element={<Navigate to="/not-found" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </ModalProvider>
     </Router>

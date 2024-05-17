@@ -46,9 +46,7 @@ export function* requestSignInEmailPasswordSaga(
         email,
         password
       );
-      localStorage.setItem("userId", userCredentials.uid);
       yield put(signIn(userCredentials.uid));
-
       yield put(requestUser({ uid: userCredentials.uid }));
       yield put(requestStudentUser({ uid: userCredentials.uid }));
     }
