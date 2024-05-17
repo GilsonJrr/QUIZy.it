@@ -136,6 +136,7 @@ export const InputLabel = styled.input`
   border: none;
   outline: none;
   margin-bottom: 4px;
+  background-color: transparent;
 `;
 
 export const ExtraInfoContainer = styled.div`

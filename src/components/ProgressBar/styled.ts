@@ -23,13 +23,18 @@ export const ProgressBarFill = styled.div<Props>`
   top: 0;
   border-radius: ${({ radius }) => radius}px;
   display: ${({ progress }) => (progress ? "flex" : "none")};
+  min-width: 12%;
   width: ${({ progress }) => (progress ? progress : 0)}%;
   height: 100%;
   background-color: ${({ color, theme }) =>
     color ? color : theme.colors.main.default};
   color: ${({ theme }) => theme.colors.background.default};
-  padding: 0 15px;
+  padding: ${({ progress }) =>
+    progress && progress < 20 ? "0 0 0 5px" : "0 0 0 15px"};
   align-items: center;
+  @media screen and (min-width: 600px) {
+    min-width: 16%;
+  }
 `;
 
 export const Empty = styled.div<Props>`

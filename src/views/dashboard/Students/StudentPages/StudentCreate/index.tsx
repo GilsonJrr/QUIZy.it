@@ -256,7 +256,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
     } else {
       reset();
     }
-  }, [extraField, reset, setValue, studentId, student]);
+  }, [reset, setValue, studentId, student]);
 
   const handleDelete = () => {
     handleModal(
@@ -278,32 +278,6 @@ const StudentCreate: FC<StudentCreateProps> = () => {
       />
     );
   };
-
-  // const handleNewUserAlert = (data: TStudent) => {
-  //   // onSubmit();
-  //   // alert("show");
-  //   studentId === null &&
-  //     handleModal(
-  //       <AlertModal
-  //         type={"success"}
-  //         message={
-  //           <div>
-  //             <h3>
-  //               Your student account has been successfully created. Please find
-  //               the login details below:
-  //             </h3>
-  //             <br />
-  //             <h4>Email: ${watch("email")}</h4>
-  //             <h4>Password: ABC1234D</h4>
-  //             <br />
-  //             <h3>Please forward these details to the student.</h3>
-  //             <button>Create </button>
-  //           </div>
-  //         }
-  //         totalTime={50000}
-  //       />
-  //     );
-  // };
 
   if (isLoading) {
     return (
@@ -437,13 +411,13 @@ const StudentCreate: FC<StudentCreateProps> = () => {
                             setExtraField(e.target.value);
                             setEditingField(index);
                           }}
-                          placeholder="Enter value name"
+                          placeholder="Enter extra info title"
                           //TODO: ver um forma de manter tudo editavel
                           disabled={index < extraFields.length - 1}
                         />
                       }
                       width={"100%"}
-                      placeholder="Enter question title"
+                      placeholder="Enter extra info value"
                       {...register(fieldName)}
                     />
                     <Styled.DeleteIcon
@@ -463,14 +437,14 @@ const StudentCreate: FC<StudentCreateProps> = () => {
                 type="button"
                 onClick={handleAddField}
                 //TODO: fix this: quando adiciona o valor da chave ele some
-                // disabled={
-                //   !(
-                //     extraFields.length === 0 ||
-                //     (extraFields[extraFields.length - 1] !== "Change here" &&
-                //       watch(extraFields[extraFields.length - 1]))
-                //   )
-                // }
-                disabled
+                disabled={
+                  extraFields.length > 10 ||
+                  !(
+                    extraFields.length === 0 ||
+                    (extraFields[extraFields.length - 1] !== "Change here" &&
+                      watch(extraFields[extraFields.length - 1]))
+                  )
+                }
               >
                 Add extra information
               </Button>
