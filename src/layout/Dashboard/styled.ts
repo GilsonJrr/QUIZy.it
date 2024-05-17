@@ -67,7 +67,7 @@ export const LogoContainer = styled.div`
   width: 20%;
   @media screen and (min-width: 600px) {
     width: 7vw;
-    padding: 10px 20px;
+    padding: 10px 15px;
   }
 `;
 
