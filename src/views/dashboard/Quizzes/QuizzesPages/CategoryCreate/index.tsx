@@ -62,26 +62,39 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
   });
 
   const onSubmit = (data: TStudent) => {
+    if (categories && categories?.length >= 10) {
+      return handleModal(
+        <AlertModal
+          type="warning"
+          title="Category Creation Limit"
+          totalTime={6000}
+          message={`You have reached the maximum number of categories you can create. 
+            Please delete an existing category or contact support for assistance.`}
+        />
+      );
+    }
     const preparedData = {
       id: categoryId !== null ? categoryId : idGenerator(18),
       uid: userID || "",
       ...data,
     };
 
-    dispatch(
-      setCategory(preparedData),
-      handleModal(
-        <AlertModal
-          type={"success"}
-          message={
-            categoryId !== null
-              ? "Category update successfully"
-              : "Category created successfully"
-          }
-        />
-      )
-    );
-    navigate("/quizzes");
+    if (categories) {
+      dispatch(
+        setCategory(preparedData),
+        handleModal(
+          <AlertModal
+            type={"success"}
+            message={
+              categoryId !== null
+                ? "Category update successfully"
+                : "Category created successfully"
+            }
+          />
+        )
+      );
+      navigate("/quizzes");
+    }
   };
 
   useEffect(() => {

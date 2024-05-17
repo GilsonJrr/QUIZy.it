@@ -42,6 +42,7 @@ export const Content = styled.div<Props>`
   display: flex;
   gap: 15px;
   animation: ${fadeIn} 0.2s ease-in-out;
+  max-width: 30vw;
 `;
 
 export const IconContainer = styled.div``;

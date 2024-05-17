@@ -18,6 +18,7 @@ import { removeQuiz } from "Store/quiz/actions";
 import useDeviceType from "hooks/useDeviceType";
 import Button from "components/Button";
 import { addLeadingZero } from "functions/index";
+import AlertModal from "components/Modal/AlertModal";
 
 type MultipleQuestionProps = {
   sendQuiz: (data: QuizTypeValues) => void;
@@ -43,7 +44,7 @@ const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
   const { handleModal } = useModalContext();
 
   const { user } = useSelector((state: RootState) => state.user);
-  const { quiz } = useSelector((state: RootState) => state.quiz);
+  const { quiz, quizzes } = useSelector((state: RootState) => state.quiz);
 
   const quizId = new URLSearchParams(location.search).get("quizId");
 
@@ -63,6 +64,17 @@ const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
   });
 
   const onSubmit = (data: TMultipleQuestionsForm) => {
+    if (quizzes && quizzes?.length >= 100) {
+      return handleModal(
+        <AlertModal
+          type="warning"
+          title="Quiz Creation Limit"
+          totalTime={6000}
+          message={`You have reached the maximum number of quizzes you can create. 
+          Please delete an existing quiz or contact support for assistance.`}
+        />
+      );
+    }
     handleTestAllQuestions();
 
     const addRightAnswer = (): TMultipleQuestionsForm => {

@@ -6,19 +6,24 @@ type AlertModalProps = {
   type: "error" | "success" | "warning" | "info";
   message: string | ReactNode | ReactNode[];
   title?: string;
+  totalTime?: number;
 };
 
 const AlertModal: FC<AlertModalProps> = ({
   type = "error",
   message,
   title,
+  totalTime,
 }) => {
   const { handleModal } = useModalContext();
 
   useEffect(() => {
-    setTimeout(() => {
-      handleModal("");
-    }, 2000);
+    setTimeout(
+      () => {
+        handleModal("");
+      },
+      totalTime ? totalTime : 2000
+    );
   });
 
   return (

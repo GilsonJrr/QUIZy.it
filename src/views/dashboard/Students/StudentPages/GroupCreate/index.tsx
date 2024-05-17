@@ -57,6 +57,17 @@ const GroupCreate: FC<StudentCreateProps> = () => {
   });
 
   const onSubmit = (data: TStudent) => {
+    if (groups && groups?.length >= 10) {
+      return handleModal(
+        <AlertModal
+          type="warning"
+          title="Group Creation Limit"
+          totalTime={6000}
+          message={`You have reached the maximum number of groups you can create. 
+          Please delete an existing group or contact support for assistance.`}
+        />
+      );
+    }
     const preparedData = {
       id: groupId !== null ? groupId : idGenerator(18),
       uid: userID || "",

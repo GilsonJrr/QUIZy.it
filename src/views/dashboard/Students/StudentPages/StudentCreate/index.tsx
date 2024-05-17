@@ -58,7 +58,9 @@ const StudentCreate: FC<StudentCreateProps> = () => {
 
   const { groups } = useSelector((state: RootState) => state.group);
   const { isLoading } = useSelector((state: RootState) => state.user);
-  const { student } = useSelector((state: RootState) => state.student);
+  const { student, students } = useSelector(
+    (state: RootState) => state.student
+  );
   const userID = localStorage.getItem("userId") || "";
 
   const [extraFields, setExtraFields] = useState<any[]>([]);
@@ -81,6 +83,17 @@ const StudentCreate: FC<StudentCreateProps> = () => {
   });
 
   const onSubmit = (data: TStudent) => {
+    if (students && students?.length >= 20) {
+      return handleModal(
+        <AlertModal
+          type="warning"
+          title="Student Limit Reached"
+          totalTime={6000}
+          message={`You have reached the maximum number of students you can add. 
+          Please remove an existing student or contact support for assistance.`}
+        />
+      );
+    }
     const { group, ...rest } = data;
 
     const newStudentData = {
