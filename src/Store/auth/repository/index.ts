@@ -3,6 +3,7 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
+  confirmPasswordReset,
 } from "firebase/auth";
 import { auth } from "lib/firebase";
 import { database } from "lib/firebase";

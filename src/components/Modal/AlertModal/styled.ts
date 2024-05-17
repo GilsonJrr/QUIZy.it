@@ -42,7 +42,10 @@ export const Content = styled.div<Props>`
   display: flex;
   gap: 15px;
   animation: ${fadeIn} 0.2s ease-in-out;
-  max-width: 30vw;
+  max-width: 100vw;
+  @media screen and (min-width: 600px) {
+    max-width: 30vw;
+  }
 `;
 
 export const IconContainer = styled.div``;

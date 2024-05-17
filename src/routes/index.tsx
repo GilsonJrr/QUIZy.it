@@ -29,6 +29,7 @@ import CategoryCreate from "views/dashboard/Quizzes/QuizzesPages/CategoryCreate"
 import ProfileModal from "components/Modal/ProfileModal";
 import { LoadingContainerFullPage } from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
+import ResetPassword from "views/auth/ResetPassword";
 
 const Routers = () => {
   const { isLoading } = useSelector((state: RootState) => state.auth);
@@ -58,15 +59,16 @@ const Routers = () => {
     );
   }
 
-  if (isAuthenticated === false) {
+  if (!isAuthenticated) {
     return (
       <Router>
         <ModalProvider>
           <Routes>
-            <Route path="*" element={<Navigate to="/login" replace />} />
             <Route element={<AuthPages />}>
               <Route path="/login" element={<Login />} />
               <Route path="/SignUp" element={<SignUp />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="*" element={<Navigate to="/login" replace />} />
             </Route>
           </Routes>
         </ModalProvider>

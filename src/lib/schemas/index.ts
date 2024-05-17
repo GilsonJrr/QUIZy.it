@@ -5,6 +5,13 @@ export const LoginSchema = Yup.object().shape({
   password: Yup.string().required("You must enter your password"),
 });
 
+export const ResetPasswordSchema = Yup.object().shape({
+  confirmPassword: Yup.string().required(
+    "You must enter your password confirmation"
+  ),
+  password: Yup.string().required("You must enter your password"),
+});
+
 export const SignUpSchema = Yup.object().shape({
   login: Yup.string().required("You must enter your email"),
   password: Yup.string().required("You must enter your password"),
