@@ -93,7 +93,7 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
 
   const handleDeleteQuestion = (id: number) => {
     unregister(`questions.${selectedQuestion}`);
-    setQuestion(question.filter((a) => a !== id));
+    setQuestion(question?.filter((a) => a !== id));
     setSelectedQuestion(id - 1);
   };
 

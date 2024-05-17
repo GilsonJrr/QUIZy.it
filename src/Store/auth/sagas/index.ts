@@ -1,6 +1,12 @@
 import { takeLatest, put, call } from "redux-saga/effects";
 
-import { authError, signIn, signOut, signUpSuccess } from "../actions";
+import {
+  authError,
+  requestPasswordReset,
+  signIn,
+  signOut,
+  signUpSuccess,
+} from "../actions";
 
 import {
   passwordResetFirebase,
@@ -38,6 +44,7 @@ export function* requestSignInEmailPasswordSaga(
 ): any {
   const email = props.payload.email;
   const password = props.payload.password;
+  const onSuccess = props.payload.onSuccess;
 
   try {
     if (email && password) {
@@ -49,6 +56,12 @@ export function* requestSignInEmailPasswordSaga(
       yield put(signIn(userCredentials.uid));
       yield put(requestUser({ uid: userCredentials.uid }));
       yield put(requestStudentUser({ uid: userCredentials.uid }));
+      // if (userCredentials.use.emailVerified) {
+      // } else {
+      //   // "redirect to "/verifyemail""
+      //   yield call(() => (window.location.href = "/signin"));
+      // }
+      yield put(() => onSuccess?.());
     }
   } catch (err: any) {
     yield put(authError("cannot sign In"));
@@ -84,6 +97,7 @@ export function* requestSignUpEmailPasswordSaga(
   props: AuthAction<AuthSignUpInput>
 ): any {
   const { email, password, userType, name, tutorUID, ...rest } = props.payload;
+  const onSuccess = props.payload.onSuccess;
 
   try {
     if (email && password) {
@@ -105,9 +119,12 @@ export function* requestSignUpEmailPasswordSaga(
       if (userType === "tutor") {
         yield put(setUser(newUser));
       } else {
+        yield put(requestPasswordReset({ email: newUser.email }));
         yield put(setStudentToUser(newUser));
         yield put(setStudentUser(newUser));
       }
+
+      yield put(() => onSuccess?.());
     }
   } catch (err: any) {
     yield put(authError("cannot sign Up"));

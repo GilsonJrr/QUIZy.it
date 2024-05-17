@@ -121,6 +121,8 @@ export type TFormData = {
   trueOrFalseQuestions?: TTrueOrFalseQuestions[];
 };
 
+export type UserType = "tutor" | "student";
+
 //enums
 export enum EAnswerIndexation {
   A = 0,

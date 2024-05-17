@@ -1,4 +1,6 @@
 import { database } from "lib/firebase";
+import { deleteUser } from "firebase/auth";
+// import { auth } from "lib/firebase";
 import { ref, set, get, query, limitToFirst, remove } from "firebase/database";
 
 import { StudentTypeValues } from "../types";
@@ -55,4 +57,21 @@ export const removeStudent = async (uid: string, studentId: string) => {
     .catch((err) => {
       throw new Error(err);
     });
+};
+
+export const removeStudentUser = async (uid: string) => {
+  return remove(ref(database, `student/${uid}`))
+    .then((students) => students)
+    .catch((err) => {
+      throw new Error(err);
+    });
+};
+
+export const removeStudentUserAccount = async (uid: any) => {
+  try {
+    await deleteUser(uid);
+    console.log("Successfully deleted user");
+  } catch (error) {
+    // console.log("Error deleting user:", error.message);
+  }
 };

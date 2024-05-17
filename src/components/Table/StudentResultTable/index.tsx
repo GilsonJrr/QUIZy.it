@@ -29,7 +29,7 @@ const StudentResultTable: FC<StudentResultTableProps> = ({
   const results = useMemo(() => {
     const myResults = quizzes?.map((student) => ({
       results: Object.fromEntries(
-        Object.entries(student.results || {}).filter(
+        Object.entries(student.results || {})?.filter(
           ([key, value]) => key === studentID
         )
       ),
@@ -49,7 +49,7 @@ const StudentResultTable: FC<StudentResultTableProps> = ({
                 }
               : undefined;
           })
-          .filter((empty) => empty !== undefined)
+          ?.filter((empty) => empty !== undefined)
       : [];
   }, [quizzes, studentID]);
 

@@ -6,6 +6,8 @@ import {
   getStudent,
   getStudentList,
   removeStudent,
+  removeStudentUser,
+  // removeStudentUserAccount,
   updateStudentList,
 } from "../repository";
 
@@ -54,6 +56,9 @@ export function* setStudentSaga(props: StudentAction<StudentTypeValues>): any {
   const { email, name, uid: tutorUID, ...rest } = payload;
 
   try {
+    //TODO: fix this
+    yield put(() => onSuccess?.());
+
     if (uid && payload) {
       yield put(
         requestSignUpEmailPassword({
@@ -65,7 +70,6 @@ export function* setStudentSaga(props: StudentAction<StudentTypeValues>): any {
           ...rest,
         })
       );
-      yield put(() => onSuccess?.());
     }
   } catch (err: any) {
     yield put(err);
@@ -107,6 +111,9 @@ export function* removeStudentSaga(props: StudentAction<StudentRequest>): any {
   try {
     if (studentId && uid) {
       yield call(removeStudent, uid, studentId);
+      yield call(removeStudentUser, studentId);
+      // yield call(removeStudentUserAccount, studentId);
+      // yield put(deleteUser());
       const studentResponses = yield call(getStudentList, uid);
       yield put(studentList(studentResponses));
       yield put(() => onSuccess?.());

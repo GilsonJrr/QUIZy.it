@@ -28,6 +28,13 @@ export const TableBodyComponents = styled.div<Props>`
   border-radius: 3px;
   display: flex;
   justify-content: center;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+
   @media screen and (min-width: 600px) {
     justify-content: flex-start;
   }

@@ -24,6 +24,7 @@ export interface AuthState {
 export type AuthAction<Payload> = {
   type: AuthTypes;
   payload: Payload;
+  onSuccess?: () => void;
 };
 
 export type AuthReducer = (
@@ -34,6 +35,7 @@ export type AuthReducer = (
 export interface AuthSignInInput {
   email: string;
   password: string;
+  onSuccess?: () => void;
 }
 
 export interface AuthPasswordResetInput {
@@ -43,9 +45,10 @@ export interface AuthPasswordResetInput {
 export interface AuthSignUpInput {
   email: string;
   password: string;
-  userType?: "tutor" | "student";
+  userType?: "tutor" | "student" | string;
   name?: string;
   tutorUID?: string;
+  onSuccess?: () => void;
 }
 
 //Agenda

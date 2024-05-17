@@ -57,11 +57,11 @@ const StudentCreate: FC<StudentCreateProps> = () => {
   const studentId = new URLSearchParams(location.search).get("id");
 
   const { groups } = useSelector((state: RootState) => state.group);
-  const { isLoading } = useSelector((state: RootState) => state.user);
+  const { user, isLoading } = useSelector((state: RootState) => state.user);
   const { student, students } = useSelector(
     (state: RootState) => state.student
   );
-  const userID = localStorage.getItem("userId") || "";
+  const userID = user?.info?.uid;
 
   const [extraFields, setExtraFields] = useState<any[]>([]);
   const [extraField, setExtraField] = useState<string>();
@@ -89,7 +89,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
           type="warning"
           title="Student Limit Reached"
           totalTime={6000}
-          message={`You have reached the maximum number of students you can add. 
+          message={`You have reached the maximum number of students you can add.
           Please remove an existing student or contact support for assistance.`}
         />
       );
@@ -100,7 +100,6 @@ const StudentCreate: FC<StudentCreateProps> = () => {
       uid: userID,
       group: data.group === "groupLess" ? "" : data.group,
       userType: "student",
-
       ...rest,
     };
 
@@ -111,26 +110,35 @@ const StudentCreate: FC<StudentCreateProps> = () => {
       userType: "student",
       ...rest,
     };
-    studentId !== null
-      ? dispatch(
-          updateStudent(updateStudentData),
-          handleModal(
-            <AlertModal
-              type={"success"}
-              message={"Student updated successfully"}
-            />
-          )
+
+    if (studentId !== null) {
+      dispatch(
+        updateStudent(updateStudentData),
+        handleModal(
+          <AlertModal
+            type={"success"}
+            message={"Student updated successfully"}
+          />
         )
-      : dispatch(
-          setStudent(newStudentData),
-          handleModal(
-            <AlertModal
-              type={"success"}
-              message={"Student added successfully"}
-            />
-          )
-        );
-    navigate("/students");
+      );
+      navigate("/students");
+    } else {
+      dispatch(
+        setStudent(newStudentData),
+        handleModal(
+          <AlertModal
+            type={"success"}
+            message={`Your student account has been successfully created. Please find your login details below:
+                  Email: ${data.email}
+                  Password: ABC1234D`}
+            totalTime={100000}
+          />
+        )
+      );
+      navigate(
+        `/students?newStudentCreated=true&studentsQuantity=${students?.length}`
+      );
+    }
   };
 
   const handleAddField = () => {
@@ -164,7 +172,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
 
   const handleDeleteField = (id: number) => {
     unregister(extraFields[id]);
-    setExtraFields(extraFields.filter((_, index) => index !== id));
+    setExtraFields(extraFields?.filter((_, index) => index !== id));
   };
 
   const crumbs = [
@@ -256,6 +264,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
         deleteTitle={watch("name") || ""}
         onDelete={() => {
           dispatch(
+            //TODO: remover da lista de usuarios tb
             removeStudent(
               { uid: userID || "", studentId: student?.info?.uid },
               () =>
@@ -269,6 +278,32 @@ const StudentCreate: FC<StudentCreateProps> = () => {
       />
     );
   };
+
+  // const handleNewUserAlert = (data: TStudent) => {
+  //   // onSubmit();
+  //   // alert("show");
+  //   studentId === null &&
+  //     handleModal(
+  //       <AlertModal
+  //         type={"success"}
+  //         message={
+  //           <div>
+  //             <h3>
+  //               Your student account has been successfully created. Please find
+  //               the login details below:
+  //             </h3>
+  //             <br />
+  //             <h4>Email: ${watch("email")}</h4>
+  //             <h4>Password: ABC1234D</h4>
+  //             <br />
+  //             <h3>Please forward these details to the student.</h3>
+  //             <button>Create </button>
+  //           </div>
+  //         }
+  //         totalTime={50000}
+  //       />
+  //     );
+  // };
 
   if (isLoading) {
     return (
@@ -301,6 +336,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
             <Styled.Form
               id="newStudentForm"
               onSubmit={handleSubmit(onSubmit)}
+              // onSubmit={handleSubmit(handleNewUserAlert)}
               padding={isMobile}
             >
               <Styled.SelectContainer>
@@ -449,7 +485,12 @@ const StudentCreate: FC<StudentCreateProps> = () => {
               {isMobile ? "Delete" : "Delete Student"}
             </Button>
           )}
-          <Button type="submit" form="newStudentForm">
+          {/* <Button type="button" onClick={handleNewUserAlert}> */}
+          <Button
+            type="submit"
+            form="newStudentForm"
+            // onClick={handleNewUserAlert}
+          >
             {studentId !== null ? "Update " : "Add "}{" "}
             {isMobile ? "" : "Student"}
           </Button>

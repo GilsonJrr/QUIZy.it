@@ -19,6 +19,7 @@ export type UserState = {
 export type UserAction<Payload> = {
   type: UserTypes;
   payload: Payload;
+  onSuccess?: () => void;
 };
 
 export type UserRequest = {
@@ -60,6 +61,7 @@ export type UseData = {
   socialNetWork?: string;
   photo?: string;
   average?: string;
+  onSuccess?: () => void;
   //***/
   info?: Info;
   //adicionar os outros campos

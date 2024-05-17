@@ -45,10 +45,13 @@ export function* requestUserSaga(props: UserAction<UserRequest>): any {
 export function* setStudentUserSaga(props: UserAction<UseData>): any {
   const uid = props.payload.uid;
   const payload = props.payload;
+  const onSuccess = props.payload.onSuccess;
 
   try {
     if (uid && payload) {
       yield call(setStudentUser, uid, payload);
+
+      yield put(() => onSuccess?.());
     }
   } catch (err: any) {
     // yield put(authError('cannot sign In'));
@@ -58,12 +61,15 @@ export function* setStudentUserSaga(props: UserAction<UseData>): any {
 export function* setUserSaga(props: UserAction<UseData>): any {
   const uid = props.payload.uid;
   const payload = props.payload;
+  const onSuccess = props.payload.onSuccess;
 
   try {
     if (uid && payload) {
       yield call(setUser, uid, payload);
       const userAgendaResponses = yield call(getUser, uid);
       yield put(user(userAgendaResponses));
+
+      yield put(() => onSuccess?.());
     }
   } catch (err: any) {
     // yield put(authError('cannot sign In'));
@@ -73,6 +79,7 @@ export function* setUserSaga(props: UserAction<UseData>): any {
 export function* setStudentToUserSaga(props: UserAction<UseData>): any {
   const uid = props.payload.tutorID;
   const payload = props.payload;
+  const onSuccess = props.payload.onSuccess;
 
   try {
     if (uid && payload) {
@@ -81,6 +88,8 @@ export function* setStudentToUserSaga(props: UserAction<UseData>): any {
       yield put(user(userAgendaResponses));
       const studentResponses = yield call(getStudentList, uid || "");
       yield put(studentList(studentResponses));
+
+      yield put(() => onSuccess?.());
     }
   } catch (err: any) {
     // yield put(authError('cannot sign In'));

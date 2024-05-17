@@ -11,7 +11,7 @@ export const Container = styled.div`
     height: calc(100vh - 19vh);
 
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 0.9fr 1fr 1.3fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
     grid-column-gap: 20px;
     grid-row-gap: 20px;

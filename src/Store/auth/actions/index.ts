@@ -17,10 +17,14 @@ export function signIn(
   };
 }
 
-export function signUpSuccess(props: any): AuthAction<any> {
+export function signUpSuccess(
+  props: any,
+  onSuccess?: () => void
+): AuthAction<any> {
   return {
     type: AuthTypes.SIGNUP_SUCCESS,
     payload: { ...props },
+    onSuccess,
   };
 }
 
@@ -55,11 +59,13 @@ export function requestSignOut() {
 }
 
 export function requestSignUpEmailPassword(
-  props: AuthSignUpInput
+  props: AuthSignUpInput,
+  onSuccess?: () => void
 ): AuthAction<AuthSignUpInput> {
   return {
     type: AuthTypes.REQUEST_SIGNUP_EMAIL_PASSWORD,
     payload: { ...props },
+    onSuccess,
   };
 }
 

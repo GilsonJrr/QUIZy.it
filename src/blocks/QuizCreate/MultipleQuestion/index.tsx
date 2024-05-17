@@ -105,7 +105,7 @@ const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
 
   const handleDeleteQuestion = (id: number) => {
     unregister(`questions.${selectedQuestion}`);
-    setQuestion(question.filter((a) => a !== id));
+    setQuestion(question?.filter((a) => a !== id));
     setSelectedQuestion(id - 1);
   };
 
@@ -156,7 +156,7 @@ const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
   const questionTest: any[] = [
     {
       question: watch(`questions.${selectedQuestion}.questionTitle`),
-      answers: randomize(questions.filter((a) => a.answer !== "")),
+      answers: randomize(questions?.filter((a) => a.answer !== "")),
       correctAnswers: watch(`questions.${selectedQuestion}.answer01`),
     },
   ];

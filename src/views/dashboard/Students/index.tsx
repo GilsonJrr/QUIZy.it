@@ -7,12 +7,14 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import { FaUserEdit } from "react-icons/fa";
 import RenderStudentCard from "components/renderItems/RenderStudentCard";
 import Tabs from "components/Tabs";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { requestStudentList } from "Store/students/actions";
 import { RootState } from "Store/root-reducer";
 import { requestGroupList } from "Store/group/actions";
 import useDeviceType from "hooks/useDeviceType";
+import AlertModal from "components/Modal/AlertModal";
+import { useModalContext } from "components/Modal/modalContext";
 
 type StudentsProps = {};
 
@@ -25,9 +27,37 @@ const Students: FC<StudentsProps> = () => {
     (state: RootState) => state.group
   );
 
+  const { handleModal } = useModalContext();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isMobile = useDeviceType();
+  const location = useLocation();
+
+  const newStudentCreated = new URLSearchParams(location.search).get(
+    "newStudentCreated"
+  );
+  const studentsQuantity = new URLSearchParams(location.search).get(
+    "studentsQuantity"
+  );
+
+  useEffect(() => {
+    if (
+      students &&
+      newStudentCreated &&
+      parseInt(studentsQuantity || "") < students.length
+    ) {
+      handleModal(
+        <AlertModal
+          type={"success"}
+          message={`Your student account has been successfully created. he will receive a 
+                    e-mail to reset the password and be able to do the first login`}
+          totalTime={7000}
+        />
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newStudentCreated, students, studentsQuantity]);
 
   const userID = localStorage.getItem("userId") || "";
 
@@ -45,9 +75,9 @@ const Students: FC<StudentsProps> = () => {
       onClick: () => navigate("/students/group-create"),
     },
     // {
-    // option: "Edit group",
-    // optionIcon: <FaEdit size={40} />,
-    // onClick: () => navigate(randomQuiz()),
+    //   option: "Edit group",
+    //   optionIcon: <FaEdit size={40} />,
+    //   onClick: () => navigate(randomQuiz()),
     // },
   ];
   const [tab, setTab] = useState("All");

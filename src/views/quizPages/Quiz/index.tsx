@@ -73,7 +73,7 @@ const Quiz = () => {
           question: question.questionTitle,
           answers: randomize(
             quiz.type === "Multiple"
-              ? multipleAnswers.filter((answer) => answer.answer !== "")
+              ? multipleAnswers?.filter((answer) => answer.answer !== "")
               : trueOrFalseAnswers
           ),
           correctAnswers: question.rightAnswer,

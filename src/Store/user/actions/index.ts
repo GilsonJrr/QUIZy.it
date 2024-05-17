@@ -23,24 +23,36 @@ export function requestStudentUser(
   };
 }
 
-export function setUser(props: UseData): UserAction<UseData> {
+export function setUser(
+  props: UseData,
+  onSuccess?: () => void
+): UserAction<UseData> {
   return {
     type: UserTypes.SET_USER,
     payload: { ...props },
+    onSuccess,
   };
 }
 
-export function setStudentUser(props: UseData): UserAction<UseData> {
+export function setStudentUser(
+  props: UseData,
+  onSuccess?: () => void
+): UserAction<UseData> {
   return {
     type: UserTypes.SET_USER_STUDENT,
     payload: { ...props },
+    onSuccess,
   };
 }
 
-export function setStudentToUser(props: UseData): UserAction<UseData> {
+export function setStudentToUser(
+  props: UseData,
+  onSuccess?: () => void
+): UserAction<UseData> {
   return {
     type: UserTypes.SET_STUDENT_TO_USER,
     payload: { ...props },
+    onSuccess,
   };
 }
 
