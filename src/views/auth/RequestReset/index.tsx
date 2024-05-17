@@ -56,7 +56,7 @@ const RequestReset = () => {
       <Styled.Title>RESET PASSWORD</Styled.Title>
       <Styled.Form onSubmit={handleSubmit(onSubmit)}>
         <SimpleInput
-          label={<Styled.Label>User Name</Styled.Label>}
+          label={<Styled.Label>Email</Styled.Label>}
           placeholder="Type your email"
           error={errors.login}
           {...register("login")}
