@@ -44,6 +44,7 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
   const [showScore, setShowScore] = useState(false);
   const [score, setScore] = useState(0);
   const [quizResume, setQuizResume] = useState<TQuizResume[]>([]);
+  const [timeSpent, setTimeSpent] = useState(0);
 
   const handleAnswer = () => {
     selectedAnswer?.type === "correct" && setScore(score + 1);
@@ -85,6 +86,10 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
       resume: quizResume,
       date: new Date().toISOString(),
       studentName: student?.info?.name,
+      timeSpent: timeSpent,
+      tries: quiz?.results?.[(student?.info?.uid as any) ?? ""]?.tries
+        ? quiz?.results?.[(student?.info?.uid as any) ?? ""]?.tries + 1
+        : 1,
     };
     dispatch(setResult(newResult));
     navigate("/quizResult", {
@@ -96,6 +101,16 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
       },
     });
   };
+
+  useEffect(() => {
+    const incrementTime = () => {
+      setTimeSpent((prevTime) => prevTime + 1);
+    };
+    const id = setInterval(incrementTime, 1000);
+    return () => {
+      clearInterval(id);
+    };
+  });
 
   return (
     <Styled.Container>

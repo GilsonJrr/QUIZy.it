@@ -39,6 +39,8 @@ export type ResultTypeValues = {
   date?: string;
   quizCategory?: string;
   studentName?: string;
+  timeSpent: string;
+  tries: string;
 };
 
 export type ResultState = {

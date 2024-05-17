@@ -50,6 +50,7 @@ const RenderTable: FC<RenderTableProps> = ({
         quizResume: tutorResultTable?.extraInfo?.resume,
         quizId: tutorResultTable?.extraInfo?.quizUid,
         studentName: tutorResultTable?.studentName,
+        allInfo: tutorResultTable?.extraInfo,
       },
     });
   };

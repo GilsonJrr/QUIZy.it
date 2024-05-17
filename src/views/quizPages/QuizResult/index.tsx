@@ -8,6 +8,7 @@ import { LoadingContainerFullPage } from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
 import ProgressBar from "components/ProgressBar";
 import Button from "components/Button";
+import { formatTime } from "utils/index";
 
 type QuizResultProps = {};
 
@@ -27,6 +28,7 @@ const QuizResult: FC<QuizResultProps> = () => {
     quizResume,
     quizId,
     studentName,
+    allInfo,
   } = location.state || "";
   const finalScore = (score * 100) / amount;
 
@@ -69,6 +71,8 @@ const QuizResult: FC<QuizResultProps> = () => {
     );
   }
 
+  console.log("quizResume", allInfo);
+
   return (
     <Styled.Container>
       <Styled.TitlesContainer>
@@ -84,11 +88,20 @@ const QuizResult: FC<QuizResultProps> = () => {
           <Styled.Label>Final score</Styled.Label>
           <ProgressBar progress={finalScore} radius={5} />
         </Styled.InfoContainer>
-        {userType === "student" && (
+        {userType === "student" ? (
           <Styled.MessageContainer>
             <Styled.Label>FeedBack</Styled.Label>
             <Styled.ScoreMessage>{handleMessage()}</Styled.ScoreMessage>
           </Styled.MessageContainer>
+        ) : (
+          <Styled.InfoContainer>
+            <Styled.Label>Time spent</Styled.Label>
+            <Styled.ScoreMessage>
+              {formatTime(allInfo.timeSpent)}
+            </Styled.ScoreMessage>
+            <Styled.Label>Tries</Styled.Label>
+            <Styled.ScoreMessage>{allInfo.tries}</Styled.ScoreMessage>
+          </Styled.InfoContainer>
         )}
       </Styled.TitlesContainer>
       <Styled.ResumeContainer>

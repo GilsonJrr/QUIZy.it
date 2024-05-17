@@ -23,11 +23,7 @@ export const getResult = async (
   resultId: string
 ) => {
   return get(
-    ref(
-      database,
-      // `user/${uid}/students/${studentId}/results/${resultId}/`
-      `user/${uid}/quiz/${studentId}/results/${studentId}/`
-    )
+    ref(database, `user/${uid}/quiz/${studentId}/results/${studentId}/`)
   )
     .then((results) => results.val())
     .catch((err) => {
@@ -40,7 +36,6 @@ export const setResult = async (_uid: string, data: ResultTypeValues) => {
   return set(
     ref(
       database,
-      // `user/${data.tutorUid}/students/${data.studentUid}/results/${data.quizUid}/`
       `user/${data.tutorUid}/quiz/${data.quizUid}/results/${data.studentUid}/`
     ),
     rest
