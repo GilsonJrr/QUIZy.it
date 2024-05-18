@@ -87,6 +87,7 @@ const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
   const options: TOption[] = [
     { value: "Multiple", label: "Multiple" },
     { value: "TrueOrFalse", label: "True Or False" },
+    { value: "FillTheBlanks", label: "Fill The Blanks" },
   ];
 
   const categoryOptions: TOption[] =
