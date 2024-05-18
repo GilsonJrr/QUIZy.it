@@ -318,12 +318,14 @@ const StudentCreate: FC<StudentCreateProps> = () => {
                   placeholder="Enter the student Name"
                   error={errors.name}
                   {...register("name")}
+                  width="49%"
                 />
                 <SimpleInput
                   label={"Photo"}
                   placeholder="Enter the student photo"
                   error={errors.photo}
                   {...register("photo")}
+                  width="49%"
                 />
               </Styled.SelectContainer>
               <Styled.SelectContainer>
@@ -332,12 +334,14 @@ const StudentCreate: FC<StudentCreateProps> = () => {
                   placeholder="Choose a phone"
                   error={errors.phone}
                   {...register("phone")}
+                  width="49%"
                 />
                 <SimpleInput
                   label={"Email"}
                   placeholder="Choose a email"
                   error={errors.email}
                   {...register("email")}
+                  width="49%"
                 />
               </Styled.SelectContainer>
               <Styled.SelectContainer>
@@ -346,6 +350,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
                   placeholder=""
                   error={errors.address}
                   {...register("address")}
+                  width="49%"
                 />
                 {groups?.length !== 0 && (
                   <SelectInput
@@ -356,6 +361,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
                     ]}
                     error={errors.group}
                     {...register("group")}
+                    width="49%"
                   />
                 )}
               </Styled.SelectContainer>
@@ -365,12 +371,14 @@ const StudentCreate: FC<StudentCreateProps> = () => {
                   placeholder="DD/MM/YYYY"
                   error={errors.birthDate}
                   {...register("birthDate")}
+                  width="49%"
                 />
                 <SimpleInput
                   label={"Social Net Work"}
                   placeholder="@JonhDoe"
                   error={errors.socialNetWork}
                   {...register("socialNetWork")}
+                  width="49%"
                 />
               </Styled.SelectContainer>
               <TextAreaInput

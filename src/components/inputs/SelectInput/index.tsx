@@ -6,13 +6,14 @@ import { FieldError } from "react-hook-form";
 interface SelectInputProps extends SelectHTMLAttributes<HTMLSelectElement> {
   label: string;
   options: TOption[];
+  width?: string;
   error?: FieldError | undefined;
 }
 
 const SelectInput = forwardRef<HTMLSelectElement, SelectInputProps>(
-  ({ label, error, options, ...rest }, ref) => {
+  ({ label, error, options, width, ...rest }, ref) => {
     return (
-      <Styled.Container>
+      <Styled.Container width={width}>
         <Styled.Label>{label}</Styled.Label>
         <Styled.Select ref={ref} {...rest}>
           {options.map((option) => (

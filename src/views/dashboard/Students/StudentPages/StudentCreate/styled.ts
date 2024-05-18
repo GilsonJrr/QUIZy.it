@@ -92,6 +92,7 @@ export const Form = styled.form<Props>`
   gap: 25px;
   padding-bottom: ${({ padding }) => (padding ? "150" : "")}px;
   overflow-y: scroll;
+  width: 100%;
 `;
 
 export const EmptyForm = styled.div`
