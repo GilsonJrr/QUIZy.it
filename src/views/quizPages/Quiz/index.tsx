@@ -86,8 +86,6 @@ const Quiz = () => {
     localStorage.setItem("lastQuiz", quiz?.id || "");
   }, [quiz?.id]);
 
-  //TODO: request user here
-
   if (isLoading) {
     return (
       <LoadingContainerFullPage>

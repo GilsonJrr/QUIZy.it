@@ -3,7 +3,7 @@ import * as Styled from "./styled";
 
 import { FaCheck } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
-import { Answer, EAnswerIndexation, QuestionFiltered } from "types/index";
+import { Answer, QuestionFiltered } from "types/index";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setResult } from "Store/result/actions";
@@ -12,6 +12,7 @@ import { RootState } from "Store/root-reducer";
 import ProgressBar from "components/ProgressBar";
 import Button from "components/Button";
 import { theme } from "lib/styles/globalStyles";
+import Multiple from "../Multiple";
 
 type QuizTemplateProps = {
   onClose?: () => void;
@@ -49,7 +50,6 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
   const handleAnswer = () => {
     selectedAnswer?.type === "correct" && setScore(score + 1);
     setShowAnswer(true);
-    //filtrar quando for correto
     setQuizResume([
       ...quizResume,
       {
@@ -130,35 +130,13 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
             </Styled.ProgressNumber>
           </Styled.ProgressContainer>
         </Styled.Header>
-
-        <Styled.QuestionContainer>
-          <Styled.Question>{questions?.[current]?.question}</Styled.Question>
-          <Styled.OptionsContainer>
-            {questions?.[current]?.answers.map((answer: any, index: number) => {
-              const active = answer.answer === selectedAnswer?.answer;
-              return (
-                <Styled.ButtonContainer>
-                  <Button
-                    onClick={() => setSelectedAnswer(answer)}
-                    variant={active ? "success" : "secondary"}
-                    disabled={showAnswer}
-                    width="100%"
-                    padding="20px"
-                  >
-                    <Styled.AnswerIndex>
-                      {EAnswerIndexation[index]}
-                    </Styled.AnswerIndex>
-                    <Styled.AnswerText active={active}>
-                      {answer.answer || ""}
-                    </Styled.AnswerText>
-                  </Button>
-                </Styled.ButtonContainer>
-              );
-            })}
-          </Styled.OptionsContainer>
-        </Styled.QuestionContainer>
+        <Multiple
+          title={questions?.[current]?.question}
+          question={questions?.[current]}
+          selectedAnswer={selectedAnswer?.answer || ""}
+          setSelectedAnswer={(answer) => setSelectedAnswer(answer)}
+        />
       </Styled.QuizContainer>
-
       {!preview && (
         <Styled.QuizCheckContainer
           checkType={showAnswer ? selectedAnswer?.type : ""}
