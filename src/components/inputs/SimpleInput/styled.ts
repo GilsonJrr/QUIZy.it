@@ -9,7 +9,10 @@ export const Container = styled.div<Props>`
   position: relative;
   align-items: ${({ viewMode }) => (viewMode ? "center" : "auto")};
   justify-content: ${({ viewMode }) => (viewMode ? "center" : "auto")};
-  width: ${({ width }) => width || "100%"};
+  width: 100%;
+  @media screen and (min-width: 600px) {
+    width: ${({ width }) => width || "100%"};
+  }
 `;
 
 export const Label = styled.label<Props>`

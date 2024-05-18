@@ -8,7 +8,10 @@ export const Container = styled.div<Props>`
   gap: 4px;
   width: 100%;
   position: relative;
-  width: ${({ width }) => width || "100%"};
+  width: 100%;
+  @media screen and (min-width: 600px) {
+    width: ${({ width }) => width || "100%"};
+  }
 `;
 
 export const Label = styled.label<Props>`
