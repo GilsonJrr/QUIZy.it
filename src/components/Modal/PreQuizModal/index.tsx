@@ -60,43 +60,41 @@ const PreQuizModal: FC<PreQuizModalProps> = ({ item }) => {
 
   return (
     <ModalTemplate onClick={() => handleModal("")}>
-      <Styled.Container>
-        <Styled.Image src={item.image ? item.image : EmptyImage} />
-        <Styled.Content>
-          <Styled.Title>{item.title}</Styled.Title>
-          <Styled.SubTitle>{item.description}</Styled.SubTitle>
-          <Styled.InfoContainer>
-            <Styled.Info>{item.category} </Styled.Info>|
-            <Styled.Info> {item.type}</Styled.Info>
-          </Styled.InfoContainer>
-          <Styled.OptionContainer>
-            <Button
-              onClick={handleMyList}
-              variant="secondary"
-              padding="10px 20px"
-              size="small"
-            >
-              {isLoading ? (
-                <LoadingSpinner size="smaller" />
-              ) : (
-                <>
-                  {isOnTheList ? "Remove From List" : "Add to My list"}
-                  <BsSubstack size={12} />
-                </>
-              )}
-            </Button>
-            <Button
-              onClick={() => navigate(`/quiz?quizId=${item.id}`)}
-              variant="secondary"
-              padding="10px 20px"
-              size="small"
-            >
-              Start
-              <FaPlay size={12} />
-            </Button>
-          </Styled.OptionContainer>
-        </Styled.Content>
-      </Styled.Container>
+      <Styled.Image src={item.image ? item.image : EmptyImage} />
+      <Styled.Content>
+        <Styled.Title>{item.title}</Styled.Title>
+        <Styled.SubTitle>{item.description}</Styled.SubTitle>
+        <Styled.InfoContainer>
+          <Styled.Info>{item.category} </Styled.Info>|
+          <Styled.Info> {item.type}</Styled.Info>
+        </Styled.InfoContainer>
+        <Styled.OptionContainer>
+          <Button
+            onClick={handleMyList}
+            variant="secondary"
+            padding="10px 20px"
+            size="small"
+          >
+            {isLoading ? (
+              <LoadingSpinner size="smaller" />
+            ) : (
+              <>
+                {isOnTheList ? "Remove From List" : "Add to My list"}
+                <BsSubstack size={12} />
+              </>
+            )}
+          </Button>
+          <Button
+            onClick={() => navigate(`/quiz?quizId=${item.id}`)}
+            variant="secondary"
+            padding="10px 20px"
+            size="small"
+          >
+            Start
+            <FaPlay size={12} />
+          </Button>
+        </Styled.OptionContainer>
+      </Styled.Content>
     </ModalTemplate>
   );
 };

@@ -34,17 +34,20 @@ export const Container = styled.div`
 export const Content = styled.div<Props>`
   background-color: ${({ theme }) => theme.colors.background.default};
   position: absolute;
-  top: 5px;
   padding: 20px;
-  border-radius: 20px;
-  border: 2px solid
-    ${({ theme, type }) => theme.colors.alert[type as typeProps]};
   display: flex;
   gap: 15px;
   animation: ${fadeIn} 0.2s ease-in-out;
-  max-width: 100vw;
+  width: 100vw;
+  border-bottom: 3px solid
+    ${({ theme, type }) => theme.colors.alert[type as typeProps]};
+  justify-content: space-between;
   @media screen and (min-width: 600px) {
-    max-width: 30vw;
+    border: 2px solid
+      ${({ theme, type }) => theme.colors.alert[type as typeProps]};
+    border-radius: 20px;
+    top: 5px;
+    max-width: 25vw;
   }
 `;
 

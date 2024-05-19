@@ -33,12 +33,14 @@ const Multiple: FC<MultipleProps> = ({
                 width="100%"
                 padding="20px"
               >
-                <Styled.AnswerIndex>
-                  {EAnswerIndexation[index]}
-                </Styled.AnswerIndex>
-                <Styled.AnswerText active={active}>
-                  {answer.answer || ""}
-                </Styled.AnswerText>
+                <Styled.ButtonContent>
+                  <Styled.AnswerIndex>
+                    {EAnswerIndexation[index]}
+                  </Styled.AnswerIndex>
+                  <Styled.AnswerText active={active}>
+                    {answer.answer || ""}
+                  </Styled.AnswerText>
+                </Styled.ButtonContent>
               </Button>
             </Styled.ButtonContainer>
           );

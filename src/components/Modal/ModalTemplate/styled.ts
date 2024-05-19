@@ -13,3 +13,19 @@ export const ModalBackground = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+export const Container = styled.div`
+  background-color: ${({ theme }) => theme.colors.background.tertiary};
+  border-radius: 20px 20px 0 0;
+  min-width: 30vw;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  @media screen and (min-width: 600px) {
+    width: auto;
+    position: relative;
+    border-radius: 20px;
+  }
+`;

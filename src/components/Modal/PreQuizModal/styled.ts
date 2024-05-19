@@ -1,16 +1,5 @@
 import styled from "styled-components";
 
-type Props = {};
-
-export const Container = styled.div<Props>`
-  background-color: ${({ theme }) => theme.colors.background.tertiary};
-  border-radius: 20px;
-  min-width: 30vw;
-  display: flex;
-  flex-direction: column;
-  height: 70vh;
-`;
-
 export const Image = styled.img`
   width: 100%;
   height: 50%;

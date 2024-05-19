@@ -12,12 +12,8 @@ export const Container = styled.div<Props>`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   position: relative;
-  /* padding: 20px 0 0 0; */
-  @media screen and (min-width: 600px) {
-    /* padding: 20px 40px; */
-  }
 `;
 
 export const ContainerInner = styled.div`

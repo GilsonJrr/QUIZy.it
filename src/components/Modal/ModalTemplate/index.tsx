@@ -14,7 +14,7 @@ const ModalTemplate: FC<ModalTemplateProps> = ({ children, onClick }) => {
 
   return (
     <Styled.ModalBackground onClick={handleContainerClick}>
-      {children}
+      <Styled.Container>{children}</Styled.Container>
     </Styled.ModalBackground>
   );
 };
