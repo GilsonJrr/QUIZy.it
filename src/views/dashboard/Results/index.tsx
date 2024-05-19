@@ -17,6 +17,7 @@ const Results: FC<ResultsProps> = () => {
   const isMobile = useDeviceType();
 
   const { userStudent } = useSelector((state: RootState) => state.user);
+  const { quizzes } = useSelector((state: RootState) => state.quiz);
   const { user, isLoading: userLoading } = useSelector(
     (state: RootState) => state.user
   );
@@ -25,16 +26,13 @@ const Results: FC<ResultsProps> = () => {
     students,
     isLoading: studentLoading,
   } = useSelector((state: RootState) => state.student);
-  const { results: studentResult } = useSelector(
-    (state: RootState) => state.result
-  );
 
   const [tableTutorEmpty, setTableTutorEmpty] = useState(false);
 
   const userType = user?.info?.userType || localStorage.getItem("userType");
 
   useEffect(() => {
-    if (studentResult === undefined) {
+    if (quizzes === undefined) {
       dispatch(
         requestResultList({
           uid: student?.info?.tutorID || "",
@@ -42,7 +40,7 @@ const Results: FC<ResultsProps> = () => {
         })
       );
     }
-  }, [dispatch, student, studentResult]);
+  }, [dispatch, quizzes, student]);
 
   useEffect(() => {
     if (students === undefined) {

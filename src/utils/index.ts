@@ -40,3 +40,17 @@ export function formatTime(seconds: number) {
 
   return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 }
+
+export const sumByCategory = (data: any[]) => {
+  return data?.reduce((acc, cur) => {
+    const categoryIndex = acc.findIndex(
+      (item: { category: any }) => item.category === cur.category
+    );
+    if (categoryIndex !== -1) {
+      acc[categoryIndex].size += cur.size;
+    } else {
+      acc.push({ category: cur.category, size: cur.size });
+    }
+    return acc;
+  }, []);
+};

@@ -58,10 +58,14 @@ const StudentCreate: FC<StudentCreateProps> = () => {
 
   const { groups } = useSelector((state: RootState) => state.group);
   const { user, isLoading } = useSelector((state: RootState) => state.user);
-  const { student, students } = useSelector(
+  const { student: otherStudent, students } = useSelector(
     (state: RootState) => state.student
   );
   const userID = user?.info?.uid;
+
+  const student =
+    students?.filter((student) => student.info?.uid === studentId)[0] ||
+    otherStudent;
 
   const [extraFields, setExtraFields] = useState<any[]>([]);
   const [extraField, setExtraField] = useState<string>();

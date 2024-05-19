@@ -16,12 +16,13 @@ import { requestQuizList } from "Store/quiz/actions";
 import Tabs from "components/Tabs";
 import useDeviceType from "hooks/useDeviceType";
 import StudentResultTable from "components/Table/StudentResultTable";
+import { sumByCategory } from "utils/index";
 
 type StudentProfileProps = {};
 
 const StudentProfile: FC<StudentProfileProps> = () => {
   const {
-    student,
+    student: otherStudent,
     isLoading: studentLoading,
     students,
   } = useSelector((state: RootState) => state.student);
@@ -38,6 +39,10 @@ const StudentProfile: FC<StudentProfileProps> = () => {
   const studentId = new URLSearchParams(location.search).get("studentId");
   const [tab, setTab] = useState("Info");
   const [emptyResult, setEmptyResult] = useState(false);
+
+  const student =
+    students?.filter((student) => student.info?.uid === studentId)[0] ||
+    otherStudent;
 
   const crumbs = [
     { label: "Students", path: "/students" },
@@ -67,41 +72,32 @@ const StudentProfile: FC<StudentProfileProps> = () => {
   }, [quizzes, studentId]);
 
   useEffect(() => {
-    if (user && studentId) {
+    if (!student) {
       dispatch(
-        requestStudent({ uid: user?.info?.uid || "", studentId: studentId })
+        requestStudent({
+          uid: user?.info?.uid || "",
+          studentId: studentId || "",
+        })
       );
     }
-  }, [dispatch, studentId, user]);
+  }, [dispatch, student, studentId, user]);
 
   useEffect(() => {
-    dispatch(
-      requestResultList({
-        uid: user?.info?.uid || "",
-        studentUid: studentId || "",
-      })
-    );
-  }, [dispatch, studentId, user]);
+    if (quizzes === undefined) {
+      dispatch(
+        requestResultList({
+          uid: user?.info?.uid || "",
+          studentUid: studentId || "",
+        })
+      );
+    }
+  }, [dispatch, quizzes, studentId, user]);
 
   useEffect(() => {
     if (quizzes === undefined) {
       dispatch(requestQuizList({ uid: user?.info?.uid || "" }));
     }
   }, [dispatch, quizzes, user]);
-
-  const sumByCategory = (data: any[]) => {
-    return data?.reduce((acc, cur) => {
-      const categoryIndex = acc.findIndex(
-        (item: { category: any }) => item.category === cur.category
-      );
-      if (categoryIndex !== -1) {
-        acc[categoryIndex].size += cur.size;
-      } else {
-        acc.push({ category: cur.category, size: cur.size });
-      }
-      return acc;
-    }, []);
-  };
 
   const categoryTotal = sumByCategory(
     quizzes?.map((quiz) => {
@@ -117,6 +113,8 @@ const StudentProfile: FC<StudentProfileProps> = () => {
       studentList.info?.name !== student?.info?.name
     );
   });
+
+  console.log("studentProfile", student);
 
   if (studentLoading || quizLoading) {
     return (
