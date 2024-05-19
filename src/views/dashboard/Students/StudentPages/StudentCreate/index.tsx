@@ -264,7 +264,6 @@ const StudentCreate: FC<StudentCreateProps> = () => {
         deleteTitle={watch("name") || ""}
         onDelete={() => {
           dispatch(
-            //TODO: remover da lista de usuarios tb
             removeStudent(
               { uid: userID || "", studentId: student?.info?.uid },
               () =>
@@ -444,7 +443,6 @@ const StudentCreate: FC<StudentCreateProps> = () => {
               <Button
                 type="button"
                 onClick={handleAddField}
-                //TODO: fix this: quando adiciona o valor da chave ele some
                 disabled={
                   extraFields.length > 10 ||
                   !(

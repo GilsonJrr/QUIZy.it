@@ -33,13 +33,13 @@ import ResetPassword from "views/auth/ResetPassword";
 import RequestReset from "views/auth/RequestReset";
 
 const Routers = () => {
-  const { isLoading } = useSelector((state: RootState) => state.auth);
   const { user } = useSelector((state: RootState) => state.user);
   const userType = user?.info?.userType;
 
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | undefined>();
   const userID = user?.info?.uid;
 
+  //TODO: coocar isso no redux
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -52,7 +52,9 @@ const Routers = () => {
     return () => unsubscribe();
   }, [userID]);
 
-  if (isLoading && isAuthenticated === true) {
+  console.log("isAuthenticated", isAuthenticated);
+
+  if (isAuthenticated === undefined) {
     return (
       <LoadingContainerFullPage>
         <LoadingSpinner size="big" />

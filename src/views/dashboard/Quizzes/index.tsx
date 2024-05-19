@@ -41,7 +41,6 @@ const Quizzes: FC<QuizzesProps> = () => {
 
   const [tab, setTab] = useState("Options");
 
-  //TODO: lembrar que quando for estudante aqui ser chamado o id do tutor
   const userID = user?.info?.uid || userStudent?.uid;
   const userType = user?.info?.userType
     ? user?.info?.userType
