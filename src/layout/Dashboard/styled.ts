@@ -9,49 +9,46 @@ type Props = {
 };
 
 export const Container = styled.div`
-  position: relative;
-  overflow: hidden;
   background-color: ${({ theme }) => theme.colors.background.highlight};
-  height: 100vh;
-`;
-
-export const Content = styled.div`
-  margin-top: 6vh;
-  margin-left: 0px;
   width: 100%;
+  height: 100vh;
   overflow: hidden;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  @media screen and (min-width: 600px) {
-    height: 91%;
-    width: calc(100vw - 7vw);
-    margin-left: 7vw;
-    margin-top: 9vh;
-  }
 `;
 
 export const Header = styled.div`
   display: none;
+  height: 8%;
   @media screen and (min-width: 600px) {
-    position: fixed;
     display: flex;
-    top: 0;
     width: 100%;
     background-color: ${({ theme }) => theme.colors.background.default};
-    z-index: 10000;
-    height: 9vh;
+  }
+`;
+
+export const Content = styled.div`
+  display: flex;
+  width: 100%;
+  height: 92%;
+  flex-direction: column;
+  @media screen and (min-width: 600px) {
+    flex-direction: row;
+  }
+`;
+
+export const ChildrenContainer = styled.div`
+  padding: 15px;
+  height: 100%;
+  @media screen and (min-width: 600px) {
+    width: 94%;
+    padding: 20px 40px;
   }
 `;
 
 export const HeaderMobile = styled.div`
-  position: fixed;
   display: flex;
   top: 0;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.background.default};
-  z-index: 10000;
   height: 6vh;
   @media screen and (min-width: 600px) {
     display: none;
@@ -67,7 +64,7 @@ export const LogoContainer = styled.div`
   cursor: pointer;
   width: 20%;
   @media screen and (min-width: 600px) {
-    width: 7vw;
+    width: 6%;
     padding: 10px 15px;
   }
 `;
@@ -89,7 +86,7 @@ export const HeaderTitle = styled.div`
   border-left: none;
   padding: 10px 20px;
   @media screen and (min-width: 600px) {
-    width: 58vw;
+    width: 64%;
     justify-content: space-between;
   }
 `;
@@ -114,11 +111,11 @@ export const HeaderMessage = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 5vw;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-top: none;
   border-left: none;
   padding: 10px 20px;
+  width: 5%;
 `;
 
 export const AlertContainer = styled.div`
@@ -157,9 +154,9 @@ export const HeaderProfile = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30vw;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   padding: 10px 20px;
+  width: 25%;
 `;
 
 export const ProfileTitles = styled.div`

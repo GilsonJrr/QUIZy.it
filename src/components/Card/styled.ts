@@ -19,7 +19,7 @@ export const Card = styled.div<Props>`
   position: relative;
   background-color: ${({ theme }) => theme.colors.background.highlight};
 
-  height: 100vh;
+  height: 100%;
   overflow: auto;
 
   ::-webkit-scrollbar-thumb {

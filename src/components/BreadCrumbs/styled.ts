@@ -18,7 +18,7 @@ export const Container = styled.div<Props>`
     content: "";
     position: absolute;
     width: 10%;
-    height: ${({ showFade }) => (showFade ? 50 : 0)}px;
+    height: ${({ showFade }) => (showFade ? 30 : 0)}px;
     background: linear-gradient(
       90deg,
       ${({ theme }) => theme.colors.background.highlight} 20%,

@@ -18,16 +18,16 @@ export const Container = styled.div<Props>`
 `;
 
 export const Content = styled.div<Props>`
-  background-color: ${({ theme }) => theme.colors.background.default};
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  right: 0;
-  top: 0;
-
-  padding: 9vh 40px 30px;
-  border-left: 1px solid ${({ theme }) => theme.colors.main.default};
+  height: 100%;
+  background-color: ${({ theme }) => theme.colors.background.highlight};
   @media screen and (min-width: 600px) {
+    background-color: ${({ theme }) => theme.colors.background.default};
+    border-left: 1px solid ${({ theme }) => theme.colors.main.default};
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    right: 0;
+    top: 0;
     padding: 30px 40px 30px;
     width: 30vw;
     position: absolute;

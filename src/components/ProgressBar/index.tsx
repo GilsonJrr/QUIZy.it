@@ -22,7 +22,7 @@ const ProgressBar: FC<ProgressBarProps> = ({
         color={color}
         progressNull={progress === 0}
       >
-        {displayPercentage && `${progress.toFixed(0)} %`}
+        {displayPercentage && `${progress.toFixed(0)}%`}
       </Styled.ProgressBarFill>
       <Styled.Empty>0%</Styled.Empty>
     </Styled.ProgressBar>

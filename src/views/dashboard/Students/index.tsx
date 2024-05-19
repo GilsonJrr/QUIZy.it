@@ -88,7 +88,6 @@ const Students: FC<StudentsProps> = () => {
       return groups.map((group) => {
         return { label: group.title };
       });
-      // return [];
     } else {
       return [];
     }
@@ -117,7 +116,7 @@ const Students: FC<StudentsProps> = () => {
   }, [dispatch, students, userID]);
 
   useEffect(() => {
-    if (groups === undefined && userID) {
+    if (groups === undefined) {
       dispatch(requestGroupList({ uid: userID }));
     }
   }, [dispatch, groups, userID]);

@@ -4,12 +4,9 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: calc(100vh - 19vh);
+  height: 100%;
 
   @media screen and (min-width: 600px) {
-    width: 100%;
-    height: calc(100vh - 19vh);
-
     display: grid;
     grid-template-columns: 1fr 0.9fr 1fr 1.3fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
@@ -26,13 +23,10 @@ export const Container = styled.div`
 
 export const Wrapper = styled.div`
   width: 100%;
-  padding: 20px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  @media screen and (min-width: 600px) {
-    padding: 20px 40px;
-  }
 `;
 
 export const GroupContainer = styled.div`

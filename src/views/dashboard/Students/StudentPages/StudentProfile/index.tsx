@@ -187,6 +187,7 @@ const StudentProfile: FC<StudentProfileProps> = () => {
               gridName="group"
               emptyMessage={`${student?.info?.name} is alone here`}
               innerCard={isMobile}
+              isLoading={!student}
             >
               <Styled.GroupContainer>
                 {sameGroupStudents?.map((group) => {
@@ -213,6 +214,7 @@ const StudentProfile: FC<StudentProfileProps> = () => {
             isEmpty={false}
             gridName="information"
             innerCard={isMobile}
+            isLoading={!student}
           >
             {student && student?.info && (
               <Block.ProfileInfo student={student.info} />

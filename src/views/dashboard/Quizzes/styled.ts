@@ -2,15 +2,12 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
-  min-height: 100%;
-  padding: 0 20px;
-  height: calc(100vh - 9vh);
-
+  height: 100%;
+  padding: 0;
   display: flex;
   flex-direction: column;
-
   @media screen and (min-width: 600px) {
-    padding: 20px 40px;
+    /* padding: 20px 40px; */
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
@@ -43,7 +40,7 @@ export const TabContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 20px 0;
+  margin: 0 0 20px 0;
 `;
 
 export const EmptyContainer = styled.div`

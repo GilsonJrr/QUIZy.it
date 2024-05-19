@@ -17,17 +17,14 @@ export const Container = styled.div<Props>`
   bottom: 0;
   @media screen and (min-width: 600px) {
     display: flex;
-    width: 7vw;
-    height: 100vh;
-    position: fixed;
+    width: 6%;
   }
 `;
 
 export const ContainerBackGround = styled.div<Props>`
   width: 100%;
-  height: calc(100vh - 9vh);
+  height: 100%;
   background-color: ${({ theme }) => theme.colors.main.default};
-  position: fixed;
   left: 0;
   bottom: 0;
   display: flex;
@@ -37,7 +34,6 @@ export const ContainerBackGround = styled.div<Props>`
   z-index: 100;
   @media screen and (min-width: 600px) {
     background-color: transparent;
-    width: 7vw;
   }
 `;
 
@@ -46,16 +42,15 @@ export const MenuContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 20px;
+  padding: 10px;
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-top: none;
-  /* background-color: ${({ theme }) => theme.colors.background.tertiary}; */
+  background-color: ${({ theme }) => theme.colors.background.tertiary};
   height: auto;
   background-color: ${({ theme }) => theme.colors.background.default};
   @media screen and (min-width: 600px) {
-    padding: 20px 20px 0 20px;
-    height: 100%;
+    height: 90%;
   }
 `;
 

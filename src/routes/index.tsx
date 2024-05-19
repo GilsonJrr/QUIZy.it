@@ -60,7 +60,7 @@ const Routers = () => {
     );
   }
 
-  if (!isAuthenticated) {
+  if (isAuthenticated === false) {
     return (
       <Router>
         <ModalProvider>

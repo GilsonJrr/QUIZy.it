@@ -9,11 +9,7 @@ export const Container = styled.div<Props>`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: calc(100vh - 9vh);
-  padding: 20px;
-  @media screen and (min-width: 600px) {
-    padding: 20px 40px;
-  }
+  height: 100%;
 `;
 
 export const ContainerInner = styled.div`

@@ -61,6 +61,7 @@ const Results: FC<ResultsProps> = () => {
         isEmpty={tableTutorEmpty}
         emptyMessage={"you have not completed any quiz so far"}
         isLoading={userType === "tutor" ? studentLoading : userLoading}
+        innerCard={isMobile}
       >
         {userType === "tutor" ? (
           <TutorResultTable

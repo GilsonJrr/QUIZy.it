@@ -169,7 +169,6 @@ const Quizzes: FC<QuizzesProps> = () => {
                 <RenderQuizCard item={item} editMode={userType === "tutor"} />
               );
             })}
-          <></>
         </Card>
       )}
       {(!isMobile || tab === "Categories") && (

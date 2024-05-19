@@ -12,11 +12,11 @@ export const Container = styled.div<Props>`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: calc(100vh - 9vh);
+  height: 100vh;
   position: relative;
-  padding: 20px;
+  /* padding: 20px 0 0 0; */
   @media screen and (min-width: 600px) {
-    padding: 20px 40px;
+    /* padding: 20px 40px; */
   }
 `;
 

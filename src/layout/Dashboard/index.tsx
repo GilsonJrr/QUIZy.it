@@ -74,7 +74,6 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
 
   return (
     <Styled.Container>
-      <Sidebar display={showMenu} onClose={() => setShowMenu(false)} />
       <Styled.Header>
         <Styled.LogoContainer onClick={() => navigate("/")}>
           <Styled.Logo src={Logo} />
@@ -133,7 +132,12 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
           <GiHamburgerMenu size={25} />
         </Styled.HeaderHamburgerMenu>
       </Styled.HeaderMobile>
-      <Styled.Content>{children || <Outlet />}</Styled.Content>
+      <Styled.Content>
+        <Sidebar display={showMenu} onClose={() => setShowMenu(false)} />
+        <Styled.ChildrenContainer>
+          {children || <Outlet />}
+        </Styled.ChildrenContainer>
+      </Styled.Content>
     </Styled.Container>
   );
 };
