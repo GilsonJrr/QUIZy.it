@@ -192,6 +192,7 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
             questions={questionTest}
             quizId={quiz?.id || ""}
             preview
+            type="TrueOrFalse"
           />
         </Styled.PreviewContainer>
       }

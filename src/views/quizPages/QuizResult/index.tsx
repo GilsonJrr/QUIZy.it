@@ -9,6 +9,7 @@ import LoadingSpinner from "components/LoadingSpiner";
 import ProgressBar from "components/ProgressBar";
 import Button from "components/Button";
 import { formatTime } from "utils/index";
+import { TResume } from "types/index";
 
 type QuizResultProps = {};
 
@@ -71,8 +72,6 @@ const QuizResult: FC<QuizResultProps> = () => {
     );
   }
 
-  console.log("quizResume", allInfo);
-
   return (
     <Styled.Container>
       <Styled.TitlesContainer>
@@ -97,36 +96,97 @@ const QuizResult: FC<QuizResultProps> = () => {
           <Styled.InfoContainer>
             <Styled.Label>Time spent</Styled.Label>
             <Styled.ScoreMessage>
-              {formatTime(allInfo.timeSpent)}
+              {formatTime(allInfo?.timeSpent)}
             </Styled.ScoreMessage>
             <Styled.Label>Tries</Styled.Label>
-            <Styled.ScoreMessage>{allInfo.tries}</Styled.ScoreMessage>
+            <Styled.ScoreMessage>{allInfo?.tries}</Styled.ScoreMessage>
           </Styled.InfoContainer>
         )}
       </Styled.TitlesContainer>
       <Styled.ResumeContainer>
-        {quizResume?.map((res: any) => {
+        {quizResume?.map((res: TResume) => {
           return (
             <Styled.ResumeContainerInner>
-              <Styled.ResumeTextContainer>
-                {res.rightAnswer === res.selectedAnswer ? (
-                  <Styled.CheckIcon size={20} />
-                ) : (
-                  <Styled.CloseIcon size={25} />
-                )}
-                <h3>{res.question}</h3>
-              </Styled.ResumeTextContainer>
-              <Styled.ResumeTextContainer answer>
-                {res.rightAnswer === res.selectedAnswer ? (
-                  <Styled.CircleIcon right size={16} />
-                ) : (
-                  <>
-                    <Styled.CircleIcon right={false} />
-                    Your answer: <h4>{res.selectedAnswer}</h4> Right answer:
-                  </>
-                )}
-                <h4>{res.rightAnswer}</h4>
-              </Styled.ResumeTextContainer>
+              {quiz?.type !== "FillTheBlanks" && (
+                <Styled.ResumeTextContainer>
+                  {res.rightAnswer === res.selectedAnswer ? (
+                    <Styled.CheckIcon size={20} />
+                  ) : (
+                    <Styled.CloseIcon size={25} />
+                  )}
+                  <h3>{res.question}</h3>
+                </Styled.ResumeTextContainer>
+              )}
+              {quiz?.type === "FillTheBlanks" ? (
+                <Styled.ResumeTextContainer answer>
+                  {res.selectedFillAnswer?.some(
+                    (a: any) => a.type === "wrong"
+                  ) ? (
+                    <>
+                      <Styled.CircleIcon right={false} />
+                      Your answer: {/* <h4> */}
+                      {/* //AQUI */}
+                      {res.selectedFillAnswer.map((a) => {
+                        return (
+                          <div>
+                            {a.type === "default" ? (
+                              <Styled.AnswerText answerType={"default"}>
+                                {a.value}
+                              </Styled.AnswerText>
+                            ) : a.type === "wrong" ? (
+                              <Styled.AnswerText answerType={"wrong"}>
+                                {a.selectedValue === ""
+                                  ? "        "
+                                  : a.selectedValue}
+                              </Styled.AnswerText>
+                            ) : (
+                              <Styled.AnswerText answerType={"right"}>
+                                {a.selectedValue}
+                              </Styled.AnswerText>
+                            )}
+                          </div>
+                        );
+                      })}
+                      {/* //AQUI */}
+                      {/* </h4> */}
+                      Right answer:
+                    </>
+                  ) : (
+                    <Styled.CircleIcon right size={16} />
+                  )}
+                  {res?.selectedFillAnswer?.map((a) => {
+                    return (
+                      <div>
+                        {a.type === "default" ? (
+                          <Styled.AnswerText answerType={"default"}>
+                            {a.value}
+                          </Styled.AnswerText>
+                        ) : a.type === "wrong" ? (
+                          <Styled.AnswerText answerType={"right"}>
+                            {a.value}
+                          </Styled.AnswerText>
+                        ) : (
+                          <Styled.AnswerText answerType={"right"}>
+                            {a.value}
+                          </Styled.AnswerText>
+                        )}
+                      </div>
+                    );
+                  })}
+                </Styled.ResumeTextContainer>
+              ) : (
+                <Styled.ResumeTextContainer answer>
+                  {res.rightAnswer === res.selectedAnswer ? (
+                    <Styled.CircleIcon right size={16} />
+                  ) : (
+                    <>
+                      <Styled.CircleIcon right={false} />
+                      Your answer: <h4>{res.selectedAnswer}</h4> Right answer:
+                    </>
+                  )}
+                  <h4>{res.rightAnswer}</h4>
+                </Styled.ResumeTextContainer>
+              )}
             </Styled.ResumeContainerInner>
           );
         })}

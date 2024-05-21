@@ -22,7 +22,7 @@ export const getQuizList = async (
     ? query(queryRef, orderByChild("category"), equalTo(category))
     : size
     ? query(queryRef, limitToFirst(size))
-    : query(queryRef);
+    : query(queryRef, orderByChild("date"));
 
   return get(quizQuery)
     .then((snapshot) => {

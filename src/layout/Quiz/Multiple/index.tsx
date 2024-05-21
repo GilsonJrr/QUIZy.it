@@ -18,6 +18,20 @@ const Multiple: FC<MultipleProps> = ({
   showAnswer,
   setSelectedAnswer,
 }) => {
+  const handleSelectedAnswer = (data: Answer) => {
+    const answer: Answer = {
+      ...data,
+      finalAnswer: question.correctAnswers.toString(),
+      resume: {
+        question: question.question,
+        rightAnswer: question.correctAnswers.toString(),
+        selectedAnswer: data.answer,
+      },
+    };
+
+    setSelectedAnswer(answer);
+  };
+
   return (
     <Styled.QuestionContainer>
       <Styled.Question>{title}</Styled.Question>
@@ -27,7 +41,7 @@ const Multiple: FC<MultipleProps> = ({
           return (
             <Styled.ButtonContainer>
               <Button
-                onClick={() => setSelectedAnswer(answer)}
+                onClick={() => handleSelectedAnswer(answer)}
                 variant={active ? "success" : "secondary"}
                 disabled={showAnswer}
                 width="100%"

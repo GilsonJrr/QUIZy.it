@@ -114,8 +114,6 @@ const StudentProfile: FC<StudentProfileProps> = () => {
     );
   });
 
-  console.log("studentProfile", student);
-
   if (studentLoading || quizLoading) {
     return (
       <LoadingContainerFullPage>

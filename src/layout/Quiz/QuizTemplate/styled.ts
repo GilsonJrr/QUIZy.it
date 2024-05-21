@@ -79,19 +79,6 @@ export const QuestionContainer = styled.div`
   }
 `;
 
-export const OptionsContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  overflow-y: scroll;
-
-  @media screen and (min-width: 600px) {
-    width: 50%;
-  }
-`;
-
 export const Question = styled.h3`
   text-align: center;
   color: ${({ theme }) => theme.colors.main.default};

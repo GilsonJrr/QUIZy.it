@@ -62,10 +62,7 @@ const Results: FC<ResultsProps> = () => {
         innerCard={isMobile}
       >
         {userType === "tutor" ? (
-          <TutorResultTable
-            dashBoard
-            emptyState={(empty) => setTableTutorEmpty(empty)}
-          />
+          <TutorResultTable emptyState={(empty) => setTableTutorEmpty(empty)} />
         ) : (
           <StudentResultTable
             dashBoard

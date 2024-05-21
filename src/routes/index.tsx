@@ -52,8 +52,6 @@ const Routers = () => {
     return () => unsubscribe();
   }, [userID]);
 
-  console.log("isAuthenticated", isAuthenticated);
-
   if (isAuthenticated === undefined) {
     return (
       <LoadingContainerFullPage>

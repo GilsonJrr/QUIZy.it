@@ -70,8 +70,5 @@ export const removeStudentUser = async (uid: string) => {
 export const removeStudentUserAccount = async (uid: any) => {
   try {
     await deleteUser(uid);
-    console.log("Successfully deleted user");
-  } catch (error) {
-    // console.log("Error deleting user:", error.message);
-  }
+  } catch (error) {}
 };
