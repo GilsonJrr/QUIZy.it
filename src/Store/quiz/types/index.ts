@@ -35,8 +35,15 @@ export type TMultipleQuestions = {
 };
 
 export type TTrueOrFalseQuestions = {
+  spitedPhrase?: unknown;
   questionTitle: string;
   rightAnswer?: boolean;
+};
+
+export type TFillTheBlanksQuestions = {
+  question?: string[];
+  rightAnswer?: string[];
+  spitedPhrase?: string[];
 };
 
 export type QuizTypeValues = {
@@ -47,7 +54,10 @@ export type QuizTypeValues = {
   image?: string;
   type: string;
   category: string;
-  questions?: TMultipleQuestions[] | TTrueOrFalseQuestions[];
+  questions?:
+    | TMultipleQuestions[]
+    | TTrueOrFalseQuestions[]
+    | TFillTheBlanksQuestions[];
   results?: ResultTypeValues[];
   date?: string;
 };

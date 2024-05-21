@@ -2,10 +2,9 @@ import React, { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as Styled from "./styled";
 import SimpleInput from "components/inputs/SimpleInput";
-import { trueOrFalseSchema } from "lib/schemas";
+import { FillTheBlanksSchema } from "lib/schemas";
 import { yupResolver } from "@hookform/resolvers/yup";
 import QuizForm from "layout/QuizForm";
-import ToggleInput from "components/inputs/ToggleInput";
 import { QuizTypeValues, TTrueOrFalseQuestions } from "Store/quiz/types";
 import { idGenerator } from "utils/index";
 import QuizTemplate from "layout/Quiz/QuizTemplate";
@@ -20,18 +19,19 @@ import Button from "components/Button";
 import { addLeadingZero } from "functions/index";
 import AlertModal from "components/Modal/AlertModal";
 
-type TrueOrFalseQuestionProps = {
+type FillTheBlanksProps = {
   sendQuiz: (data: QuizTypeValues) => void;
 };
 
-type TTrueOrFalseQuestionsFrom = {
+type TFillTheBlanksQuestionsFrom = {
   questions: {
     questionTitle: string;
-    rightAnswer?: boolean;
+    rightAnswer?: string[];
+    spitedPhrase?: string[];
   }[];
 };
 
-const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
+const FillTheBlanks: FC<FillTheBlanksProps> = ({ sendQuiz }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const isMobile = useDeviceType();
@@ -43,6 +43,7 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
 
   const [question, setQuestion] = useState([0]);
   const [selectedQuestion, setSelectedQuestion] = useState<number>(0);
+  const [hiddenWords, setHiddenWords] = useState([""]);
 
   const userID = user?.info?.uid;
 
@@ -56,18 +57,31 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
     unregister,
     setValue,
     reset,
-  } = useForm<TTrueOrFalseQuestionsFrom>({
-    resolver: yupResolver(trueOrFalseSchema),
+  } = useForm<TFillTheBlanksQuestionsFrom>({
+    resolver: yupResolver(FillTheBlanksSchema),
   });
 
-  const onSubmit = (data: TTrueOrFalseQuestionsFrom) => {
+  const spitedPhrase = watch(`questions.${selectedQuestion}.questionTitle`)
+    ?.split(" ")
+    .filter((empty) => empty !== "");
+  const handleSplittedValues = () => {
+    setValue(`questions.${selectedQuestion}.spitedPhrase`, spitedPhrase);
+    hiddenWords.length > 0 &&
+      setValue(
+        `questions.${selectedQuestion}.rightAnswer`,
+        hiddenWords?.filter((a) => spitedPhrase?.includes(a))
+      );
+    return;
+  };
+
+  const onSubmit = (data: TFillTheBlanksQuestionsFrom) => {
     if (quizzes && quizzes?.length >= 100) {
       return handleModal(
         <AlertModal
           type="warning"
           title="Quiz Creation Limit"
           totalTime={6000}
-          message={`You have reached the maximum number of quizzes you can create. 
+          message={`You have reached the maximum number of quizzes you can create.
           Please delete an existing quiz or contact support for assistance.`}
         />
       );
@@ -82,13 +96,6 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
     };
 
     sendQuiz(dataPrepared);
-  };
-
-  const handleAddQuestion = () => {
-    if (question.length < 15) {
-      setQuestion([...question, question[question.length - 1] + 1]);
-      setSelectedQuestion(question[question.length - 1] + 1);
-    }
   };
 
   const handleDeleteQuestion = (id: number) => {
@@ -117,29 +124,6 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
     }
   };
 
-  const questions = [
-    {
-      id: 1,
-      answer:
-        watch(`questions.${selectedQuestion}.rightAnswer`)?.toString() || "",
-      type: "correct",
-    },
-    {
-      id: 1,
-      answer:
-        (!watch(`questions.${selectedQuestion}.rightAnswer`))?.toString() || "",
-      type: "incorrect",
-    },
-  ];
-
-  const questionTest: any[] = [
-    {
-      question: watch(`questions.${selectedQuestion}.questionTitle`),
-      answers: questions,
-      correctAnswers: watch(`questions.${selectedQuestion}.rightAnswer`),
-    },
-  ];
-
   const handleDelete = () => {
     handleModal(
       <DeleteModal
@@ -161,20 +145,28 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
       questions?.forEach((question, index) => {
         setValue(`questions.${index}.questionTitle`, question.questionTitle);
         setValue(
+          `questions.${index}.spitedPhrase`,
+          question.spitedPhrase as unknown as string[]
+        );
+        setValue(
           `questions.${index}.rightAnswer`,
-          question.rightAnswer || true
+          question.rightAnswer as unknown as string[]
         );
       });
     }
   }, [quiz, setValue]);
 
   useEffect(() => {
+    setHiddenWords(watch(`questions.${selectedQuestion}.rightAnswer`) || []);
+  }, [selectedQuestion, watch]);
+
+  useEffect(() => {
     if (quizId === null) {
-      const emptyState: TTrueOrFalseQuestionsFrom = {
+      const emptyState: TFillTheBlanksQuestionsFrom = {
         questions: [
           {
             questionTitle: "",
-            rightAnswer: true,
+            rightAnswer: [""],
           },
         ],
       };
@@ -184,19 +176,52 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleAddHiddenWord = (word: string) => {
+    if (hiddenWords.includes(word)) {
+      hiddenWords && setHiddenWords(hiddenWords?.filter((a) => a !== word));
+      hiddenWords &&
+        setValue(
+          `questions.${selectedQuestion}.rightAnswer`,
+          hiddenWords?.filter((a) => a !== word)
+        );
+      return;
+    }
+    setHiddenWords(
+      [...hiddenWords, word].filter((a) => spitedPhrase?.includes(a))
+    );
+    setValue(
+      `questions.${selectedQuestion}.rightAnswer`,
+      [...hiddenWords, word].filter((a) => spitedPhrase?.includes(a))
+    );
+  };
+
+  const handleAddQuestion = () => {
+    if (question.length < 15) {
+      setQuestion([...question, question[question.length - 1] + 1]);
+      setSelectedQuestion(question[question.length - 1] + 1);
+    }
+  };
+
   return (
     <QuizForm
       preview={
         <Styled.PreviewContainer>
           <QuizTemplate
-            questions={questionTest}
+            filTheBlanks={[
+              {
+                rightAnswer: watch(`questions.${selectedQuestion}.rightAnswer`),
+                spitedPhrase: watch(
+                  `questions.${selectedQuestion}.spitedPhrase`
+                ),
+              },
+            ]}
             quizId={quiz?.id || ""}
             preview
-            type="TrueOrFalse"
+            type="FillTheBlanks"
           />
         </Styled.PreviewContainer>
       }
-      formName={"FormTrueOrFalseQuestion"}
+      formName={"FormFillTheBlanksQuestion"}
       title={"True Or False"}
       buttonTitle="Save"
       edit={!!quizId}
@@ -205,28 +230,39 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
     >
       <Styled.Container>
         <Styled.Form
-          id="FormTrueOrFalseQuestion"
+          id="FormFillTheBlanksQuestion"
           onSubmit={handleSubmit(onSubmit)}
         >
           <SimpleInput
-            label={"Question"}
+            {...register(`questions.${selectedQuestion}.questionTitle`)}
+            label={"Final Answer"}
             placeholder="Enter question title"
             value={watch(`questions.${selectedQuestion}.questionTitle`) || ""}
             error={errors.questions?.[selectedQuestion]?.questionTitle}
-            {...register(`questions.${selectedQuestion}.questionTitle`)}
+            onBlur={handleSplittedValues}
           />
-          <Styled.AnswerContainer justify="flex-start">
-            <ToggleInput
-              Label="Answer"
-              options={[
-                { label: "True", value: true },
-                { label: "False", value: false },
-              ]}
-              setValue={(value) =>
-                setValue(`questions.${selectedQuestion}.rightAnswer`, value)
-              }
-            />
-          </Styled.AnswerContainer>
+          {spitedPhrase?.length > 1 && (
+            <>
+              <h2>Choose Words to be Blank</h2>
+              <Styled.Words>
+                {spitedPhrase?.map((word) => {
+                  return (
+                    <Button
+                      variant={
+                        hiddenWords.includes(word) ? "primary" : "secondary"
+                      }
+                      padding="5px 10px"
+                      radius="40px"
+                      type="button"
+                      onClick={() => handleAddHiddenWord(word)}
+                    >
+                      {word}
+                    </Button>
+                  );
+                })}
+              </Styled.Words>
+            </>
+          )}
         </Styled.Form>
         <Styled.ButtonContainer
           justify={
@@ -265,4 +301,4 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
   );
 };
 
-export default TrueOrFalseQuestion;
+export default FillTheBlanks;

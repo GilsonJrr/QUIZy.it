@@ -39,7 +39,6 @@ const ResetPassword = () => {
   });
 
   const onSubmit = (data: TResetPassword) => {
-    console.log(data);
     if (data.password !== data.confirmPassword) {
       handleModal(<AlertModal type="error" message="Passwords do not match" />);
       return;

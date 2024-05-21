@@ -54,6 +54,9 @@ const QuizCreate: FC<QuizCreateProps> = () => {
       {quizType === "TrueOrFalse" && (
         <Block.TrueOrFalseQuestion sendQuiz={(quiz) => handleSendQuiz(quiz)} />
       )}
+      {quizType === "FillTheBlanks" && (
+        <Block.FillTheBlanks sendQuiz={(quiz) => handleSendQuiz(quiz)} />
+      )}
     </Styled.Container>
   );
 };

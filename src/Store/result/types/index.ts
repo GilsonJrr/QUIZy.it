@@ -25,6 +25,9 @@ export type TQuizResume = {
   question?: string;
   rightAnswer?: string;
   selectedAnswer?: string;
+  selectedValue?: string;
+  type?: string;
+  value?: string;
 };
 
 export type ResultTypeValues = {

@@ -10,15 +10,10 @@ const LanguageSwitcher: FC<LanguageSwitcherProps> = () => {
   const { i18n } = useTranslation();
 
   const changeLanguage = (lng: string) => {
-    console.log("Changing language to:", lng);
     i18n
       .changeLanguage(lng)
-      .then(() => {
-        console.log("Language changed successfully to:", lng);
-      })
-      .catch((error) => {
-        console.error("Error changing language:", error);
-      });
+      .then(() => {})
+      .catch((error) => {});
   };
 
   return (

@@ -14,6 +14,7 @@ export const theme: DefaultTheme = {
       secondary: "#e6e6e6",
     },
     quiz: {
+      default: "#4a4747",
       right: "#89c799",
       rightSecondary: "#a6e3b6",
       wrong: "#c78788",

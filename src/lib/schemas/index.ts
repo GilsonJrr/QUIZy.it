@@ -57,6 +57,16 @@ export const multipleChosesSchema = Yup.object().shape({
     .required("Questions are required"),
 });
 
+export const FillTheBlanksSchema = Yup.object().shape({
+  questions: Yup.array(
+    Yup.object().shape({
+      questionTitle: Yup.string().required("Question title is required"),
+    })
+  )
+    .min(1, "You need at least one question")
+    .required("Questions are required"),
+});
+
 export const trueOrFalseSchema = Yup.object().shape({
   questions: Yup.array(
     Yup.object().shape({

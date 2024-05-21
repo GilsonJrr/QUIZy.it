@@ -219,6 +219,7 @@ const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
             questions={questionTest}
             quizId={quiz?.id || ""}
             preview
+            type="Multiple"
           />
         </Styled.PreviewContainer>
       }

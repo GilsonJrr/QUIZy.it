@@ -97,6 +97,14 @@ const Quiz = () => {
   return (
     <QuizTemplate
       questions={questions || []}
+      filTheBlanks={
+        quiz?.questions?.map((question: any) => {
+          return {
+            rightAnswer: question.rightAnswer,
+            spitedPhrase: question.spitedPhrase,
+          };
+        }) || []
+      }
       onClose={() => navigate("/quizzes")}
       quizId={quizID || ""}
     />

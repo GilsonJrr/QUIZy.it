@@ -16,13 +16,30 @@ export type QuizQuestion = {
   isNiche: boolean;
 };
 
-export type Answer = {
-  id: number;
-  answer: string | undefined;
+export type TResume = {
+  question?: string | undefined;
+  selectedFillAnswer?: TFillAnswer[];
+  rightAnswer?: string;
+  selectedAnswer?: string | ReactNode | ReactNode[];
+};
+
+export type TFillAnswer = {
+  value: string;
   type: string;
+  selectedAnswer?: string;
+  selectedValue?: string;
+};
+
+export type Answer = {
+  id?: number;
+  answer?: ReactNode | ReactNode[] | string;
+  finalAnswer?: ReactNode | ReactNode[] | string;
+  resume?: TResume;
+  type?: string;
 };
 
 export type QuestionFiltered = {
+  rightAnswer?: string[];
   question: string;
   answers: Answer[];
   correctAnswers: string;

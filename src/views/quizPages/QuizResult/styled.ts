@@ -7,6 +7,7 @@ import { FaCircle } from "react-icons/fa6";
 type Props = {
   right?: boolean;
   answer?: boolean;
+  answerType?: "default" | "wrong" | "right";
 };
 
 export const Container = styled.div<Props>`
@@ -146,4 +147,12 @@ export const CloseIcon = styled(AiOutlineClose)`
 export const CircleIcon = styled(FaCircle)<Props>`
   color: ${({ right, theme }) =>
     right ? theme.colors.quiz.right : theme.colors.quiz.wrong};
+`;
+
+export const AnswerText = styled.h4<Props>`
+  color: ${({ theme, answerType }) =>
+    answerType && theme.colors.quiz[answerType]};
+  text-decoration: ${({ answerType }) =>
+    answerType !== "default" ? "underline" : ""};
+  white-space: pre;
 `;
