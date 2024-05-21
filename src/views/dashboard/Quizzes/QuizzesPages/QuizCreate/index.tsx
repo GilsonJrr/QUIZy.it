@@ -4,8 +4,12 @@ import BreadCrumbs from "components/BreadCrumbs";
 import * as Block from "blocks/QuizCreate/index";
 import { QuizRequest, QuizTypeValues } from "Store/quiz/types";
 import { useDispatch } from "react-redux";
-import { setQuiz } from "Store/quiz/actions";
+import { removeQuiz, setQuiz } from "Store/quiz/actions";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useModalContext } from "components/Modal/modalContext";
+import AlertModal from "components/Modal/AlertModal";
+import { TQuizDelete } from "types/index";
+import DeleteModal from "components/Modal/DeleteModal";
 
 type QuizCreateProps = {};
 
@@ -13,6 +17,8 @@ const QuizCreate: FC<QuizCreateProps> = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
+
+  const { handleModal } = useModalContext();
 
   const quizId = new URLSearchParams(location.search).get("quizId");
 
@@ -40,8 +46,37 @@ const QuizCreate: FC<QuizCreateProps> = () => {
   }, []);
 
   const handleSendQuiz = (quiz: QuizTypeValues) => {
-    dispatch(setQuiz(quiz as QuizRequest));
+    dispatch(
+      setQuiz(quiz as QuizRequest),
+      handleModal(
+        <AlertModal
+          type={"success"}
+          message={
+            quizId !== null
+              ? "Quiz update successfully"
+              : "Quiz created successfully"
+          }
+        />
+      )
+    );
     navigate("/quizzes");
+  };
+
+  const handleDelete = (deleteData: TQuizDelete) => {
+    handleModal(
+      <DeleteModal
+        deleteTitle={deleteData.quizTitle || ""}
+        onDelete={() => {
+          dispatch(
+            removeQuiz({
+              uid: deleteData.uid || "",
+              quizId: deleteData.quizId || "",
+            })
+          );
+          navigate("/quizzes");
+        }}
+      />
+    );
   };
 
   return (
@@ -49,13 +84,22 @@ const QuizCreate: FC<QuizCreateProps> = () => {
       <BreadCrumbs crumbs={!quizType ? crumbs : crumbsQuestion} />
       {!quizType && <Block.FormQuiz quizType={(e) => setQuizType(e)} />}
       {quizType === "Multiple" && (
-        <Block.MultipleQuestion sendQuiz={(quiz) => handleSendQuiz(quiz)} />
+        <Block.MultipleQuestion
+          sendQuiz={(quiz) => handleSendQuiz(quiz)}
+          deleteQuiz={(deleteData) => handleDelete(deleteData)}
+        />
       )}
       {quizType === "TrueOrFalse" && (
-        <Block.TrueOrFalseQuestion sendQuiz={(quiz) => handleSendQuiz(quiz)} />
+        <Block.TrueOrFalseQuestion
+          sendQuiz={(quiz) => handleSendQuiz(quiz)}
+          deleteQuiz={(deleteData) => handleDelete(deleteData)}
+        />
       )}
       {quizType === "FillTheBlanks" && (
-        <Block.FillTheBlanks sendQuiz={(quiz) => handleSendQuiz(quiz)} />
+        <Block.FillTheBlanks
+          sendQuiz={(quiz) => handleSendQuiz(quiz)}
+          deleteQuiz={(deleteData) => handleDelete(deleteData)}
+        />
       )}
     </Styled.Container>
   );

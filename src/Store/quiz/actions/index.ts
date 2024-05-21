@@ -58,16 +58,24 @@ export function quiz(props: QuizTypeValues): QuizAction<QuizTypeValues> {
   };
 }
 
-export function setQuiz(props: QuizRequest): QuizAction<QuizRequest> {
+export function setQuiz(
+  props: QuizRequest,
+  onSuccess?: () => void
+): QuizAction<QuizRequest> {
   return {
     type: QuizTypes.SET_QUIZ,
     payload: { ...props },
+    onSuccess,
   };
 }
 
-export function removeQuiz(props: QuizRequest): QuizAction<QuizRequest> {
+export function removeQuiz(
+  props: QuizRequest,
+  onSuccess?: () => void
+): QuizAction<QuizRequest> {
   return {
     type: QuizTypes.REMOVE_QUIZ,
     payload: { ...props },
+    onSuccess,
   };
 }

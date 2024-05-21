@@ -10,18 +10,17 @@ import { idGenerator, randomize } from "utils/index";
 import QuizTemplate from "layout/Quiz/QuizTemplate";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useModalContext } from "components/Modal/modalContext";
-import DeleteModal from "components/Modal/DeleteModal";
-import { useDispatch } from "react-redux";
-import { removeQuiz } from "Store/quiz/actions";
 import useDeviceType from "hooks/useDeviceType";
 import Button from "components/Button";
 import { addLeadingZero } from "functions/index";
 import AlertModal from "components/Modal/AlertModal";
+import { TQuizDelete } from "types/index";
 
 type MultipleQuestionProps = {
   sendQuiz: (data: QuizTypeValues) => void;
+  deleteQuiz: (data: TQuizDelete) => void;
 };
 
 type TMultipleQuestionsForm = {
@@ -35,10 +34,11 @@ type TMultipleQuestionsForm = {
   }[];
 };
 
-const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
+const MultipleQuestion: FC<MultipleQuestionProps> = ({
+  sendQuiz,
+  deleteQuiz,
+}) => {
   const location = useLocation();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const isMobile = useDeviceType();
 
   const { handleModal } = useModalContext();
@@ -162,17 +162,12 @@ const MultipleQuestion: FC<MultipleQuestionProps> = ({ sendQuiz }) => {
   ];
 
   const handleDelete = () => {
-    handleModal(
-      <DeleteModal
-        deleteTitle={quiz?.title || ""}
-        onDelete={() => {
-          dispatch(
-            removeQuiz({ uid: user?.info?.uid || "", quizId: quizId || "" })
-          );
-          navigate("/quizzes");
-        }}
-      />
-    );
+    const dataDelete = {
+      quizTitle: quiz?.title || "",
+      uid: user?.info?.uid || "",
+      quizId: quizId || "",
+    };
+    deleteQuiz(dataDelete);
   };
 
   useEffect(() => {

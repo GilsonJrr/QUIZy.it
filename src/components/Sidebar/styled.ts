@@ -42,7 +42,7 @@ export const MenuContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 10px;
+  padding: 20px 10px;
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-top: none;

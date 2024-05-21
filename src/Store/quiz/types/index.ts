@@ -16,6 +16,7 @@ export enum QuizTypes {
 export type QuizAction<Payload> = {
   type: QuizTypes;
   payload: Payload;
+  onSuccess?: () => void;
 };
 
 export type QuizRequest = {
@@ -23,6 +24,7 @@ export type QuizRequest = {
   quizId?: string;
   category?: string;
   size?: number;
+  onSuccess?: () => void;
 };
 
 export type TMultipleQuestions = {
@@ -60,6 +62,7 @@ export type QuizTypeValues = {
     | TFillTheBlanksQuestions[];
   results?: ResultTypeValues[];
   date?: string;
+  onSuccess?: () => void;
 };
 
 export type QuizState = {

@@ -51,12 +51,14 @@ export function* getQuizSaga(props: QuizAction<QuizRequest>): any {
 export function* setQuizSaga(props: QuizAction<QuizTypeValues>): any {
   const uid = props.payload.uid;
   const payload = props.payload;
+  const onSuccess = props.onSuccess;
 
   try {
     if (uid && payload) {
       yield call(setQuiz, uid, payload);
       const quizResponses = yield call(getQuizList, uid);
       yield put(quizList(quizResponses));
+      yield put(() => onSuccess?.());
     }
   } catch (err: any) {
     yield put(err);
@@ -66,12 +68,14 @@ export function* setQuizSaga(props: QuizAction<QuizTypeValues>): any {
 export function* removeQuizSaga(props: QuizAction<QuizRequest>): any {
   const quizId = props.payload.quizId;
   const uid = props.payload.uid;
+  const onSuccess = props.onSuccess;
 
   try {
     if (quizId && uid) {
       yield call(removeQuiz, uid, quizId);
       const quizResponses = yield call(getQuizList, uid);
       yield put(quizList(quizResponses));
+      yield put(() => onSuccess?.());
     }
   } catch (err: any) {
     yield put(err);

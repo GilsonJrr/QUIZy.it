@@ -139,6 +139,12 @@ export type TFormData = {
   trueOrFalseQuestions?: TTrueOrFalseQuestions[];
 };
 
+export type TQuizDelete = {
+  quizTitle: string;
+  uid: string;
+  quizId: string;
+};
+
 export type UserType = "tutor" | "student";
 
 //enums

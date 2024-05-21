@@ -8,19 +8,19 @@ import QuizForm from "layout/QuizForm";
 import { QuizTypeValues, TTrueOrFalseQuestions } from "Store/quiz/types";
 import { idGenerator } from "utils/index";
 import QuizTemplate from "layout/Quiz/QuizTemplate";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { useLocation } from "react-router-dom";
 import { useModalContext } from "components/Modal/modalContext";
-import DeleteModal from "components/Modal/DeleteModal";
-import { removeQuiz } from "Store/quiz/actions";
 import useDeviceType from "hooks/useDeviceType";
 import Button from "components/Button";
 import { addLeadingZero } from "functions/index";
 import AlertModal from "components/Modal/AlertModal";
+import { TQuizDelete } from "types/index";
 
 type FillTheBlanksProps = {
   sendQuiz: (data: QuizTypeValues) => void;
+  deleteQuiz: (data: TQuizDelete) => void;
 };
 
 type TFillTheBlanksQuestionsFrom = {
@@ -31,9 +31,8 @@ type TFillTheBlanksQuestionsFrom = {
   }[];
 };
 
-const FillTheBlanks: FC<FillTheBlanksProps> = ({ sendQuiz }) => {
+const FillTheBlanks: FC<FillTheBlanksProps> = ({ sendQuiz, deleteQuiz }) => {
   const location = useLocation();
-  const dispatch = useDispatch();
   const isMobile = useDeviceType();
 
   const { handleModal } = useModalContext();
@@ -125,16 +124,12 @@ const FillTheBlanks: FC<FillTheBlanksProps> = ({ sendQuiz }) => {
   };
 
   const handleDelete = () => {
-    handleModal(
-      <DeleteModal
-        deleteTitle={quiz?.title || ""}
-        onDelete={() =>
-          dispatch(
-            removeQuiz({ uid: user?.info?.uid || "", quizId: quizId || "" })
-          )
-        }
-      />
-    );
+    const dataDelete = {
+      quizTitle: quiz?.title || "",
+      uid: user?.info?.uid || "",
+      quizId: quizId || "",
+    };
+    deleteQuiz(dataDelete);
   };
 
   useEffect(() => {

@@ -9,19 +9,19 @@ import ToggleInput from "components/inputs/ToggleInput";
 import { QuizTypeValues, TTrueOrFalseQuestions } from "Store/quiz/types";
 import { idGenerator } from "utils/index";
 import QuizTemplate from "layout/Quiz/QuizTemplate";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { useLocation } from "react-router-dom";
 import { useModalContext } from "components/Modal/modalContext";
-import DeleteModal from "components/Modal/DeleteModal";
-import { removeQuiz } from "Store/quiz/actions";
 import useDeviceType from "hooks/useDeviceType";
 import Button from "components/Button";
 import { addLeadingZero } from "functions/index";
 import AlertModal from "components/Modal/AlertModal";
+import { TQuizDelete } from "types/index";
 
 type TrueOrFalseQuestionProps = {
   sendQuiz: (data: QuizTypeValues) => void;
+  deleteQuiz: (data: TQuizDelete) => void;
 };
 
 type TTrueOrFalseQuestionsFrom = {
@@ -31,9 +31,11 @@ type TTrueOrFalseQuestionsFrom = {
   }[];
 };
 
-const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
+const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({
+  sendQuiz,
+  deleteQuiz,
+}) => {
   const location = useLocation();
-  const dispatch = useDispatch();
   const isMobile = useDeviceType();
 
   const { handleModal } = useModalContext();
@@ -141,16 +143,12 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({ sendQuiz }) => {
   ];
 
   const handleDelete = () => {
-    handleModal(
-      <DeleteModal
-        deleteTitle={quiz?.title || ""}
-        onDelete={() =>
-          dispatch(
-            removeQuiz({ uid: user?.info?.uid || "", quizId: quizId || "" })
-          )
-        }
-      />
-    );
+    const dataDelete = {
+      quizTitle: quiz?.title || "",
+      uid: user?.info?.uid || "",
+      quizId: quizId || "",
+    };
+    deleteQuiz(dataDelete);
   };
 
   useEffect(() => {
