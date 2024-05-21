@@ -37,6 +37,7 @@ const RenderTable: FC<RenderTableProps> = ({
             quizResume: item?.quizResume,
             quizId: item?.quizId,
             studentName: item?.studentName,
+            allInfo: item?.extraInfo,
           },
         })
       : navigate(`/quiz?quizId=${item?.quizId}`);

@@ -46,6 +46,7 @@ const StudentResultTable: FC<StudentResultTableProps> = ({
                   amount: Object.values(res.results)[0]?.amount,
                   quizResume: Object.values(res.results)[0]?.resume,
                   studentName: Object.values(res.results)[0]?.studentName,
+                  extraInfo: Object.values(res.results)[0],
                 }
               : undefined;
           })
