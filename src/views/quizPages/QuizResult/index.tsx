@@ -76,8 +76,12 @@ const QuizResult: FC<QuizResultProps> = () => {
     <Styled.Container>
       <Styled.TitlesContainer>
         <Styled.InfoContainer>
-          <Styled.Label>Student</Styled.Label>
-          <Styled.ScoreMessage>{studentName}</Styled.ScoreMessage>
+          {userType === "tutor" && (
+            <>
+              <Styled.Label>Student</Styled.Label>
+              <Styled.ScoreMessage>{studentName}</Styled.ScoreMessage>
+            </>
+          )}
           <Styled.Label>Quiz</Styled.Label>
           <Styled.ScoreMessage>{quiz?.title}</Styled.ScoreMessage>
           <Styled.Label>Quiz Info</Styled.Label>
