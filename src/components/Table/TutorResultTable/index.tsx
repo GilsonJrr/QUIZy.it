@@ -49,8 +49,6 @@ const TutorResultTable: FC<TutorResultTableProps> = ({
       : [];
   }, [quizzes]);
 
-  console.log("results", tutorResults);
-
   useEffect(() => {
     emptyState?.(tutorResults.length === 0);
   }, [emptyState, tutorResults.length]);

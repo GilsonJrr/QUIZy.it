@@ -129,7 +129,10 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
             </Styled.ProgressNumber>
           </Styled.ProgressContainer>
         </Styled.Header>
-        {(quiz?.type === "Multiple" || quiz?.type === "TrueOrFalse") && (
+        {(quiz?.type === "Multiple" ||
+          quiz?.type === "TrueOrFalse" ||
+          type === "Multiple" ||
+          type === "TrueOrFalse") && (
           <Multiple
             title={questions?.[current]?.question}
             question={questions?.[current]}
@@ -137,7 +140,7 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
             setSelectedAnswer={(answer) => setSelectedAnswer(answer)}
           />
         )}
-        {quiz?.type === "FillTheBlanks" && (
+        {(quiz?.type === "FillTheBlanks" || type === "FillTheBlanks") && (
           <FilTheBlanks
             questions={filTheBlanks?.[current]}
             setSelectedAnswer={(answer) => setSelectedAnswer(answer)}

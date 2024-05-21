@@ -57,7 +57,6 @@ const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
       ...rest,
       date: Date.now(),
     };
-    console.log("data", data, dataWithDate);
     localStorage.setItem("preSendQuiz", JSON.stringify(dataWithDate));
   };
 
