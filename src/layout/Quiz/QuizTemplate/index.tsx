@@ -81,7 +81,7 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
       amount: questions?.length.toString(),
       score: score.toString(),
       resume: quizResume,
-      date: new Date().toISOString(),
+      date: Date.now(),
       studentName: student?.info?.name,
       timeSpent: timeSpent,
       tries: quiz?.results?.[(student?.info?.uid as any) ?? ""]?.tries

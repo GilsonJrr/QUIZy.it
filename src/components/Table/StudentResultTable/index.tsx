@@ -50,6 +50,7 @@ const StudentResultTable: FC<StudentResultTableProps> = ({
               : undefined;
           })
           ?.filter((empty) => empty !== undefined)
+          .sort((a, b) => parseInt(b?.date || "") - parseInt(a?.date || ""))
       : [];
   }, [quizzes, studentID]);
 

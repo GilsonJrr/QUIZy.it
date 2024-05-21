@@ -107,6 +107,7 @@ export type TTutorResult = {
   extraInfo?: ResultTypeValues;
   studentName?: string;
   amount?: string;
+  date?: string;
 };
 
 export type TOption = {

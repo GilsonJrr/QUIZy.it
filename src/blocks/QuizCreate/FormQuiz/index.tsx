@@ -27,6 +27,7 @@ type TFormData = {
   image?: string;
   type: string;
   category: string;
+  date?: string;
 };
 
 const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
@@ -51,10 +52,12 @@ const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
 
   const onSubmit = (data: TFormData) => {
     quizType(watch("type"));
+    const { date, ...rest } = data;
     const dataWithDate = {
-      date: new Date().toISOString(),
-      ...data,
+      ...rest,
+      date: Date.now(),
     };
+    console.log("data", data, dataWithDate);
     localStorage.setItem("preSendQuiz", JSON.stringify(dataWithDate));
   };
 

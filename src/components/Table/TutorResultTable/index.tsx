@@ -23,6 +23,8 @@ const TutorResultTable: FC<TutorResultTableProps> = ({
     { label: "", width: 15 },
   ];
 
+  // sort((a, b) => parseInt(b?.date || "") - parseInt(a?.date || ""))
+
   const tutorResults = useMemo(() => {
     const myResults = quizzes?.map((quiz) => ({
       results: quiz.results,
@@ -38,12 +40,16 @@ const TutorResultTable: FC<TutorResultTableProps> = ({
                 amount: innerQuiz.amount,
                 extraInfo: innerQuiz,
                 studentName: innerQuiz?.studentName,
+                date: innerQuiz.date,
               };
             });
           })
           .flatMap((innerArray) => innerArray)
+          .sort((a, b) => parseInt(b?.date || "") - parseInt(a?.date || ""))
       : [];
   }, [quizzes]);
+
+  console.log("results", tutorResults);
 
   useEffect(() => {
     emptyState?.(tutorResults.length === 0);
