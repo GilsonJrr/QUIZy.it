@@ -57,8 +57,6 @@ export function* setStudentSaga(props: StudentAction<StudentTypeValues>): any {
 
   try {
     //TODO: fix this
-    yield put(() => onSuccess?.());
-
     if (uid && payload) {
       yield put(
         requestSignUpEmailPassword({
@@ -70,6 +68,7 @@ export function* setStudentSaga(props: StudentAction<StudentTypeValues>): any {
           ...rest,
         })
       );
+      yield put(() => onSuccess?.());
     }
   } catch (err: any) {
     yield put(err);

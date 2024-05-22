@@ -15,12 +15,22 @@ import { requestGroupList } from "Store/group/actions";
 import useDeviceType from "hooks/useDeviceType";
 import AlertModal from "components/Modal/AlertModal";
 import { useModalContext } from "components/Modal/modalContext";
-import { LoadingContainerCard } from "components/Container/styled";
+import {
+  LoadingContainerCard,
+  LoadingContainerFullPage,
+} from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
 
 type StudentsProps = {};
 
 const Students: FC<StudentsProps> = () => {
+  const { isLoading: userLoading } = useSelector(
+    (state: RootState) => state.user
+  );
+  const { isLoading: authLoading } = useSelector(
+    (state: RootState) => state.auth
+  );
+
   const { students, isLoading } = useSelector(
     (state: RootState) => state.student
   );
@@ -122,6 +132,14 @@ const Students: FC<StudentsProps> = () => {
       dispatch(requestGroupList({ uid: userID || "" }));
     }
   }, [dispatch, groups, userID]);
+
+  if (isLoading || authLoading || userLoading) {
+    return (
+      <LoadingContainerFullPage>
+        <LoadingSpinner size="big" />
+      </LoadingContainerFullPage>
+    );
+  }
 
   return (
     <Styled.Container>

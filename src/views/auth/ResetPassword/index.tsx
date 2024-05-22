@@ -43,6 +43,10 @@ const ResetPassword = () => {
       handleModal(<AlertModal type="error" message="Passwords do not match" />);
       return;
     }
+    if (data.password.length <= 6) {
+      handleModal(<AlertModal type="error" message="Passwords to short" />);
+      return;
+    }
     dispatch(
       resetPassword({ oobCode: oobCode || "", password: data.password }),
       navigate("/login")

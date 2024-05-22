@@ -170,7 +170,7 @@ const GroupCreate: FC<StudentCreateProps> = () => {
             gridName="newQuiz"
             innerCard={isMobile}
           >
-            <Styled.Form id="newStudentForm" onSubmit={handleSubmit(onSubmit)}>
+            <Styled.Form id="newGroupForm" onSubmit={handleSubmit(onSubmit)}>
               <SimpleInput
                 label={"Group Title"}
                 placeholder="Enter the group title"
@@ -244,7 +244,7 @@ const GroupCreate: FC<StudentCreateProps> = () => {
               {isMobile ? "Delete" : "Delete Group"}
             </Button>
           )}
-          <Button type="submit" form="newStudentForm">
+          <Button type="submit" form="newGroupForm">
             {groupId !== null ? "Update " : "Add "} {isMobile ? "" : "Group"}
           </Button>
         </Styled.ButtonContainer>

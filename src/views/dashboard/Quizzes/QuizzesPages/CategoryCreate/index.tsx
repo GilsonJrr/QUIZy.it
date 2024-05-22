@@ -199,7 +199,7 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
             gridName="newQuiz"
             innerCard={isMobile}
           >
-            <Styled.Form id="newStudentForm" onSubmit={handleSubmit(onSubmit)}>
+            <Styled.Form id="newCategoryForm" onSubmit={handleSubmit(onSubmit)}>
               <SimpleInput
                 label={t("addCategory.categoryTitle")}
                 placeholder={t("addCategory.enterCategoryTitle")}
@@ -276,7 +276,7 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
                 : t("addCategory.deleteCategory")}
             </Button>
           )}
-          <Button type="submit" form="newStudentForm">
+          <Button type="submit" form="newCategoryForm">
             {categoryId !== null
               ? `${t("addCategory.update")} `
               : `${t("addCategory.add")} `}

@@ -49,6 +49,7 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ student }) => {
         <Button
           onClick={() => navigate(`/students/student-create?id=${uid}`)}
           width="100%"
+          align="center"
         >
           See More
         </Button>

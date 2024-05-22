@@ -118,7 +118,7 @@ const authReducer: Reducer<AuthState, AuthAction & PersistPartial> = (
     case AuthTypes.PASSWORD_RESET: {
       return {
         ...state,
-        isLoading: true,
+        // isLoading: true,
         error: undefined,
       };
     }
