@@ -16,6 +16,7 @@ import LoadingSpinner from "components/LoadingSpiner";
 import { LoadingContainerFullPage } from "components/Container/styled";
 import MenuModal from "components/Modal/MenuModal";
 // import LanguageSwitcher from "components/languageSwitcher";
+import { useAnimation } from "hooks/useAnimation";
 
 type dashboardProps = {
   children?: ReactNode | ReactNode[];
@@ -34,6 +35,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
 
   const [openMessages, setOpenMessages] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const { triggerAnimation } = useAnimation();
 
   const currentUrl = location.pathname;
   const search = location.search && location.search[0];
@@ -136,7 +138,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
       </Styled.HeaderMobile>
       <Styled.Content>
         <Sidebar display={showMenu} onClose={() => setShowMenu(false)} />
-        <Styled.ChildrenContainer>
+        <Styled.ChildrenContainer triggerAnimation={triggerAnimation}>
           {children || <Outlet />}
         </Styled.ChildrenContainer>
       </Styled.Content>

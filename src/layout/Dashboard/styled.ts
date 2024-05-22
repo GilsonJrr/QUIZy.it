@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 import { IoMdMail } from "react-icons/io";
 import { HiBellAlert } from "react-icons/hi2";
@@ -6,6 +6,7 @@ import { FaChevronLeft } from "react-icons/fa";
 
 type Props = {
   open?: boolean;
+  triggerAnimation?: boolean;
 };
 
 export const Container = styled.div`
@@ -25,6 +26,24 @@ export const Header = styled.div`
   }
 `;
 
+const popUp = keyframes`
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+`;
+
+const popOut = keyframes`
+  0%{
+      opacity: 1;
+    }
+  100%{
+    opacity: 0;
+  }
+`;
+
 export const Content = styled.div`
   display: flex;
   width: 100%;
@@ -35,12 +54,20 @@ export const Content = styled.div`
   }
 `;
 
-export const ChildrenContainer = styled.div`
+export const ChildrenContainer = styled.div<Props>`
   padding: 15px;
   height: 100%;
   @media screen and (min-width: 600px) {
     width: 94%;
     padding: 20px 40px;
+    ${({ triggerAnimation }) =>
+      triggerAnimation
+        ? css`
+            animation: ${popOut} 0.4s linear;
+          `
+        : css`
+            animation: ${popUp} 0.4s linear;
+          `}
   }
 `;
 

@@ -18,14 +18,15 @@ import Tooltip from "components/Tooltip";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { MdPlaylistAddCheck } from "react-icons/md";
 import { FaUserEdit } from "react-icons/fa";
+import { useAnimation } from "hooks/useAnimation";
 
 type SidebarProps = {
-  logo?: string;
   display?: boolean;
   onClose?: () => void;
+  triggerAnimation?: (trigger: boolean) => void;
 };
 
-const Sidebar: FC<SidebarProps> = ({ logo, display, onClose }) => {
+const Sidebar: FC<SidebarProps> = ({ display, onClose }) => {
   const { user, userStudent } = useSelector((state: RootState) => state.user);
   const userType = user?.info?.userType || userStudent?.userType;
   const location = useLocation();
@@ -33,10 +34,15 @@ const Sidebar: FC<SidebarProps> = ({ logo, display, onClose }) => {
   const dispatch = useDispatch();
 
   const currentUrl = location.pathname.split("/")[1];
+  const { animate } = useAnimation();
 
   const handleRedirect = (navigatePath: string) => {
-    navigate(navigatePath);
     onClose?.();
+    animate(100);
+    const timeout = setTimeout(() => {
+      navigate(navigatePath);
+    }, 100);
+    return () => clearTimeout(timeout);
   };
 
   const handleSignOut = () => {

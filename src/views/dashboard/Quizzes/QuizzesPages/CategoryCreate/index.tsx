@@ -25,6 +25,8 @@ import useDeviceType from "hooks/useDeviceType";
 import Tabs from "components/Tabs";
 import Button from "components/Button";
 import AlertModal from "components/Modal/AlertModal";
+import { useTranslation } from "react-i18next";
+
 type StudentCreateProps = {};
 
 type TStudent = {
@@ -34,6 +36,7 @@ type TStudent = {
 };
 
 const CategoryCreate: FC<StudentCreateProps> = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -66,10 +69,9 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
       return handleModal(
         <AlertModal
           type="warning"
-          title="Category Creation Limit"
+          title={t("addCategory.categoryCreationLimit")}
           totalTime={6000}
-          message={`You have reached the maximum number of categories you can create. 
-            Please delete an existing category or contact support for assistance.`}
+          message={t("addCategory.categoryCreationLimitMessage")}
         />
       );
     }
@@ -87,8 +89,8 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
             type={"success"}
             message={
               categoryId !== null
-                ? "Category update successfully"
-                : "Category created successfully"
+                ? t("addCategory.categoryUpdateSuccess")
+                : t("addCategory.categoryCreateSuccess")
             }
           />
         )
@@ -110,21 +112,28 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
   }, [dispatch, quizzesCategory, userID]);
 
   const crumbs = [
-    { label: "Quizzes", path: "/quizzes" },
-    { label: categoryId !== null ? "Edit Category" : "Add Category", path: "" },
+    { label: t("addCategory.quizzes"), path: "/quizzes" },
+    {
+      label:
+        categoryId !== null
+          ? t("addCategory.editCategory")
+          : t("addCategory.addCategory"),
+      path: "",
+    },
   ];
 
   useEffect(() => {
+    const categoryArray = Array.isArray(categories) ? categories : [];
     if (categoryId !== null && categories) {
-      reset(...categories?.filter((g) => g.id === categoryId));
+      reset(...categoryArray?.filter((g) => g.id === categoryId));
     }
   }, [categoryId, categories, reset]);
 
   const hasQuiz = useMemo(() => {
-    return quizzesCategory?.some(
-      (a) =>
-        a.category === categories?.filter((g) => g.id === categoryId)[0]?.title
-    );
+    const categoryArray = Array.isArray(categories) ? categories : [];
+    const categoryTitle = categoryArray.filter((g) => g.id === categoryId)[0]
+      ?.title;
+    return quizzesCategory?.some((a) => a.category === categoryTitle);
   }, [categoryId, categories, quizzesCategory]);
 
   const handleDelete = () => {
@@ -137,7 +146,10 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
               { uid: userID || "", categoryId: categoryId || "" },
               () =>
                 handleModal(
-                  <AlertModal type={"info"} message={"Category removed"} />
+                  <AlertModal
+                    type={"info"}
+                    message={t("addCategory.categoryRemoved")}
+                  />
                 )
             )
           );
@@ -169,7 +181,10 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
       {isMobile && (
         <Styled.TabContainer>
           <Tabs
-            tabs={[{ label: "Category" }, { label: "All Categories" }]}
+            tabs={[
+              { label: t("addCategory.category") },
+              { label: t("addCategory.allCategories") },
+            ]}
             activeTab={(tab) => setTab(tab)}
             radius={5}
             active={tab}
@@ -177,23 +192,22 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
         </Styled.TabContainer>
       )}
       <Styled.ContainerInner>
-        {(!isMobile || tab === "Category") && (
+        {(!isMobile || tab === t("addCategory.category")) && (
           <Card
-            title={isMobile ? "" : "New Category"}
+            title={isMobile ? "" : t("addCategory.newCategory")}
             isEmpty={false}
             gridName="newQuiz"
             innerCard={isMobile}
           >
             <Styled.Form id="newStudentForm" onSubmit={handleSubmit(onSubmit)}>
               <SimpleInput
-                label={"Category Title"}
-                placeholder="Enter the category title"
+                label={t("addCategory.categoryTitle")}
+                placeholder={t("addCategory.enterCategoryTitle")}
                 error={
                   hasQuiz
                     ? {
                         type: "custom",
-                        message:
-                          "Category has active quiz, name can't be changed",
+                        message: t("addCategory.categoryHasActiveQuiz"),
                       }
                     : errors.title
                 }
@@ -201,13 +215,13 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
                 disabled={hasQuiz}
               />
               <SimpleInput
-                label={"Category image"}
-                placeholder="Enter the category image"
+                label={t("addCategory.categoryImage")}
+                placeholder={t("addCategory.enterCategoryImage")}
                 error={errors.image}
                 {...register("image")}
               />
               <TextAreaInput
-                label="About"
+                label={t("addCategory.about")}
                 height="40vh"
                 error={errors.about}
                 {...register("about")}
@@ -215,9 +229,9 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
             </Styled.Form>
           </Card>
         )}
-        {(!isMobile || tab === "All Categories") && (
+        {(!isMobile || tab === t("addCategory.allCategories")) && (
           <Card
-            title={isMobile ? "" : "All Categories"}
+            title={isMobile ? "" : t("addCategory.allCategories")}
             isEmpty={false}
             gridName="newQuestion"
             innerCard={isMobile}
@@ -257,12 +271,16 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
               onClick={handleDelete}
               variant="danger"
             >
-              {isMobile ? "Delete" : "Delete Category"}
+              {isMobile
+                ? t("addCategory.delete")
+                : t("addCategory.deleteCategory")}
             </Button>
           )}
           <Button type="submit" form="newStudentForm">
-            {categoryId !== null ? `Update ` : "Add "}{" "}
-            {isMobile ? "" : "Category"}
+            {categoryId !== null
+              ? `${t("addCategory.update")} `
+              : `${t("addCategory.add")} `}
+            {isMobile ? "" : t("addCategory.category")}
           </Button>
         </Styled.ButtonContainer>
       </Styled.ContainerInner>

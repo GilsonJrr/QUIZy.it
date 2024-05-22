@@ -21,6 +21,8 @@ import useDeviceType from "hooks/useDeviceType";
 import Tabs from "components/Tabs";
 import Button from "components/Button";
 import { useTranslation } from "react-i18next";
+import { LoadingContainerFullPage } from "components/Container/styled";
+import LoadingSpinner from "components/LoadingSpiner";
 
 type QuizzesProps = {};
 
@@ -118,6 +120,14 @@ const Quizzes: FC<QuizzesProps> = () => {
       dispatch(requestQuizList({ uid: requestUid, size: 50 }));
     }
   }, [dispatch, quizzes, requestUid, userID]);
+
+  if (categoryLoading) {
+    return (
+      <LoadingContainerFullPage>
+        <LoadingSpinner size="big" />
+      </LoadingContainerFullPage>
+    );
+  }
 
   return (
     <Styled.Container>

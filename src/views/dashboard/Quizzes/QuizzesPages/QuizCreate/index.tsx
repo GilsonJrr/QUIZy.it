@@ -10,10 +10,12 @@ import { useModalContext } from "components/Modal/modalContext";
 import AlertModal from "components/Modal/AlertModal";
 import { TQuizDelete } from "types/index";
 import DeleteModal from "components/Modal/DeleteModal";
+import { useTranslation } from "react-i18next";
 
 type QuizCreateProps = {};
 
 const QuizCreate: FC<QuizCreateProps> = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -25,18 +27,26 @@ const QuizCreate: FC<QuizCreateProps> = () => {
   const [quizType, setQuizType] = useState<string>();
 
   const crumbs = [
-    { label: "Quizzes", path: "/quizzes" },
-    { label: quizId ? "Edit Quiz" : "Add Quiz", path: "" },
+    { label: t("quizCreate.quizzes"), path: "/quizzes" },
+    {
+      label: quizId ? t("quizCreate.editQuiz") : t("quizCreate.addQuiz"),
+      path: "",
+    },
   ];
 
   const crumbsQuestion = [
-    { label: "Quizzes", path: "/quizzes" },
+    { label: t("quizCreate.quizzes"), path: "/quizzes" },
     {
-      label: quizId ? "Edit Quiz" : "Add Quiz",
+      label: quizId ? t("quizCreate.editQuiz") : t("quizCreate.addQuiz"),
       onClick: () => setQuizType(undefined),
       path: "",
     },
-    { label: quizId ? "Edit Question" : "Add Question", path: "" },
+    {
+      label: quizId
+        ? t("quizCreate.editQuestion")
+        : t("quizCreate.addQuestion"),
+      path: "",
+    },
   ];
 
   useEffect(() => {
@@ -53,8 +63,8 @@ const QuizCreate: FC<QuizCreateProps> = () => {
           type={"success"}
           message={
             quizId !== null
-              ? "Quiz update successfully"
-              : "Quiz created successfully"
+              ? t("quizCreate.quizUpdateSuccess")
+              : t("quizCreate.quizCreateSuccess")
           }
         />
       )
