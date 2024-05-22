@@ -7,6 +7,7 @@ type TooltipProps = {
   position: "top" | "bottom" | "left" | "right";
   onHover?: boolean;
   width?: string;
+  disable?: boolean;
 };
 
 const Tooltip: FC<TooltipProps> = ({
@@ -15,6 +16,7 @@ const Tooltip: FC<TooltipProps> = ({
   position,
   onHover,
   width,
+  disable = false,
 }) => {
   const [showSelector, setShowSelector] = useState(false);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
@@ -60,6 +62,7 @@ const Tooltip: FC<TooltipProps> = ({
         onClick={() => setShowSelector(!showSelector)}
         ref={containerRef}
         onMouseOver={() => (onHover ? setShowSelector(true) : "")}
+        disable={disable}
       >
         {children}
       </Styled.Content>
@@ -78,7 +81,7 @@ const Tooltip: FC<TooltipProps> = ({
       <Styled.ToolTipContent
         ref={tooltipRef}
         position={position}
-        showSelector={showSelector}
+        showSelector={!disable && !!toolTipContent && showSelector}
       >
         {toolTipContent}
       </Styled.ToolTipContent>

@@ -1,19 +1,22 @@
 import React, { FC, ButtonHTMLAttributes, ReactNode } from "react";
 import * as Styled from "./styled";
 
+export type variant =
+  | "primary"
+  | "secondary"
+  | "danger"
+  | "success"
+  | "anchor-dark"
+  | "anchor-white";
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?:
-    | "primary"
-    | "secondary"
-    | "danger"
-    | "success"
-    | "anchor-dark"
-    | "anchor-white";
+  variant?: variant;
   size?: "small" | "medium" | "big";
   children: ReactNode | ReactNode[];
   radius?: string;
   padding?: string;
   width?: string;
+  align?: "flex-start" | "center" | "flex-end";
+  partialDisabled?: boolean;
 }
 
 enum EFontSize {
@@ -29,6 +32,8 @@ const Button: FC<ButtonProps> = ({
   radius,
   padding,
   width,
+  align,
+  partialDisabled,
   ...rest
 }) => {
   return (
@@ -39,6 +44,8 @@ const Button: FC<ButtonProps> = ({
       padding={padding}
       width={width}
       size={EFontSize[size]}
+      align={align}
+      partialDisabled={partialDisabled}
     >
       {children}
     </Styled.Button>

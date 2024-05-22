@@ -153,7 +153,7 @@ export const AnswerText = styled.h3<Props>`
 
 export const ContinueButtonContainer = styled.div`
   bottom: 10px;
-  width: 100%;
+  /* width: 100%; */
   padding: 25px 0px;
   @media screen and (min-width: 600px) {
     display: flex;
@@ -161,7 +161,7 @@ export const ContinueButtonContainer = styled.div`
     right: 0;
     width: 30%;
     button {
-      width: 100%;
+      /* width: 100%; */
     }
   }
 `;

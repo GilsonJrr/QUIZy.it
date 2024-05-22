@@ -10,8 +10,28 @@
     "emptyResult": "You have not completed any quiz so far",
     "labelQuizzes": "Quizzes",
     "labelStudents": "Students",
-    "labelResults": "Results"
+    "labelResults": "Results",
+    "redirectResults": "Results",
+    "redirectStudents": "Students"
   },
+  "quizzes": {
+    "radonQuiz": "Radon Quiz",
+    "retryLastQuiz": "Retry last Quiz",
+    "addQuiz": "Add Quiz",
+    "addCategory": "Add category",
+    "options": "Options",
+    "quizzes": "Quizzes",
+    "categories": "Categories",
+    "newQuizzes": "New Quizzes",
+    "allQuizzes": "All Quizzes",
+    "quizNotFound": "Quiz not found",
+    "noNewQuizAvailable": "No new quiz available at this time. Please check later",
+    "noCategoriesFound": "No categories found. Please check later",
+    "noQuizFoundInCategory": "No quiz found on this category",
+    "seeAllCategories": "See all Categories",
+    "noCategory": "No Category"
+  },
+  "addCategory": {},
   "welcome": "Welcome to our app!",
   "intro": "This is a sample introduction.",
   "button": {

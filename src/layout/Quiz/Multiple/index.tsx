@@ -1,7 +1,8 @@
 import React, { FC } from "react";
 import * as Styled from "./styled";
 import { Answer, EAnswerIndexation, QuestionFiltered } from "types/index";
-import Button from "components/Button";
+
+import Button, { variant } from "components/Button";
 
 type MultipleProps = {
   title: string;
@@ -32,25 +33,56 @@ const Multiple: FC<MultipleProps> = ({
     setSelectedAnswer(answer);
   };
 
+  // console.log("question", question);
+
+  const handleAnswerColor = (type: string, active: boolean) => {
+    switch (true) {
+      case showAnswer && type === "correct":
+        return "success";
+      case showAnswer && type === "correct" && active:
+        return "success";
+      case showAnswer && type === "incorrect" && active:
+        return "danger";
+      case !active:
+        return "default";
+      case active:
+        return "success";
+    }
+  };
+
   return (
     <Styled.QuestionContainer>
       <Styled.Question>{title}</Styled.Question>
       <Styled.OptionsContainer>
         {question?.answers?.map((answer: any, index: number) => {
           const active = answer.answer === selectedAnswer;
+          const type = answer.type;
           return (
             <Styled.ButtonContainer>
               <Button
                 onClick={() => handleSelectedAnswer(answer)}
-                variant={active ? "success" : "secondary"}
+                variant={handleAnswerColor(type, active) as variant}
                 disabled={showAnswer}
+                partialDisabled
                 width="100%"
                 padding="20px"
               >
-                <Styled.ButtonContent>
-                  <Styled.AnswerIndex>
-                    {EAnswerIndexation[index]}
-                  </Styled.AnswerIndex>
+                <Styled.ButtonContent
+                  reverse={!((showAnswer && !active) || !showAnswer)}
+                >
+                  {(showAnswer && !active) || !showAnswer ? (
+                    <Styled.AnswerIndex>
+                      {EAnswerIndexation[index]}
+                    </Styled.AnswerIndex>
+                  ) : (
+                    <Styled.AnswerIndex active={showAnswer}>
+                      {type === "correct" ? (
+                        <Styled.CheckIcon size={25} />
+                      ) : (
+                        <Styled.CloseIcon size={35} />
+                      )}
+                    </Styled.AnswerIndex>
+                  )}
                   <Styled.AnswerText active={active}>
                     {answer.answer || ""}
                   </Styled.AnswerText>

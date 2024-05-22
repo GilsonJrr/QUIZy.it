@@ -20,12 +20,14 @@ import { requestQuizList, requestQuizListCategory } from "Store/quiz/actions";
 import useDeviceType from "hooks/useDeviceType";
 import Tabs from "components/Tabs";
 import Button from "components/Button";
+import { useTranslation } from "react-i18next";
 
 type QuizzesProps = {};
 
 const Quizzes: FC<QuizzesProps> = () => {
   const dispatch = useDispatch();
   const isMobile = useDeviceType();
+  const { t } = useTranslation();
 
   const { user, userStudent } = useSelector((state: RootState) => state.user);
   const { student } = useSelector((state: RootState) => state.student);
@@ -39,7 +41,7 @@ const Quizzes: FC<QuizzesProps> = () => {
     quizCategoryLoading,
   } = useSelector((state: RootState) => state.quiz);
 
-  const [tab, setTab] = useState("Options");
+  const [tab, setTab] = useState(t("quizzes.options"));
 
   const userID = user?.info?.uid || userStudent?.uid;
   const userType = user?.info?.userType
@@ -60,12 +62,12 @@ const Quizzes: FC<QuizzesProps> = () => {
           return { title: c.title, image: c.image };
         })
       : []),
-    { title: "No category" },
+    { title: t("quizzes.noCategory") },
   ];
 
   const StudentOptions: TOptions[] = [
     {
-      option: "Radon Quiz",
+      option: t("quizzes.radonQuiz"),
       optionIcon: <GiCardRandom size={40} />,
       onClick: () =>
         navigate(
@@ -76,7 +78,7 @@ const Quizzes: FC<QuizzesProps> = () => {
         ),
     },
     {
-      option: "Retry last Quiz",
+      option: t("quizzes.retryLastQuiz"),
       optionIcon: <FaFastBackward size={40} />,
       onClick: () => navigate(`/quiz?quizId=${lastQuiz}`),
     },
@@ -84,12 +86,12 @@ const Quizzes: FC<QuizzesProps> = () => {
 
   const TutorOptions: TOptions[] = [
     {
-      option: "Add Quiz",
+      option: t("quizzes.addQuiz"),
       optionIcon: <IoMdAddCircleOutline size={40} />,
       onClick: () => navigate("/quizzes/quiz-create"),
     },
     {
-      option: "Add category",
+      option: t("quizzes.addCategory"),
       optionIcon: <MdPlaylistAddCheck size={40} />,
       onClick: () => navigate("/quizzes/category-create"),
     },
@@ -97,7 +99,7 @@ const Quizzes: FC<QuizzesProps> = () => {
 
   const handleDisplayCategories = (category: string) => {
     setCategory(category);
-    if (category === "No category") {
+    if (category === t("quizzes.noCategory")) {
       return dispatch(
         requestQuizListCategory({ uid: requestUid, category: "categoryLess" })
       );
@@ -123,36 +125,34 @@ const Quizzes: FC<QuizzesProps> = () => {
         <Styled.TabContainer>
           <Tabs
             tabs={[
-              { label: "Options" },
-              { label: "Quizzes" },
-              { label: "Categories" },
+              { label: t("quizzes.options") },
+              { label: t("quizzes.quizzes") },
+              { label: t("quizzes.categories") },
             ]}
             activeTab={(tab) => setTab(tab)}
             radius={5}
           />
         </Styled.TabContainer>
       )}
-      {(!isMobile || tab === "Options") && (
+      {(!isMobile || tab === t("quizzes.options")) && (
         <OptionsButton
           options={userType === "student" ? StudentOptions : TutorOptions}
           width="45%"
         />
       )}
-      {(!isMobile || tab === "Quizzes") && (
+      {(!isMobile || tab === t("quizzes.quizzes")) && (
         <Card
           gridName="card2"
           title={
             isMobile
               ? ""
               : userType === "student"
-              ? "New Quizzes"
-              : "All Quizzes"
+              ? t("quizzes.newQuizzes")
+              : t("quizzes.allQuizzes")
           }
           isEmpty={quizzes?.length === 0}
           emptyMessage={
-            search
-              ? "Quiz not found"
-              : "No new quiz available at this time. Please check later"
+            search ? t("quizzes.quizNotFound") : t("quizzes.noNewQuizAvailable")
           }
           scrollable
           searchable
@@ -170,12 +170,12 @@ const Quizzes: FC<QuizzesProps> = () => {
             })}
         </Card>
       )}
-      {(!isMobile || tab === "Categories") && (
+      {(!isMobile || tab === t("quizzes.categories")) && (
         <Card
           gridName="card3"
-          title={isMobile ? "" : category ? category : "Categories"}
+          title={isMobile ? "" : category ? category : t("quizzes.categories")}
           isEmpty={categories.length === 0}
-          emptyMessage={"No categories found. Please check later"}
+          emptyMessage={t("quizzes.noCategoriesFound")}
           scrollable
           isLoading={categoryLoading || quizCategoryLoading}
           innerCard={isMobile}
@@ -194,7 +194,7 @@ const Quizzes: FC<QuizzesProps> = () => {
           ) : quizzesCategory?.length === 0 ? (
             <Styled.EmptyContainer>
               <Styled.EmptyText>
-                No quiz found on this category
+                {t("quizzes.noQuizFoundInCategory")}
               </Styled.EmptyText>
             </Styled.EmptyContainer>
           ) : (
@@ -207,7 +207,9 @@ const Quizzes: FC<QuizzesProps> = () => {
           {category && (
             <Styled.ButtonContainer>
               <Button onClick={() => setCategory("")} width="100%">
-                See all Categories
+                <Styled.ButtonText>
+                  {t("quizzes.seeAllCategories")}
+                </Styled.ButtonText>
               </Button>
             </Styled.ButtonContainer>
           )}

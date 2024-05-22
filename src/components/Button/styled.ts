@@ -15,6 +15,8 @@ type Props = {
   radius?: string;
   padding?: string;
   width?: string;
+  align?: "flex-start" | "center" | "flex-end";
+  partialDisabled?: boolean;
 };
 
 enum EVariantBackGround {
@@ -86,10 +88,10 @@ export const Button = styled.button<Props>`
 
   display: flex;
   align-items: center;
-  /* justify-content: center; */
+  justify-content: ${({ align }) => align};
   gap: 5px;
 
   &:disabled {
-    opacity: 0.5;
+    opacity: ${({ partialDisabled }) => (partialDisabled ? "1" : "0.5")};
   }
 `;

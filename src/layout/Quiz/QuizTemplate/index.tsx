@@ -138,6 +138,7 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
             question={questions?.[current]}
             selectedAnswer={selectedAnswer?.answer as string}
             setSelectedAnswer={(answer) => setSelectedAnswer(answer)}
+            showAnswer={showAnswer}
           />
         )}
         {(quiz?.type === "FillTheBlanks" || type === "FillTheBlanks") && (
@@ -192,8 +193,10 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
                   : handleAnswer
               }
               disabled={!selectedAnswer}
+              partialDisabled
               width="100%"
               variant="secondary"
+              align="center"
             >
               {showAnswer && showScore
                 ? "Finish"

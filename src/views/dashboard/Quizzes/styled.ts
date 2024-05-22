@@ -34,6 +34,16 @@ export const ButtonContainer = styled.div`
   right: 20px;
   z-index: 1000;
   width: calc(100% - 40px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ButtonText = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const TabContainer = styled.div`

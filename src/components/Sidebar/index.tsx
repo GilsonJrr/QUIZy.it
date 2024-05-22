@@ -26,8 +26,8 @@ type SidebarProps = {
 };
 
 const Sidebar: FC<SidebarProps> = ({ logo, display, onClose }) => {
-  const { user } = useSelector((state: RootState) => state.user);
-  const userType = user?.info?.userType;
+  const { user, userStudent } = useSelector((state: RootState) => state.user);
+  const userType = user?.info?.userType || userStudent?.userType;
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -88,10 +88,13 @@ const Sidebar: FC<SidebarProps> = ({ logo, display, onClose }) => {
             <Styled.MenuText active={currentUrl === "/"}>Home</Styled.MenuText>
           </Styled.IconContainer>
           <Tooltip
-            toolTipContent={quizzesToolTipOptions()}
+            toolTipContent={
+              currentUrl === "quizzes" ? "" : quizzesToolTipOptions()
+            }
             position={"right"}
             onHover
             width={"100%"}
+            disable={userType === "student"}
           >
             <Styled.IconContainer
               active={currentUrl === "quizzes"}
@@ -105,7 +108,9 @@ const Sidebar: FC<SidebarProps> = ({ logo, display, onClose }) => {
           </Tooltip>
           {userType === "tutor" && (
             <Tooltip
-              toolTipContent={studentsToolTipOptions()}
+              toolTipContent={
+                currentUrl === "students" ? "" : studentsToolTipOptions()
+              }
               position={"right"}
               onHover
               width={"100%"}

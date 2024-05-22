@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { FaCheck } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
 
 type Props = {
   progress?: number;
@@ -7,6 +9,7 @@ type Props = {
   modalType?: string;
   checkType?: string;
   preview?: boolean;
+  reverse?: boolean;
 };
 
 export const QuestionContainer = styled.div`
@@ -70,24 +73,37 @@ export const ButtonContainer = styled.div`
   }
 `;
 
-export const ButtonContent = styled.div`
+export const ButtonContent = styled.div<Props>`
   display: flex;
+  flex-direction: ${({ reverse }) => (reverse ? "row-reverse" : "row")};
+  width: 100%;
   gap: 15px;
   align-items: center;
+
+  transition: 0.5s ease-in-out all;
 `;
 
-export const AnswerIndex = styled.div`
+export const AnswerIndex = styled.div<Props>`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 18px;
-  background-color: ${({ theme }) => theme.colors.main.default};
-  color: ${({ theme }) => theme.colors.background.default};
-  height: 30px;
-  width: 30px;
+  background-color: ${({ theme, active }) =>
+    active ? theme.colors.background.default : theme.colors.main.default};
+  color: ${({ theme, active }) =>
+    active ? theme.colors.main.default : theme.colors.background.default};
+  height: 40px;
+  width: 40px;
   border-radius: 100%;
   line-height: 0;
   font-weight: 700;
+`;
+
+export const CheckIcon = styled(FaCheck)`
+  color: ${({ theme }) => theme.colors.quiz.right};
+`;
+
+export const CloseIcon = styled(IoClose)`
+  color: ${({ theme }) => theme.colors.quiz.wrong};
 `;
 
 export const AnswerText = styled.h3<Props>`

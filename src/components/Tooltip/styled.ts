@@ -5,6 +5,7 @@ type Props = {
   position?: "top" | "bottom" | "left" | "right";
   width?: string;
   hover?: boolean;
+  disable?: boolean;
 };
 
 export const Container = styled.div<Props>`
@@ -21,10 +22,12 @@ export const Content = styled.div<Props>`
   width: ${({ width }) => width || ""};
   align-items: center;
   justify-content: center;
-  outline: ${({ hover, showSelector }) => (hover && showSelector ? "1" : "0")}px
+  outline: ${({ hover, showSelector, disable }) =>
+      disable ? "0" : hover && showSelector ? "1" : "0"}px
     solid ${({ theme }) => theme.colors.main.default};
   outline-offset: -1px;
   border-radius: 10px;
+  transition: 0.3s ease-in-out all;
 `;
 
 export const TopArrow = css`
@@ -130,7 +133,6 @@ export const ToolTipInvisibleContainer = styled.div<Props>`
 
 export const ToolTipContent = styled.div<Props>`
   display: ${({ showSelector }) => (showSelector ? "flex" : "none")};
-  /* display: flex; */
   position: absolute;
   flex-direction: column;
 

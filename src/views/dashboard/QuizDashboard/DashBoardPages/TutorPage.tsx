@@ -80,7 +80,7 @@ export const TutorPage = () => {
           searchable
           searchValue={search}
           setSearch={(e) => setSearch(e)}
-          redirectTo="Quizzes"
+          redirectTo={"Quizzes"}
           redirectPath="/quizzes"
           isLoading={quizLoading}
           innerCard={isMobile}
@@ -104,7 +104,7 @@ export const TutorPage = () => {
           searchable
           searchValue={searchStudents}
           setSearch={(e) => setSearchStudents(e)}
-          redirectTo="Students"
+          redirectTo={t("dashboard.redirectStudents")}
           redirectPath="/students"
           isLoading={isLoading}
           innerCard={isMobile}
@@ -123,7 +123,7 @@ export const TutorPage = () => {
           title={isMobile ? "" : t("dashboard.results")}
           isEmpty={tableIsEmpty}
           emptyMessage={t("dashboard.emptyResult")}
-          redirectTo="Results"
+          redirectTo={t("dashboard.redirectResults")}
           redirectPath="/results"
           isLoading={quizLoading}
           innerCard={isMobile}

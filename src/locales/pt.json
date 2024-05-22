@@ -10,8 +10,28 @@
     "emptyResult": "Você ainda não completou nenhum quiz",
     "labelQuizzes": "Quizzes",
     "labelStudents": "Alunos",
-    "labelResults": "Resultados"
+    "labelResults": "Resultados",
+    "redirectResults": "Resultados",
+    "redirectStudents": "Estudantes"
   },
+  "quizzes": {
+    "radonQuiz": "Quiz Aleatório",
+    "retryLastQuiz": "Tentar Último Quiz",
+    "addQuiz": "Adicionar Quiz",
+    "addCategory": "Adicionar Categoria",
+    "options": "Opções",
+    "quizzes": "Quizzes",
+    "categories": "Categorias",
+    "newQuizzes": "Novos Quizzes",
+    "allQuizzes": "Todos os Quizzes",
+    "quizNotFound": "Quiz não encontrado",
+    "noNewQuizAvailable": "Nenhum novo quiz disponível no momento. Por favor, verifique mais tarde",
+    "noCategoriesFound": "Nenhuma categoria encontrada. Por favor, verifique mais tarde",
+    "noQuizFoundInCategory": "Nenhum quiz encontrado nesta categoria",
+    "seeAllCategories": "Ver todas as Categorias",
+    "noCategory": "Sem categoria"
+  },
+  "addCategory": {},
   "welcome": "Welcome to our app!",
   "intro": "This is a sample introduction.",
   "button": {
