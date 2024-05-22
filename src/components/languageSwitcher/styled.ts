@@ -1,13 +1,23 @@
 import styled from "styled-components";
 
-import { FaGlobe } from "react-icons/fa6";
+import { US } from "country-flag-icons/react/3x2";
+import { BR } from "country-flag-icons/react/3x2";
 
-type Props = {};
-
-export const Container = styled.div<Props>`
-  margin: 0 40px 0 0;
+export const USIcon = styled(US)`
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
 `;
 
-export const GlobeIcon = styled(FaGlobe)`
+export const BRIcon = styled(BR)`
   cursor: pointer;
+  height: 20px;
+  width: 20px;
+`;
+
+export const OptionsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+  gap: 10px;
 `;

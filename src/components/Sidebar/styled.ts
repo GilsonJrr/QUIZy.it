@@ -67,7 +67,8 @@ export const IconContainer = styled.div<Props>`
   justify-content: flex-start;
   transition: 0.3s ease-in-out all;
   gap: 20px;
-
+  width: 100%;
+  z-index: 10;
   &:hover {
     background-color: ${({ theme }) => theme.colors.main.default};
     color: ${({ theme }) => theme.colors.background.default};
@@ -114,4 +115,27 @@ export const ExitContainer = styled.div`
     align-items: center;
     justify-content: center;
   }
+`;
+
+export const SideBarToolTipOptionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 150px;
+  gap: 10px;
+  padding: 10px;
+`;
+
+export const SideBarOption = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
+  padding: 20px 0;
+  border-radius: 10px;
+  gap: 10px;
+  font-weight: 600;
 `;

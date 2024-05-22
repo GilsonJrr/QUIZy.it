@@ -15,6 +15,7 @@ import { requestStudent } from "Store/students/actions";
 import LoadingSpinner from "components/LoadingSpiner";
 import { LoadingContainerFullPage } from "components/Container/styled";
 import MenuModal from "components/Modal/MenuModal";
+// import LanguageSwitcher from "components/languageSwitcher";
 
 type dashboardProps = {
   children?: ReactNode | ReactNode[];
@@ -82,6 +83,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
           <Styled.HeaderTitleText>
             {RouterTitle[`${currentUrl}${search}` as keyof typeof RouterTitle]}
           </Styled.HeaderTitleText>
+          {/* <LanguageSwitcher /> */}
         </Styled.HeaderTitle>
         <Styled.HeaderMessage>
           <Styled.AlertContainer

@@ -86,7 +86,7 @@ export const Button = styled.button<Props>`
 
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   gap: 5px;
 
   &:disabled {
