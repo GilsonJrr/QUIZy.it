@@ -154,7 +154,9 @@ const ProfileModal: FC<ExampleProps> = () => {
             form={!editMode ? "profileUpdate" : "none"}
             width="100%"
           >
-            {editMode ? "Update Profile" : "Edit"}
+            <Styled.ButtonText>
+              {editMode ? "Update Profile" : "Edit"}
+            </Styled.ButtonText>
           </Button>
         </Styled.ButtonContainer>
       </Styled.Content>

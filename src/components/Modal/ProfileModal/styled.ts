@@ -73,6 +73,16 @@ export const ButtonContainer = styled.div`
   position: absolute;
   right: 0;
   bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ButtonText = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const PhotoButtonContainer = styled.div`
