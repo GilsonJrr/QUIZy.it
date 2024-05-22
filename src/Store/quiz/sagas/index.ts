@@ -1,23 +1,52 @@
-import { takeLatest, put, call } from "redux-saga/effects";
+import { takeLatest, put, call, take, cancelled } from "redux-saga/effects";
 
 import { quiz, quizList, quizListCategory } from "../actions";
 
-import { getQuiz, getQuizList, setQuiz, removeQuiz } from "../repository";
+import {
+  getQuiz,
+  getQuizList,
+  setQuiz,
+  removeQuiz,
+  subscribeToQuizList,
+} from "../repository";
 
 import { QuizAction, QuizRequest, QuizTypeValues, QuizTypes } from "../types";
+import { eventChannel } from "redux-saga";
 
 //Quiz
+function createQuizListChannel(uid: string, category: string, size: number) {
+  return eventChannel((emit) => {
+    const unsubscribe = subscribeToQuizList(uid, (quizzes) => {
+      emit(quizzes);
+    });
+
+    // The subscriber must return an unsubscribe function
+    return () => unsubscribe();
+  });
+}
+
 export function* getQuizListSaga(props: QuizAction<QuizRequest>): any {
   const uid = props.payload.uid;
-  const category = props.payload.category;
-  const size = props.payload.size;
-  try {
-    if (uid) {
-      const quizResponses = yield call(getQuizList, uid, category, size);
-      yield put(quizList(quizResponses));
+  const category = props.payload.category || "";
+  const size = props.payload.size || 0;
+
+  if (uid) {
+    const quizListChannel = yield call(
+      createQuizListChannel,
+      uid,
+      category,
+      size
+    );
+    try {
+      while (true) {
+        const quizResponses = yield take(quizListChannel);
+        yield put(quizList(quizResponses));
+      }
+    } finally {
+      if (yield cancelled()) {
+        quizListChannel.close();
+      }
     }
-  } catch (err: any) {
-    yield put(err);
   }
 }
 

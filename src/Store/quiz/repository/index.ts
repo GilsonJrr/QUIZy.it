@@ -8,9 +8,26 @@ import {
   query,
   equalTo,
   limitToFirst,
+  onValue,
 } from "firebase/database";
 
 import { QuizTypeValues } from "../types";
+
+export const subscribeToQuizList = (
+  uid: string,
+  callback: (quizzes: any[]) => void
+) => {
+  const unsubscribe = onValue(ref(database, `user/${uid}/quiz`), (snapshot) => {
+    const quizzes: any[] = [];
+    snapshot.forEach((childSnapshot) => {
+      quizzes.push(childSnapshot.val());
+    });
+    callback(quizzes);
+  });
+
+  // Return a function to unsubscribe
+  return unsubscribe;
+};
 
 export const getQuizList = async (
   uid: string,

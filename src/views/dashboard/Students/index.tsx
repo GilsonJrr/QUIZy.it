@@ -15,6 +15,8 @@ import { requestGroupList } from "Store/group/actions";
 import useDeviceType from "hooks/useDeviceType";
 import AlertModal from "components/Modal/AlertModal";
 import { useModalContext } from "components/Modal/modalContext";
+import { LoadingContainerCard } from "components/Container/styled";
+import LoadingSpinner from "components/LoadingSpiner";
 
 type StudentsProps = {};
 
@@ -117,7 +119,7 @@ const Students: FC<StudentsProps> = () => {
 
   useEffect(() => {
     if (groups === undefined) {
-      dispatch(requestGroupList({ uid: userID }));
+      dispatch(requestGroupList({ uid: userID || "" }));
     }
   }, [dispatch, groups, userID]);
 
@@ -151,10 +153,16 @@ const Students: FC<StudentsProps> = () => {
           innerCard={isMobile}
         >
           <Styled.CardInner>
-            <Tabs
-              tabs={[{ label: "All" }, ...tabs]}
-              activeTab={(tab) => setTab(tab)}
-            />
+            {!groupLoading ? (
+              <Tabs
+                tabs={[{ label: "All" }, ...tabs]}
+                activeTab={(tab) => setTab(tab)}
+              />
+            ) : (
+              <LoadingContainerCard>
+                <LoadingSpinner size="medium" />
+              </LoadingContainerCard>
+            )}
             <Styled.MapRow>
               {searchedStudents?.map((item) => {
                 if (item.info) {

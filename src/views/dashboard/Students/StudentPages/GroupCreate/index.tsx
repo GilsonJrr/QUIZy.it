@@ -93,8 +93,8 @@ const GroupCreate: FC<StudentCreateProps> = () => {
   };
 
   useEffect(() => {
-    if (groups === undefined && userID) {
-      dispatch(requestGroupList({ uid: userID }));
+    if (groups === undefined) {
+      dispatch(requestGroupList({ uid: userID || "" }));
     }
   }, [dispatch, groups, userID]);
 
