@@ -18,7 +18,7 @@ export const Container = styled.div<Props>`
 
 export const ContainerInner = styled.div`
   width: 100%;
-  min-height: 100%;
+  height: 100%;
 
   display: flex;
   flex-direction: column;
@@ -84,7 +84,7 @@ export const SelectContainer = styled.div`
 export const Form = styled.form<Props>`
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 10px;
   padding-bottom: ${({ padding }) => (padding ? "150" : "")}px;
   overflow-y: scroll;
   width: 100%;

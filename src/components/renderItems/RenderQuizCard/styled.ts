@@ -8,9 +8,10 @@ export const QuizCard = styled.div<Props>`
   display: flex;
   border-radius: 20px;
   border: 1px solid ${({ theme }) => theme.colors.main.default};
-  min-height: 110px;
+  min-height: 120px;
   cursor: ${({ preview }) => (preview ? "auto" : "pointer")};
   pointer-events: ${({ preview }) => (preview ? "none" : "all")};
+  padding-right: 16px;
 `;
 
 export const QuizImage = styled.img`
@@ -31,8 +32,8 @@ export const QuizTitlesContainer = styled.div`
 `;
 
 export const StartButton = styled.div`
-  position: absolute;
   bottom: 15px;
   right: 30px;
   font-weight: 600;
+  margin: auto 0 10px 0;
 `;

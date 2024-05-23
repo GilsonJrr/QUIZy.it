@@ -45,6 +45,7 @@ export const CrumbsContainer = styled.div<Props>`
   justify-content: center;
   align-items: center;
   gap: 5px;
+  cursor: pointer;
 
   ${Title} {
     &:last-child {

@@ -34,7 +34,7 @@ const ToggleInput: FC<ToggleInputProps> = ({
 
   return (
     <Styled.Wrapper width={width}>
-      <Styled.Label>{Label}</Styled.Label>
+      <Title size="smaller">{Label}</Title>
       {options.map((option, index) => {
         if (active === index) {
           return (

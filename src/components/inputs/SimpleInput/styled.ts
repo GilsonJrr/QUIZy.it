@@ -15,11 +15,6 @@ export const Container = styled.div<Props>`
   }
 `;
 
-export const Label = styled.label<Props>`
-  font-weight: 600;
-  font-size: 1.1rem;
-`;
-
 export const Input = styled.input<Props>`
   border-radius: 10px;
   font-size: 1.4rem;

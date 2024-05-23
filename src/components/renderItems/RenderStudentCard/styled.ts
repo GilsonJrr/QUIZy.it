@@ -9,15 +9,7 @@ export const Container = styled.div<Props>`
   border-radius: 100px 20px 20px 100px;
   position: relative;
   width: ${({ width }) => width || "100%"};
-`;
-
-export const PhotoContainer = styled.img`
-  height: 110px;
-  width: 110px;
-  border-radius: 100%;
-  background-color: ${({ theme }) => theme.colors.main.secondary};
-  border: 1px solid ${({ theme }) => theme.colors.main.default};
-  object-fit: cover;
+  max-height: 121px;
 `;
 
 export const InfoContainer = styled.div`
@@ -31,7 +23,7 @@ export const InnerInfoContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin: 10px 0;
+  margin: 2px 0;
 `;
 
 export const ButtonContainer = styled.div`

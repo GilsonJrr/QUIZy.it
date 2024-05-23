@@ -12,7 +12,7 @@ type Props = {
   reverse?: boolean;
 };
 
-export const QuestionContainer = styled.div`
+export const QuestionContainer = styled.div<Props>`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -21,14 +21,13 @@ export const QuestionContainer = styled.div`
   margin-top: 20px;
   @media screen and (min-width: 600px) {
     flex-direction: row;
-    justify-content: space-between;
-    margin-top: 50px;
     align-items: flex-start;
     justify-content: space-between;
-    padding: 0 60px;
+    padding: ${({ preview }) => (preview ? "" : "50px 60px 0")};
     gap: 50px;
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
+    height: 100%;
   }
 `;
 

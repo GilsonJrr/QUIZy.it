@@ -32,14 +32,14 @@ const RenderQuizCard: FC<RenderQuizCardProps> = ({
       <Styled.QuizImage src={item.image ? item.image : EmptyImage} />
       <Styled.QuizTitlesContainer>
         <Title>{item.title}</Title>
-        <Title size="smaller" fontWeight="lighter" margin="10px 0 5px 0">
+        <Title size="smaller" fontWeight="lighter" margin="2px 0 0 0">
           {item.category ? `${item.category} | ` : ""} {item.type}
         </Title>
         <Title size="smaller" fontWeight="lighter">
           {item.description}
         </Title>
-        <Styled.StartButton>{editMode ? "Edit" : "Start"}</Styled.StartButton>
       </Styled.QuizTitlesContainer>
+      <Styled.StartButton>{editMode ? "Edit" : "Start"}</Styled.StartButton>
     </Styled.QuizCard>
   );
 };

@@ -223,7 +223,7 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
               />
               <TextAreaInput
                 label={t("addCategory.about")}
-                height="40vh"
+                height="33vh"
                 error={errors.about}
                 {...register("about")}
               />

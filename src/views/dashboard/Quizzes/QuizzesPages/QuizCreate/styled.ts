@@ -14,7 +14,7 @@ export const Container = styled.div<Props>`
 
 export const ContainerInner = styled.div`
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   padding: 20px 0px;
 
   display: grid;

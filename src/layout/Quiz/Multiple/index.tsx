@@ -4,6 +4,7 @@ import { Answer, EAnswerIndexation, QuestionFiltered } from "types/index";
 
 import Button, { variant } from "components/Button";
 import { Title } from "components/ui/Typography/styled";
+import useDeviceType from "hooks/useDeviceType";
 
 type MultipleProps = {
   title: string;
@@ -11,6 +12,7 @@ type MultipleProps = {
   selectedAnswer: string;
   showAnswer?: boolean;
   setSelectedAnswer: (answer: Answer) => void;
+  preview?: boolean;
 };
 
 const Multiple: FC<MultipleProps> = ({
@@ -19,7 +21,10 @@ const Multiple: FC<MultipleProps> = ({
   selectedAnswer,
   showAnswer,
   setSelectedAnswer,
+  preview,
 }) => {
+  const isMobile = useDeviceType();
+
   const handleSelectedAnswer = (data: Answer) => {
     const answer: Answer = {
       ...data,
@@ -50,8 +55,14 @@ const Multiple: FC<MultipleProps> = ({
   };
 
   return (
-    <Styled.QuestionContainer>
-      <Title size="bigger" multiLine margin="20px 0 30px" textAlign="center">
+    <Styled.QuestionContainer preview={preview}>
+      <Title
+        size="bigger"
+        multiLine
+        margin="20px 0 30px"
+        textAlign="center"
+        width={isMobile ? "100%" : "50%"}
+      >
         {title}
       </Title>
       <Styled.OptionsContainer>
@@ -84,7 +95,12 @@ const Multiple: FC<MultipleProps> = ({
                       )}
                     </Styled.AnswerIndex>
                   )}
-                  <Title textAlign="center" margin="0 auto 0 0">
+                  <Title
+                    textAlign="left"
+                    margin="0 auto 0 0"
+                    multiLine
+                    width="70%"
+                  >
                     {answer.answer || ""}
                   </Title>
                 </Styled.ButtonContent>

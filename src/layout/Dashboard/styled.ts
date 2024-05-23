@@ -56,7 +56,7 @@ export const Content = styled.div`
 
 export const ChildrenContainer = styled.div<Props>`
   padding: 15px;
-  height: 100%;
+  height: calc(100vh - 9vh);
   @media screen and (min-width: 600px) {
     width: 94%;
     padding: 20px 40px;

@@ -10,7 +10,7 @@ import ProgressBar from "components/ProgressBar";
 import Button from "components/Button";
 import { formatTime } from "utils/index";
 import { TResume } from "types/index";
-import { AnswerText } from "components/ui/Typography/styled";
+import { AnswerText, Title } from "components/ui/Typography/styled";
 
 type QuizResultProps = {};
 
@@ -79,31 +79,31 @@ const QuizResult: FC<QuizResultProps> = () => {
         <Styled.InfoContainer>
           {userType === "tutor" && (
             <>
-              <Styled.Label>Student</Styled.Label>
+              <Title size="smaller">Student</Title>
               <Styled.ScoreMessage>{studentName}</Styled.ScoreMessage>
             </>
           )}
-          <Styled.Label>Quiz</Styled.Label>
+          <Title size="smaller">Quiz</Title>
           <Styled.ScoreMessage>{quiz?.title}</Styled.ScoreMessage>
-          <Styled.Label>Quiz Info</Styled.Label>
+          <Title size="smaller">Quiz Info</Title>
           <Styled.ScoreMessage>
             {quiz?.type} | {quiz?.category}
           </Styled.ScoreMessage>
-          <Styled.Label>Final score</Styled.Label>
+          <Title size="smaller">Final score</Title>
           <ProgressBar progress={finalScore} radius={5} />
         </Styled.InfoContainer>
         {userType === "student" ? (
           <Styled.MessageContainer>
-            <Styled.Label>FeedBack</Styled.Label>
+            <Title size="smaller">FeedBack</Title>
             <Styled.ScoreMessage>{handleMessage()}</Styled.ScoreMessage>
           </Styled.MessageContainer>
         ) : (
           <Styled.InfoContainer>
-            <Styled.Label>Time spent</Styled.Label>
+            <Title size="smaller">Time spent</Title>
             <Styled.ScoreMessage>
               {formatTime(allInfo?.timeSpent)}
             </Styled.ScoreMessage>
-            <Styled.Label>Tries</Styled.Label>
+            <Title size="smaller">Tries</Title>
             <Styled.ScoreMessage>{allInfo?.tries}</Styled.ScoreMessage>
           </Styled.InfoContainer>
         )}
@@ -129,8 +129,7 @@ const QuizResult: FC<QuizResultProps> = () => {
                   ) ? (
                     <>
                       <Styled.CircleIcon right={false} />
-                      Your answer: {/* <h4> */}
-                      {/* //AQUI */}
+                      Your answer:
                       {res.selectedFillAnswer.map((a) => {
                         return (
                           <div>

@@ -16,6 +16,7 @@ import Multiple from "../Multiple";
 import { TFillTheBlanksQuestions } from "Store/quiz/types";
 import FilTheBlanks from "../FilTheBlanks";
 import { Title } from "components/ui/Typography/styled";
+import useDeviceType from "hooks/useDeviceType";
 
 type QuizTemplateProps = {
   onClose?: () => void;
@@ -36,6 +37,7 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isMobile = useDeviceType();
 
   const { quiz } = useSelector((state: RootState) => state.quiz);
   const { student } = useSelector((state: RootState) => state.student);
@@ -112,6 +114,37 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
     }
   });
 
+  const quizTypeDisplay = () => {
+    return (
+      <>
+        {(quiz?.type === "Multiple" ||
+          quiz?.type === "TrueOrFalse" ||
+          type === "Multiple" ||
+          type === "TrueOrFalse") && (
+          <Multiple
+            title={questions?.[current]?.question}
+            question={questions?.[current]}
+            selectedAnswer={selectedAnswer?.answer as string}
+            setSelectedAnswer={(answer) => setSelectedAnswer(answer)}
+            showAnswer={showAnswer}
+            preview={preview}
+          />
+        )}
+        {(quiz?.type === "FillTheBlanks" || type === "FillTheBlanks") && (
+          <FilTheBlanks
+            questions={filTheBlanks?.[current]}
+            setSelectedAnswer={(answer) => setSelectedAnswer(answer)}
+            resetTrigger={resetTrigger}
+          />
+        )}
+      </>
+    );
+  };
+
+  if (preview) {
+    return quizTypeDisplay();
+  }
+
   return (
     <Styled.Container>
       <Styled.QuizContainer preview={preview}>
@@ -125,30 +158,12 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
               color={theme.colors.quiz.right}
               displayPercentage={false}
             />
-            <Title width="15%">
+            <Title width={isMobile ? "15%" : ""}>
               {current + 1}/{questions?.length}
             </Title>
           </Styled.ProgressContainer>
         </Styled.Header>
-        {(quiz?.type === "Multiple" ||
-          quiz?.type === "TrueOrFalse" ||
-          type === "Multiple" ||
-          type === "TrueOrFalse") && (
-          <Multiple
-            title={questions?.[current]?.question}
-            question={questions?.[current]}
-            selectedAnswer={selectedAnswer?.answer as string}
-            setSelectedAnswer={(answer) => setSelectedAnswer(answer)}
-            showAnswer={showAnswer}
-          />
-        )}
-        {(quiz?.type === "FillTheBlanks" || type === "FillTheBlanks") && (
-          <FilTheBlanks
-            questions={filTheBlanks?.[current]}
-            setSelectedAnswer={(answer) => setSelectedAnswer(answer)}
-            resetTrigger={resetTrigger}
-          />
-        )}
+        {quizTypeDisplay()}
       </Styled.QuizContainer>
       {!preview && (
         <Styled.QuizCheckContainer

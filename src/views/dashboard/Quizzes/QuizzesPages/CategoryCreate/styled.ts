@@ -18,12 +18,11 @@ export const Container = styled.div<Props>`
 
 export const ContainerInner = styled.div`
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   padding: 20px 0px;
 
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 9vh);
   padding: 10px 0;
 
   @media screen and (min-width: 600px) {

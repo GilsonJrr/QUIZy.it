@@ -81,7 +81,7 @@ const RenderTable: FC<RenderTableProps> = ({
             {item?.quiz}
           </Title>
         </Styled.TableBodyComponents>
-        <Styled.TableBodyComponents width={20}>
+        <Styled.TableBodyComponents width={15}>
           <Title size="smaller" fontWeight="lighter">
             {item?.score} / {item?.amount}
           </Title>
@@ -91,7 +91,7 @@ const RenderTable: FC<RenderTableProps> = ({
             {handleDate(item?.date)}
           </Title>
         </Styled.TableBodyComponents>
-        <Styled.Option onClick={handleRetry}>
+        <Styled.Option onClick={handleRetry} width={15}>
           <Title size="smaller" fontWeight="lighter" color="light">
             {tutorView ? "Open" : "Retry"}
           </Title>

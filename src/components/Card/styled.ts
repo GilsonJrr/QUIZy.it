@@ -61,7 +61,6 @@ export const CardHeader = styled.div<Props>`
   align-items: center;
   justify-content: ${({ justify }) => justify || "space-between"};
   width: 100%;
-  margin-bottom: 10px;
 `;
 
 export const CardInner = styled.div<Props>`

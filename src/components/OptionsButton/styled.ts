@@ -34,7 +34,7 @@ export const OptionButton = styled.button<Props>`
   font-size: 1.2rem;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.1s ease-in-out all;
+  transition: 0.4s ease-in-out all;
 
   &:hover {
     transform: scale(1.05);

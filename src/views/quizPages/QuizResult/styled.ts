@@ -57,10 +57,9 @@ export const MessageContainer = styled.div`
   }
 `;
 
-export const Label = styled.label`
-  font-weight: 500;
-  margin: 10px 0 3px;
-`;
+// export const Label = styled.label`
+//   font-weight: 500;
+// `;
 
 export const ScoreMessage = styled.p`
   text-align: left;

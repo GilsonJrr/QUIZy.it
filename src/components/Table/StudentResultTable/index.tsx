@@ -22,9 +22,9 @@ const StudentResultTable: FC<StudentResultTableProps> = ({
 
   const TableHeaderTitles: THeader[] = [
     { label: "Title", width: 50 },
-    { label: "Score", width: 20 },
+    { label: "Score", width: 15 },
     { label: "Date", width: 20 },
-    { label: "Option", width: 10, align: "center" },
+    { label: "Option", width: 15, align: "center" },
   ];
   const results = useMemo(() => {
     const myResults = quizzes?.map((student) => ({

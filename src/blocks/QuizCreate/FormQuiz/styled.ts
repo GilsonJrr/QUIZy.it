@@ -15,5 +15,5 @@ export const SelectContainer = styled.div`
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 8px;
 `;

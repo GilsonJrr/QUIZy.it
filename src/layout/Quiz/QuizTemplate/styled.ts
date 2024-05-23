@@ -15,6 +15,7 @@ export const Container = styled.div`
   height: 100vh;
   padding: 0px;
   width: 100%;
+  height: 100%;
 
   @media screen and (min-width: 600px) {
     padding: 0px;
@@ -128,6 +129,7 @@ export const AnswerIndex = styled.div`
 export const ContinueButtonContainer = styled.div`
   bottom: 10px;
   padding: 25px 0px;
+  width: 100%;
   @media screen and (min-width: 600px) {
     display: flex;
     justify-content: flex-end;

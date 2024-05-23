@@ -46,8 +46,8 @@ export const IconContainer = styled.div`
   }
 `;
 
-export const AvatarContainer = styled.div`
-  margin: 10px 0 20px;
+export const AvatarContainer = styled.div<Props>`
+  margin: ${({ editMode }) => (editMode ? "" : "10px 0 20px")};
   position: relative;
 `;
 
@@ -55,8 +55,6 @@ export const ProfileEditContainer = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 5px;
   width: 100%;
 `;
 

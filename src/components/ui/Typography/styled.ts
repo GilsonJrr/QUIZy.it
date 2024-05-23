@@ -14,11 +14,18 @@ type TypographyProps = {
 };
 
 enum ETypeSize {
-  "smaller" = "0.95rem",
+  "smaller" = "0.9rem",
   "small" = "1.2rem",
   "medium" = "1.4rem",
   "big" = "1.8rem",
   "bigger" = "2rem",
+}
+
+enum EFontWeight {
+  "lighter" = 400,
+  "normal" = 500,
+  "bold" = 600,
+  "bolder" = 700,
 }
 
 export const Ellipsis = css`
@@ -31,14 +38,14 @@ export const Ellipsis = css`
 
 export const Title = styled.h2<TypographyProps>`
   font-size: ${({ size }) => ETypeSize[size || "medium"]};
-  font-weight: ${({ fontWeight }) => fontWeight || "bold"};
+  font-weight: ${({ fontWeight }) => EFontWeight[fontWeight || "normal"]};
   margin: ${({ margin }) => margin};
   padding: ${({ padding }) => padding};
   color: ${({ theme, color }) => theme.colors.text[color || "default"]};
   text-align: ${({ textAlign }) => textAlign};
   width: ${({ width }) => width};
 
-  ${({ multiLine }) => (multiLine ? "" : Ellipsis)};
+  ${({ multiLine }) => (multiLine ? "" : Ellipsis)}
 `;
 
 export const Paragraph = styled.p<TypographyProps>`

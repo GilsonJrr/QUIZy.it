@@ -95,7 +95,7 @@ const ProfileModal: FC<ExampleProps> = () => {
           id="profileUpdate"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <Styled.AvatarContainer>
+          <Styled.AvatarContainer editMode={editMode}>
             <Avatar
               name={watch("name")}
               photo={watch("photo")}

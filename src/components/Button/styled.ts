@@ -37,6 +37,15 @@ const backgroundColors: string[] = [
   "transparent",
 ];
 
+// const backgroundColorsHover: string[] = [
+//   theme.colors.main.secondary,
+//   theme.colors.background.highlight,
+//   theme.colors.quiz.wrong,
+//   theme.colors.quiz.right,
+//   "transparent",
+//   "transparent",
+// ];
+
 enum EVariantBorder {
   primary,
   secondary,
@@ -94,4 +103,6 @@ export const Button = styled.button<Props>`
   &:disabled {
     opacity: ${({ partialDisabled }) => (partialDisabled ? "1" : "0.5")};
   }
+
+  transition: 0.2s ease-in-out all;
 `;

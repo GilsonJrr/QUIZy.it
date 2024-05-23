@@ -13,11 +13,6 @@ export const Container = styled.div<Props>`
   width: ${({ width }) => width || "100%"};
 `;
 
-export const Label = styled.label<Props>`
-  font-weight: 600;
-  font-size: 1.1rem;
-`;
-
 export const Textarea = styled.textarea<Props>`
   border-radius: 10px;
   font-size: 1.4rem;

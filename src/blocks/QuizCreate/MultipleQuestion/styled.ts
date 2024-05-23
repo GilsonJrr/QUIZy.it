@@ -11,27 +11,11 @@ export const Container = styled.div<Props>`
   width: 100%;
 `;
 
-export const ContainerInner = styled.div`
-  width: 100%;
-  min-height: 100%;
-  padding: 20px 0px;
-
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 0.2fr;
-  grid-column-gap: 20px;
-  grid-row-gap: 20px;
-  grid-template-areas:
-    "newQuiz newQuestion"
-    "newQuiz newQuestion"
-    "newQuiz buttonContainer";
-`;
-
 export const ButtonContainer = styled.div<Props>`
   grid-area: "buttonContainer";
   display: flex;
   justify-content: ${({ justify }) => justify || "flex-end"};
-  margin-top: 20px;
+  margin-top: 10px;
 `;
 
 export const SelectContainer = styled.div`
@@ -45,7 +29,8 @@ export const SelectContainer = styled.div`
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 8px;
+  height: 100%;
 `;
 
 export const AnswerContainer = styled.div<Props>`
@@ -67,7 +52,7 @@ export const QuestionsContainer = styled.div`
   gap: 10px;
   display: flex;
   flex-wrap: wrap;
-  margin-top: 35px;
+  margin-top: 15px;
 `;
 
 export const PreviewContainer = styled.div`

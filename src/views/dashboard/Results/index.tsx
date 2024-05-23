@@ -9,9 +9,9 @@ import { requestStudentList } from "Store/students/actions";
 import TutorResultTable from "components/Table/TutorResultTable";
 import useDeviceType from "hooks/useDeviceType";
 import StudentResultTable from "components/Table/StudentResultTable";
-import Button from "components/Button";
-import { requestQuizList } from "Store/quiz/actions";
-import LoadingSpinner from "components/LoadingSpiner";
+// import Button from "components/Button";
+// import { requestQuizList } from "Store/quiz/actions";
+// import LoadingSpinner from "components/LoadingSpiner";
 
 type ResultsProps = {};
 
@@ -57,11 +57,11 @@ const Results: FC<ResultsProps> = () => {
     }
   }, [dispatch, user, students]);
 
-  const updateResult = () => {
-    dispatch(
-      dispatch(requestQuizList({ uid: user?.info?.uid || "", size: 50 }))
-    );
-  };
+  // const updateResult = () => {
+  //   dispatch(
+  //     dispatch(requestQuizList({ uid: user?.info?.uid || "", size: 50 }))
+  //   );
+  // };
 
   return (
     <Card
@@ -83,11 +83,11 @@ const Results: FC<ResultsProps> = () => {
             studentID={userStudent?.uid}
           />
         )}
-        <Styled.ButtonContainer>
+        {/* <Styled.ButtonContainer>
           <Button align="center" onClick={updateResult}>
             {quizLoading ? <LoadingSpinner color="light" /> : "Update results"}
           </Button>
-        </Styled.ButtonContainer>
+        </Styled.ButtonContainer> */}
       </Styled.CardContainer>
     </Card>
   );
