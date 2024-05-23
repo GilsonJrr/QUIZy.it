@@ -14,25 +14,11 @@ export const QuestionContainer = styled.div`
     justify-content: space-between;
     margin-top: 50px;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: space-between;
     gap: 50px;
     height: 100%;
     overflow-y: scroll;
-  }
-`;
-
-export const Question = styled.h3`
-  text-align: center;
-  color: ${({ theme }) => theme.colors.main.default};
-  margin-bottom: 30px;
-  @media screen and (min-width: 600px) {
-    width: 50%;
-    text-align: top;
-    font-size: 2rem;
-    margin: 0 10px;
-    margin-bottom: 0px;
-    position: sticky;
-    top: 0;
+    padding: 0 60px;
   }
 `;
 

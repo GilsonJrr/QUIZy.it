@@ -36,22 +36,6 @@ export const Logo = styled.img`
   height: 50px;
 `;
 
-export const LogoText = styled.h3`
-  color: ${({ theme }) => theme.colors.background.default};
-`;
-
-export const Title = styled.h1`
-  color: ${({ theme }) => theme.colors.background.default};
-  margin: 0 0 10px 0;
-`;
-
-export const SubTitle = styled.h2`
-  color: ${({ theme }) => theme.colors.background.default};
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: 500;
-`;
-
 export const Form = styled.form`
   margin: 40px 0 20px;
   display: flex;

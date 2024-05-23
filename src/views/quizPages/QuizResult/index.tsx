@@ -10,6 +10,7 @@ import ProgressBar from "components/ProgressBar";
 import Button from "components/Button";
 import { formatTime } from "utils/index";
 import { TResume } from "types/index";
+import { AnswerText } from "components/ui/Typography/styled";
 
 type QuizResultProps = {};
 
@@ -134,25 +135,23 @@ const QuizResult: FC<QuizResultProps> = () => {
                         return (
                           <div>
                             {a.type === "default" ? (
-                              <Styled.AnswerText answerType={"default"}>
+                              <AnswerText answerType={"default"}>
                                 {a.value}
-                              </Styled.AnswerText>
+                              </AnswerText>
                             ) : a.type === "wrong" ? (
-                              <Styled.AnswerText answerType={"wrong"}>
+                              <AnswerText answerType={"wrong"}>
                                 {a.selectedValue === ""
                                   ? "        "
                                   : a.selectedValue}
-                              </Styled.AnswerText>
+                              </AnswerText>
                             ) : (
-                              <Styled.AnswerText answerType={"right"}>
+                              <AnswerText answerType={"right"}>
                                 {a.selectedValue}
-                              </Styled.AnswerText>
+                              </AnswerText>
                             )}
                           </div>
                         );
                       })}
-                      {/* //AQUI */}
-                      {/* </h4> */}
                       Right answer:
                     </>
                   ) : (
@@ -162,17 +161,17 @@ const QuizResult: FC<QuizResultProps> = () => {
                     return (
                       <div>
                         {a.type === "default" ? (
-                          <Styled.AnswerText answerType={"default"}>
+                          <AnswerText answerType={"default"}>
                             {a.value}
-                          </Styled.AnswerText>
+                          </AnswerText>
                         ) : a.type === "wrong" ? (
-                          <Styled.AnswerText answerType={"right"}>
+                          <AnswerText answerType={"right"}>
                             {a.value}
-                          </Styled.AnswerText>
+                          </AnswerText>
                         ) : (
-                          <Styled.AnswerText answerType={"right"}>
+                          <AnswerText answerType={"right"}>
                             {a.value}
-                          </Styled.AnswerText>
+                          </AnswerText>
                         )}
                       </div>
                     );

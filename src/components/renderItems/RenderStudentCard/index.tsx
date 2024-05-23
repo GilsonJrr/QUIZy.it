@@ -4,6 +4,7 @@ import { StudentTypeValues } from "Store/students/types";
 import Avatar from "components/Avatar";
 import { useNavigate } from "react-router-dom";
 import useDeviceType from "hooks/useDeviceType";
+import { Title } from "components/ui/Typography/styled";
 
 type RenderStudentCardProps = {
   item: StudentTypeValues;
@@ -23,18 +24,28 @@ const RenderStudentCard: FC<RenderStudentCardProps> = ({ item, width }) => {
     >
       <Avatar size="big" name={item.name} photo={item.photo} />
       <Styled.InfoContainer>
-        <Styled.Name>{item.name}</Styled.Name>
+        <Title>{item.name}</Title>
         <Styled.InnerInfoContainer>
-          {item.group && <Styled.Info>Group: {item.group} </Styled.Info>}
+          {item.group && (
+            <Title size="smaller" fontWeight="normal">
+              Group: {item.group}{" "}
+            </Title>
+          )}
           {item.average && (
-            <Styled.Info>
+            <Title size="smaller" fontWeight="normal">
               | Average:
               {item.average}
-            </Styled.Info>
+            </Title>
           )}
         </Styled.InnerInfoContainer>
-        {item.phone && <Styled.Contact>Phone: {item.phone}</Styled.Contact>}
-        <Styled.Contact>Email: {item.email}</Styled.Contact>
+        {item.phone && (
+          <Title size="smaller" fontWeight="normal">
+            Phone: {item.phone}
+          </Title>
+        )}
+        <Title size="smaller" fontWeight="normal">
+          Email: {item.email}
+        </Title>
       </Styled.InfoContainer>
       {!isMobile && (
         <Styled.ButtonContainer>

@@ -64,10 +64,6 @@ export const CardHeader = styled.div<Props>`
   margin-bottom: 10px;
 `;
 
-export const CardTitle = styled.h1`
-  font-size: 1.4rem;
-`;
-
 export const CardInner = styled.div<Props>`
   display: flex;
   flex-direction: column;
@@ -75,16 +71,4 @@ export const CardInner = styled.div<Props>`
   overflow: auto;
   height: 100%;
   padding-bottom: ${({ scrollable }) => (scrollable ? "150" : "0")}px;
-`;
-
-export const EmptyListMessage = styled.h2`
-  text-align: center;
-  font-size: 1.1rem;
-  font-weight: 500;
-  width: 100%;
-  margin: auto;
-  @media screen and (min-width: 600px) {
-    margin: auto;
-    width: 50%;
-  }
 `;

@@ -26,18 +26,6 @@ export const QuizTitlesContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const QuizTitle = styled.h3`
-  font-size: 1.4rem;
-`;
-
-export const QuizInfo = styled.h3`
-  font-size: 1rem;
-  font-weight: 400;
-`;
-
 export const StartButton = styled.div`
-  /* position: absolute;
-  bottom: 15px;
-  right: 30px; */
   font-weight: 600;
 `;

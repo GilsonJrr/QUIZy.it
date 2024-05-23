@@ -37,8 +37,6 @@ export const GroupContainer = styled.div`
 //Divide no Bloco de Categorie Results
 export const ProgressWrapper = styled.div``;
 
-export const ProgressTitle = styled.h3``;
-
 export const ProgressContainer = styled.div`
   display: flex;
   flex-direction: column;

@@ -14,6 +14,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Button from "components/Button";
 import { useModalContext } from "components/Modal/modalContext";
 import AlertModal from "components/Modal/AlertModal";
+import { Title } from "components/ui/Typography/styled";
 
 type TResetPassword = {
   password: string;
@@ -57,9 +58,14 @@ const ResetPassword = () => {
     <Styled.Container>
       <Styled.LogoContainer>
         <Styled.Logo src={Logo} alt="Logo image" />
-        <Styled.LogoText>QUIZy.it</Styled.LogoText>
+        <Title color="light" size="small">
+          QUIZy.it
+        </Title>
       </Styled.LogoContainer>
-      <Styled.Title>RESET PASSWORD</Styled.Title>
+      <Title color="light" size="bigger" margin="0 0 10px 0">
+        RESET PASSWORD
+      </Title>
+
       <Styled.Form onSubmit={handleSubmit(onSubmit)}>
         <SimpleInput
           label={<Styled.Label>Password</Styled.Label>}

@@ -15,6 +15,7 @@ import { IoMdExit } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { useDispatch } from "react-redux";
 import { requestSignOut } from "Store/auth/actions";
+import { Title } from "components/ui/Typography/styled";
 
 type MenuModalProps = {};
 
@@ -49,16 +50,16 @@ const MenuModal: FC<MenuModalProps> = () => {
             onClick={() => navigate("/")}
           >
             <IoMdHome size={30} />
-            <Styled.MenuText active={currentUrl === ""}>Home</Styled.MenuText>
+            <Title color={currentUrl === "" ? "light" : "default"}>Home</Title>
           </Styled.IconContainer>
           <Styled.IconContainer
             active={currentUrl === "quizzes"}
             onClick={() => navigate("quizzes")}
           >
             <MdOutlineQuiz size={30} />
-            <Styled.MenuText active={currentUrl === "quizzes"}>
+            <Title color={currentUrl === "quizzes" ? "light" : "default"}>
               Quizzes
-            </Styled.MenuText>
+            </Title>
           </Styled.IconContainer>
           {userType === "tutor" && (
             <Styled.IconContainer
@@ -66,9 +67,9 @@ const MenuModal: FC<MenuModalProps> = () => {
               onClick={() => navigate("/students")}
             >
               <FaPeopleGroup size={30} />
-              <Styled.MenuText active={currentUrl === "students"}>
+              <Title color={currentUrl === "students" ? "light" : "default"}>
                 Students
-              </Styled.MenuText>
+              </Title>
             </Styled.IconContainer>
           )}
           <Styled.IconContainer
@@ -76,23 +77,23 @@ const MenuModal: FC<MenuModalProps> = () => {
             onClick={() => navigate("/results")}
           >
             <FaFileSignature size={30} />
-            <Styled.MenuText active={currentUrl === "results"}>
+            <Title color={currentUrl === "results" ? "light" : "default"}>
               Results
-            </Styled.MenuText>
+            </Title>
           </Styled.IconContainer>
           <Styled.IconContainer
             active={currentUrl === "profile"}
             onClick={() => navigate("/profile")}
           >
             <CgProfile size={30} />
-            <Styled.MenuText active={currentUrl === "profile"}>
+            <Title color={currentUrl === "profile" ? "light" : "default"}>
               Profile
-            </Styled.MenuText>
+            </Title>
           </Styled.IconContainer>
         </Styled.MenuContainer>
         <Styled.ExitContainer onClick={handleSignOut}>
           <IoMdExit size={30} />
-          <Styled.MenuText exit>Exit</Styled.MenuText>
+          <Title color="error">Exit</Title>
         </Styled.ExitContainer>
       </Styled.Container>
     </ModalTemplate>

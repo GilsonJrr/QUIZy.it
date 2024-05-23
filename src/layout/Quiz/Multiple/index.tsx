@@ -3,6 +3,7 @@ import * as Styled from "./styled";
 import { Answer, EAnswerIndexation, QuestionFiltered } from "types/index";
 
 import Button, { variant } from "components/Button";
+import { Title } from "components/ui/Typography/styled";
 
 type MultipleProps = {
   title: string;
@@ -33,8 +34,6 @@ const Multiple: FC<MultipleProps> = ({
     setSelectedAnswer(answer);
   };
 
-  // console.log("question", question);
-
   const handleAnswerColor = (type: string, active: boolean) => {
     switch (true) {
       case showAnswer && type === "correct":
@@ -52,7 +51,7 @@ const Multiple: FC<MultipleProps> = ({
 
   return (
     <Styled.QuestionContainer>
-      <Styled.Question>{title}</Styled.Question>
+      <Title size="bigger">{title}</Title>
       <Styled.OptionsContainer>
         {question?.answers?.map((answer: any, index: number) => {
           const active = answer.answer === selectedAnswer;
@@ -83,9 +82,9 @@ const Multiple: FC<MultipleProps> = ({
                       )}
                     </Styled.AnswerIndex>
                   )}
-                  <Styled.AnswerText active={active}>
+                  <Title textAlign="center" margin="0 auto 0 0">
                     {answer.answer || ""}
-                  </Styled.AnswerText>
+                  </Title>
                 </Styled.ButtonContent>
               </Button>
             </Styled.ButtonContainer>

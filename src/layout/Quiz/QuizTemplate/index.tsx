@@ -15,6 +15,7 @@ import { theme } from "lib/styles/globalStyles";
 import Multiple from "../Multiple";
 import { TFillTheBlanksQuestions } from "Store/quiz/types";
 import FilTheBlanks from "../FilTheBlanks";
+import { Title } from "components/ui/Typography/styled";
 
 type QuizTemplateProps = {
   onClose?: () => void;
@@ -124,9 +125,9 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
               color={theme.colors.quiz.right}
               displayPercentage={false}
             />
-            <Styled.ProgressNumber>
+            <Title>
               {current + 1}/{questions?.length}
-            </Styled.ProgressNumber>
+            </Title>
           </Styled.ProgressContainer>
         </Styled.Header>
         {(quiz?.type === "Multiple" ||
@@ -162,12 +163,8 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
                   <IoClose size={50} />
                 </Styled.CheckedAnswerIcon>
                 <Styled.CheckedAnswerTextContainer>
-                  <Styled.CheckedAnswerTitle>
-                    The right answer is:
-                  </Styled.CheckedAnswerTitle>
-                  <Styled.CheckedAnswerText>
-                    {selectedAnswer?.finalAnswer}
-                  </Styled.CheckedAnswerText>
+                  <Title size="big">The right answer is:</Title>
+                  <Title>{selectedAnswer?.finalAnswer}</Title>
                 </Styled.CheckedAnswerTextContainer>
               </Styled.CheckedAnswerContainer>
             ) : (
@@ -177,7 +174,7 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
                 >
                   <FaCheck size={50} />
                 </Styled.CheckedAnswerIcon>
-                <Styled.CheckedAnswerText>Grate job!</Styled.CheckedAnswerText>
+                <Title size="big">Grate job!</Title>
               </Styled.CheckedAnswerContainer>
             )
           ) : (

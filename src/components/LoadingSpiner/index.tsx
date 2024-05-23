@@ -3,6 +3,7 @@ import * as Styled from "./styled";
 
 type LoadingSpinnerProps = {
   size?: "smaller" | "small" | "medium" | "big" | "bigger";
+  color?: "light" | "dark";
 };
 
 enum ESize {
@@ -21,10 +22,17 @@ enum EThinness {
   "bigger" = 5,
 }
 
-const LoadingSpinner: FC<LoadingSpinnerProps> = ({ size = "small" }) => {
+const LoadingSpinner: FC<LoadingSpinnerProps> = ({
+  size = "small",
+  color = "dark",
+}) => {
   return (
     <Styled.Container>
-      <Styled.Spinner size={ESize[size]} thinness={EThinness[size]} />
+      <Styled.Spinner
+        size={ESize[size]}
+        thinness={EThinness[size]}
+        color={color}
+      />
     </Styled.Container>
   );
 };

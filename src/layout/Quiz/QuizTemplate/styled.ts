@@ -56,10 +56,6 @@ export const Coins = styled.div`
   font-weight: 800;
 `;
 
-export const Title = styled.h1`
-  font-size: 20px;
-`;
-
 export const QuestionContainer = styled.div`
   width: 100%;
   display: flex;
@@ -76,21 +72,6 @@ export const QuestionContainer = styled.div`
     gap: 50px;
     height: 100%;
     overflow-y: scroll;
-  }
-`;
-
-export const Question = styled.h3`
-  text-align: center;
-  color: ${({ theme }) => theme.colors.main.default};
-  margin-bottom: 30px;
-  @media screen and (min-width: 600px) {
-    width: 50%;
-    text-align: top;
-    font-size: 2rem;
-    margin: 0 10px;
-    margin-bottom: 0px;
-    position: sticky;
-    top: 0;
   }
 `;
 
@@ -120,8 +101,6 @@ export const ProgressContainer = styled.div`
   gap: 20px;
 `;
 
-export const ProgressNumber = styled.h3``;
-
 export const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
@@ -146,23 +125,14 @@ export const AnswerIndex = styled.div`
   font-weight: 700;
 `;
 
-export const AnswerText = styled.h3<Props>`
-  color: ${({ theme }) => theme.colors.main.default};
-  width: 90%;
-`;
-
 export const ContinueButtonContainer = styled.div`
   bottom: 10px;
-  /* width: 100%; */
   padding: 25px 0px;
   @media screen and (min-width: 600px) {
     display: flex;
     justify-content: flex-end;
     right: 0;
     width: 30%;
-    button {
-      /* width: 100%; */
-    }
   }
 `;
 
@@ -212,15 +182,6 @@ export const CheckedAnswerIcon = styled.div<Props>`
 `;
 
 export const CheckedAnswerTextContainer = styled.div``;
-
-export const CheckedAnswerTitle = styled.h1`
-  font-size: 1.5rem;
-  font-weight: 500;
-`;
-
-export const CheckedAnswerText = styled.h2`
-  font-size: 1.6rem;
-`;
 
 export const ModalBackground = styled.div`
   position: absolute;

@@ -118,10 +118,6 @@ export const HeaderTitle = styled.div`
   }
 `;
 
-export const HeaderTitleText = styled.h1`
-  font-size: 1.3rem;
-`;
-
 export const HeaderHamburgerMenu = styled.div`
   display: flex;
   align-items: center;
@@ -190,20 +186,6 @@ export const ProfileTitles = styled.div`
   width: 90%;
 `;
 
-export const ProfileName = styled.h1`
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  font-size: 1.1rem;
-`;
-
-export const UserType = styled.h2`
-  font-size: 0.7rem;
-  text-transform: capitalize;
-`;
-
 export const ChevronLeft = styled(FaChevronLeft)`
   cursor: pointer;
 `;
@@ -238,20 +220,4 @@ export const MessageContainer = styled.div`
   &:hover {
     border-bottom: 1px solid rgba(0, 0, 0);
   }
-`;
-
-export const MessageFrom = styled.h1`
-  font-size: 1.2rem;
-  margin: 6px 0;
-`;
-
-export const Message = styled.h2`
-  font-size: 1rem;
-  max-height: 2.6em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  font-weight: 400;
 `;

@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import * as Styled from "./styled";
+import { Title } from "components/ui/Typography/styled";
 
 type TOptions = {
   label: string;
@@ -42,7 +43,7 @@ const ToggleInput: FC<ToggleInputProps> = ({
               active={active === 0}
             >
               <Styled.OptionContainer active={active === 0}>
-                <Styled.Option>{option.label}</Styled.Option>
+                <Title size="small">{option.label}</Title>
               </Styled.OptionContainer>
               <Styled.Toggle />
             </Styled.Container>

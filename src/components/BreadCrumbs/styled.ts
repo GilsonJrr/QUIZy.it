@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { FiChevronsRight } from "react-icons/fi";
+import { Title } from "components/ui/Typography/styled";
 
 type Props = {
   showFade?: boolean;
@@ -39,17 +40,13 @@ export const Container = styled.div<Props>`
   }
 `;
 
-export const Crumbs = styled.h3`
-  cursor: pointer;
-`;
-
 export const CrumbsContainer = styled.div<Props>`
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 5px;
 
-  ${Crumbs} {
+  ${Title} {
     &:last-child {
       text-decoration: underline;
     }

@@ -57,23 +57,9 @@ export const MessageContainer = styled.div`
   }
 `;
 
-export const Title = styled.h1`
-  margin: 0;
-`;
-
 export const Label = styled.label`
   font-weight: 500;
   margin: 10px 0 3px;
-`;
-
-export const Score = styled.h2`
-  border-radius: 100%;
-  font-size: 8rem;
-  font-weight: 800;
-  margin: 0;
-  @media screen and (min-width: 600px) {
-    font-size: 10rem;
-  }
 `;
 
 export const ScoreMessage = styled.p`
@@ -147,12 +133,4 @@ export const CloseIcon = styled(AiOutlineClose)`
 export const CircleIcon = styled(FaCircle)<Props>`
   color: ${({ right, theme }) =>
     right ? theme.colors.quiz.right : theme.colors.quiz.wrong};
-`;
-
-export const AnswerText = styled.h4<Props>`
-  color: ${({ theme, answerType }) =>
-    answerType && theme.colors.quiz[answerType]};
-  text-decoration: ${({ answerType }) =>
-    answerType !== "default" ? "underline" : ""};
-  white-space: pre;
 `;

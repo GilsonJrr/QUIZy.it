@@ -4,6 +4,7 @@ import { StudentTypeValues } from "Store/students/types";
 import Avatar from "components/Avatar";
 import { useNavigate } from "react-router-dom";
 import Button from "components/Button";
+import { Paragraph, Title } from "components/ui/Typography/styled";
 
 type ProfileInfoProps = {
   student: StudentTypeValues;
@@ -18,32 +19,32 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ student }) => {
     <Styled.Container>
       <Avatar name={name} photo={photo} size="bigger" />
       <Styled.HeaderContainer>
-        <Styled.Title>{name}</Styled.Title>
-        <Styled.Label>{socialNetWork}</Styled.Label>
+        <Title>{name}</Title>
+        <Title size="smaller">{socialNetWork}</Title>
       </Styled.HeaderContainer>
       <Styled.InfosContainer>
         <Styled.InfoTagContainer>
           <Styled.TagBackGround>
             <Styled.BirthDate />
           </Styled.TagBackGround>
-          <Styled.Text>{birthDate}</Styled.Text>
+          <Title size="small">{birthDate}</Title>
         </Styled.InfoTagContainer>
         <Styled.InfoTagContainer>
           <Styled.TagBackGround>
             <Styled.Email />
           </Styled.TagBackGround>
-          <Styled.Text>{email}</Styled.Text>
+          <Title size="small">{email}</Title>
         </Styled.InfoTagContainer>
         <Styled.InfoTagContainer>
           <Styled.TagBackGround>
             <Styled.Phone />
           </Styled.TagBackGround>
-          <Styled.Text>{phone}</Styled.Text>
+          <Title size="small">{phone}</Title>
         </Styled.InfoTagContainer>
       </Styled.InfosContainer>
       <Styled.AboutContainer>
-        <Styled.Label>About</Styled.Label>
-        <Styled.Paragraph>{about}</Styled.Paragraph>
+        <Title size="small">About</Title>
+        <Paragraph size="smaller">{about}</Paragraph>
       </Styled.AboutContainer>
       <Styled.ButtonContainer>
         <Button

@@ -91,7 +91,6 @@ const Sidebar: FC<SidebarProps> = ({ display, onClose }) => {
             onClick={() => handleRedirect("/")}
           >
             <IoMdHome size={30} />
-            <Styled.MenuText active={currentUrl === "/"}>Home</Styled.MenuText>
           </Styled.IconContainer>
           <Tooltip
             toolTipContent={
@@ -107,9 +106,6 @@ const Sidebar: FC<SidebarProps> = ({ display, onClose }) => {
               onClick={() => handleRedirect("/quizzes")}
             >
               <MdOutlineQuiz size={30} />
-              <Styled.MenuText active={currentUrl === "/quizzes"}>
-                Quizzes
-              </Styled.MenuText>
             </Styled.IconContainer>
           </Tooltip>
           {userType === "tutor" && (
@@ -126,9 +122,6 @@ const Sidebar: FC<SidebarProps> = ({ display, onClose }) => {
                 onClick={() => handleRedirect("/students")}
               >
                 <FaPeopleGroup size={30} />
-                <Styled.MenuText active={currentUrl === "/students"}>
-                  Students
-                </Styled.MenuText>
               </Styled.IconContainer>
             </Tooltip>
           )}
@@ -137,14 +130,10 @@ const Sidebar: FC<SidebarProps> = ({ display, onClose }) => {
             onClick={() => handleRedirect("/results")}
           >
             <FaFileSignature size={30} />
-            <Styled.MenuText active={currentUrl === "/results"}>
-              Results
-            </Styled.MenuText>
           </Styled.IconContainer>
         </Styled.MenuContainer>
         <Styled.ExitContainer>
           <IoMdExit size={30} onClick={handleSignOut} />
-          <Styled.MenuText exit>Exit</Styled.MenuText>
         </Styled.ExitContainer>
       </Styled.ContainerBackGround>
     </Styled.Container>

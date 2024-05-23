@@ -1,9 +1,10 @@
 import React, { FC, ReactNode, useEffect } from "react";
 import * as Styled from "./styled";
 import { useModalContext } from "../modalContext";
+import { Title } from "components/ui/Typography/styled";
 
 type AlertModalProps = {
-  type: "error" | "success" | "warning" | "info";
+  type: "error" | "success" | "warning" | "default";
   message: string | ReactNode | ReactNode[];
   title?: string;
   totalTime?: number;
@@ -33,14 +34,14 @@ const AlertModal: FC<AlertModalProps> = ({
           {type === "error" && <Styled.ErrorIcon size={40} />}
           {type === "success" && <Styled.SuccessIcon size={40} />}
           {type === "warning" && <Styled.WarningIcon size={40} />}
-          {type === "info" && <Styled.InfoIcon size={40} />}
+          {type === "default" && <Styled.InfoIcon size={40} />}
         </Styled.IconContainer>
         <Styled.TextContainer>
-          <Styled.Title type={type}>
+          <Title color={type}>
             {title
               ? title
               : type[0].toLocaleUpperCase() + type.slice(1, type.length)}
-          </Styled.Title>
+          </Title>
           <Styled.Message>{message}</Styled.Message>
         </Styled.TextContainer>
         <Styled.CloseContainer>

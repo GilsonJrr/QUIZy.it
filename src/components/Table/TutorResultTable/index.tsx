@@ -23,8 +23,6 @@ const TutorResultTable: FC<TutorResultTableProps> = ({
     { label: "", width: 15 },
   ];
 
-  // sort((a, b) => parseInt(b?.date || "") - parseInt(a?.date || ""))
-
   const tutorResults = useMemo(() => {
     const myResults = quizzes?.map((quiz) => ({
       results: quiz.results,

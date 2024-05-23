@@ -55,10 +55,6 @@ export const Coins = styled.div`
   font-weight: 800;
 `;
 
-export const Title = styled.h1`
-  font-size: 20px;
-`;
-
 export const QuestionContainer = styled.div`
   width: 100%;
   display: flex;
@@ -84,19 +80,6 @@ export const OptionsContainer = styled.div`
   justify-content: center;
   @media screen and (min-width: 600px) {
     width: 50%;
-  }
-`;
-
-export const Question = styled.h3`
-  text-align: center;
-  color: ${({ theme }) => theme.colors.main.default};
-  margin-bottom: 30px;
-  @media screen and (min-width: 600px) {
-    width: 50%;
-    text-align: top;
-    font-size: 2rem;
-    margin: 10px;
-    margin-bottom: 0px;
   }
 `;
 
@@ -144,8 +127,6 @@ export const ProgressBarFill = styled.div<Props>`
   background-color: ${({ theme }) => theme.colors.quiz.right};
 `;
 
-export const ProgressNumber = styled.h3``;
-
 export const AnswerIndex = styled.div`
   display: flex;
   align-items: center;
@@ -156,10 +137,6 @@ export const AnswerIndex = styled.div`
   border-radius: 100%;
   line-height: 0;
   font-weight: 700;
-`;
-
-export const AnswerText = styled.h3<Props>`
-  color: ${({ theme }) => theme.colors.main.default};
 `;
 
 export const QuizCheckContainer = styled.div<Props>`
@@ -205,15 +182,6 @@ export const CheckedAnswerIcon = styled.div<Props>`
 `;
 
 export const CheckedAnswerTextContainer = styled.div``;
-
-export const CheckedAnswerTitle = styled.h1`
-  font-size: 1.5rem;
-  font-weight: 500;
-`;
-
-export const CheckedAnswerText = styled.h2`
-  font-size: 1.6rem;
-`;
 
 export const ModalBackground = styled.div`
   position: absolute;

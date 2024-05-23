@@ -122,8 +122,6 @@ export const CategoryCardContainer = styled.div`
   padding-bottom: 150px;
 `;
 
-export const CategoryTitle = styled.h3``;
-
 export const CategoryCard = styled.div<Props>`
   display: flex;
   align-items: center;
@@ -137,11 +135,6 @@ export const CategoryCard = styled.div<Props>`
 
   background-color: ${({ active, theme }) =>
     active ? theme.colors.main.default : ""};
-
-  ${CategoryTitle} {
-    color: ${({ active, theme }) =>
-      active ? theme.colors.background.tertiary : theme.colors.main.default};
-  }
 
   @media screen and (min-width: 600px) {
     width: 48%;

@@ -8,7 +8,6 @@ const LoadingImage: FC<LoadingImageProps> = () => {
   return (
     <Styled.Container>
       <Styled.Loader src={Logo} />
-      <Styled.LoadingText>LOADING...</Styled.LoadingText>
     </Styled.Container>
   );
 };

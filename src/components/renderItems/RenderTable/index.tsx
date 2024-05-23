@@ -3,6 +3,7 @@ import * as Styled from "./styled";
 import { TResult, TTutorResult } from "types/index";
 import { useNavigate } from "react-router-dom";
 import useDeviceType from "hooks/useDeviceType";
+import { Title } from "components/ui/Typography/styled";
 
 type RenderTableProps = {
   item?: TResult;
@@ -60,15 +61,15 @@ const RenderTable: FC<RenderTableProps> = ({
     return isMobile ? (
       <Styled.ListContainer onClick={handleRetry}>
         <Styled.List>
-          <Styled.ListTitle>{item?.quiz}</Styled.ListTitle>
+          <Title>{item?.quiz}</Title>
           <Styled.ListInfoContainer>
             <Styled.InfoContainer>
-              <Styled.InfoText>
+              <Title fontWeight="lighter">
                 {item?.score} / {item?.amount}
-              </Styled.InfoText>
+              </Title>
             </Styled.InfoContainer>
             <Styled.InfoContainer>
-              <Styled.InfoText>{handleDate(item?.date)}</Styled.InfoText>
+              <Title fontWeight="lighter">{handleDate(item?.date)}</Title>
             </Styled.InfoContainer>
           </Styled.ListInfoContainer>
         </Styled.List>
@@ -76,16 +77,24 @@ const RenderTable: FC<RenderTableProps> = ({
     ) : (
       <Styled.TableContent>
         <Styled.TableBodyComponents width={50}>
-          {item?.quiz}
+          <Title size="smaller" fontWeight="lighter">
+            {item?.quiz}
+          </Title>
         </Styled.TableBodyComponents>
         <Styled.TableBodyComponents width={20}>
-          {item?.score} / {item?.amount}
+          <Title size="smaller" fontWeight="lighter">
+            {item?.score} / {item?.amount}
+          </Title>
         </Styled.TableBodyComponents>
         <Styled.TableBodyComponents width={20}>
-          {handleDate(item?.date)}
+          <Title size="smaller" fontWeight="lighter">
+            {handleDate(item?.date)}
+          </Title>
         </Styled.TableBodyComponents>
         <Styled.Option onClick={handleRetry}>
-          {tutorView ? "Open" : "Retry"}
+          <Title size="smaller" fontWeight="lighter" color="light">
+            {tutorView ? "Open" : "Retry"}
+          </Title>
         </Styled.Option>
       </Styled.TableContent>
     );
@@ -95,32 +104,36 @@ const RenderTable: FC<RenderTableProps> = ({
     return isMobile ? (
       <Styled.ListContainer onClick={handleOpenResult}>
         <Styled.List>
-          <Styled.ListTitle>{tutorResultTable?.name}</Styled.ListTitle>
+          <Title>{tutorResultTable?.name}</Title>
           <Styled.ListInfoContainer>
-            <Styled.InfoContainer>
-              <Styled.InfoText>{tutorResultTable?.quiz}</Styled.InfoText>
-            </Styled.InfoContainer>
-            <Styled.InfoContainer>
-              <Styled.InfoText>
-                {tutorResultTable?.score} / {tutorResultTable?.amount}
-              </Styled.InfoText>
-            </Styled.InfoContainer>
+            <Title fontWeight="lighter">{tutorResultTable?.quiz}</Title>
+            <Title fontWeight="lighter">
+              {tutorResultTable?.score} / {tutorResultTable?.amount}
+            </Title>
           </Styled.ListInfoContainer>
         </Styled.List>
       </Styled.ListContainer>
     ) : (
       <Styled.TableContent>
         <Styled.TableBodyComponents width={40}>
-          {tutorResultTable?.name}
+          <Title size="smaller" fontWeight="lighter">
+            {tutorResultTable?.name}
+          </Title>
         </Styled.TableBodyComponents>
         <Styled.TableBodyComponents width={40}>
-          {tutorResultTable?.quiz}
+          <Title size="smaller" fontWeight="lighter">
+            {tutorResultTable?.quiz}
+          </Title>
         </Styled.TableBodyComponents>
         <Styled.TableBodyComponents width={15}>
-          {tutorResultTable?.score} / {tutorResultTable?.amount}
+          <Title size="smaller" fontWeight="lighter">
+            {tutorResultTable?.score} / {tutorResultTable?.amount}
+          </Title>
         </Styled.TableBodyComponents>
         <Styled.Option width={15} onClick={handleOpenResult}>
-          Open
+          <Title size="smaller" fontWeight="lighter" color="light">
+            Open
+          </Title>
         </Styled.Option>
       </Styled.TableContent>
     );

@@ -44,8 +44,3 @@ export const OptionContainer = styled.div<Props>`
   display: flex;
   width: 50%;
 `;
-
-export const Option = styled.h3`
-  text-align: center;
-  pointer-events: none;
-`;

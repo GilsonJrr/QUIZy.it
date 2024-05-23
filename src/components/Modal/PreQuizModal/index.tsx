@@ -17,6 +17,7 @@ import { RootState } from "Store/root-reducer";
 import { MyListTypeValues } from "Store/myList/types";
 import LoadingSpinner from "components/LoadingSpiner";
 import Button from "components/Button";
+import { Title } from "components/ui/Typography/styled";
 
 type PreQuizModalProps = {
   item: QuizTypeValues;
@@ -62,11 +63,18 @@ const PreQuizModal: FC<PreQuizModalProps> = ({ item }) => {
     <ModalTemplate onClick={() => handleModal("")}>
       <Styled.Image src={item.image ? item.image : EmptyImage} />
       <Styled.Content>
-        <Styled.Title>{item.title}</Styled.Title>
-        <Styled.SubTitle>{item.description}</Styled.SubTitle>
+        <Title>{item.title}</Title>
+        <Title size="small" fontWeight="lighter">
+          {item.description}
+        </Title>
         <Styled.InfoContainer>
-          <Styled.Info>{item.category} </Styled.Info>|
-          <Styled.Info> {item.type}</Styled.Info>
+          <Title size="small" fontWeight="lighter">
+            {item.category}
+          </Title>
+          |
+          <Title size="small" fontWeight="lighter">
+            {item.type}
+          </Title>
         </Styled.InfoContainer>
         <Styled.OptionContainer>
           <Button

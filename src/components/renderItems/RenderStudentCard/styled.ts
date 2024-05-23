@@ -27,29 +27,11 @@ export const InfoContainer = styled.div`
   width: 70%;
 `;
 
-export const Name = styled.h1`
-  font-size: 1.4rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-`;
-
 export const InnerInfoContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
   margin: 10px 0;
-`;
-
-export const Info = styled.h2`
-  font-size: 1rem;
-  margin-right: 5px;
-`;
-
-export const Contact = styled.h3`
-  font-size: 0.7rem;
 `;
 
 export const ButtonContainer = styled.div`

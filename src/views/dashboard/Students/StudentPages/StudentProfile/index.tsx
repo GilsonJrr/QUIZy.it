@@ -17,6 +17,7 @@ import Tabs from "components/Tabs";
 import useDeviceType from "hooks/useDeviceType";
 import StudentResultTable from "components/Table/StudentResultTable";
 import { sumByCategory } from "utils/index";
+import { Title } from "components/ui/Typography/styled";
 
 type StudentProfileProps = {};
 
@@ -164,11 +165,11 @@ const StudentProfile: FC<StudentProfileProps> = () => {
                   )[0]?.size;
                   return (
                     <Styled.ProgressContainer>
-                      <Styled.ProgressTitle>
+                      <Title size="small">
                         {category.category === "categoryLess"
                           ? "Uncategorized"
                           : category.category}
-                      </Styled.ProgressTitle>
+                      </Title>
                       <ProgressBar
                         progress={(studentResult / category.size) * 100}
                       />

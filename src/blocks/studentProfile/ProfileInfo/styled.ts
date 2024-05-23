@@ -24,47 +24,6 @@ export const HeaderContainer = styled.div`
   margin: 10px 0;
 `;
 
-export const Title = styled.h1`
-  font-size: 1.4rem;
-  width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-`;
-
-export const Label = styled.h2`
-  font-size: 1.1rem;
-  font-weight: 700;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-`;
-
-export const Text = styled.h2`
-  font-size: 1.1rem;
-  font-weight: 500;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-`;
-
-export const Paragraph = styled.p`
-  font-size: 0.9rem;
-  max-height: 6em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
-  font-weight: 400;
-`;
-
 export const InfosContainer = styled.div`
   display: flex;
   flex-direction: column;

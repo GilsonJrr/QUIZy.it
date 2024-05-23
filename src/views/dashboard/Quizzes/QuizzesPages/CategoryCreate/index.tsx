@@ -26,6 +26,7 @@ import Tabs from "components/Tabs";
 import Button from "components/Button";
 import AlertModal from "components/Modal/AlertModal";
 import { useTranslation } from "react-i18next";
+import { Title } from "components/ui/Typography/styled";
 
 type StudentCreateProps = {};
 
@@ -147,7 +148,7 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
               () =>
                 handleModal(
                   <AlertModal
-                    type={"info"}
+                    type={"default"}
                     message={t("addCategory.categoryRemoved")}
                   />
                 )
@@ -250,9 +251,7 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
                         name={category.title}
                         photo={category.image}
                       />
-                      <Styled.CategoryTitle>
-                        {category.title}
-                      </Styled.CategoryTitle>
+                      <Title>{category.title}</Title>
                     </Styled.CategoryCard>
                   );
                 })}

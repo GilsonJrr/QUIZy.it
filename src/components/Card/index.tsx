@@ -6,6 +6,7 @@ import SearchInput from "components/inputs/SearchInput";
 import { LoadingContainerCard } from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
 import Button from "components/Button";
+import { Title } from "components/ui/Typography/styled";
 
 type CardProps = {
   title: string;
@@ -78,7 +79,7 @@ const Card: FC<CardProps> = ({
       innerCard={innerCard}
     >
       <Styled.CardHeader justify={handleJustify()}>
-        <Styled.CardTitle>{title}</Styled.CardTitle>
+        <Title>{title}</Title>
         {searchable && (
           <SearchInput value={searchValue} setValue={(e) => setSearch?.(e)} />
         )}
@@ -95,7 +96,9 @@ const Card: FC<CardProps> = ({
       </Styled.CardHeader>
       <Styled.CardInner scrollable={scrollable}>
         {isEmpty ? (
-          <Styled.EmptyListMessage>{emptyMessage}</Styled.EmptyListMessage>
+          <Title size="small" fontWeight="lighter" textAlign="center">
+            {emptyMessage}
+          </Title>
         ) : (
           children
         )}

@@ -20,6 +20,7 @@ import useDeviceType from "hooks/useDeviceType";
 import Tabs from "components/Tabs";
 import Button from "components/Button";
 import AlertModal from "components/Modal/AlertModal";
+import { Title } from "components/ui/Typography/styled";
 type StudentCreateProps = {};
 
 type TStudent = {
@@ -123,7 +124,7 @@ const GroupCreate: FC<StudentCreateProps> = () => {
           dispatch(
             removeGroup({ uid: userID || "", groupId: groupId || "" }, () =>
               handleModal(
-                <AlertModal type={"info"} message={"Group Removed"} />
+                <AlertModal type={"default"} message={"Group Removed"} />
               )
             )
           );
@@ -222,7 +223,7 @@ const GroupCreate: FC<StudentCreateProps> = () => {
                         name={group.title}
                         photo={group.image}
                       />
-                      <Styled.GroupTitle>{group.title}</Styled.GroupTitle>
+                      <Title>{group.title}</Title>
                     </Styled.GroupCard>
                   );
                 })}

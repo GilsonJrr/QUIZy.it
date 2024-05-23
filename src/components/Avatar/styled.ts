@@ -18,6 +18,7 @@ export const Container = styled.div<Props>`
 
 export const Name = styled.h2<Props>`
   font-size: ${({ size }) => size};
+  color: ${({ theme }) => theme.colors.main.default};
 `;
 
 export const Photo = styled.img<Props>`

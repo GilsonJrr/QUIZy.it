@@ -5,6 +5,7 @@ import PreQuizModal from "components/Modal/PreQuizModal";
 import EmptyImage from "assets/images/Empty_quiz_image_state.png";
 import { QuizTypeValues } from "Store/quiz/types";
 import { useNavigate } from "react-router-dom";
+import { Title } from "components/ui/Typography/styled";
 
 type RenderQuizCardProps = {
   item: QuizTypeValues;
@@ -30,11 +31,13 @@ const RenderQuizCard: FC<RenderQuizCardProps> = ({
     <Styled.QuizCard onClick={handleClick} preview={preview}>
       <Styled.QuizImage src={item.image ? item.image : EmptyImage} />
       <Styled.QuizTitlesContainer>
-        <Styled.QuizTitle>{item.title}</Styled.QuizTitle>
-        <Styled.QuizInfo>
+        <Title>{item.title}</Title>
+        <Title size="smaller" fontWeight="lighter" margin="10px 0 5px 0">
           {item.category ? `${item.category} | ` : ""} {item.type}
-        </Styled.QuizInfo>
-        <Styled.Description>{item.description}</Styled.Description>
+        </Title>
+        <Title size="smaller" fontWeight="lighter">
+          {item.description}
+        </Title>
         <Styled.StartButton>{editMode ? "Edit" : "Start"}</Styled.StartButton>
       </Styled.QuizTitlesContainer>
     </Styled.QuizCard>

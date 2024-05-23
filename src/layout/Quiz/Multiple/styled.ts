@@ -24,7 +24,8 @@ export const QuestionContainer = styled.div`
     justify-content: space-between;
     margin-top: 50px;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 0 60px;
     gap: 50px;
     height: 100%;
     overflow-y: scroll;
@@ -43,23 +44,6 @@ export const OptionsContainer = styled.div`
     width: 50%;
   }
 `;
-
-export const Question = styled.h3`
-  text-align: center;
-  color: ${({ theme }) => theme.colors.main.default};
-  margin-bottom: 30px;
-  @media screen and (min-width: 600px) {
-    width: 50%;
-    text-align: top;
-    font-size: 2rem;
-    margin: 0 10px;
-    margin-bottom: 0px;
-    position: sticky;
-    top: 0;
-  }
-`;
-
-export const ProgressNumber = styled.h3``;
 
 export const ButtonContainer = styled.div`
   width: 100%;
@@ -104,10 +88,4 @@ export const CheckIcon = styled(FaCheck)`
 
 export const CloseIcon = styled(IoClose)`
   color: ${({ theme }) => theme.colors.quiz.wrong};
-`;
-
-export const AnswerText = styled.h3<Props>`
-  color: ${({ theme }) => theme.colors.main.default};
-  width: 90%;
-  text-align: left;
 `;

@@ -80,19 +80,6 @@ export const IconContainer = styled.div<Props>`
   }
 `;
 
-export const MenuText = styled.h2<Props>`
-  display: flex;
-  margin: 0;
-  font-size: 1.3rem;
-  color: ${({ active, exit, theme }) =>
-    active
-      ? theme.colors.background.default
-      : exit && theme.colors.quiz.wrongSecondary};
-  @media screen and (min-width: 600px) {
-    display: none;
-  }
-`;
-
 export const ExitContainer = styled.div`
   height: 10%;
   display: flex;

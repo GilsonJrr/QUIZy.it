@@ -27,6 +27,13 @@ export const theme: DefaultTheme = {
       warning: "#ccc67e",
       info: "#4a4747",
     },
+    text: {
+      error: "#c78788",
+      success: "#89c799",
+      warning: "#ccc67e",
+      default: "#4a4747",
+      light: "#f8f8f8",
+    },
   },
 };
 

@@ -5,6 +5,7 @@ import { useModalContext } from "../modalContext";
 import { GoAlertFill } from "react-icons/go";
 import LoadingSpinner from "components/LoadingSpiner";
 import Button from "components/Button";
+import { Title } from "components/ui/Typography/styled";
 
 type DeleteModalProps = {
   deleteTitle: string;
@@ -36,10 +37,12 @@ const DeleteModal: FC<DeleteModalProps> = ({ deleteTitle, onDelete }) => {
       <Styled.Container onClick={(event) => event.stopPropagation()}>
         <Styled.TitleContainer>
           <GoAlertFill size={20} />
-          <Styled.Tile>Delete</Styled.Tile>
+          <Title size="bigger">Delete</Title>
         </Styled.TitleContainer>
-        <Styled.SubTitle>Are you sure that you want to delete</Styled.SubTitle>
-        <Styled.ToBeDeletedTitle>{deleteTitle}</Styled.ToBeDeletedTitle>
+        <Title size="small" fontWeight="normal" margin="20px 0 10px 0">
+          Are you sure that you want to delete
+        </Title>
+        <Title size="big">{deleteTitle}</Title>
         <Styled.ButtonContainer>
           <Button
             onClick={handleDelete}

@@ -29,12 +29,6 @@ export const TableBodyComponents = styled.div<Props>`
   display: flex;
   justify-content: center;
 
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-
   @media screen and (min-width: 600px) {
     justify-content: flex-start;
   }
@@ -68,10 +62,4 @@ export const InfoContainer = styled.div`
   align-items: center;
   gap: 5px;
   margin-right: 10px;
-`;
-
-export const ListTitle = styled.h2``;
-
-export const InfoText = styled.h3`
-  font-weight: 500;
 `;

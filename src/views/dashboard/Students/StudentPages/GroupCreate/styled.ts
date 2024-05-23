@@ -123,8 +123,6 @@ export const GroupCardContainer = styled.div`
   padding-bottom: 150px;
 `;
 
-export const GroupTitle = styled.h3``;
-
 export const GroupCard = styled.div<Props>`
   display: flex;
   align-items: center;
@@ -138,11 +136,6 @@ export const GroupCard = styled.div<Props>`
 
   background-color: ${({ active, theme }) =>
     active ? theme.colors.main.default : ""};
-
-  ${GroupTitle} {
-    color: ${({ active, theme }) =>
-      active ? theme.colors.background.tertiary : theme.colors.main.default};
-  }
 
   @media screen and (min-width: 600px) {
     width: 48%;

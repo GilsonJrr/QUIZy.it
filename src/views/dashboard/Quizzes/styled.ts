@@ -59,7 +59,3 @@ export const EmptyContainer = styled.div`
   justify-content: center;
   height: 100%;
 `;
-
-export const EmptyText = styled.h3`
-  font-weight: 500;
-`;

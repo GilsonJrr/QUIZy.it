@@ -3,6 +3,7 @@ import styled, { keyframes } from "styled-components";
 type Props = {
   size?: number;
   thinness?: number;
+  color?: "light" | "dark";
 };
 
 export const Container = styled.div`
@@ -22,8 +23,17 @@ export const Spinner = styled.div<Props>`
   height: ${({ size }) => size}px;
   border-radius: 50%;
   border: ${({ thinness }) => thinness}px solid transparent;
-  border-top-color: ${({ theme }) => theme.colors.main.default};
-  border-left-color: ${({ theme }) => theme.colors.main.default};
-  border-right-color: ${({ theme }) => theme.colors.main.default};
+  border-top-color: ${({ theme, color }) =>
+    color === "light"
+      ? theme.colors.background.default
+      : theme.colors.main.default};
+  border-left-color: ${({ theme, color }) =>
+    color === "light"
+      ? theme.colors.background.default
+      : theme.colors.main.default};
+  border-right-color: ${({ theme, color }) =>
+    color === "light"
+      ? theme.colors.background.default
+      : theme.colors.main.default};
   animation: ${spinAnimation} 0.8s linear infinite;
 `;

@@ -272,7 +272,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
               { uid: userID || "", studentId: student?.info?.uid },
               () =>
                 handleModal(
-                  <AlertModal type={"info"} message={"Student removed"} />
+                  <AlertModal type={"default"} message={"Student removed"} />
                 )
             )
           );

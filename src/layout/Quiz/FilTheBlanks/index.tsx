@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import * as Styled from "./styled";
 import { TFillTheBlanksQuestions } from "Store/quiz/types";
 import { Answer } from "types/index";
+import { Title } from "components/ui/Typography/styled";
 
 type FilTheBlanksProps = {
   questions: TFillTheBlanksQuestions;
@@ -74,7 +75,9 @@ const FilTheBlanks: FC<FilTheBlanksProps> = ({
 
   return (
     <Styled.QuestionContainer>
-      <Styled.Question>Fill the blanks</Styled.Question>
+      <Title size="bigger" width="100%">
+        Fill the blanks
+      </Title>
       <Styled.OptionsContainer>
         <Styled.Words>
           {questions?.spitedPhrase?.map((word: string, answerIndex: number) => {

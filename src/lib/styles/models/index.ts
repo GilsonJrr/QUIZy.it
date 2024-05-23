@@ -14,3 +14,5 @@ export type MainType = "default";
 export type QuizType = "right" | "wrong";
 
 export type AlertType = "Error" | "Success" | "Warning" | "Info";
+
+export type TextType = "Error" | "Success" | "Warning" | "default" | "light";

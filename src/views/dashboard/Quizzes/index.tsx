@@ -23,6 +23,7 @@ import Button from "components/Button";
 import { useTranslation } from "react-i18next";
 import { LoadingContainerFullPage } from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
+import { Title } from "components/ui/Typography/styled";
 
 type QuizzesProps = {};
 
@@ -203,9 +204,9 @@ const Quizzes: FC<QuizzesProps> = () => {
             })
           ) : quizzesCategory?.length === 0 ? (
             <Styled.EmptyContainer>
-              <Styled.EmptyText>
+              <Title size="small" fontWeight="lighter">
                 {t("quizzes.noQuizFoundInCategory")}
-              </Styled.EmptyText>
+              </Title>
             </Styled.EmptyContainer>
           ) : (
             quizzesCategory?.map((item) => {

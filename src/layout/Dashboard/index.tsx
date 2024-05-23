@@ -17,6 +17,7 @@ import { LoadingContainerFullPage } from "components/Container/styled";
 import MenuModal from "components/Modal/MenuModal";
 // import LanguageSwitcher from "components/languageSwitcher";
 import { useAnimation } from "hooks/useAnimation";
+import { Title } from "components/ui/Typography/styled";
 
 type dashboardProps = {
   children?: ReactNode | ReactNode[];
@@ -82,9 +83,9 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
           <Styled.Logo src={Logo} />
         </Styled.LogoContainer>
         <Styled.HeaderTitle>
-          <Styled.HeaderTitleText>
+          <Title>
             {RouterTitle[`${currentUrl}${search}` as keyof typeof RouterTitle]}
-          </Styled.HeaderTitleText>
+          </Title>
           {/* <LanguageSwitcher /> */}
         </Styled.HeaderTitle>
         <Styled.HeaderMessage>
@@ -103,8 +104,8 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
               {messages?.map((message) => {
                 return (
                   <Styled.MessageContainer>
-                    <Styled.MessageFrom>{message.from}</Styled.MessageFrom>
-                    <Styled.Message>{message.message}</Styled.Message>
+                    <Title>{message.from}</Title>
+                    <Title>{message.message}</Title>
                   </Styled.MessageContainer>
                 );
               })}
@@ -113,12 +114,12 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
         </Styled.HeaderMessage>
         <Styled.HeaderProfile onClick={handleOpenProfile}>
           <Styled.ProfileTitles>
-            <Styled.ProfileName>
+            <Title size="small">
               {user?.info?.name || student?.info?.name}
-            </Styled.ProfileName>
-            <Styled.UserType>
+            </Title>
+            <Title size="smaller" fontWeight="lighter">
               {user?.info?.userType || student?.info?.userType || ""}
-            </Styled.UserType>
+            </Title>
           </Styled.ProfileTitles>
           <Styled.ChevronLeft size={20} />
         </Styled.HeaderProfile>
@@ -128,9 +129,9 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
           <Styled.Logo src={Logo} />
         </Styled.LogoContainer>
         <Styled.HeaderTitle>
-          <Styled.HeaderTitleText>
+          <Title>
             {RouterTitle[`${currentUrl}${search}` as keyof typeof RouterTitle]}
-          </Styled.HeaderTitleText>
+          </Title>
         </Styled.HeaderTitle>
         <Styled.HeaderHamburgerMenu onClick={() => handleModal(<MenuModal />)}>
           <GiHamburgerMenu size={25} />

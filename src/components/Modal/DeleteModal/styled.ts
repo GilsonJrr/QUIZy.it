@@ -22,14 +22,6 @@ export const TitleContainer = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.main.default};
 `;
 
-export const Tile = styled.h2``;
-
-export const SubTitle = styled.h3`
-  margin: 20px 0 10px;
-`;
-
-export const ToBeDeletedTitle = styled.h1``;
-
 export const ButtonContainer = styled.div`
   border-top: 1px solid ${({ theme }) => theme.colors.main.default};
   width: 100%;

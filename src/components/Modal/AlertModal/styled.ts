@@ -6,7 +6,7 @@ import { IoIosWarning } from "react-icons/io";
 import { FaInfoCircle } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 
-type typeProps = "error" | "success" | "warning" | "info";
+type typeProps = "error" | "success" | "warning" | "default";
 type Props = { type?: typeProps };
 
 const fadeIn = keyframes`
@@ -60,11 +60,6 @@ export const TextContainer = styled.div<Props>`
 `;
 
 export const CloseContainer = styled.div``;
-
-export const Title = styled.h1<Props>`
-  font-size: 1.4rem;
-  color: ${({ theme, type }) => theme.colors.alert[type as typeProps]};
-`;
 
 export const Message = styled.p``;
 

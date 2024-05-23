@@ -34,7 +34,3 @@ export const Loader = styled.img`
   background-size: cover;
   animation: ${bounce} 3s ease-in-out infinite;
 `;
-
-export const LoadingText = styled.h2`
-  font-size: 1.3rem;
-`;

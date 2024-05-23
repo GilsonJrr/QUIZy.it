@@ -9,6 +9,9 @@ import { requestStudentList } from "Store/students/actions";
 import TutorResultTable from "components/Table/TutorResultTable";
 import useDeviceType from "hooks/useDeviceType";
 import StudentResultTable from "components/Table/StudentResultTable";
+import Button from "components/Button";
+import { requestQuizList } from "Store/quiz/actions";
+import LoadingSpinner from "components/LoadingSpiner";
 
 type ResultsProps = {};
 
@@ -17,7 +20,9 @@ const Results: FC<ResultsProps> = () => {
   const isMobile = useDeviceType();
 
   const { userStudent } = useSelector((state: RootState) => state.user);
-  const { quizzes } = useSelector((state: RootState) => state.quiz);
+  const { quizzes, isLoading: quizLoading } = useSelector(
+    (state: RootState) => state.quiz
+  );
   const { user, isLoading: userLoading } = useSelector(
     (state: RootState) => state.user
   );
@@ -52,15 +57,23 @@ const Results: FC<ResultsProps> = () => {
     }
   }, [dispatch, user, students]);
 
+  const updateResult = () => {
+    dispatch(
+      dispatch(requestQuizList({ uid: user?.info?.uid || "", size: 50 }))
+    );
+  };
+
   return (
-    <Styled.Container>
-      <Card
-        title={isMobile ? "" : "Completed Quizzes"}
-        isEmpty={tableTutorEmpty}
-        emptyMessage={"you have not completed any quiz so far"}
-        isLoading={userType === "tutor" ? studentLoading : userLoading}
-        innerCard={isMobile}
-      >
+    <Card
+      title={isMobile ? "" : "Completed Quizzes"}
+      isEmpty={tableTutorEmpty}
+      emptyMessage={"you have not completed any quiz so far"}
+      isLoading={
+        quizLoading || userType === "tutor" ? studentLoading : userLoading
+      }
+      innerCard={isMobile}
+    >
+      <Styled.CardContainer>
         {userType === "tutor" ? (
           <TutorResultTable emptyState={(empty) => setTableTutorEmpty(empty)} />
         ) : (
@@ -70,8 +83,13 @@ const Results: FC<ResultsProps> = () => {
             studentID={userStudent?.uid}
           />
         )}
-      </Card>
-    </Styled.Container>
+        <Styled.ButtonContainer>
+          <Button align="center" onClick={updateResult}>
+            {quizLoading ? <LoadingSpinner color="light" /> : "Update results"}
+          </Button>
+        </Styled.ButtonContainer>
+      </Styled.CardContainer>
+    </Card>
   );
 };
 

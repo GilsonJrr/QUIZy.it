@@ -17,27 +17,13 @@ export const Content = styled.div`
   gap: 5px;
 `;
 
-export const Title = styled.h1`
-  margin-bottom: 10px;
-  font-size: 1.5rem;
-`;
-
-export const SubTitle = styled.h2`
-  font-size: 1.2rem;
-  font-weight: 500;
-`;
-
 export const InfoContainer = styled.div`
   display: flex;
   gap: 5px;
   align-items: flex-end;
   justify-content: flex-end;
   width: 100%;
-  margin: auto 0 0 0;
-`;
-
-export const Info = styled.p`
-  text-transform: capitalize;
+  margin: 20px 0;
 `;
 
 export const OptionContainer = styled.div`
