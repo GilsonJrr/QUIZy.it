@@ -97,7 +97,7 @@ export const ProgressContainer = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 20px;
 `;
 

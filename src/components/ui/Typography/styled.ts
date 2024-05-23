@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 type TypographyProps = {
   size?: "smaller" | "small" | "medium" | "big" | "bigger";
@@ -8,6 +8,7 @@ type TypographyProps = {
   padding?: string;
   textAlign?: "left" | "center" | "right";
   width?: string;
+  multiLine?: boolean;
 
   answerType?: "default" | "wrong" | "right";
 };
@@ -20,6 +21,14 @@ enum ETypeSize {
   "bigger" = "2rem",
 }
 
+export const Ellipsis = css`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+`;
+
 export const Title = styled.h2<TypographyProps>`
   font-size: ${({ size }) => ETypeSize[size || "medium"]};
   font-weight: ${({ fontWeight }) => fontWeight || "bold"};
@@ -29,11 +38,7 @@ export const Title = styled.h2<TypographyProps>`
   text-align: ${({ textAlign }) => textAlign};
   width: ${({ width }) => width};
 
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
+  ${({ multiLine }) => (multiLine ? "" : Ellipsis)};
 `;
 
 export const Paragraph = styled.p<TypographyProps>`

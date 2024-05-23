@@ -75,7 +75,13 @@ const FilTheBlanks: FC<FilTheBlanksProps> = ({
 
   return (
     <Styled.QuestionContainer>
-      <Title size="bigger" width="100%">
+      <Title
+        size="bigger"
+        width="100%"
+        multiLine
+        margin="20px 0 30px"
+        textAlign="center"
+      >
         Fill the blanks
       </Title>
       <Styled.OptionsContainer>

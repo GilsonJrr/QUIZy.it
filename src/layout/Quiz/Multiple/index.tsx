@@ -51,7 +51,9 @@ const Multiple: FC<MultipleProps> = ({
 
   return (
     <Styled.QuestionContainer>
-      <Title size="bigger">{title}</Title>
+      <Title size="bigger" multiLine margin="20px 0 30px" textAlign="center">
+        {title}
+      </Title>
       <Styled.OptionsContainer>
         {question?.answers?.map((answer: any, index: number) => {
           const active = answer.answer === selectedAnswer;

@@ -125,7 +125,7 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
               color={theme.colors.quiz.right}
               displayPercentage={false}
             />
-            <Title>
+            <Title width="15%">
               {current + 1}/{questions?.length}
             </Title>
           </Styled.ProgressContainer>
