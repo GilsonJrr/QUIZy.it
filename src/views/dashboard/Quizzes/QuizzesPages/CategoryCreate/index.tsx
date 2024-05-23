@@ -251,7 +251,11 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
                         name={category.title}
                         photo={category.image}
                       />
-                      <Title>{category.title}</Title>
+                      <Title
+                        color={category.id === categoryId ? "light" : "default"}
+                      >
+                        {category.title}
+                      </Title>
                     </Styled.CategoryCard>
                   );
                 })}

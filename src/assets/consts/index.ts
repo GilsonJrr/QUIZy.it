@@ -797,7 +797,7 @@ export const example = {
       answer03: "c",
       answer04: "d",
       questionTitle: "questionTitle",
-      rightAnswer: "a",
+      rightAnswer: "same as answer01",
     },
   ],
   title: "quizTitle",

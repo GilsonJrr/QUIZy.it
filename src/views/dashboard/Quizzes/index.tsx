@@ -122,6 +122,10 @@ const Quizzes: FC<QuizzesProps> = () => {
     }
   }, [dispatch, quizzes, requestUid, userID]);
 
+  const filterQuizzes = quizzes?.filter((e) =>
+    e.title.toUpperCase().includes(search?.toUpperCase() || "")
+  );
+
   if (categoryLoading) {
     return (
       <LoadingContainerFullPage>
@@ -161,7 +165,7 @@ const Quizzes: FC<QuizzesProps> = () => {
               ? t("quizzes.newQuizzes")
               : t("quizzes.allQuizzes")
           }
-          isEmpty={quizzes?.length === 0}
+          isEmpty={filterQuizzes?.length === 0}
           emptyMessage={
             search ? t("quizzes.quizNotFound") : t("quizzes.noNewQuizAvailable")
           }
@@ -172,13 +176,11 @@ const Quizzes: FC<QuizzesProps> = () => {
           isLoading={quizzesLoading}
           innerCard={isMobile}
         >
-          {quizzes &&
-            quizzes?.length > 0 &&
-            quizzes?.map((item) => {
-              return (
-                <RenderQuizCard item={item} editMode={userType === "tutor"} />
-              );
-            })}
+          {filterQuizzes?.map((item) => {
+            return (
+              <RenderQuizCard item={item} editMode={userType === "tutor"} />
+            );
+          })}
         </Card>
       )}
       {(!isMobile || tab === t("quizzes.categories")) && (

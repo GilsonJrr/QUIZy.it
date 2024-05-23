@@ -223,7 +223,9 @@ const GroupCreate: FC<StudentCreateProps> = () => {
                         name={group.title}
                         photo={group.image}
                       />
-                      <Title>{group.title}</Title>
+                      <Title color={group.id === groupId ? "light" : "default"}>
+                        {group.title}
+                      </Title>
                     </Styled.GroupCard>
                   );
                 })}
