@@ -23,6 +23,7 @@ type CardProps = {
   setSearch?: (search: string) => void;
   isLoading?: boolean;
   innerCard?: boolean;
+  height?: string;
 };
 
 const Card: FC<CardProps> = ({
@@ -40,6 +41,7 @@ const Card: FC<CardProps> = ({
   setSearch,
   isLoading,
   innerCard,
+  height,
 }) => {
   const navigate = useNavigate();
 
@@ -77,23 +79,26 @@ const Card: FC<CardProps> = ({
       scrollable={scrollable}
       width={width}
       innerCard={innerCard}
+      height={height}
     >
-      <Styled.CardHeader justify={handleJustify()}>
-        <Title>{title}</Title>
-        {searchable && (
-          <SearchInput value={searchValue} setValue={(e) => setSearch?.(e)} />
-        )}
-        {redirectTo && (
-          <Button
-            onClick={() => navigate(redirectPath)}
-            variant="anchor-dark"
-            size="small"
-            padding="0px"
-          >
-            {redirectTo} <FaArrowRight />
-          </Button>
-        )}
-      </Styled.CardHeader>
+      {title && (
+        <Styled.CardHeader justify={handleJustify()}>
+          <Title>{title}</Title>
+          {searchable && (
+            <SearchInput value={searchValue} setValue={(e) => setSearch?.(e)} />
+          )}
+          {redirectTo && (
+            <Button
+              onClick={() => navigate(redirectPath)}
+              variant="anchor-dark"
+              size="small"
+              padding="0px"
+            >
+              {redirectTo} <FaArrowRight />
+            </Button>
+          )}
+        </Styled.CardHeader>
+      )}
       <Styled.CardInner scrollable={scrollable}>
         {isEmpty ? (
           <Title size="small" fontWeight="lighter" textAlign="center">

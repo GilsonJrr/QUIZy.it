@@ -3,16 +3,18 @@ import { takeLatest, put, call } from "redux-saga/effects";
 import { student, studentList } from "../actions";
 
 import {
+  getImgProfile,
   getStudent,
   getStudentList,
   removeStudent,
   removeStudentUser,
-  // removeStudentUserAccount,
+  setImgProfile,
   updateStudentList,
 } from "../repository";
 
 import {
   StudentAction,
+  StudentPhotoValues,
   StudentRequest,
   StudentTypeValues,
   StudentTypes,
@@ -75,6 +77,49 @@ export function* setStudentSaga(props: StudentAction<StudentTypeValues>): any {
   }
 }
 
+export function* setStudentPhotoSaga(
+  props: StudentAction<StudentPhotoValues>
+): any {
+  const payload = props.payload;
+  const onSuccess = props.onSuccess;
+
+  try {
+    if (payload) {
+      console.log("photo saga", payload.photo);
+      yield call(setImgProfile, payload);
+      const photoResponse = yield call(getImgProfile, payload || "");
+      const studentResponses = yield call(
+        getStudent,
+        payload.tutorUid || "",
+        payload.studentUid || ""
+      );
+      const { photo, ...restInfo } = studentResponses.info;
+      yield call(updateStudentList, {
+        photo: photoResponse,
+        ...restInfo,
+        tutorID: payload.tutorUid,
+        uid: payload.studentUid,
+      });
+      yield put(
+        student({
+          photo: photoResponse,
+          ...restInfo,
+          tutorID: payload.tutorUid,
+          uid: payload.studentUid,
+        })
+      );
+      const studentListResponses = yield call(
+        getStudentList,
+        payload.tutorUid || ""
+      );
+      yield put(studentList(studentListResponses));
+      yield put(() => onSuccess?.());
+    }
+  } catch (err: any) {
+    yield put(err);
+  }
+}
+
 export function* updateStudentSaga(
   props: StudentAction<StudentTypeValues>
 ): any {
@@ -89,7 +134,17 @@ export function* updateStudentSaga(
         payload.tutorID || "",
         payload.uid || ""
       );
-      yield put(student(studentResponses));
+      const photoResponse = yield call(getImgProfile, {
+        studentUid: payload.uid,
+        tutorUid: payload.tutorID,
+      });
+      const { photo, ...restInfo } = studentResponses.info;
+      yield put(
+        student({
+          photo: photoResponse,
+          ...restInfo,
+        })
+      );
       const studentListResponses = yield call(
         getStudentList,
         payload.tutorID || ""
@@ -129,4 +184,5 @@ export default [
   takeLatest(StudentTypes.REQUEST_STUDENT, getStudentSaga),
   takeLatest(StudentTypes.REMOVE_STUDENT, removeStudentSaga),
   takeLatest(StudentTypes.UPDATE_STUDENT, updateStudentSaga),
+  takeLatest(StudentTypes.SET_STUDENT_PHOTO, setStudentPhotoSaga),
 ];

@@ -14,6 +14,7 @@ import {
   removeStudent,
   requestStudent,
   setStudent,
+  setStudentPhoto,
   updateStudent,
 } from "Store/students/actions";
 import { useSelector } from "react-redux";
@@ -58,9 +59,11 @@ const StudentCreate: FC<StudentCreateProps> = () => {
 
   const { groups } = useSelector((state: RootState) => state.group);
   const { user, isLoading } = useSelector((state: RootState) => state.user);
-  const { student: otherStudent, students } = useSelector(
-    (state: RootState) => state.student
-  );
+  const {
+    student: otherStudent,
+    students,
+    photoLoading,
+  } = useSelector((state: RootState) => state.student);
   const userID = user?.info?.uid;
 
   const student =
@@ -209,10 +212,12 @@ const StudentCreate: FC<StudentCreateProps> = () => {
   }, [dispatch, groups, userID]);
 
   useEffect(() => {
-    requestStudent({
-      uid: userID || "",
-      studentId: studentId || "",
-    });
+    dispatch(
+      requestStudent({
+        uid: userID || "",
+        studentId: studentId || "",
+      })
+    );
   }, [dispatch, reset, userID, studentId]);
 
   useEffect(() => {
@@ -282,6 +287,16 @@ const StudentCreate: FC<StudentCreateProps> = () => {
     );
   };
 
+  const handleUploadPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(
+      setStudentPhoto({
+        photo: event.target.files?.[0],
+        studentUid: studentId || "",
+        tutorUid: userID,
+      })
+    );
+  };
+
   if (isLoading) {
     return (
       <LoadingContainerFullPage>
@@ -323,13 +338,18 @@ const StudentCreate: FC<StudentCreateProps> = () => {
                   {...register("name")}
                   width="49%"
                 />
-                <SimpleInput
-                  label={"Photo"}
-                  placeholder="Enter the student photo"
-                  error={errors.photo}
-                  {...register("photo")}
-                  width="49%"
-                />
+                {studentId !== null && (
+                  <SimpleInput
+                    type="file"
+                    label={"Photo"}
+                    placeholder="Enter the student photo"
+                    error={errors.photo}
+                    {...register("photo")}
+                    onChange={handleUploadPhoto}
+                    width="49%"
+                    loading={photoLoading}
+                  />
+                )}
               </Styled.SelectContainer>
               <Styled.SelectContainer>
                 <SimpleInput
@@ -470,7 +490,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
               {isMobile ? "Delete" : "Delete Student"}
             </Button>
           )}
-          <Button type="submit" form="newStudentForm">
+          <Button type="submit" form="newStudentForm" disabled={photoLoading}>
             {studentId !== null ? "Update " : "Add "}{" "}
             {isMobile ? "" : "Student"}
           </Button>

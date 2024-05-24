@@ -1,9 +1,14 @@
-import { database } from "lib/firebase";
+import { database, storage } from "lib/firebase";
 import { deleteUser } from "firebase/auth";
-// import { auth } from "lib/firebase";
 import { ref, set, get, query, limitToFirst, remove } from "firebase/database";
+import {
+  ref as refStorage,
+  getDownloadURL,
+  uploadBytesResumable,
+  getStorage,
+} from "firebase/storage";
 
-import { StudentTypeValues } from "../types";
+import { StudentPhotoValues, StudentTypeValues } from "../types";
 
 export const getStudentList = async (uid: string, limit?: number) => {
   let recentPostsRef;
@@ -38,6 +43,49 @@ export const updateStudent = async (data: StudentTypeValues) => {
     .catch((err) => {
       throw new Error(err);
     });
+};
+
+export const getImgProfile = async (data: StudentPhotoValues) => {
+  const { studentUid, tutorUid } = data;
+  const storage = getStorage();
+  const storageRef = refStorage(
+    storage,
+    `user/${tutorUid}/student/${studentUid}/info/studentProfile`
+  );
+  return getDownloadURL(storageRef)
+    .then((downloadURL) => {
+      console.log("photoStudent b", downloadURL);
+      return downloadURL;
+    })
+    .catch((error) => {
+      console.error("Error getting profile image:", error);
+      return null;
+    });
+};
+
+export const setImgProfile = (data: StudentPhotoValues) => {
+  const { photo, studentUid, tutorUid } = data;
+  const storageRef = refStorage(
+    storage,
+    `user/${tutorUid}/student/${studentUid}/info/studentProfile`
+  );
+
+  const uploadTask = uploadBytesResumable(
+    storageRef,
+    photo as Blob | Uint8Array | ArrayBuffer
+  );
+
+  uploadTask?.on(
+    "state_changed",
+    (error) => {
+      console.log(error);
+    },
+    () => {
+      getDownloadURL(uploadTask.snapshot.ref).then(
+        (downloadURL) => downloadURL
+      );
+    }
+  );
 };
 
 export const updateStudentList = async (data: StudentTypeValues) => {

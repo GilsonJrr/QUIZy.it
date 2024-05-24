@@ -5,15 +5,21 @@ import { BsCalendarDateFill } from "react-icons/bs";
 import { MdEmail } from "react-icons/md";
 import { FaPhoneSquare } from "react-icons/fa";
 
-type Props = {};
+type Props = { user?: boolean };
 
 export const Container = styled.div<Props>`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   height: 100%;
   position: relative;
   width: 100%;
+  border-radius: 10px;
+  @media screen and (min-width: 600px) {
+    padding: 0px;
+    border: 0px;
+  }
 `;
 
 export const HeaderContainer = styled.div`
@@ -69,4 +75,74 @@ export const Phone = styled(FaPhoneSquare)`
 export const ButtonContainer = styled.div`
   width: 100%;
   margin: auto 0 0 0;
+`;
+
+export const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0 0 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  overflow-y: hidden;
+  overflow-x: hidden;
+`;
+
+export const TabContainer = styled.div`
+  border-top: 1px solid ${({ theme }) => theme.colors.main.default};
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 0 0 0;
+
+  div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  @media screen and (min-width: 600px) {
+    padding: 0px;
+    border-top: 0px;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+`;
+export const ChatContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  max-height: 48vh;
+  min-height: 48vh;
+  overflow: scroll;
+`;
+
+export const MessageTextContainer = styled.div`
+  width: 100%;
+  margin: 10px 0;
+  align-self: flex-end;
+`;
+
+export const MessageContainer = styled.div<Props>`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: ${({ user }) => (user ? "flex-end" : "flex-start")};
+  margin-bottom: 10px;
+`;
+
+export const Message = styled.div<Props>`
+  background-color: ${({ theme, user }) =>
+    user ? theme.colors.quiz.right : theme.colors.main.default};
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
 `;

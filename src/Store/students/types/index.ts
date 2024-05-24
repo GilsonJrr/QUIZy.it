@@ -10,6 +10,7 @@ export enum StudentTypes {
   STUDENT = "STUDENT",
   REMOVE_STUDENT = "REMOVE_STUDENT",
   UPDATE_STUDENT = "UPDATE_STUDENT",
+  SET_STUDENT_PHOTO = "SET_STUDENT_PHOTO",
 }
 
 export type StudentAction<Payload> = {
@@ -43,6 +44,12 @@ export type TInfo = {
   onSuccess?: () => void;
 };
 
+export type StudentPhotoValues = {
+  studentUid?: string;
+  tutorUid?: string;
+  photo?: string | Blob | Uint8Array | ArrayBuffer;
+};
+
 export type StudentTypeValues = {
   id?: string;
   uid?: string;
@@ -64,9 +71,15 @@ export type StudentTypeValues = {
   results?: ResultTypeValues[];
 };
 
+export type PhotoType = {
+  uid: string;
+  photo: string;
+};
+
 export type StudentState = {
   isLoading: boolean;
   error: string | undefined;
   students: StudentTypeValues[] | undefined;
   student: StudentTypeValues | undefined;
+  photoLoading: boolean;
 };

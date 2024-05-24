@@ -5,7 +5,7 @@ import { Title } from "components/ui/Typography/styled";
 
 interface TextAreaInputProps
   extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label: string | ReactNode;
+  label?: string | ReactNode;
   height?: string;
   error?: FieldError | undefined;
   width?: string;

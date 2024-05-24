@@ -34,6 +34,26 @@ export const GroupContainer = styled.div`
   gap: 10px;
 `;
 
+export const TabContainer = styled.div`
+  position: absolute;
+  top: 10px;
+  border-top: 1px solid ${({ theme }) => theme.colors.main.default};
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+
+  div {
+    width: auto;
+  }
+
+  @media screen and (min-width: 600px) {
+    border-top: 0px;
+    width: auto;
+  }
+`;
+
 //Divide no Bloco de Categorie Results
 export const ProgressWrapper = styled.div``;
 

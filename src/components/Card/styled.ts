@@ -6,20 +6,21 @@ type Props = {
   width?: string;
   innerCard?: boolean;
   justify?: string;
+  height?: string;
 };
 
 export const Card = styled.div<Props>`
+  grid-area: ${({ gridName }) => gridName || ""};
   border-radius: 0px;
   border: none;
   padding: ${({ innerCard }) => (innerCard ? "0px" : "15px 20px")};
-  grid-area: ${({ gridName }) => gridName};
   display: flex;
   flex-direction: column;
   gap: 20px;
   position: relative;
   background-color: ${({ theme }) => theme.colors.background.highlight};
 
-  height: 100%;
+  height: ${({ height }) => height || "100%"};
   overflow: auto;
 
   ::-webkit-scrollbar-thumb {
@@ -37,7 +38,6 @@ export const Card = styled.div<Props>`
     transition: 0.3s ease-in-out all;
     border: 1px solid ${({ theme }) => theme.colors.main.default};
     background-color: ${({ theme }) => theme.colors.background.default};
-    height: 100%;
 
     &::after {
       content: "";

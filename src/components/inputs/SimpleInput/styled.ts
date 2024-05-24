@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-type Props = { width?: string; viewMode?: boolean };
+type Props = { width?: string; viewMode?: boolean; file?: boolean };
 
 export const Container = styled.div<Props>`
   display: flex;
@@ -15,7 +15,7 @@ export const Container = styled.div<Props>`
   }
 `;
 
-export const Input = styled.input<Props>`
+export const ContainerStyle = css<Props>`
   border-radius: 10px;
   font-size: 1.4rem;
   padding: 10px;
@@ -23,6 +23,13 @@ export const Input = styled.input<Props>`
     ${({ theme }) => theme.colors.main.default};
   outline: none;
   background-color: ${({ theme }) => theme.colors.background.highlight};
+  width: 100%;
+`;
+
+export const Input = styled.input<Props>`
+  ${ContainerStyle}
+
+  display: ${({ file }) => (file ? "none" : "flex")};
 `;
 
 export const Error = styled.p`
@@ -31,4 +38,19 @@ export const Error = styled.p`
   margin-top: 3px;
   font-size: 0.8rem;
   color: red;
+`;
+
+export const LoadingContainer = styled.div<Props>`
+  ${ContainerStyle}
+  background-color: ${({ theme }) => theme.colors.main.default};
+
+  padding: 15px;
+`;
+
+export const LabelButton = styled.label<Props>`
+  ${ContainerStyle}
+
+  background-color: ${({ theme }) => theme.colors.main.default};
+  text-align: center;
+  cursor: pointer;
 `;
