@@ -39,6 +39,7 @@ const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
         )}
         <Styled.Input
           type="file"
+          accept="image/*"
           ref={ref}
           id="file-upload"
           {...rest}
