@@ -14,7 +14,6 @@ import {
   removeStudent,
   requestStudent,
   setStudent,
-  setStudentPhoto,
   updateStudent,
 } from "Store/students/actions";
 import { useSelector } from "react-redux";
@@ -29,6 +28,9 @@ import useDeviceType from "hooks/useDeviceType";
 import Tabs from "components/Tabs";
 import Button from "components/Button";
 import AlertModal from "components/Modal/AlertModal";
+import { setImgStudent } from "Store/user/repository";
+import { UserPhoto } from "Store/user/types";
+import FileInput from "components/inputs/FileInput";
 
 type StudentCreateProps = {};
 
@@ -73,6 +75,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
   const [extraFields, setExtraFields] = useState<any[]>([]);
   const [extraField, setExtraField] = useState<string>();
   const [editingField, setEditingField] = useState(0);
+  const [usePhotoLoading, setUsePhotoLoading] = useState(false);
   const [tab, setTab] = useState("Information");
 
   const bottomRef = useRef<HTMLDivElement | null>(null);
@@ -288,13 +291,16 @@ const StudentCreate: FC<StudentCreateProps> = () => {
   };
 
   const handleUploadPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      setStudentPhoto({
-        photo: event.target.files?.[0],
-        studentUid: studentId || "",
-        tutorUid: userID,
-      })
-    );
+    const quizImageData: UserPhoto = {
+      photo: (event.target.files?.[0] as unknown as string) || "",
+      uid: studentId || "",
+      tutorUid: userID,
+    };
+    setUsePhotoLoading(true);
+    setImgStudent(quizImageData).then(({ pic, loading }) => {
+      setUsePhotoLoading(loading);
+      setValue("photo", pic);
+    });
   };
 
   if (isLoading) {
@@ -339,15 +345,14 @@ const StudentCreate: FC<StudentCreateProps> = () => {
                   width="49%"
                 />
                 {studentId !== null && (
-                  <SimpleInput
-                    type="file"
+                  <FileInput
                     label={"Photo"}
                     placeholder="Enter the student photo"
                     error={errors.photo}
                     {...register("photo")}
                     onChange={handleUploadPhoto}
                     width="49%"
-                    loading={photoLoading}
+                    loading={usePhotoLoading}
                   />
                 )}
               </Styled.SelectContainer>
@@ -490,7 +495,11 @@ const StudentCreate: FC<StudentCreateProps> = () => {
               {isMobile ? "Delete" : "Delete Student"}
             </Button>
           )}
-          <Button type="submit" form="newStudentForm" disabled={photoLoading}>
+          <Button
+            type="submit"
+            form="newStudentForm"
+            disabled={photoLoading || usePhotoLoading}
+          >
             {studentId !== null ? "Update " : "Add "}{" "}
             {isMobile ? "" : "Student"}
           </Button>

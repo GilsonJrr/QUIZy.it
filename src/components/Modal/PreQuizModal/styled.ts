@@ -33,3 +33,11 @@ export const OptionContainer = styled.div`
   width: 100%;
   margin: auto 0 0 0;
 `;
+
+export const Container = styled.div`
+  width: 100%;
+  @media screen and (min-width: 600px) {
+    width: 30vw;
+    height: 80vh;
+  }
+`;

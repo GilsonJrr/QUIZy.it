@@ -73,3 +73,15 @@ export type FeedbackData = {
   body: string;
   feedbackID: string;
 };
+
+export type UserPhoto = {
+  uid: string;
+  tutorUid?: string;
+  photo: string;
+};
+
+export type UploadResult = {
+  pic: string;
+  loading: boolean;
+  error: string | null;
+};

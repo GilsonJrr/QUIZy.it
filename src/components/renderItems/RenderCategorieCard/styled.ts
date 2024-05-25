@@ -12,7 +12,10 @@ export const QuizCard = styled.div<Props>`
   min-height: 80px;
   cursor: pointer;
   height: 2rem;
-  width: 48%;
+  width: 200%;
+  @media screen and (min-width: 600px) {
+    width: 48%;
+  }
 `;
 
 export const QuizImage = styled.img`

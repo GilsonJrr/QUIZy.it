@@ -6,17 +6,20 @@ import EmptyImage from "assets/images/Empty_quiz_image_state.png";
 import { QuizTypeValues } from "Store/quiz/types";
 import { useNavigate } from "react-router-dom";
 import { Title } from "components/ui/Typography/styled";
+import LoadingSpinner from "components/LoadingSpiner";
 
 type RenderQuizCardProps = {
   item: QuizTypeValues;
   editMode?: boolean;
   preview?: boolean;
+  loading?: boolean;
 };
 
 const RenderQuizCard: FC<RenderQuizCardProps> = ({
   item,
   editMode,
   preview,
+  loading,
 }) => {
   const { handleModal } = useModalContext();
   const navigate = useNavigate();
@@ -29,7 +32,13 @@ const RenderQuizCard: FC<RenderQuizCardProps> = ({
 
   return (
     <Styled.QuizCard onClick={handleClick} preview={preview}>
-      <Styled.QuizImage src={item.image ? item.image : EmptyImage} />
+      {loading ? (
+        <Styled.LoaderContainer>
+          <LoadingSpinner size="medium" />
+        </Styled.LoaderContainer>
+      ) : (
+        <Styled.QuizImage src={item.image ? item.image : EmptyImage} />
+      )}
       <Styled.QuizTitlesContainer>
         <Title>{item.title}</Title>
         <Title size="smaller" fontWeight="lighter" margin="2px 0 0 0">

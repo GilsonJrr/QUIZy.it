@@ -54,7 +54,6 @@ export const getImgProfile = async (data: StudentPhotoValues) => {
   );
   return getDownloadURL(storageRef)
     .then((downloadURL) => {
-      console.log("photoStudent b", downloadURL);
       return downloadURL;
     })
     .catch((error) => {

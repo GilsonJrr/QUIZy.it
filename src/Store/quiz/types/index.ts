@@ -51,11 +51,11 @@ export type TFillTheBlanksQuestions = {
 export type QuizTypeValues = {
   id?: string;
   uid?: string;
-  title: string;
+  title?: string;
   description?: string;
   image?: string;
-  type: string;
-  category: string;
+  type?: string;
+  category?: string;
   questions?:
     | TMultipleQuestions[]
     | TTrueOrFalseQuestions[]
@@ -72,4 +72,10 @@ export type QuizState = {
   quizzes: QuizTypeValues[] | undefined;
   quizzesCategory: QuizTypeValues[] | undefined;
   quiz: QuizTypeValues | undefined;
+};
+
+export type UploadResult = {
+  pic: string;
+  loading: boolean;
+  error: string | null;
 };

@@ -6,7 +6,6 @@ import { RootState } from "Store/root-reducer";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
-import { UseData } from "Store/auth/types";
 import { updateStudent } from "Store/students/actions";
 import { setUser } from "Store/user/actions";
 
@@ -15,28 +14,27 @@ import { useModalContext } from "../modalContext";
 import SimpleInput from "components/inputs/SimpleInput";
 import { TStudent } from "views/dashboard/Students/StudentPages/StudentCreate";
 
-import { FaCamera } from "react-icons/fa";
 import { LoadingContainerCard } from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
 import Button from "components/Button";
+import { setImgStudent, setImgUser } from "Store/user/repository";
+import { UseData, UserPhoto } from "Store/user/types";
+import FileInput from "components/inputs/FileInput";
 
 type ExampleProps = {};
 
 const ProfileModal: FC<ExampleProps> = () => {
   const dispatch = useDispatch();
-  const {
-    register,
-    reset,
-    handleSubmit,
-    formState: { isDirty },
-    watch,
-  } = useForm<TStudent>({});
+  const { register, reset, handleSubmit, watch, setValue } = useForm<TStudent>(
+    {}
+  );
 
   const { handleModal } = useModalContext();
   const { user, isLoading } = useSelector((state: RootState) => state.user);
   const { student } = useSelector((state: RootState) => state.student);
 
   const [editMode, setEditMode] = useState(false);
+  const [loadingImage, setLoadingImage] = useState(false);
 
   const tutorInfo = user?.info || ([] as unknown as UseData);
   const studentInfo = student?.info || ([] as unknown as UseData);
@@ -47,12 +45,14 @@ const ProfileModal: FC<ExampleProps> = () => {
   };
 
   const onSubmit = (data: TStudent) => {
-    isDirty && handleModal("");
+    handleModal("");
 
-    if (data.userType === "student" && isDirty) {
+    console.log("data", data);
+
+    if (data.userType === "student") {
       return dispatch(updateStudent(data));
     }
-    if (data.userType === "tutor" && isDirty) {
+    if (data.userType === "tutor") {
       return dispatch(setUser(data));
     }
   };
@@ -71,6 +71,29 @@ const ProfileModal: FC<ExampleProps> = () => {
 
   const handleClick = () => {
     setEditMode(!editMode);
+  };
+
+  const handleUploadPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const quizImageData: UserPhoto = {
+      uid: watch("uid") || "",
+      tutorUid: watch("tutorID" || ""),
+      photo: (event.target.files?.[0] as unknown as string) || "",
+    };
+    setLoadingImage(true);
+    if (userType === "tutor") {
+      setImgUser(quizImageData).then(({ pic, loading }) => {
+        setLoadingImage(loading);
+        setValue("photo", pic);
+      });
+      return;
+    }
+    if (userType === "student") {
+      setImgStudent(quizImageData).then(({ pic, loading }) => {
+        setLoadingImage(loading);
+        setValue("photo", pic);
+      });
+      return;
+    }
   };
 
   if (isLoading || watch("name") === undefined) {
@@ -103,9 +126,13 @@ const ProfileModal: FC<ExampleProps> = () => {
             />
             {editMode && (
               <Styled.PhotoButtonContainer>
-                <Button padding="10px" radius="100%">
-                  <FaCamera />
-                </Button>
+                <FileInput
+                  placeholder="Enter the student photo"
+                  {...register("photo")}
+                  onChange={handleUploadPhoto}
+                  iconOnly
+                  loading={loadingImage}
+                />
               </Styled.PhotoButtonContainer>
             )}
           </Styled.AvatarContainer>
@@ -153,6 +180,7 @@ const ProfileModal: FC<ExampleProps> = () => {
             type={!editMode ? "submit" : "button"}
             form={!editMode ? "profileUpdate" : "none"}
             width="100%"
+            disabled={loadingImage}
           >
             <Styled.ButtonText>
               {editMode ? "Update Profile" : "Edit"}

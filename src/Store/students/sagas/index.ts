@@ -134,17 +134,12 @@ export function* updateStudentSaga(
         payload.tutorID || "",
         payload.uid || ""
       );
-      const photoResponse = yield call(getImgProfile, {
-        studentUid: payload.uid,
-        tutorUid: payload.tutorID,
-      });
-      const { photo, ...restInfo } = studentResponses.info;
-      yield put(
-        student({
-          photo: photoResponse,
-          ...restInfo,
-        })
-      );
+      // const photoResponse = yield call(getImgProfile, {
+      //   studentUid: payload.uid,
+      //   tutorUid: payload.tutorID,
+      // });
+      // const { photo, ...restInfo } = studentResponses.info;
+      yield put(student(studentResponses));
       const studentListResponses = yield call(
         getStudentList,
         payload.tutorID || ""

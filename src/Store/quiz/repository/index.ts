@@ -1,4 +1,4 @@
-import { database } from "lib/firebase";
+import { database, storage } from "lib/firebase";
 import {
   ref,
   set,
@@ -11,7 +11,12 @@ import {
   onValue,
 } from "firebase/database";
 
-import { QuizTypeValues } from "../types";
+import { QuizTypeValues, UploadResult } from "../types";
+import {
+  ref as refStorage,
+  getDownloadURL,
+  uploadBytesResumable,
+} from "firebase/storage";
 
 export const subscribeToQuizList = (
   uid: string,
@@ -77,4 +82,45 @@ export const removeQuiz = async (uid: string, studentId: string) => {
     .catch((err) => {
       throw new Error(err);
     });
+};
+
+export const setImgQuiz = (data: QuizTypeValues): Promise<UploadResult> => {
+  const { uid, id, image } = data;
+  const storageRef = refStorage(storage, `user/${uid}/quiz/${id}/`);
+
+  const uploadTask = uploadBytesResumable(
+    storageRef,
+    image as unknown as Blob | Uint8Array | ArrayBuffer
+  );
+
+  let loading = true;
+  let pic = "";
+  let error: string | null = null;
+
+  return new Promise((resolve) => {
+    uploadTask.on(
+      "state_changed",
+      null,
+      (uploadError) => {
+        console.log(uploadError);
+        loading = false;
+        error = uploadError.message;
+        resolve({ pic, loading, error });
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref)
+          .then((downloadURL) => {
+            pic = downloadURL;
+            loading = false;
+            resolve({ pic, loading, error });
+          })
+          .catch((urlError) => {
+            console.error(urlError);
+            loading = false;
+            error = urlError.message;
+            resolve({ pic, loading, error });
+          });
+      }
+    );
+  });
 };

@@ -122,9 +122,11 @@ const Quizzes: FC<QuizzesProps> = () => {
     }
   }, [dispatch, quizzes, requestUid, userID]);
 
-  const filterQuizzes = quizzes?.filter((e) =>
-    e.title.toUpperCase().includes(search?.toUpperCase() || "")
-  );
+  const filterQuizzes = Array.isArray(quizzes)
+    ? quizzes?.filter((e) =>
+        e?.title?.toUpperCase().includes(search?.toUpperCase() || "")
+      )
+    : [];
 
   if (categoryLoading) {
     return (

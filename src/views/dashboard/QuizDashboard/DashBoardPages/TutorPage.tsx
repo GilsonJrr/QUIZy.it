@@ -37,9 +37,11 @@ export const TutorPage = () => {
     e.info?.name.toUpperCase().includes(searchStudents?.toUpperCase() || "")
   );
 
-  const filterQuizzes = quizzes?.filter((e) =>
-    e.title.toUpperCase().includes(search?.toUpperCase() || "")
-  );
+  const filterQuizzes = Array.isArray(quizzes)
+    ? quizzes?.filter((e) =>
+        e?.title?.toUpperCase().includes(search?.toUpperCase() || "")
+      )
+    : [];
 
   useEffect(() => {
     if (students === undefined) {

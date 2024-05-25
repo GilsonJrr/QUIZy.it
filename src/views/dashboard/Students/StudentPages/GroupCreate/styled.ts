@@ -154,4 +154,8 @@ export const NameColorContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   gap: 20px;
+  flex-direction: column;
+  @media screen and (min-width: 600px) {
+    flex-direction: row;
+  }
 `;

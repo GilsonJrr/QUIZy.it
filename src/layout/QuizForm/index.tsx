@@ -3,6 +3,7 @@ import * as Styled from "./styled";
 import Card from "components/Card";
 import useDeviceType from "hooks/useDeviceType";
 import Button from "components/Button";
+import LoadingSpinner from "components/LoadingSpiner";
 
 type QuizFormProps = {
   children: ReactNode | ReactNode[];
@@ -13,6 +14,8 @@ type QuizFormProps = {
   title: string;
   buttonTitle: string;
   deleteTitle?: string;
+  disabled?: boolean;
+  loading?: boolean;
 };
 
 const QuizForm: FC<QuizFormProps> = ({
@@ -24,6 +27,8 @@ const QuizForm: FC<QuizFormProps> = ({
   title,
   buttonTitle,
   deleteTitle,
+  disabled,
+  loading,
 }) => {
   const isMobile = useDeviceType();
 
@@ -49,8 +54,12 @@ const QuizForm: FC<QuizFormProps> = ({
             {deleteTitle}
           </Button>
         )}
-        <Button type="submit" form={formName}>
-          {buttonTitle}
+        <Button type="submit" form={formName} disabled={disabled}>
+          {loading ? (
+            <LoadingSpinner color="light" size="small" />
+          ) : (
+            buttonTitle
+          )}
         </Button>
       </Styled.ButtonContainer>
     </Styled.Container>
