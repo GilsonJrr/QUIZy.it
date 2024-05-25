@@ -144,3 +144,11 @@ export const TabContainer = styled.div`
   display: flex;
   margin: 20px 0 0;
 `;
+
+export const NameColorContainer = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
+`;

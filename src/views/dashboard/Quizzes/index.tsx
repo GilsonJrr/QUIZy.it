@@ -62,7 +62,7 @@ const Quizzes: FC<QuizzesProps> = () => {
   const categories: TCategories[] = [
     ...(cat && cat.length > 0
       ? cat?.map((c) => {
-          return { title: c.title, image: c.image };
+          return { title: c.title, image: c.image, color: c.color };
         })
       : []),
     { title: t("quizzes.noCategory") },
@@ -194,16 +194,18 @@ const Quizzes: FC<QuizzesProps> = () => {
           innerCard={isMobile}
         >
           {!category ? (
-            categories?.map((category) => {
-              return (
-                <RenderCategoriesCard
-                  item={category}
-                  chosenCategory={(category) =>
-                    handleDisplayCategories(category)
-                  }
-                />
-              );
-            })
+            <Styled.CategoryContainer>
+              {categories?.map((category) => {
+                return (
+                  <RenderCategoriesCard
+                    item={category}
+                    chosenCategory={(category) =>
+                      handleDisplayCategories(category)
+                    }
+                  />
+                );
+              })}
+            </Styled.CategoryContainer>
           ) : quizzesCategory?.length === 0 ? (
             <Styled.EmptyContainer>
               <Title size="small" fontWeight="lighter">

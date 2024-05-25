@@ -21,12 +21,14 @@ import Tabs from "components/Tabs";
 import Button from "components/Button";
 import AlertModal from "components/Modal/AlertModal";
 import { Title } from "components/ui/Typography/styled";
+import ColorInput from "components/inputs/ColorInput";
 type StudentCreateProps = {};
 
 type TStudent = {
   title: string;
   about?: string;
   image?: string;
+  color?: string;
 };
 
 const GroupCreate: FC<StudentCreateProps> = () => {
@@ -53,6 +55,7 @@ const GroupCreate: FC<StudentCreateProps> = () => {
     formState: { errors },
     reset,
     watch,
+    setValue,
   } = useForm<TStudent>({
     resolver: yupResolver(GroupCreateSchema),
   });
@@ -172,30 +175,29 @@ const GroupCreate: FC<StudentCreateProps> = () => {
             innerCard={isMobile}
           >
             <Styled.Form id="newGroupForm" onSubmit={handleSubmit(onSubmit)}>
-              <SimpleInput
-                label={"Group Title"}
-                placeholder="Enter the group title"
-                error={
-                  hasStudent
-                    ? {
-                        type: "custom",
-                        message:
-                          "Group has active student, name can't be changed",
-                      }
-                    : errors.title
-                }
-                {...register("title")}
-                disabled={hasStudent}
-              />
-              <SimpleInput
-                label={"Group image"}
-                placeholder="Enter the group image"
-                error={errors.image}
-                {...register("image")}
-              />
+              <Styled.NameColorContainer>
+                <SimpleInput
+                  label={"Group Title"}
+                  placeholder="Enter the group title"
+                  error={
+                    hasStudent
+                      ? {
+                          type: "custom",
+                          message: "Group has active student, can't be changed",
+                        }
+                      : errors.title
+                  }
+                  {...register("title")}
+                  disabled={hasStudent}
+                />
+                <ColorInput
+                  color={watch("color") || ""}
+                  onChange={(color) => setValue("color", color)}
+                />
+              </Styled.NameColorContainer>
               <TextAreaInput
                 label="About"
-                height="40vh"
+                height="50vh"
                 error={errors.about}
                 {...register("about")}
               />
@@ -222,6 +224,7 @@ const GroupCreate: FC<StudentCreateProps> = () => {
                         size="medium"
                         name={group.title}
                         photo={group.image}
+                        border={group.color || " "}
                       />
                       <Title color={group.id === groupId ? "light" : "default"}>
                         {group.title}

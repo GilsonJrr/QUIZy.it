@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import * as Styled from "./styled";
 import { TCategories } from "types/index";
-import EmptyImage from "assets/images/Empty_quiz_image_state.png";
 import { Title } from "components/ui/Typography/styled";
 
 type RenderCategoriesCardProps = {
@@ -14,8 +13,10 @@ const RenderCategoriesCard: FC<RenderCategoriesCardProps> = ({
   chosenCategory,
 }) => {
   return (
-    <Styled.QuizCard onClick={() => chosenCategory(item.title)}>
-      <Styled.QuizImage src={item.image ? item.image : EmptyImage} />
+    <Styled.QuizCard
+      onClick={() => chosenCategory(item.title)}
+      color={item.color}
+    >
       <Styled.QuizTitlesContainer>
         <Title>{item.title}</Title>
         <Styled.StartButton>Open</Styled.StartButton>

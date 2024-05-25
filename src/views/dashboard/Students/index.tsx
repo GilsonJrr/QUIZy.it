@@ -98,7 +98,7 @@ const Students: FC<StudentsProps> = () => {
   const tabs = useMemo(() => {
     if (groups && groups.length > 0 && !groupLoading) {
       return groups.map((group) => {
-        return { label: group.title };
+        return { label: group.title, color: group.color };
       });
     } else {
       return [];
@@ -146,7 +146,7 @@ const Students: FC<StudentsProps> = () => {
       {isMobile && (
         <Styled.TabContainer>
           <Tabs
-            tabs={[{ label: "Students" }, { label: "Options" }]}
+            tabs={[{ label: "Students", color: " " }, { label: "Options" }]}
             activeTab={(tab) => setMenuTab(tab)}
             radius={5}
           />

@@ -39,7 +39,6 @@ const StudentProfile: FC<StudentProfileProps> = () => {
 
   const studentId = new URLSearchParams(location.search).get("studentId");
   const [tab, setTab] = useState("Info");
-  const [emptyResult, setEmptyResult] = useState(false);
 
   const student =
     students?.filter((student) => student.info?.uid === studentId)[0] ||
@@ -138,15 +137,11 @@ const StudentProfile: FC<StudentProfileProps> = () => {
           <Card
             title={isMobile ? "" : "All results"}
             gridName="results"
-            isEmpty={emptyResult}
+            isEmpty={false}
             emptyMessage={`${student?.info?.name} has't completed any quiz yet`}
             innerCard={isMobile}
           >
-            <StudentResultTable
-              studentID={studentId || ""}
-              emptyState={(empty) => setEmptyResult(empty)}
-              tutorView
-            />
+            <StudentResultTable studentID={studentId || ""} tutorView />
           </Card>
         )}
         {(!isMobile || tab === "Category") && (

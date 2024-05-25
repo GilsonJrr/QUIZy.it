@@ -59,3 +59,9 @@ export const EmptyContainer = styled.div`
   justify-content: center;
   height: 100%;
 `;
+
+export const CategoryContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+`;

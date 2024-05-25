@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 type Props = {
   size?: string;
+  border?: string;
 };
 
 export const Container = styled.div<Props>`
@@ -12,7 +13,8 @@ export const Container = styled.div<Props>`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid ${({ theme }) => theme.colors.main.default};
+  border: ${({ border }) => (border ? 5 : 1)}px solid
+    ${({ theme, border }) => (border ? border : theme.colors.main.default)};
   cursor: pointer;
 `;
 

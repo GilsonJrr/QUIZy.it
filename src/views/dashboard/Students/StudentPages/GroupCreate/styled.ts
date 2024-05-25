@@ -62,8 +62,9 @@ export const SelectContainer = styled.div`
 export const Form = styled.form<Props>`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
   padding-bottom: ${({ padding }) => (padding ? "150" : "")}px;
+  height: 100%;
 `;
 
 export const EmptyForm = styled.div`
@@ -145,4 +146,12 @@ export const GroupCard = styled.div<Props>`
 export const TabContainer = styled.div`
   display: flex;
   margin: 20px 0 0;
+`;
+
+export const NameColorContainer = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
 `;

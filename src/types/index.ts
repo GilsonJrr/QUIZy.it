@@ -59,6 +59,7 @@ export type TCollection = {
 export type TCategories = {
   title: string;
   image?: string;
+  color?: string;
 };
 
 export type TQUiz = {

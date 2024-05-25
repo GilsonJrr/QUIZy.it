@@ -69,5 +69,5 @@ export const CardInner = styled.div<Props>`
   gap: 20px;
   overflow: auto;
   height: 100%;
-  padding-bottom: ${({ scrollable }) => (scrollable ? "150" : "0")}px;
+  padding-bottom: ${({ scrollable }) => (scrollable ? "80" : "0")}px;
 `;

@@ -30,6 +30,7 @@ export type CategoryTypeValues = {
   about?: string;
   category?: string;
   image?: string;
+  color?: string;
 };
 
 export type CategoryState = {

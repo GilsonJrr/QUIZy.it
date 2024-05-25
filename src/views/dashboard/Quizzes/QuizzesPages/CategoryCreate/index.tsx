@@ -27,6 +27,7 @@ import Button from "components/Button";
 import AlertModal from "components/Modal/AlertModal";
 import { useTranslation } from "react-i18next";
 import { Title } from "components/ui/Typography/styled";
+import ColorInput from "components/inputs/ColorInput";
 
 type StudentCreateProps = {};
 
@@ -34,6 +35,7 @@ type TStudent = {
   title: string;
   about?: string;
   image?: string;
+  color?: string;
 };
 
 const CategoryCreate: FC<StudentCreateProps> = () => {
@@ -61,6 +63,7 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
     formState: { errors },
     reset,
     watch,
+    setValue,
   } = useForm<TStudent>({
     resolver: yupResolver(CategoryCreateSchema),
   });
@@ -201,29 +204,29 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
             innerCard={isMobile}
           >
             <Styled.Form id="newCategoryForm" onSubmit={handleSubmit(onSubmit)}>
-              <SimpleInput
-                label={t("addCategory.categoryTitle")}
-                placeholder={t("addCategory.enterCategoryTitle")}
-                error={
-                  hasQuiz
-                    ? {
-                        type: "custom",
-                        message: t("addCategory.categoryHasActiveQuiz"),
-                      }
-                    : errors.title
-                }
-                {...register("title")}
-                disabled={hasQuiz}
-              />
-              <SimpleInput
-                label={t("addCategory.categoryImage")}
-                placeholder={t("addCategory.enterCategoryImage")}
-                error={errors.image}
-                {...register("image")}
-              />
+              <Styled.NameColorContainer>
+                <SimpleInput
+                  label={t("addCategory.categoryTitle")}
+                  placeholder={t("addCategory.enterCategoryTitle")}
+                  error={
+                    hasQuiz
+                      ? {
+                          type: "custom",
+                          message: t("addCategory.categoryHasActiveQuiz"),
+                        }
+                      : errors.title
+                  }
+                  {...register("title")}
+                  disabled={hasQuiz}
+                />
+                <ColorInput
+                  color={watch("color") || ""}
+                  onChange={(color) => setValue("color", color)}
+                />
+              </Styled.NameColorContainer>
               <TextAreaInput
                 label={t("addCategory.about")}
-                height="33vh"
+                height="50vh"
                 error={errors.about}
                 {...register("about")}
               />
@@ -250,6 +253,7 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
                         size="medium"
                         name={category.title}
                         photo={category.image}
+                        border={category.color}
                       />
                       <Title
                         color={category.id === categoryId ? "light" : "default"}

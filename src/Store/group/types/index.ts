@@ -30,6 +30,7 @@ export type GroupTypeValues = {
   about?: string;
   group?: string;
   image?: string;
+  color?: string;
 };
 
 export type GroupState = {

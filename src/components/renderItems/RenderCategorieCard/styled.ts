@@ -1,12 +1,18 @@
 import styled from "styled-components";
 
-export const QuizCard = styled.div`
+type Props = {
+  color?: string;
+};
+
+export const QuizCard = styled.div<Props>`
   display: flex;
   border-radius: 20px;
-  border: 1px solid ${({ theme }) => theme.colors.main.default};
+  border: 5px solid
+    ${({ theme, color }) => (color ? color : theme.colors.main.default)};
   min-height: 80px;
   cursor: pointer;
-  height: 7rem;
+  height: 2rem;
+  width: 48%;
 `;
 
 export const QuizImage = styled.img`
@@ -18,7 +24,7 @@ export const QuizImage = styled.img`
 `;
 
 export const QuizTitlesContainer = styled.div`
-  width: 80%;
+  width: 100%;
   padding: 20px;
   position: relative;
   display: flex;

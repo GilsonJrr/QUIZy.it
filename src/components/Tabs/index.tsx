@@ -3,6 +3,7 @@ import * as Styled from "./styled";
 
 type TTabs = {
   label: string;
+  color?: string;
   action?: () => void;
 };
 
@@ -30,6 +31,7 @@ const Tabs: FC<TabsProps> = ({ tabs, activeTab, radius, active }) => {
             onClick={() => handleTab(tab)}
             active={active ? active === tab.label : tab.label === selectedTab}
             radius={radius}
+            color={tab.color}
           >
             <h3>{tab.label}</h3>
           </Styled.Tab>

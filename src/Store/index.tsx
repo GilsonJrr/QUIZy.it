@@ -17,7 +17,16 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(sagaMiddleware),
+    getDefaultMiddleware({
+      serializableCheck: {
+        // Ignore these action types
+        ignoredActions: ["SET_STUDENT_PHOTO"],
+        // Ignore these field paths in all actions
+        ignoredActionPaths: ["payload.photo"],
+        // Ignore these paths in the state
+        ignoredPaths: ["student.photo"],
+      },
+    }).concat(sagaMiddleware),
 });
 
 sagaMiddleware.run(rootSagas);

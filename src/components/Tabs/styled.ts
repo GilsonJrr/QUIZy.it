@@ -3,6 +3,7 @@ import styled from "styled-components";
 type Props = {
   active?: boolean;
   radius?: number;
+  color?: string;
 };
 
 export const Container = styled.div<Props>`
@@ -13,9 +14,10 @@ export const Container = styled.div<Props>`
 `;
 
 export const Tab = styled.div<Props>`
-  border: 1px solid ${({ theme }) => theme.colors.main.default};
+  border: ${({ color }) => (color ? 4 : 1)}px solid
+    ${({ theme, color }) => (color ? color : theme.colors.main.default)};
   border-radius: ${({ radius }) => radius || 20}px;
-  padding: 4px 20px;
+  padding: ${({ color }) => (color ? "1px 20px" : "4px 20px")};
   cursor: pointer;
   background-color: ${({ active, theme }) =>
     active ? theme.colors.main.default : theme.colors.background.tertiary};
