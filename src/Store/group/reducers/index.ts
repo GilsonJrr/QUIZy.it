@@ -65,6 +65,7 @@ const groupReducer: Reducer<GroupState, GroupAction> = (
         error: undefined,
         payload: undefined,
         group: undefined,
+        groups: undefined,
       };
     }
     case GroupTypes.GROUP_LIST_CLEAN_UP: {
@@ -90,6 +91,7 @@ const groupReducer: Reducer<GroupState, GroupAction> = (
         isLoading: true,
         error: undefined,
         group: undefined,
+        groups: undefined,
       };
     }
     case GroupTypes.GROUP: {
