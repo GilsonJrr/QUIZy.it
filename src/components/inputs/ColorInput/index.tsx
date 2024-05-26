@@ -1,7 +1,7 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, FocusEvent } from "react";
 import * as Styled from "./styled";
 import Button from "components/Button";
-import { BlockPicker } from "react-color";
+import { CirclePicker } from "react-color";
 import { Title } from "components/ui/Typography/styled";
 
 type ColorInputProps = {
@@ -13,15 +13,18 @@ type ColorInputProps = {
 const ColorInput: FC<ColorInputProps> = ({ color, onChange, label }) => {
   const [showSelector, setShowSelector] = useState(false);
 
-  const handleLostFocus = () => {
-    const timeout = setTimeout(() => {
+  const handleLostFocus = (event: FocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
       setShowSelector(false);
-    }, 200);
-    return () => clearTimeout(timeout);
+    }
+  };
+
+  const handleOnChangeComplete = (color: string) => {
+    onChange(color);
   };
 
   return (
-    <Styled.Container onBlur={handleLostFocus} tabIndex={0}>
+    <Styled.Container tabIndex={0} onBlur={handleLostFocus}>
       <Title size="smaller">{label}</Title>
       <Button
         type="button"
@@ -32,8 +35,15 @@ const ColorInput: FC<ColorInputProps> = ({ color, onChange, label }) => {
         Select Color
         <Styled.CurrentColor color={color} />
       </Button>
-      <Styled.PickerContainer display={showSelector}>
-        <BlockPicker color={color} onChangeComplete={(e) => onChange(e.hex)} />
+      <Styled.PickerContainer
+        display={showSelector}
+        onMouseLeave={() => setShowSelector(false)}
+        onMouseDown={(e) => e.stopPropagation()}
+      >
+        <CirclePicker
+          color={color}
+          onChangeComplete={(e) => handleOnChangeComplete(e.hex)}
+        />
       </Styled.PickerContainer>
     </Styled.Container>
   );

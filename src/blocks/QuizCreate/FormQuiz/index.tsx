@@ -17,7 +17,7 @@ import { requestQuiz } from "Store/quiz/actions";
 import LoadingSpinner from "components/LoadingSpiner";
 import { LoadingContainerFullPage } from "components/Container/styled";
 import { setImgQuiz } from "Store/quiz/repository";
-import { QuizTypeValues } from "Store/quiz/types";
+import { ImageType } from "Store/quiz/types";
 import { RowContainer } from "components/ui/Containers/styled";
 import useDeviceType from "hooks/useDeviceType";
 
@@ -134,7 +134,7 @@ const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
   }, [image, setValue]);
 
   const handleUploadPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const quizImageData: QuizTypeValues = {
+    const quizImageData: ImageType = {
       uid: user?.info?.uid || "",
       id: quizId || "",
       image: (event.target.files?.[0] as unknown as string) || "",

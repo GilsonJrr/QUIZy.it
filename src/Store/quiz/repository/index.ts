@@ -11,7 +11,7 @@ import {
   onValue,
 } from "firebase/database";
 
-import { QuizTypeValues, UploadResult } from "../types";
+import { ImageType, QuizTypeValues, UploadResult } from "../types";
 import {
   ref as refStorage,
   getDownloadURL,
@@ -84,7 +84,7 @@ export const removeQuiz = async (uid: string, studentId: string) => {
     });
 };
 
-export const setImgQuiz = (data: QuizTypeValues): Promise<UploadResult> => {
+export const setImgQuiz = (data: ImageType): Promise<UploadResult> => {
   const { uid, id, image } = data;
   const storageRef = refStorage(storage, `user/${uid}/quiz/${id}/`);
 

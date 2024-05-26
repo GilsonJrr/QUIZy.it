@@ -51,7 +51,7 @@ export type TFillTheBlanksQuestions = {
 export type QuizTypeValues = {
   id?: string;
   uid?: string;
-  title?: string;
+  title: string;
   description?: string;
   image?: string;
   type?: string;
@@ -63,6 +63,12 @@ export type QuizTypeValues = {
   results?: ResultTypeValues[];
   date?: string;
   onSuccess?: () => void;
+};
+
+export type ImageType = {
+  uid: string;
+  id: string;
+  image: string;
 };
 
 export type QuizState = {

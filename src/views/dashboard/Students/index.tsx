@@ -20,6 +20,7 @@ import {
   LoadingContainerFullPage,
 } from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
+import { TInfo } from "Store/students/types";
 
 type StudentsProps = {};
 
@@ -53,27 +54,10 @@ const Students: FC<StudentsProps> = () => {
     "studentsQuantity"
   );
 
-  useEffect(() => {
-    if (
-      students &&
-      newStudentCreated &&
-      parseInt(studentsQuantity || "") < students.length
-    ) {
-      handleModal(
-        <AlertModal
-          type={"success"}
-          message={`Your student account has been successfully created. he will receive a 
-                    e-mail to reset the password and be able to do the first login`}
-          totalTime={7000}
-        />
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newStudentCreated, students, studentsQuantity]);
-
   const userID = localStorage.getItem("userId") || "";
 
   const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState(true);
 
   const Options: TOptions[] = [
     {
@@ -114,11 +98,18 @@ const Students: FC<StudentsProps> = () => {
     }
   };
 
-  const searchedStudents =
+  const searchedStudents: TInfo[] =
     students && students?.length > 0
-      ? filterStudents()?.filter((student) =>
-          student.info?.name.toUpperCase().includes(search.toUpperCase())
-        )
+      ? filterStudents()
+          ?.filter((student) =>
+            student.info?.name.toUpperCase().includes(search.toUpperCase())
+          )
+          .map((student) => student.info)
+          .filter((info): info is TInfo => info !== undefined)
+          .sort((a, b) => {
+            const order = a.name.localeCompare(b.name);
+            return filter ? order : -order;
+          }) ?? []
       : [];
 
   useEffect(() => {
@@ -132,6 +123,24 @@ const Students: FC<StudentsProps> = () => {
       dispatch(requestGroupList({ uid: userID || "" }));
     }
   }, [dispatch, groups, userID]);
+
+  useEffect(() => {
+    if (
+      students &&
+      newStudentCreated &&
+      parseInt(studentsQuantity || "") < students.length
+    ) {
+      handleModal(
+        <AlertModal
+          type={"success"}
+          message={`Your student account has been successfully created. he will receive a 
+                    e-mail to reset the password and be able to do the first login`}
+          totalTime={7000}
+        />
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newStudentCreated, students, studentsQuantity]);
 
   if (isLoading || authLoading || userLoading) {
     return (
@@ -169,6 +178,7 @@ const Students: FC<StudentsProps> = () => {
           setSearch={(e) => setSearch(e)}
           isLoading={isLoading || groupLoading}
           innerCard={isMobile}
+          setOrder={(order) => setFilter(order)}
         >
           <Styled.CardInner>
             {!groupLoading ? (
@@ -183,10 +193,10 @@ const Students: FC<StudentsProps> = () => {
             )}
             <Styled.MapRow>
               {searchedStudents?.map((item) => {
-                if (item.info) {
+                if (item) {
                   return (
                     <RenderStudentCard
-                      item={item.info}
+                      item={item}
                       width={isMobile ? "100%" : "49%"}
                     />
                   );

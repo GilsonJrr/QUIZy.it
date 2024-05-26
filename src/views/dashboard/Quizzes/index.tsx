@@ -25,6 +25,9 @@ import { LoadingContainerFullPage } from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
 import { Title } from "components/ui/Typography/styled";
 
+import { RowContainer } from "components/ui/Containers/styled";
+import AlphabeticalFilter from "components/AlphabeticalFilter";
+
 type QuizzesProps = {};
 
 const Quizzes: FC<QuizzesProps> = () => {
@@ -45,6 +48,8 @@ const Quizzes: FC<QuizzesProps> = () => {
   } = useSelector((state: RootState) => state.quiz);
 
   const [tab, setTab] = useState(t("quizzes.options"));
+  const [categoriesOrder, setCategoriesOrder] = useState(true);
+  const [quizOrder, setQuizOrder] = useState(true);
 
   const userID = user?.info?.uid || userStudent?.uid;
   const userType = user?.info?.userType
@@ -171,6 +176,7 @@ const Quizzes: FC<QuizzesProps> = () => {
           emptyMessage={
             search ? t("quizzes.quizNotFound") : t("quizzes.noNewQuizAvailable")
           }
+          setOrder={(order) => setQuizOrder(order)}
           scrollable
           searchable
           searchValue={search}
@@ -178,17 +184,24 @@ const Quizzes: FC<QuizzesProps> = () => {
           isLoading={quizzesLoading}
           innerCard={isMobile}
         >
-          {filterQuizzes?.map((item) => {
-            return (
-              <RenderQuizCard item={item} editMode={userType === "tutor"} />
-            );
-          })}
+          {filterQuizzes
+            ?.sort((a, b) =>
+              quizOrder
+                ? a.title.localeCompare(b.title)
+                : b.title.localeCompare(a.title)
+            )
+            ?.map((item) => {
+              return (
+                <RenderQuizCard item={item} editMode={userType === "tutor"} />
+              );
+            })}
         </Card>
       )}
       {(!isMobile || tab === t("quizzes.categories")) && (
         <Card
           gridName="card3"
           title={isMobile ? "" : category ? category : t("quizzes.categories")}
+          setOrder={(order) => setCategoriesOrder(order)}
           isEmpty={categories.length === 0}
           emptyMessage={t("quizzes.noCategoriesFound")}
           scrollable
@@ -197,16 +210,22 @@ const Quizzes: FC<QuizzesProps> = () => {
         >
           {!category ? (
             <Styled.CategoryContainer>
-              {categories?.map((category) => {
-                return (
-                  <RenderCategoriesCard
-                    item={category}
-                    chosenCategory={(category) =>
-                      handleDisplayCategories(category)
-                    }
-                  />
-                );
-              })}
+              {categories
+                ?.sort((a, b) =>
+                  categoriesOrder
+                    ? a.title.localeCompare(b.title)
+                    : b.title.localeCompare(a.title)
+                )
+                ?.map((category) => {
+                  return (
+                    <RenderCategoriesCard
+                      item={category}
+                      chosenCategory={(category) =>
+                        handleDisplayCategories(category)
+                      }
+                    />
+                  );
+                })}
             </Styled.CategoryContainer>
           ) : quizzesCategory?.length === 0 ? (
             <Styled.EmptyContainer>

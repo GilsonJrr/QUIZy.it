@@ -1,12 +1,12 @@
 {
   "dashboard": {
-    "allQuizzes": "All Quizzes",
+    "allQuizzes": "Quizzes",
     "emptyQuiz": "Quiz not found",
     "emptyNoQuiz": "No new quiz available at this time. Please check later",
-    "students": "My students",
+    "students": "Students",
     "emptyStudent": "Student not found",
     "emptyNoStudent": "You have not registered any student so far",
-    "results": "Last Completed Quizzes",
+    "results": "Results",
     "emptyResult": "You have not completed any quiz so far",
     "labelQuizzes": "Quizzes",
     "labelStudents": "Students",

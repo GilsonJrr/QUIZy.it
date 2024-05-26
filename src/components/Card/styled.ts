@@ -71,3 +71,8 @@ export const CardInner = styled.div<Props>`
   height: 100%;
   padding-bottom: ${({ scrollable }) => (scrollable ? "80" : "0")}px;
 `;
+
+export const TitleContainer = styled.div`
+  display: flex;
+  gap: 10px;
+`;

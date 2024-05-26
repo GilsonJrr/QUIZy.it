@@ -7,9 +7,10 @@ import { LoadingContainerCard } from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
 import Button from "components/Button";
 import { Title } from "components/ui/Typography/styled";
+import AlphabeticalFilter from "components/AlphabeticalFilter";
 
 type CardProps = {
-  title: string;
+  title: string | ReactNode | ReactNode[];
   children: ReactNode | ReactNode[];
   gridName?: string;
   isEmpty: boolean;
@@ -24,6 +25,7 @@ type CardProps = {
   isLoading?: boolean;
   innerCard?: boolean;
   height?: string;
+  setOrder?: (order: boolean) => void;
 };
 
 const Card: FC<CardProps> = ({
@@ -42,6 +44,7 @@ const Card: FC<CardProps> = ({
   isLoading,
   innerCard,
   height,
+  setOrder,
 }) => {
   const navigate = useNavigate();
 
@@ -83,7 +86,12 @@ const Card: FC<CardProps> = ({
     >
       {title && (
         <Styled.CardHeader justify={handleJustify()}>
-          <Title>{title}</Title>
+          <Styled.TitleContainer>
+            <Title>{title}</Title>
+            {setOrder && (
+              <AlphabeticalFilter aT0Z={(order) => setOrder?.(order)} />
+            )}
+          </Styled.TitleContainer>
           {searchable && (
             <SearchInput value={searchValue} setValue={(e) => setSearch?.(e)} />
           )}
