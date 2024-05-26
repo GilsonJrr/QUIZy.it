@@ -119,7 +119,7 @@ const Students: FC<StudentsProps> = () => {
   }, [dispatch, students, userID]);
 
   useEffect(() => {
-    if (groups === undefined) {
+    if (groups === undefined || (groups && groups.length === 0)) {
       dispatch(requestGroupList({ uid: userID || "" }));
     }
   }, [dispatch, groups, userID]);
