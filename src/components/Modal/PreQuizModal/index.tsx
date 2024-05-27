@@ -58,8 +58,6 @@ const PreQuizModal: FC<PreQuizModalProps> = ({ item }) => {
     (item?.id ? item?.id : "") as MyListTypeValues
   );
 
-  console.log("item.image", item.image);
-
   return (
     <ModalTemplate onClick={() => handleModal("")}>
       <Styled.Container>

@@ -34,7 +34,6 @@ const RenderQuizCard: FC<RenderQuizCardProps> = ({
   const navigate = useNavigate();
 
   const { handleModal } = useModalContext();
-  const { student } = useSelector((state: RootState) => state.student);
   const { user, userStudent } = useSelector((state: RootState) => state.user);
 
   const userType = user?.info?.userType || userStudent?.userType;
@@ -46,8 +45,11 @@ const RenderQuizCard: FC<RenderQuizCardProps> = ({
   };
 
   const studentResult: Result = Object.values(item?.results || "").filter(
-    (a) => a.studentUid === student?.info?.uid
+    (a) => a.studentUid === userStudent?.uid
   )[0];
+
+  const notCompleted =
+    studentResult?.score === undefined && studentResult?.amount === undefined;
 
   return (
     <Styled.QuizCard
@@ -63,8 +65,11 @@ const RenderQuizCard: FC<RenderQuizCardProps> = ({
         <Styled.ProgressContainer>
           <Styled.ImageContainer
             value={
-              (Number(studentResult?.score) / Number(studentResult?.amount)) *
-              100
+              notCompleted
+                ? 0
+                : (Number(studentResult?.score) /
+                    Number(studentResult?.amount)) *
+                  100
             }
             styles={buildStyles({
               pathColor: `${theme.colors.main.default}`,

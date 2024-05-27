@@ -72,8 +72,6 @@ const StudentResultTable: FC<StudentResultTableProps> = ({
       : [];
   }, [filter, itemKey, quizzes, search, studentID]);
 
-  console.log("results", results);
-
   return (
     <Table<TResult>
       header={TableHeaderTitles}

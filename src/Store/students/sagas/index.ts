@@ -85,7 +85,6 @@ export function* setStudentPhotoSaga(
 
   try {
     if (payload) {
-      console.log("photo saga", payload.photo);
       yield call(setImgProfile, payload);
       const photoResponse = yield call(getImgProfile, payload || "");
       const studentResponses = yield call(

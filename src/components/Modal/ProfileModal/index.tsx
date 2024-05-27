@@ -47,8 +47,6 @@ const ProfileModal: FC<ExampleProps> = () => {
   const onSubmit = (data: TStudent) => {
     handleModal("");
 
-    console.log("data", data);
-
     if (data.userType === "student") {
       return dispatch(updateStudent(data));
     }
