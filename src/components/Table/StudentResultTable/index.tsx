@@ -11,7 +11,7 @@ type StudentResultTableProps = {
   tutorView?: boolean;
   search?: string;
   filter?: boolean;
-  itemKey?: string;
+  itemKey: string;
 };
 
 const StudentResultTable: FC<StudentResultTableProps> = ({
@@ -71,6 +71,8 @@ const StudentResultTable: FC<StudentResultTableProps> = ({
           })
       : [];
   }, [filter, itemKey, quizzes, search, studentID]);
+
+  console.log("results", results);
 
   return (
     <Table<TResult>

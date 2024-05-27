@@ -14,7 +14,7 @@ export const QuizCard = styled.div<Props>`
   height: 2rem;
   width: 200%;
   @media screen and (min-width: 600px) {
-    width: 48%;
+    width: 100%;
   }
 `;
 

@@ -135,19 +135,23 @@ const StudentProfile: FC<StudentProfileProps> = () => {
       <Styled.Container>
         {(!isMobile || tab === "Result") && (
           <Card
-            title={"All results"}
+            title={"Results"}
             gridName="results"
             isEmpty={false}
             emptyMessage={`${student?.info?.name} has't completed any quiz yet`}
             innerCard={isMobile}
           >
-            <StudentResultTable studentID={studentId || ""} tutorView />
+            <StudentResultTable
+              studentID={studentId || ""}
+              tutorView
+              itemKey="quiz"
+            />
           </Card>
         )}
         {(!isMobile || tab === "Category") && (
           <>
             <Card
-              title={"Categorie Result"}
+              title={"Categories"}
               gridName="categories"
               isEmpty={false}
               emptyMessage={`${student?.info?.name} has't completed any quiz yet`}
@@ -174,7 +178,7 @@ const StudentProfile: FC<StudentProfileProps> = () => {
               </Styled.ProgressWrapper>
             </Card>
             <Card
-              title={"From the same group"}
+              title={"Same group"}
               isEmpty={sameGroupStudents?.length === 0}
               gridName="group"
               emptyMessage={`${student?.info?.name} is alone here`}

@@ -1,14 +1,20 @@
 import styled from "styled-components";
 
-export const List = styled.div`
+type Props = {
+  wrap?: boolean;
+};
+
+export const List = styled.div<Props>`
   display: flex;
   width: 100%;
-  flex-direction: column;
   gap: 20px;
+
+  flex-direction: ${({ wrap }) => (wrap ? "row" : "column")};
+  flex-wrap: ${({ wrap }) => (wrap ? "wrap" : "nowrap")};
 `;
 
-export const ListContent = styled.div`
-  width: 100%;
+export const ListContent = styled.div<Props>`
+  width: ${({ wrap }) => (wrap ? 48 : 100)}%;
 `;
 
 export const EmptyState = styled.div`

@@ -1,14 +1,11 @@
 import React, { FC, useEffect, useState } from "react";
 import * as Styled from "./styled";
-import Card from "components/Card";
-import RenderQuizCard from "components/renderItems/RenderQuizCard";
 
 import { GiCardRandom } from "react-icons/gi";
 import { FaFastBackward } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { randomQuiz } from "functions/index";
-import RenderCategoriesCard from "components/renderItems/RenderCategorieCard";
-import { TCategories, TOptions } from "types/index";
+import { TOptions } from "types/index";
 import OptionsButton from "components/OptionsButton";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { MdPlaylistAddCheck } from "react-icons/md";
@@ -16,14 +13,12 @@ import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { useDispatch } from "react-redux";
 import { requestCategoryList } from "Store/category/actions";
-import { requestQuizList, requestQuizListCategory } from "Store/quiz/actions";
+import { requestQuizList } from "Store/quiz/actions";
 import useDeviceType from "hooks/useDeviceType";
 import Tabs from "components/Tabs";
-import Button from "components/Button";
 import { useTranslation } from "react-i18next";
 import { LoadingContainerFullPage } from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
-import { Title } from "components/ui/Typography/styled";
 
 import * as Block from "blocks/Dashboard";
 
@@ -39,12 +34,9 @@ const Quizzes: FC<QuizzesProps> = () => {
   const { categories: cat, isLoading: categoryLoading } = useSelector(
     (state: RootState) => state.category
   );
-  const { quizzes, quizzesCategory, quizCategoryLoading } = useSelector(
-    (state: RootState) => state.quiz
-  );
+  const { quizzes } = useSelector((state: RootState) => state.quiz);
 
   const [tab, setTab] = useState(t("quizzes.options"));
-  const [categoriesOrder, setCategoriesOrder] = useState(true);
 
   const userID = user?.info?.uid || userStudent?.uid;
   const userType = user?.info?.userType
@@ -55,17 +47,6 @@ const Quizzes: FC<QuizzesProps> = () => {
 
   const navigate = useNavigate();
   const lastQuiz = localStorage.getItem("lastQuiz") || "";
-
-  const [category, setCategory] = useState("");
-
-  const categories: TCategories[] = [
-    ...(cat && cat.length > 0
-      ? cat?.map((c) => {
-          return { title: c.title, image: c.image, color: c.color };
-        })
-      : []),
-    { title: t("quizzes.noCategory") },
-  ];
 
   const StudentOptions: TOptions[] = [
     {
@@ -98,16 +79,6 @@ const Quizzes: FC<QuizzesProps> = () => {
       onClick: () => navigate("/quizzes/category-create"),
     },
   ];
-
-  const handleDisplayCategories = (category: string) => {
-    setCategory(category);
-    if (category === t("quizzes.noCategory")) {
-      return dispatch(
-        requestQuizListCategory({ uid: requestUid, category: "categoryLess" })
-      );
-    }
-    dispatch(requestQuizListCategory({ uid: requestUid, category: category }));
-  };
 
   useEffect(() => {
     if (cat === undefined) {
@@ -158,58 +129,7 @@ const Quizzes: FC<QuizzesProps> = () => {
         />
       )}
       {(!isMobile || tab === t("quizzes.categories")) && (
-        <Card
-          gridName="card3"
-          title={category ? category : t("quizzes.categories")}
-          setOrder={(order) => setCategoriesOrder(order)}
-          isEmpty={categories.length === 0}
-          emptyMessage={t("quizzes.noCategoriesFound")}
-          scrollable
-          isLoading={categoryLoading || quizCategoryLoading}
-          innerCard={isMobile}
-        >
-          {!category ? (
-            <Styled.CategoryContainer>
-              {categories
-                ?.sort((a, b) =>
-                  categoriesOrder
-                    ? a.title.localeCompare(b.title)
-                    : b.title.localeCompare(a.title)
-                )
-                ?.map((category) => {
-                  return (
-                    <RenderCategoriesCard
-                      item={category}
-                      chosenCategory={(category) =>
-                        handleDisplayCategories(category)
-                      }
-                    />
-                  );
-                })}
-            </Styled.CategoryContainer>
-          ) : quizzesCategory?.length === 0 ? (
-            <Styled.EmptyContainer>
-              <Title size="small" fontWeight="lighter">
-                {t("quizzes.noQuizFoundInCategory")}
-              </Title>
-            </Styled.EmptyContainer>
-          ) : (
-            quizzesCategory?.map((item) => {
-              return (
-                <RenderQuizCard item={item} editMode={userType === "tutor"} />
-              );
-            })
-          )}
-          {category && (
-            <Styled.ButtonContainer>
-              <Button onClick={() => setCategory("")} width="100%">
-                <Styled.ButtonText>
-                  {t("quizzes.seeAllCategories")}
-                </Styled.ButtonText>
-              </Button>
-            </Styled.ButtonContainer>
-          )}
-        </Card>
+        <Block.CategoriesCard gridName="card3" />
       )}
     </Styled.Container>
   );

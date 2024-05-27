@@ -9,6 +9,7 @@ type ListProps<GenericProps extends object> = {
   search?: string;
   emptyState?: string;
   itemKey: string;
+  wrap?: boolean;
 };
 
 const List = <GenericProps extends object>({
@@ -18,6 +19,7 @@ const List = <GenericProps extends object>({
   search,
   emptyState,
   itemKey,
+  wrap,
 }: ListProps<GenericProps>) => {
   const filterContent = Array.isArray(content)
     ? content
@@ -43,9 +45,13 @@ const List = <GenericProps extends object>({
   }
 
   return (
-    <Styled.List>
+    <Styled.List wrap={wrap}>
       {filterContent.map((result) => {
-        return <Styled.ListContent>{renderItem(result)}</Styled.ListContent>;
+        return (
+          <Styled.ListContent wrap={wrap}>
+            {renderItem(result)}
+          </Styled.ListContent>
+        );
       })}
     </Styled.List>
   );
