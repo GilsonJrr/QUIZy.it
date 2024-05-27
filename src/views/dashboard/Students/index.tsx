@@ -113,16 +113,16 @@ const Students: FC<StudentsProps> = () => {
       : [];
 
   useEffect(() => {
-    if (students === undefined && userID) {
-      dispatch(requestStudentList({ uid: userID }));
-    }
-  }, [dispatch, students, userID]);
-
-  useEffect(() => {
     if (groups === undefined) {
       dispatch(requestGroupList({ uid: userID || "" }));
     }
   }, [dispatch, groups, userID]);
+
+  useEffect(() => {
+    if (students === undefined && userID) {
+      dispatch(requestStudentList({ uid: userID }));
+    }
+  }, [dispatch, students, userID]);
 
   useEffect(() => {
     if (
@@ -166,7 +166,7 @@ const Students: FC<StudentsProps> = () => {
       )}
       {(!isMobile || menuTab === "Students") && (
         <Card
-          title={isMobile ? "" : "Students list"}
+          title={"Students list"}
           isEmpty={students?.length === 0}
           emptyMessage={
             search

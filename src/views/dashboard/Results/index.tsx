@@ -9,6 +9,7 @@ import { requestStudentList } from "Store/students/actions";
 import TutorResultTable from "components/Table/TutorResultTable";
 import useDeviceType from "hooks/useDeviceType";
 import StudentResultTable from "components/Table/StudentResultTable";
+import * as Block from "blocks/Dashboard";
 // import Button from "components/Button";
 // import { requestQuizList } from "Store/quiz/actions";
 // import LoadingSpinner from "components/LoadingSpiner";
@@ -64,18 +65,22 @@ const Results: FC<ResultsProps> = () => {
   // };
 
   return (
-    <Card
-      title={isMobile ? "" : "Completed Quizzes"}
-      isEmpty={tableTutorEmpty}
-      emptyMessage={"you have not completed any quiz so far"}
-      isLoading={
-        quizLoading || userType === "tutor" ? studentLoading : userLoading
-      }
-      innerCard={isMobile}
-    >
-      <Styled.CardContainer>
+    <Block.ResultsCard origin />
+    // <Card
+    //   title={"Completed Quizzes"}
+    //   isEmpty={tableTutorEmpty}
+    //   emptyMessage={"you have not completed any quiz so far"}
+    //   isLoading={
+    //     quizLoading || userType === "tutor" ? studentLoading : userLoading
+    //   }
+    //   innerCard={isMobile}
+    // >
+    /* <Styled.CardContainer>
         {userType === "tutor" ? (
-          <TutorResultTable emptyState={(empty) => setTableTutorEmpty(empty)} />
+          <TutorResultTable
+            emptyState={(empty) => setTableTutorEmpty(empty)}
+            itemKey={"name"}
+          />
         ) : (
           <StudentResultTable
             dashBoard
@@ -83,13 +88,13 @@ const Results: FC<ResultsProps> = () => {
             studentID={userStudent?.uid}
           />
         )}
-        {/* <Styled.ButtonContainer>
+        <Styled.ButtonContainer>
           <Button align="center" onClick={updateResult}>
             {quizLoading ? <LoadingSpinner color="light" /> : "Update results"}
           </Button>
-        </Styled.ButtonContainer> */}
-      </Styled.CardContainer>
-    </Card>
+        </Styled.ButtonContainer>
+      </Styled.CardContainer> */
+    // </Card>
   );
 };
 

@@ -8,9 +8,9 @@ import List from "components/List";
 import RenderStudentCard from "components/renderItems/RenderStudentCard";
 import { TInfo } from "Store/students/types";
 
-type StudentsCardProps = {};
+type StudentsCardProps = { gridName?: string };
 
-const StudentsCard: FC<StudentsCardProps> = () => {
+const StudentsCard: FC<StudentsCardProps> = ({ gridName }) => {
   const isMobile = useDeviceType();
 
   const { t } = useTranslation();
@@ -28,8 +28,8 @@ const StudentsCard: FC<StudentsCardProps> = () => {
 
   return (
     <Card
-      gridName="card3"
-      title={isMobile ? "" : t("dashboard.students")}
+      gridName={gridName}
+      title={t("dashboard.students")}
       isEmpty={filterStudents?.length === 0}
       emptyMessage={t("dashboard.emptyNoStudent")}
       scrollable

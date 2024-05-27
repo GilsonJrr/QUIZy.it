@@ -10,18 +10,17 @@ import { requestMyListList } from "Store/myList/actions";
 import { MyListTypeValues } from "Store/myList/types";
 import useDeviceType from "hooks/useDeviceType";
 import Tabs from "components/Tabs";
-import StudentResultTable from "components/Table/StudentResultTable";
+import * as Block from "blocks/Dashboard";
 
 export const StudentPage = () => {
   const dispatch = useDispatch();
   const isMobile = useDeviceType();
 
-  const { quizzes, isLoading } = useSelector((state: RootState) => state.quiz);
+  const { quizzes } = useSelector((state: RootState) => state.quiz);
   const { userStudent } = useSelector((state: RootState) => state.user);
   const { myLists } = useSelector((state: RootState) => state.myList);
 
   const [tab, setTab] = useState("Quizzes");
-  const [tableIsEmpty, setTableIsEmpty] = useState(false);
 
   const myList = useMemo(() => {
     if (!quizzes || !Array.isArray(myLists)) {
@@ -67,26 +66,12 @@ export const StudentPage = () => {
         </Styled.TabContainer>
       )}
       {(tab === "Quizzes" || !isMobile) && (
-        <Card
-          gridName="card1"
-          title={isMobile ? "" : "New Quizes"}
-          isEmpty={quizzes?.length === 0}
-          emptyMessage={
-            "No new quiz available at this time. Please check later"
-          }
-          scrollable
-          isLoading={isLoading}
-          innerCard={isMobile}
-        >
-          {quizzes?.map((item) => {
-            return <RenderQuizCard item={item} />;
-          })}
-        </Card>
+        <Block.QuizzesCard gridName="card1" origin />
       )}
       {(tab === "My list" || !isMobile) && (
         <Card
           gridName="card3"
-          title={isMobile ? "" : "My list"}
+          title={"My list"}
           isEmpty={myList?.length === 0}
           emptyMessage={
             "Your List is empty add quizzes here to do it later or retry it"
@@ -100,22 +85,7 @@ export const StudentPage = () => {
         </Card>
       )}
       {(tab === "Results" || !isMobile) && (
-        <Card
-          gridName="card2"
-          title={isMobile ? "" : "Last Completed Quizzes"}
-          isEmpty={tableIsEmpty}
-          emptyMessage={"you have not completed any quiz so far"}
-          redirectTo="Results"
-          redirectPath="/results"
-          isLoading={isLoading}
-          innerCard={isMobile}
-        >
-          <StudentResultTable
-            dashBoard
-            emptyState={(empty) => setTableIsEmpty(empty)}
-            studentID={userStudent?.uid}
-          />
-        </Card>
+        <Block.ResultsCard gridName="card2" origin />
       )}
     </Styled.Container>
   );

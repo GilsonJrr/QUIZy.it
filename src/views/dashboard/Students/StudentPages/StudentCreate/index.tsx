@@ -326,7 +326,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
       <Styled.ContainerInner>
         {(!isMobile || tab === "Information") && (
           <Card
-            title={isMobile ? "" : "New Student"}
+            title={"New Student"}
             innerCard={isMobile}
             isEmpty={false}
             gridName="newQuiz"
@@ -422,7 +422,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
           <Card
             isEmpty={false}
             gridName="newQuestion"
-            title={isMobile ? "" : "Extra info"}
+            title={"Extra info"}
             innerCard={isMobile}
           >
             {extraFields.length ? (

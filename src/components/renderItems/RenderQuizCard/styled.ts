@@ -1,17 +1,20 @@
 import styled from "styled-components";
+import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 
 type Props = {
   preview?: boolean;
+  student?: boolean;
 };
 
 export const QuizCard = styled.div<Props>`
   display: flex;
-  border-radius: 20px;
   border: 1px solid ${({ theme }) => theme.colors.main.default};
-  height: 120px;
   cursor: ${({ preview }) => (preview ? "auto" : "pointer")};
   pointer-events: ${({ preview }) => (preview ? "none" : "all")};
   padding-right: 16px;
+  border-radius: ${({ student }) =>
+    student ? "100px 20px 20px 100px" : "20px"};
+  height: 120px;
 `;
 
 export const LoaderContainer = styled.div`
@@ -25,7 +28,29 @@ export const LoaderContainer = styled.div`
   }
 `;
 
-export const QuizImage = styled.img`
+export const ProgressContainer = styled.div`
+  height: 140px;
+  width: 140px;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  @media screen and (min-width: 600px) {
+    height: 120px;
+    width: 120px;
+  }
+`;
+
+export const ImageContainer = styled(CircularProgressbarWithChildren)`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 20000;
+`;
+
+export const QuizImageTutor = styled.img`
   width: 35%;
   height: 100%;
   background-color: ${({ theme }) => theme.colors.main.secondary};
@@ -34,6 +59,18 @@ export const QuizImage = styled.img`
   @media screen and (min-width: 600px) {
     width: 25%;
   }
+`;
+
+export const QuizImage = styled.img`
+  width: 100%;
+  object-fit: cover;
+  border-radius: 100%;
+  position: absolute;
+  /* margin-top: -15px; */
+
+  /* @media screen and (min-width: 600px) {
+    width: 25%;
+  } */
 `;
 
 export const QuizTitlesContainer = styled.div`

@@ -8,9 +8,13 @@ import RenderQuizCard from "components/renderItems/RenderQuizCard";
 import List from "components/List";
 import { QuizTypeValues } from "Store/quiz/types";
 
-type QuizzesCardProps = {};
+type QuizzesCardProps = {
+  origin?: boolean;
+  editMode?: boolean;
+  gridName?: string;
+};
 
-const QuizzesCard: FC<QuizzesCardProps> = () => {
+const QuizzesCard: FC<QuizzesCardProps> = ({ origin, editMode, gridName }) => {
   const isMobile = useDeviceType();
 
   const { t } = useTranslation();
@@ -23,23 +27,25 @@ const QuizzesCard: FC<QuizzesCardProps> = () => {
 
   return (
     <Card
-      gridName="card1"
-      title={isMobile ? "" : t("dashboard.allQuizzes")}
+      gridName={gridName}
+      title={t("dashboard.allQuizzes")}
       isEmpty={quizzes?.length === 0}
       emptyMessage={t("dashboard.emptyNoQuiz")}
       scrollable
       searchable
       searchValue={search}
       setSearch={(e) => setSearch(e)}
-      redirectTo={"Quizzes"}
-      redirectPath="/quizzes"
+      redirectTo={origin ? "" : "Quizzes"}
+      redirectPath={origin ? "" : "/quizzes"}
       isLoading={quizLoading}
       innerCard={isMobile}
       setOrder={(order) => setFilter(order)}
     >
       <List<QuizTypeValues>
         content={quizzes || []}
-        renderItem={(item) => <RenderQuizCard item={item} editMode />}
+        renderItem={(item) => (
+          <RenderQuizCard item={item} editMode={editMode} />
+        )}
         search={search}
         filter={filter}
         itemKey={"title"}

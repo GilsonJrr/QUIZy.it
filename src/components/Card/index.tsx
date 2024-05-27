@@ -8,6 +8,7 @@ import LoadingSpinner from "components/LoadingSpiner";
 import Button from "components/Button";
 import { Title } from "components/ui/Typography/styled";
 import AlphabeticalFilter from "components/AlphabeticalFilter";
+import useDeviceType from "hooks/useDeviceType";
 
 type CardProps = {
   title: string | ReactNode | ReactNode[];
@@ -47,6 +48,7 @@ const Card: FC<CardProps> = ({
   setOrder,
 }) => {
   const navigate = useNavigate();
+  const isMobile = useDeviceType();
 
   if (isLoading) {
     return (
@@ -87,7 +89,7 @@ const Card: FC<CardProps> = ({
       {title && (
         <Styled.CardHeader justify={handleJustify()}>
           <Styled.TitleContainer>
-            <Title>{title}</Title>
+            {!isMobile && <Title>{title}</Title>}
             {setOrder && (
               <AlphabeticalFilter aT0Z={(order) => setOrder?.(order)} />
             )}

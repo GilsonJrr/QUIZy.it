@@ -7,6 +7,11 @@ import { QuizTypeValues } from "Store/quiz/types";
 import { useNavigate } from "react-router-dom";
 import { Title } from "components/ui/Typography/styled";
 import LoadingSpinner from "components/LoadingSpiner";
+import { buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import { useSelector } from "react-redux";
+import { RootState } from "Store/root-reducer";
+import { theme } from "lib/styles/globalStyles";
 
 type RenderQuizCardProps = {
   item: QuizTypeValues;
@@ -15,14 +20,24 @@ type RenderQuizCardProps = {
   loading?: boolean;
 };
 
+type Result = {
+  score: string;
+  amount: string;
+};
+
 const RenderQuizCard: FC<RenderQuizCardProps> = ({
   item,
   editMode,
   preview,
   loading,
 }) => {
-  const { handleModal } = useModalContext();
   const navigate = useNavigate();
+
+  const { handleModal } = useModalContext();
+  const { student } = useSelector((state: RootState) => state.student);
+  const { user, userStudent } = useSelector((state: RootState) => state.user);
+
+  const userType = user?.info?.userType || userStudent?.userType;
 
   const handleClick = () => {
     editMode
@@ -30,14 +45,36 @@ const RenderQuizCard: FC<RenderQuizCardProps> = ({
       : handleModal(<PreQuizModal item={item} />);
   };
 
+  const studentResult: Result = Object.values(item?.results || "").filter(
+    (a) => a.studentUid === student?.info?.uid
+  )[0];
+
   return (
-    <Styled.QuizCard onClick={handleClick} preview={preview}>
+    <Styled.QuizCard
+      onClick={handleClick}
+      preview={preview}
+      student={userType === "student"}
+    >
       {loading ? (
         <Styled.LoaderContainer>
           <LoadingSpinner size="medium" />
         </Styled.LoaderContainer>
+      ) : userType === "student" ? (
+        <Styled.ProgressContainer>
+          <Styled.ImageContainer
+            value={
+              (Number(studentResult?.score) / Number(studentResult?.amount)) *
+              100
+            }
+            styles={buildStyles({
+              pathColor: `${theme.colors.main.default}`,
+            })}
+          >
+            <Styled.QuizImage src={item.image ? item.image : EmptyImage} />
+          </Styled.ImageContainer>
+        </Styled.ProgressContainer>
       ) : (
-        <Styled.QuizImage src={item.image ? item.image : EmptyImage} />
+        <Styled.QuizImageTutor src={item.image ? item.image : EmptyImage} />
       )}
       <Styled.QuizTitlesContainer>
         <Title>{item.title}</Title>

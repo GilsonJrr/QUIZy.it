@@ -198,7 +198,7 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
       <Styled.ContainerInner>
         {(!isMobile || tab === t("addCategory.category")) && (
           <Card
-            title={isMobile ? "" : t("addCategory.newCategory")}
+            title={t("addCategory.newCategory")}
             isEmpty={false}
             gridName="newQuiz"
             innerCard={isMobile}
@@ -235,7 +235,7 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
         )}
         {(!isMobile || tab === t("addCategory.allCategories")) && (
           <Card
-            title={isMobile ? "" : t("addCategory.allCategories")}
+            title={t("addCategory.allCategories")}
             isEmpty={false}
             gridName="newQuestion"
             innerCard={isMobile}

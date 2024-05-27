@@ -135,7 +135,7 @@ const StudentProfile: FC<StudentProfileProps> = () => {
       <Styled.Container>
         {(!isMobile || tab === "Result") && (
           <Card
-            title={isMobile ? "" : "All results"}
+            title={"All results"}
             gridName="results"
             isEmpty={false}
             emptyMessage={`${student?.info?.name} has't completed any quiz yet`}
@@ -147,7 +147,7 @@ const StudentProfile: FC<StudentProfileProps> = () => {
         {(!isMobile || tab === "Category") && (
           <>
             <Card
-              title={isMobile ? "" : "Categorie Result"}
+              title={"Categorie Result"}
               gridName="categories"
               isEmpty={false}
               emptyMessage={`${student?.info?.name} has't completed any quiz yet`}

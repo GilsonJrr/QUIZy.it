@@ -169,7 +169,7 @@ const GroupCreate: FC<StudentCreateProps> = () => {
       <Styled.ContainerInner>
         {(!isMobile || tab === "Group") && (
           <Card
-            title={isMobile ? "" : "New Group"}
+            title={"New Group"}
             isEmpty={false}
             gridName="newQuiz"
             innerCard={isMobile}
@@ -206,7 +206,7 @@ const GroupCreate: FC<StudentCreateProps> = () => {
         )}
         {(!isMobile || tab === "Groups") && (
           <Card
-            title={isMobile ? "" : "All Groups"}
+            title={"All Groups"}
             isEmpty={false}
             gridName="newQuestion"
             innerCard={isMobile}

@@ -8,11 +8,17 @@ import { RootState } from "Store/root-reducer";
 type TutorResultTableProps = {
   dashBoard?: boolean;
   emptyState?: (empty: boolean) => void;
+  search?: string;
+  filter?: boolean;
+  itemKey?: string;
 };
 
 const TutorResultTable: FC<TutorResultTableProps> = ({
   dashBoard,
   emptyState,
+  search,
+  filter,
+  itemKey,
 }) => {
   const { quizzes } = useSelector((state: RootState) => state.quiz);
 
@@ -44,8 +50,19 @@ const TutorResultTable: FC<TutorResultTableProps> = ({
           })
           .flatMap((innerArray) => innerArray)
           .sort((a, b) => parseInt(b?.date || "") - parseInt(a?.date || ""))
+          .filter((e) =>
+            (e as Record<string, string>)[itemKey || ""]
+              ?.toUpperCase()
+              .includes(search?.toUpperCase() || "")
+          )
+          .sort((a, b) => {
+            const comparison = (a as Record<string, string>)[
+              itemKey || ""
+            ].localeCompare((b as Record<string, string>)[itemKey || ""]);
+            return filter ? comparison : -comparison;
+          })
       : [];
-  }, [quizzes]);
+  }, [filter, itemKey, quizzes, search]);
 
   useEffect(() => {
     emptyState?.(tutorResults.length === 0);

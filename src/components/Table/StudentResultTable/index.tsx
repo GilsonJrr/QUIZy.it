@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo } from "react";
+import React, { FC, useMemo } from "react";
 import Table from "..";
 import RenderTable from "components/renderItems/RenderTable";
 import { THeader, TResult } from "types/index";
@@ -7,16 +7,20 @@ import { RootState } from "Store/root-reducer";
 
 type StudentResultTableProps = {
   dashBoard?: boolean;
-  emptyState?: (empty: boolean) => void;
   studentID?: string;
   tutorView?: boolean;
+  search?: string;
+  filter?: boolean;
+  itemKey?: string;
 };
 
 const StudentResultTable: FC<StudentResultTableProps> = ({
   dashBoard,
-  emptyState,
   studentID,
   tutorView,
+  search,
+  filter,
+  itemKey,
 }) => {
   const { quizzes } = useSelector((state: RootState) => state.quiz);
 
@@ -52,12 +56,21 @@ const StudentResultTable: FC<StudentResultTableProps> = ({
           })
           ?.filter((empty) => empty !== undefined)
           .sort((a, b) => parseInt(b?.date || "") - parseInt(a?.date || ""))
+          .filter((e) =>
+            (e as unknown as Record<string, string>)[itemKey || ""]
+              ?.toUpperCase()
+              .includes(search?.toUpperCase() || "")
+          )
+          .sort((a, b) => {
+            const comparison = (a as unknown as Record<string, string>)[
+              itemKey || ""
+            ].localeCompare(
+              (b as unknown as Record<string, string>)[itemKey || ""]
+            );
+            return filter ? comparison : -comparison;
+          })
       : [];
-  }, [quizzes, studentID]);
-
-  useEffect(() => {
-    emptyState?.(results.length === 0);
-  }, [emptyState, results.length]);
+  }, [filter, itemKey, quizzes, search, studentID]);
 
   return (
     <Table<TResult>

@@ -25,8 +25,7 @@ import { LoadingContainerFullPage } from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
 import { Title } from "components/ui/Typography/styled";
 
-import { RowContainer } from "components/ui/Containers/styled";
-import AlphabeticalFilter from "components/AlphabeticalFilter";
+import * as Block from "blocks/Dashboard";
 
 type QuizzesProps = {};
 
@@ -40,16 +39,12 @@ const Quizzes: FC<QuizzesProps> = () => {
   const { categories: cat, isLoading: categoryLoading } = useSelector(
     (state: RootState) => state.category
   );
-  const {
-    quizzes,
-    quizzesCategory,
-    isLoading: quizzesLoading,
-    quizCategoryLoading,
-  } = useSelector((state: RootState) => state.quiz);
+  const { quizzes, quizzesCategory, quizCategoryLoading } = useSelector(
+    (state: RootState) => state.quiz
+  );
 
   const [tab, setTab] = useState(t("quizzes.options"));
   const [categoriesOrder, setCategoriesOrder] = useState(true);
-  const [quizOrder, setQuizOrder] = useState(true);
 
   const userID = user?.info?.uid || userStudent?.uid;
   const userType = user?.info?.userType
@@ -62,7 +57,6 @@ const Quizzes: FC<QuizzesProps> = () => {
   const lastQuiz = localStorage.getItem("lastQuiz") || "";
 
   const [category, setCategory] = useState("");
-  const [search, setSearch] = useState<string>();
 
   const categories: TCategories[] = [
     ...(cat && cat.length > 0
@@ -127,12 +121,6 @@ const Quizzes: FC<QuizzesProps> = () => {
     }
   }, [dispatch, quizzes, requestUid, userID]);
 
-  const filterQuizzes = Array.isArray(quizzes)
-    ? quizzes?.filter((e) =>
-        e?.title?.toUpperCase().includes(search?.toUpperCase() || "")
-      )
-    : [];
-
   if (categoryLoading) {
     return (
       <LoadingContainerFullPage>
@@ -163,44 +151,16 @@ const Quizzes: FC<QuizzesProps> = () => {
         />
       )}
       {(!isMobile || tab === t("quizzes.quizzes")) && (
-        <Card
+        <Block.QuizzesCard
           gridName="card2"
-          title={
-            isMobile
-              ? ""
-              : userType === "student"
-              ? t("quizzes.newQuizzes")
-              : t("quizzes.allQuizzes")
-          }
-          isEmpty={filterQuizzes?.length === 0}
-          emptyMessage={
-            search ? t("quizzes.quizNotFound") : t("quizzes.noNewQuizAvailable")
-          }
-          setOrder={(order) => setQuizOrder(order)}
-          scrollable
-          searchable
-          searchValue={search}
-          setSearch={(e) => setSearch(e)}
-          isLoading={quizzesLoading}
-          innerCard={isMobile}
-        >
-          {filterQuizzes
-            ?.sort((a, b) =>
-              quizOrder
-                ? a.title.localeCompare(b.title)
-                : b.title.localeCompare(a.title)
-            )
-            ?.map((item) => {
-              return (
-                <RenderQuizCard item={item} editMode={userType === "tutor"} />
-              );
-            })}
-        </Card>
+          editMode={userType === "tutor"}
+          origin
+        />
       )}
       {(!isMobile || tab === t("quizzes.categories")) && (
         <Card
           gridName="card3"
-          title={isMobile ? "" : category ? category : t("quizzes.categories")}
+          title={category ? category : t("quizzes.categories")}
           setOrder={(order) => setCategoriesOrder(order)}
           isEmpty={categories.length === 0}
           emptyMessage={t("quizzes.noCategoriesFound")}

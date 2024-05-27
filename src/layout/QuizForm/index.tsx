@@ -35,7 +35,7 @@ const QuizForm: FC<QuizFormProps> = ({
   return (
     <Styled.Container>
       <Card
-        title={isMobile ? "" : title}
+        title={title}
         isEmpty={false}
         gridName={"newQuiz"}
         innerCard={isMobile}
