@@ -129,7 +129,10 @@ const Quizzes: FC<QuizzesProps> = () => {
         />
       )}
       {(!isMobile || tab === t("quizzes.categories")) && (
-        <Block.CategoriesCard gridName="card3" />
+        <Block.CategoriesCard
+          gridName="card3"
+          editMode={userType === "tutor"}
+        />
       )}
     </Styled.Container>
   );

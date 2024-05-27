@@ -58,6 +58,8 @@ export const AnswerCheckerContainer = styled.div`
   border-radius: 10px;
   margin-top: 4px;
   border: 1px solid ${({ theme }) => theme.colors.main.default};
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 export const AnswerCheckerText = styled.p<Props>`

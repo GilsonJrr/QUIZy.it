@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 type Props = {
   progress?: number;
-  active?: boolean;
   buttonType?: "primary" | "secondary";
   modalType?: string;
   checkType?: string;
   preview?: boolean;
+  display?: boolean;
 };
 
 export const Container = styled.div`
@@ -24,7 +24,7 @@ export const Container = styled.div`
 `;
 
 export const QuizContainer = styled.div<Props>`
-  padding: 20px 15px;
+  padding: 20px 15px 100px;
   @media screen and (min-width: 600px) {
     padding: ${({ preview }) => (preview ? 0 : 30)}px;
     display: flex;
@@ -78,17 +78,15 @@ export const QuestionContainer = styled.div`
 
 export const Close = styled.div`
   background-color: transparent;
-  height: 30px;
-  width: 30px;
+  width: 10%;
   border-radius: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 0;
-  font-size: 10px;
-  font-weight: 800;
   cursor: pointer;
   @media screen and (min-width: 600px) {
+    height: 30px;
+    width: 30px;
     background-color: ${({ theme }) => theme.colors.background.tertiary};
     border: 1px solid ${({ theme }) => theme.colors.main.default};
   }
@@ -128,13 +126,15 @@ export const AnswerIndex = styled.div`
 
 export const ContinueButtonContainer = styled.div`
   bottom: 10px;
-  padding: 25px 0px;
+  padding: 0 0 25px 0px;
   width: 100%;
   @media screen and (min-width: 600px) {
     display: flex;
+    padding: 25px 0px;
     justify-content: flex-end;
     right: 0;
     width: 30%;
+    margin: 0 0 0 auto;
   }
 `;
 
@@ -154,25 +154,26 @@ export const QuizCheckContainer = styled.div<Props>`
   gap: 40px;
   position: fixed;
   bottom: 0;
-  padding: 50px 20px 20px;
+  padding: ${({ display }) =>
+    display ? "50px 20px 20px" : "0 20px 20px 20px"};
   @media screen and (min-width: 600px) {
     flex-direction: row;
     padding: 50px 40px;
   }
 `;
 
-export const CheckedAnswerContainer = styled.div`
-  display: flex;
+export const CheckedAnswerContainer = styled.div<Props>`
+  display: ${({ display }) => (display ? "flex" : "none")};
   align-items: center;
   justify-content: center;
   gap: 20px;
 `;
 
 export const CheckedAnswerIcon = styled.div<Props>`
-  height: 80px;
-  width: 80px;
+  display: ${({ display }) => (display ? "flex" : "none")};
+  height: 50px;
+  width: 50px;
   border-radius: 100%;
-  display: flex;
   align-items: center;
   justify-content: center;
   background-color: ${({ checkType, theme }) =>
@@ -181,9 +182,15 @@ export const CheckedAnswerIcon = styled.div<Props>`
       : checkType === "incorrect"
       ? theme.colors.quiz.wrong
       : ""};
+  @media screen and (min-width: 600px) {
+    height: 80px;
+    width: 80px;
+  }
 `;
 
-export const CheckedAnswerTextContainer = styled.div``;
+export const CheckedAnswerTextContainer = styled.div`
+  width: 80%;
+`;
 
 export const ModalBackground = styled.div`
   position: absolute;

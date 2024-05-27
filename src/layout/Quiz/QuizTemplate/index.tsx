@@ -158,7 +158,7 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
               color={theme.colors.quiz.right}
               displayPercentage={false}
             />
-            <Title width={isMobile ? "15%" : ""}>
+            <Title width="20%">
               {current + 1}/{questions?.length}
             </Title>
           </Styled.ProgressContainer>
@@ -168,32 +168,37 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
       {!preview && (
         <Styled.QuizCheckContainer
           checkType={showAnswer ? selectedAnswer?.type : ""}
+          display={showAnswer}
         >
           {showAnswer ? (
             selectedAnswer?.type === "incorrect" ? (
-              <Styled.CheckedAnswerContainer>
+              <Styled.CheckedAnswerContainer display={showAnswer}>
                 <Styled.CheckedAnswerIcon
+                  display={showAnswer}
                   checkType={selectedAnswer?.type || ""}
                 >
-                  <IoClose size={50} />
+                  <IoClose size={isMobile ? 30 : 50} />
                 </Styled.CheckedAnswerIcon>
                 <Styled.CheckedAnswerTextContainer>
-                  <Title size="big">The right answer is:</Title>
-                  <Title>{selectedAnswer?.finalAnswer}</Title>
+                  <Title size="big" multiLine>
+                    The right answer is:
+                  </Title>
+                  <Title multiLine>{selectedAnswer?.finalAnswer}</Title>
                 </Styled.CheckedAnswerTextContainer>
               </Styled.CheckedAnswerContainer>
             ) : (
-              <Styled.CheckedAnswerContainer>
+              <Styled.CheckedAnswerContainer display={showAnswer}>
                 <Styled.CheckedAnswerIcon
+                  display={showAnswer}
                   checkType={selectedAnswer?.type || ""}
                 >
-                  <FaCheck size={50} />
+                  <FaCheck size={isMobile ? 30 : 50} />
                 </Styled.CheckedAnswerIcon>
                 <Title size="big">Grate job!</Title>
               </Styled.CheckedAnswerContainer>
             )
           ) : (
-            <Styled.CheckedAnswerIcon checkType={""} />
+            <Styled.CheckedAnswerIcon checkType={""} display={showAnswer} />
           )}
           <Styled.ContinueButtonContainer>
             <Button
