@@ -5,10 +5,9 @@ import {
   ref as refStorage,
   getDownloadURL,
   uploadBytesResumable,
-  getStorage,
 } from "firebase/storage";
 
-import { StudentPhotoValues, StudentTypeValues } from "../types";
+import { ImageType, StudentTypeValues, UploadResult } from "../types";
 
 export const getStudentList = async (uid: string, limit?: number) => {
   let recentPostsRef;
@@ -45,47 +44,30 @@ export const updateStudent = async (data: StudentTypeValues) => {
     });
 };
 
-export const getImgProfile = async (data: StudentPhotoValues) => {
-  const { studentUid, tutorUid } = data;
-  const storage = getStorage();
-  const storageRef = refStorage(
-    storage,
-    `user/${tutorUid}/student/${studentUid}/info/studentProfile`
-  );
-  return getDownloadURL(storageRef)
-    .then((downloadURL) => {
-      return downloadURL;
-    })
-    .catch((error) => {
-      console.error("Error getting profile image:", error);
-      return null;
-    });
-};
+// export const setImgProfile = (data: StudentPhotoValues) => {
+//   const { photo, studentUid, tutorUid } = data;
+//   const storageRef = refStorage(
+//     storage,
+//     `user/${tutorUid}/student/${studentUid}/info/studentProfile`
+//   );
 
-export const setImgProfile = (data: StudentPhotoValues) => {
-  const { photo, studentUid, tutorUid } = data;
-  const storageRef = refStorage(
-    storage,
-    `user/${tutorUid}/student/${studentUid}/info/studentProfile`
-  );
+//   const uploadTask = uploadBytesResumable(
+//     storageRef,
+//     photo as Blob | Uint8Array | ArrayBuffer
+//   );
 
-  const uploadTask = uploadBytesResumable(
-    storageRef,
-    photo as Blob | Uint8Array | ArrayBuffer
-  );
-
-  uploadTask?.on(
-    "state_changed",
-    (error) => {
-      console.log(error);
-    },
-    () => {
-      getDownloadURL(uploadTask.snapshot.ref).then(
-        (downloadURL) => downloadURL
-      );
-    }
-  );
-};
+//   uploadTask?.on(
+//     "state_changed",
+//     (error) => {
+//       console.log(error);
+//     },
+//     () => {
+//       getDownloadURL(uploadTask.snapshot.ref).then(
+//         (downloadURL) => downloadURL
+//       );
+//     }
+//   );
+// };
 
 export const updateStudentList = async (data: StudentTypeValues) => {
   return set(
@@ -118,4 +100,48 @@ export const removeStudentUserAccount = async (uid: any) => {
   try {
     await deleteUser(uid);
   } catch (error) {}
+};
+
+export const setImgProfile = (data: ImageType): Promise<UploadResult> => {
+  const { tutorUid, studentUid, image } = data;
+  const storageRef = refStorage(
+    storage,
+    `user/${tutorUid}/student/${studentUid}/info/studentProfile`
+  );
+
+  const uploadTask = uploadBytesResumable(
+    storageRef,
+    image as unknown as Blob | Uint8Array | ArrayBuffer
+  );
+
+  let loading = true;
+  let pic = "";
+  let error: string | null = null;
+
+  return new Promise((resolve) => {
+    uploadTask.on(
+      "state_changed",
+      null,
+      (uploadError) => {
+        console.log(uploadError);
+        loading = false;
+        error = uploadError.message;
+        resolve({ pic, loading, error });
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref)
+          .then((downloadURL) => {
+            pic = downloadURL;
+            loading = false;
+            resolve({ pic, loading, error });
+          })
+          .catch((urlError) => {
+            console.error(urlError);
+            loading = false;
+            error = urlError.message;
+            resolve({ pic, loading, error });
+          });
+      }
+    );
+  });
 };

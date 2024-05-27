@@ -28,9 +28,9 @@ import useDeviceType from "hooks/useDeviceType";
 import Tabs from "components/Tabs";
 import Button from "components/Button";
 import AlertModal from "components/Modal/AlertModal";
-import { setImgStudent } from "Store/user/repository";
-import { UserPhoto } from "Store/user/types";
 import FileInput from "components/inputs/FileInput";
+import { ImageType } from "Store/students/types";
+import { setImgProfile } from "Store/students/repository";
 
 type StudentCreateProps = {};
 
@@ -61,11 +61,9 @@ const StudentCreate: FC<StudentCreateProps> = () => {
 
   const { groups } = useSelector((state: RootState) => state.group);
   const { user, isLoading } = useSelector((state: RootState) => state.user);
-  const {
-    student: otherStudent,
-    students,
-    photoLoading,
-  } = useSelector((state: RootState) => state.student);
+  const { student: otherStudent, students } = useSelector(
+    (state: RootState) => state.student
+  );
   const userID = user?.info?.uid;
 
   const student =
@@ -75,7 +73,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
   const [extraFields, setExtraFields] = useState<any[]>([]);
   const [extraField, setExtraField] = useState<string>();
   const [editingField, setEditingField] = useState(0);
-  const [usePhotoLoading, setUsePhotoLoading] = useState(false);
+  const [imgLoading, setImgLoading] = useState(false);
   const [tab, setTab] = useState("Information");
 
   const bottomRef = useRef<HTMLDivElement | null>(null);
@@ -111,6 +109,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
       group: data.group === "groupLess" ? "" : data.group,
       userType: "student",
       ...rest,
+      photo: "",
     };
 
     const updateStudentData = {
@@ -291,14 +290,14 @@ const StudentCreate: FC<StudentCreateProps> = () => {
   };
 
   const handleUploadPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const quizImageData: UserPhoto = {
-      photo: (event.target.files?.[0] as unknown as string) || "",
-      uid: studentId || "",
-      tutorUid: userID,
+    const quizImageData: ImageType = {
+      tutorUid: userID || "",
+      studentUid: studentId || "",
+      image: (event.target.files?.[0] as unknown as string) || "",
     };
-    setUsePhotoLoading(true);
-    setImgStudent(quizImageData).then(({ pic, loading }) => {
-      setUsePhotoLoading(loading);
+    setImgLoading(true);
+    setImgProfile(quizImageData).then(({ pic, loading }) => {
+      setImgLoading(loading);
       setValue("photo", pic);
     });
   };
@@ -352,7 +351,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
                     {...register("photo")}
                     onChange={handleUploadPhoto}
                     width="49%"
-                    loading={usePhotoLoading}
+                    loading={imgLoading}
                   />
                 )}
               </Styled.SelectContainer>
@@ -495,11 +494,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
               {isMobile ? "Delete" : "Delete Student"}
             </Button>
           )}
-          <Button
-            type="submit"
-            form="newStudentForm"
-            disabled={photoLoading || usePhotoLoading}
-          >
+          <Button type="submit" form="newStudentForm" disabled={imgLoading}>
             {studentId !== null ? "Update " : "Add "}{" "}
             {isMobile ? "" : "Student"}
           </Button>

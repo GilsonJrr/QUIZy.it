@@ -1,10 +1,5 @@
 import { Reducer } from "redux";
-import {
-  StudentTypeValues,
-  StudentTypes,
-  StudentState,
-  StudentPhotoValues,
-} from "../types";
+import { StudentTypeValues, StudentTypes, StudentState } from "../types";
 
 interface CleanUpStudent {
   type: StudentTypes.STUDENT_CLEAN_UP;
@@ -47,11 +42,6 @@ interface Student {
   payload: StudentTypeValues;
 }
 
-interface SetStudentPhoto {
-  type: StudentTypes.SET_STUDENT_PHOTO;
-  payload: StudentPhotoValues;
-}
-
 type StudentAction =
   | CleanUpStudent
   | CleanUpStudentList
@@ -61,15 +51,13 @@ type StudentAction =
   | StudentList
   | Student
   | RemoveStudent
-  | UpdateStudent
-  | SetStudentPhoto;
+  | UpdateStudent;
 
 const studentInitialState: StudentState = {
   isLoading: false,
   students: undefined,
   student: undefined,
   error: undefined,
-  photoLoading: false,
 };
 
 const studentReducer: Reducer<StudentState, StudentAction> = (
@@ -148,13 +136,6 @@ const studentReducer: Reducer<StudentState, StudentAction> = (
         ...state,
         isLoading: true,
         error: undefined,
-      };
-    }
-    case StudentTypes.SET_STUDENT_PHOTO: {
-      return {
-        ...state,
-        isLoading: true,
-        photoLoading: true,
       };
     }
     default: {

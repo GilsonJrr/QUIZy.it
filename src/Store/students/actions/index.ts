@@ -3,7 +3,6 @@ import {
   StudentRequest,
   StudentAction,
   StudentTypeValues,
-  StudentPhotoValues,
 } from "../types";
 
 export function studentCleanUp() {
@@ -50,15 +49,6 @@ export function student(
 ): StudentAction<StudentTypeValues> {
   return {
     type: StudentTypes.STUDENT,
-    payload: { ...props },
-  };
-}
-
-export function setStudentPhoto(
-  props: StudentPhotoValues
-): StudentAction<StudentPhotoValues> {
-  return {
-    type: StudentTypes.SET_STUDENT_PHOTO,
     payload: { ...props },
   };
 }
