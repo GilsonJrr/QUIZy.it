@@ -394,6 +394,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
               </Styled.SelectContainer>
               <Styled.SelectContainer>
                 <SimpleInput
+                  type="date"
                   label={"BirthDate"}
                   placeholder="DD/MM/YYYY"
                   error={errors.birthDate}

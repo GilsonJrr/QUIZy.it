@@ -65,6 +65,7 @@ export function* requestSignInEmailPasswordSaga(
       yield put(() => onSuccess?.());
     }
   } catch (err: any) {
+    alert(`Email or Password not found or wrong`);
     yield put(authError("cannot sign In"));
   }
 }

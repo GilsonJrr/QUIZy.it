@@ -155,6 +155,7 @@ const ProfileModal: FC<ExampleProps> = () => {
           />
           <SimpleInput
             label="Birth"
+            type="date"
             disabled={!editMode}
             viewMode={!editMode}
             {...register("birthDate")}
