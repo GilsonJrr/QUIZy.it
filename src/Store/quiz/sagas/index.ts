@@ -15,7 +15,7 @@ import { QuizAction, QuizRequest, QuizTypeValues, QuizTypes } from "../types";
 import { eventChannel } from "redux-saga";
 
 //Quiz
-function createQuizListChannel(uid: string, category: string, size: number) {
+function createQuizListChannel(uid: string) {
   return eventChannel((emit) => {
     const unsubscribe = subscribeToQuizList(uid, (quizzes) => {
       emit(quizzes);
@@ -28,16 +28,9 @@ function createQuizListChannel(uid: string, category: string, size: number) {
 
 export function* getQuizListSaga(props: QuizAction<QuizRequest>): any {
   const uid = props.payload.uid;
-  const category = props.payload.category || "";
-  const size = props.payload.size || 0;
 
   if (uid) {
-    const quizListChannel = yield call(
-      createQuizListChannel,
-      uid,
-      category,
-      size
-    );
+    const quizListChannel = yield call(createQuizListChannel, uid);
     try {
       while (true) {
         const quizResponses = yield take(quizListChannel);
@@ -86,9 +79,19 @@ export function* setQuizSaga(props: QuizAction<QuizTypeValues>): any {
   try {
     if (uid && payload) {
       yield call(setQuiz, uid, payload);
-      const quizResponses = yield call(getQuizList, uid);
-      yield put(quizList(quizResponses));
+
+      const quizListChannel = yield call(createQuizListChannel, uid);
       yield put(() => onSuccess?.());
+      try {
+        while (true) {
+          const quizResponses = yield take(quizListChannel);
+          yield put(quizList(quizResponses));
+        }
+      } finally {
+        if (yield cancelled()) {
+          quizListChannel.close();
+        }
+      }
     }
   } catch (err: any) {
     yield put(err);

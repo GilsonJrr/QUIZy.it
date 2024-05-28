@@ -9,6 +9,7 @@ import Button from "components/Button";
 import { Title } from "components/ui/Typography/styled";
 import AlphabeticalFilter from "components/AlphabeticalFilter";
 import useDeviceType from "hooks/useDeviceType";
+import { GrUpdate } from "react-icons/gr";
 
 type CardProps = {
   title: string | ReactNode | ReactNode[];
@@ -27,6 +28,7 @@ type CardProps = {
   innerCard?: boolean;
   height?: string;
   setOrder?: (order: boolean) => void;
+  update?: () => void;
 };
 
 const Card: FC<CardProps> = ({
@@ -46,6 +48,7 @@ const Card: FC<CardProps> = ({
   innerCard,
   height,
   setOrder,
+  update,
 }) => {
   const navigate = useNavigate();
   const isMobile = useDeviceType();
@@ -97,6 +100,7 @@ const Card: FC<CardProps> = ({
           {searchable && (
             <SearchInput value={searchValue} setValue={(e) => setSearch?.(e)} />
           )}
+          {update && <GrUpdate onClick={update} />}
           {redirectTo && (
             <Button
               onClick={() => navigate(redirectPath)}
