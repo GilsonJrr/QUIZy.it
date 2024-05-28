@@ -158,7 +158,7 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
               color={theme.colors.quiz.right}
               displayPercentage={false}
             />
-            <Title width="20%">
+            <Title width={isMobile ? "18%" : "4%"} textAlign="right">
               {current + 1}/{questions?.length}
             </Title>
           </Styled.ProgressContainer>
