@@ -15,7 +15,7 @@ import { requestStudent } from "Store/students/actions";
 import LoadingSpinner from "components/LoadingSpiner";
 import { LoadingContainerFullPage } from "components/Container/styled";
 import MenuModal from "components/Modal/MenuModal";
-// import LanguageSwitcher from "components/languageSwitcher";
+import LanguageSwitcher from "components/languageSwitcher";
 import { useAnimation } from "hooks/useAnimation";
 import { Title } from "components/ui/Typography/styled";
 

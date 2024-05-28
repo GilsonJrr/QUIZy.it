@@ -113,15 +113,15 @@ const Card: FC<CardProps> = ({
           )}
         </Styled.CardHeader>
       )}
-      <Styled.CardInner scrollable={scrollable}>
-        {isEmpty ? (
-          <Title size="small" fontWeight="lighter" textAlign="center">
+      {isEmpty ? (
+        <Styled.EmptyContainer>
+          <Title size="small" fontWeight="lighter" textAlign="center" multiLine>
             {emptyMessage}
           </Title>
-        ) : (
-          children
-        )}
-      </Styled.CardInner>
+        </Styled.EmptyContainer>
+      ) : (
+        <Styled.CardInner scrollable={scrollable}>{children}</Styled.CardInner>
+      )}
     </Styled.Card>
   );
 };

@@ -21,10 +21,12 @@ import {
 } from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
 import { TInfo } from "Store/students/types";
+import { useTranslation } from "react-i18next";
 
 type StudentsProps = {};
 
 const Students: FC<StudentsProps> = () => {
+  const { t } = useTranslation();
   const { isLoading: userLoading } = useSelector(
     (state: RootState) => state.user
   );
@@ -60,23 +62,23 @@ const Students: FC<StudentsProps> = () => {
 
   const Options: TOptions[] = [
     {
-      option: "Add student",
+      option: t("students.option1"),
       optionIcon: <FaUserEdit size={40} />,
       onClick: () => navigate("/students/student-create"),
     },
     {
-      option: "Add group",
+      option: t("students.option2"),
       optionIcon: <IoMdAddCircleOutline size={40} />,
       onClick: () => navigate("/students/group-create"),
     },
     // {
-    //   option: "Edit group",
+    //   option: t("students.option3"),
     //   optionIcon: <FaEdit size={40} />,
     //   onClick: () => navigate(randomQuiz()),
     // },
   ];
-  const [tab, setTab] = useState("All");
-  const [menuTab, setMenuTab] = useState("Students");
+  const [tab, setTab] = useState(t("students.tab1"));
+  const [menuTab, setMenuTab] = useState(t("students.menuTab1"));
 
   const tabs = useMemo(() => {
     if (groups && groups.length > 0 && !groupLoading) {
@@ -90,7 +92,7 @@ const Students: FC<StudentsProps> = () => {
 
   const filterStudents = () => {
     switch (true) {
-      case tab === "All":
+      case tab === t("students.tab1"):
         return students;
       default:
         return students?.filter((student) => student?.info?.group === tab);
@@ -132,8 +134,7 @@ const Students: FC<StudentsProps> = () => {
       handleModal(
         <AlertModal
           type={"success"}
-          message={`Your student account has been successfully created. he will receive a 
-                    e-mail to reset the password and be able to do the first login`}
+          message={t("students.modalMessage")}
           totalTime={7000}
         />
       );
@@ -154,23 +155,26 @@ const Students: FC<StudentsProps> = () => {
       {isMobile && (
         <Styled.TabContainer>
           <Tabs
-            tabs={[{ label: "Students", color: " " }, { label: "Options" }]}
+            tabs={[
+              { label: t("students.menuTab1"), color: " " },
+              { label: t("students.menuTab2") },
+            ]}
             activeTab={(tab) => setMenuTab(tab)}
             radius={5}
           />
         </Styled.TabContainer>
       )}
-      {(!isMobile || menuTab === "Options") && (
+      {(!isMobile || menuTab === t("students.menuTab2")) && (
         <OptionsButton options={Options} width="20%" />
       )}
-      {(!isMobile || menuTab === "Students") && (
+      {(!isMobile || menuTab === t("students.menuTab1")) && (
         <Card
-          title={"Students list"}
+          title={t("students.title")}
           isEmpty={students?.length === 0}
           emptyMessage={
             search
-              ? "Student not found"
-              : "you have not registered any student so far"
+              ? t("students.emptyMessageSearch")
+              : t("students.emptyMessageNoSearch")
           }
           searchable
           searchValue={search}
@@ -182,7 +186,7 @@ const Students: FC<StudentsProps> = () => {
           <Styled.CardInner>
             {!groupLoading ? (
               <Tabs
-                tabs={[{ label: "All" }, ...tabs]}
+                tabs={[{ label: t("students.tab1") }, ...tabs]}
                 activeTab={(tab) => setTab(tab)}
               />
             ) : (

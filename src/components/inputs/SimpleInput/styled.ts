@@ -22,8 +22,9 @@ export const ContainerStyle = css<Props>`
   border: ${({ viewMode }) => (viewMode ? 0 : 1)}px solid
     ${({ theme }) => theme.colors.main.default};
   outline: none;
-  background-color: ${({ theme }) => theme.colors.background.highlight};
-  width: 100%;
+  background-color: ${({ theme, viewMode }) =>
+    viewMode ? "transparent" : theme.colors.background.highlight};
+  width: ${({ viewMode }) => (viewMode ? 90 : 100)}%;
 `;
 
 export const Input = styled.input<Props>`

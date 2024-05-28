@@ -44,8 +44,12 @@ const ProfileModal: FC<ExampleProps> = () => {
     handleModal("");
   };
 
+  // console.log("data", tutorInfo, studentInfo);
+
   const onSubmit = (data: TStudent) => {
     handleModal("");
+
+    console.log("data", data);
 
     if (data.userType === "student") {
       return dispatch(updateStudent(data));
@@ -59,10 +63,24 @@ const ProfileModal: FC<ExampleProps> = () => {
 
   useEffect(() => {
     if (userType === "tutor") {
-      return reset(tutorInfo);
+      reset(tutorInfo);
+      setValue("photo", tutorInfo.photo ? tutorInfo.photo : "");
+      setValue("birthDate", tutorInfo.birthDate ? tutorInfo.birthDate : "");
+      setValue(
+        "socialNetWork",
+        tutorInfo.socialNetWork ? tutorInfo.socialNetWork : ""
+      );
+      return;
     }
     if (userType === "student") {
-      return reset(studentInfo);
+      reset(studentInfo);
+      setValue("photo", studentInfo.photo ? studentInfo.photo : "");
+      setValue("birthDate", studentInfo.birthDate ? studentInfo.birthDate : "");
+      setValue(
+        "socialNetWork",
+        studentInfo.socialNetWork ? studentInfo.socialNetWork : ""
+      );
+      return;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset]);

@@ -65,6 +65,17 @@
     "editQuestion": "Edit Question",
     "addQuestion": "Add Question"
   },
+  "students": {
+    "option1": "Add student",
+    "option2": "Add group",
+    "tab1": "All",
+    "menuTab1": "Students",
+    "menuTab2": "Options",
+    "title": "Students",
+    "emptyMessageSearch": "Student not found",
+    "emptyMessageNoSearch": "you have not registered any student so far",
+    "modalMessage": "Your student account has been successfully created. he will receive a e-mail to reset the password and be able to do the first login"
+  },
   "welcome": "Welcome to our app!",
   "intro": "This is a sample introduction.",
   "button": {

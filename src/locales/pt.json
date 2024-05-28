@@ -65,6 +65,17 @@
     "editQuestion": "Editar Questão",
     "addQuestion": "Adicionar Questão"
   },
+  "students": {
+    "option1": "Adicionar estudante",
+    "option2": "Adicionar grupo",
+    "tab1": "Todos",
+    "menuTab1": "Opções",
+    "menuTab2": "Options",
+    "title": "Estudantes",
+    "emptyMessageSearch": "Você ainda não registrou nenhum estudante até agora",
+    "emptyMessageNoSearch": "Você ainda não registrou nenhum estudante até agora",
+    "modalMessage": "A conta do seu estudante foi criada com sucesso. Ele receberá um e-mail para redefinir a senha e poder fazer o primeiro login"
+  },
   "welcome": "Welcome to our app!",
   "intro": "This is a sample introduction.",
   "button": {

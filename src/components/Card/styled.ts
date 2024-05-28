@@ -72,6 +72,13 @@ export const CardInner = styled.div<Props>`
   padding-bottom: ${({ scrollable }) => (scrollable ? "80" : "0")}px;
 `;
 
+export const EmptyContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+`;
+
 export const TitleContainer = styled.div`
   display: flex;
   gap: 10px;

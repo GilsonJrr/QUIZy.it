@@ -39,7 +39,9 @@ const List = <GenericProps extends object>({
   if (filterContent.length === 0) {
     return (
       <Styled.EmptyState>
-        <Title>{emptyState}</Title>
+        <Title multiLine textAlign="center" size="small" fontWeight="lighter">
+          {emptyState}
+        </Title>
       </Styled.EmptyState>
     );
   }
