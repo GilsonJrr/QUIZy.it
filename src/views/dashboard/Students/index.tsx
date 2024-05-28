@@ -31,14 +31,13 @@ const Students: FC<StudentsProps> = () => {
   const { isLoading: authLoading } = useSelector(
     (state: RootState) => state.auth
   );
-
   const { students, isLoading } = useSelector(
     (state: RootState) => state.student
   );
-
   const { groups, isLoading: groupLoading } = useSelector(
     (state: RootState) => state.group
   );
+  const { user } = useSelector((state: RootState) => state.user);
 
   const { handleModal } = useModalContext();
 
@@ -54,7 +53,7 @@ const Students: FC<StudentsProps> = () => {
     "studentsQuantity"
   );
 
-  const userID = localStorage.getItem("userId") || "";
+  const userID = user?.info?.uid;
 
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState(true);
@@ -113,11 +112,10 @@ const Students: FC<StudentsProps> = () => {
       : [];
 
   useEffect(() => {
-    //TODO: investigar esse bug em producao
-    dispatch(requestGroupList({ uid: userID || "" }));
-    // if (groups === undefined) {
-    // }
-  }, [dispatch, userID]);
+    if (groups === undefined) {
+      dispatch(requestGroupList({ uid: userID || "" }));
+    }
+  }, [dispatch, groups, userID]);
 
   useEffect(() => {
     if (students === undefined && userID) {
