@@ -113,10 +113,11 @@ const Students: FC<StudentsProps> = () => {
       : [];
 
   useEffect(() => {
-    if (groups === undefined) {
-      dispatch(requestGroupList({ uid: userID || "" }));
-    }
-  }, [dispatch, groups, userID]);
+    //TODO: investigar esse bug em producao
+    dispatch(requestGroupList({ uid: userID || "" }));
+    // if (groups === undefined) {
+    // }
+  }, [dispatch, userID]);
 
   useEffect(() => {
     if (students === undefined && userID) {

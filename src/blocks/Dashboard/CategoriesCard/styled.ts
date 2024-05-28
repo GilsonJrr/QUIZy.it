@@ -32,7 +32,7 @@ export const ButtonContainer = styled.div`
   bottom: 20px;
   left: 20px;
   right: 20px;
-  z-index: 1000;
+  z-index: 30000;
   width: calc(100% - 40px);
   display: flex;
   align-items: center;
