@@ -121,6 +121,7 @@ export const ChatContainer = styled.div`
   max-height: 48vh;
   min-height: 48vh;
   overflow: scroll;
+  overflow-x: hidden;
 `;
 
 export const MessageTextContainer = styled.div`

@@ -58,6 +58,19 @@ export const Paragraph = styled.p<TypographyProps>`
   font-size: ${({ size }) => ETypeSize[size || "medium"]};
   font-weight: ${({ fontWeight }) => fontWeight || "normal"};
   color: ${({ theme, color }) => theme.colors.text[color || "default"]};
+  word-break: break-all;
+`;
+
+export const LinkText = styled.a<TypographyProps>`
+  max-height: 6em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  font-size: ${({ size }) => ETypeSize[size || "medium"]};
+  font-weight: ${({ fontWeight }) => fontWeight || "normal"};
+  word-break: break-all;
 `;
 
 export const AnswerText = styled.h4<TypographyProps>`

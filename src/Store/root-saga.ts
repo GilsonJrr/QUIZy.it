@@ -9,6 +9,7 @@ import categorySagas from "./category/sagas";
 import quizSagas from "./quiz/sagas";
 import resultSagas from "./result/sagas";
 import myListSagas from "./myList/sagas";
+import chatSagas from "./chat/sagas";
 
 export function* rootSagas() {
   yield all([
@@ -21,5 +22,6 @@ export function* rootSagas() {
     ...quizSagas,
     ...resultSagas,
     ...myListSagas,
+    ...chatSagas,
   ]);
 }

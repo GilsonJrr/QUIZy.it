@@ -28,3 +28,19 @@ export const TabContainer = styled.div`
   justify-content: center;
   margin: 0 0 20px 0;
 `;
+
+export const ChatContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  @media screen and (min-width: 600px) {
+    padding: 0px;
+    border: 0px;
+  }
+`;

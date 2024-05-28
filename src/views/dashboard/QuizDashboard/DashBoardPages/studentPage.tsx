@@ -11,6 +11,8 @@ import { MyListTypeValues } from "Store/myList/types";
 import useDeviceType from "hooks/useDeviceType";
 import Tabs from "components/Tabs";
 import * as Block from "blocks/Dashboard";
+import Chat from "components/Chat";
+import { Title } from "components/ui/Typography/styled";
 
 export const StudentPage = () => {
   const dispatch = useDispatch();
@@ -21,6 +23,7 @@ export const StudentPage = () => {
   const { myLists } = useSelector((state: RootState) => state.myList);
 
   const [tab, setTab] = useState("Quizzes");
+  const [innerTab, setInnerTab] = useState("List");
 
   const myList = useMemo(() => {
     if (!quizzes || !Array.isArray(myLists)) {
@@ -56,37 +59,69 @@ export const StudentPage = () => {
         <Styled.TabContainer>
           <Tabs
             tabs={[
-              { label: "Quizzes" },
-              { label: "My list" },
-              { label: "Results" },
+              { label: "Quiz" },
+              { label: "List" },
+              { label: "Result" },
+              // { label: "Chat" },
             ]}
             activeTab={(tab) => setTab(tab)}
             radius={5}
           />
         </Styled.TabContainer>
       )}
-      {(tab === "Quizzes" || !isMobile) && (
+      {(tab === "Quiz" || !isMobile) && (
         <Block.QuizzesCard gridName="card1" origin />
       )}
-      {(tab === "My list" || !isMobile) && (
+      {(tab === "List" || !isMobile) && (
         <Card
           gridName="card3"
-          title={"My list"}
-          isEmpty={myList?.length === 0}
-          emptyMessage={
-            "Your List is empty add quizzes here to do it later or retry it"
-          }
-          scrollable
+          title={innerTab}
+          isEmpty={false}
+          scrollable={innerTab !== "Chat"}
           innerCard={isMobile}
         >
-          {myList?.map((list) => {
-            return <RenderQuizCard item={list} />;
-          })}
+          {/* {!isMobile && (
+            <Tabs
+              tabs={[{ label: "List" }, { label: "Chat" }]}
+              activeTab={(tab) => setInnerTab(tab)}
+              radius={10}
+            />
+          )} */}
+          {innerTab === "List" &&
+            (myList.length > 0 ? (
+              myList?.map((list) => {
+                return <RenderQuizCard item={list} />;
+              })
+            ) : (
+              <Styled.ChatContainer>
+                <Title fontWeight="lighter" multiLine textAlign="center">
+                  Your List is empty add quizzes here to do it later or retry it
+                </Title>
+              </Styled.ChatContainer>
+            ))}
+          {innerTab === "Chat" && (
+            <Styled.ChatContainer>
+              <Chat
+                tutorUid={userStudent?.tutorID || ""}
+                studentUid={userStudent?.uid || ""}
+                userType={"student"}
+              />
+            </Styled.ChatContainer>
+          )}
         </Card>
       )}
-      {(tab === "Results" || !isMobile) && (
+      {(tab === "Result" || !isMobile) && (
         <Block.ResultsCard gridName="card2" origin />
       )}
+      {/* {tab === "Chat" && isMobile && (
+        <Styled.ChatContainer>
+          <Chat
+            tutorUid={userStudent?.tutorID || ""}
+            studentUid={userStudent?.uid || ""}
+            userType={"student"}
+          />
+        </Styled.ChatContainer>
+      )} */}
     </Styled.Container>
   );
 };

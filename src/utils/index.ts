@@ -54,3 +54,13 @@ export const sumByCategory = (data: any[]) => {
     return acc;
   }, []);
 };
+
+export const linkConverter = (link: string) => {
+  try {
+    const url = new URL(link);
+    console.log("url", url);
+    return { type: "link", link: link, label: url.hostname };
+  } catch (e) {
+    return { type: "text", label: link };
+  }
+};
