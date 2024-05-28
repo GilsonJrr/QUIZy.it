@@ -13,6 +13,7 @@ export const QuizCard = styled.div<Props>`
   cursor: pointer;
   height: 2rem;
   width: 200%;
+  background-color: ${({ theme }) => theme.colors.background.default};
   @media screen and (min-width: 600px) {
     width: 100%;
   }

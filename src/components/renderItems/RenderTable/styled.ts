@@ -37,6 +37,7 @@ export const TableBodyComponents = styled.div<Props>`
 export const ListContainer = styled.div`
   display: flex;
   border: 1px solid rgba(0, 0, 0, 0.8);
+  background-color: ${({ theme }) => theme.colors.background.default};
   border-radius: 10px;
   width: 100%;
   padding: 12px 20px;

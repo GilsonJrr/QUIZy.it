@@ -9,6 +9,7 @@ type Props = {
 export const QuizCard = styled.div<Props>`
   display: flex;
   border: 1px solid ${({ theme }) => theme.colors.main.default};
+  background-color: ${({ theme }) => theme.colors.background.default};
   cursor: ${({ preview }) => (preview ? "auto" : "pointer")};
   pointer-events: ${({ preview }) => (preview ? "none" : "all")};
   padding-right: 16px;

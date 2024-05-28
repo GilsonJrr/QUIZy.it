@@ -6,6 +6,7 @@ type Props = { width?: string };
 export const Container = styled.div<Props>`
   display: flex;
   border: 1px solid ${({ theme }) => theme.colors.main.default};
+  background-color: ${({ theme }) => theme.colors.background.default};
   border-radius: 100px 20px 20px 100px;
   position: relative;
   width: ${({ width }) => width || "100%"};

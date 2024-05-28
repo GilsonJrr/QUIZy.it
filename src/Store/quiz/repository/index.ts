@@ -16,6 +16,7 @@ import {
   ref as refStorage,
   getDownloadURL,
   uploadBytesResumable,
+  deleteObject,
 } from "firebase/storage";
 
 export const subscribeToQuizList = (
@@ -81,6 +82,19 @@ export const removeQuiz = async (uid: string, studentId: string) => {
     .then((quiz) => quiz)
     .catch((err) => {
       throw new Error(err);
+    });
+};
+
+export const deleteImgQuiz = (data: ImageType) => {
+  const { uid, id } = data;
+  const storageRef = refStorage(storage, `user/${uid}/quiz/${id}/`);
+
+  deleteObject(storageRef)
+    .then(() => {
+      // File deleted successfully
+    })
+    .catch((error) => {
+      // Uh-oh, an error occurred!
     });
 };
 

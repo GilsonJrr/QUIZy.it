@@ -68,7 +68,7 @@ export type QuizTypeValues = {
 export type ImageType = {
   uid: string;
   id: string;
-  image: string;
+  image?: string;
 };
 
 export type QuizState = {

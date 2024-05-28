@@ -5,6 +5,7 @@ import {
   ref as refStorage,
   getDownloadURL,
   uploadBytesResumable,
+  deleteObject,
 } from "firebase/storage";
 
 import { ImageType, StudentTypeValues, UploadResult } from "../types";
@@ -44,31 +45,6 @@ export const updateStudent = async (data: StudentTypeValues) => {
     });
 };
 
-// export const setImgProfile = (data: StudentPhotoValues) => {
-//   const { photo, studentUid, tutorUid } = data;
-//   const storageRef = refStorage(
-//     storage,
-//     `user/${tutorUid}/student/${studentUid}/info/studentProfile`
-//   );
-
-//   const uploadTask = uploadBytesResumable(
-//     storageRef,
-//     photo as Blob | Uint8Array | ArrayBuffer
-//   );
-
-//   uploadTask?.on(
-//     "state_changed",
-//     (error) => {
-//       console.log(error);
-//     },
-//     () => {
-//       getDownloadURL(uploadTask.snapshot.ref).then(
-//         (downloadURL) => downloadURL
-//       );
-//     }
-//   );
-// };
-
 export const updateStudentList = async (data: StudentTypeValues) => {
   return set(
     ref(database, `user/${data.tutorID}/students/${data.uid}/info`),
@@ -100,6 +76,22 @@ export const removeStudentUserAccount = async (uid: any) => {
   try {
     await deleteUser(uid);
   } catch (error) {}
+};
+
+export const deleteImgStudent = (data: ImageType) => {
+  const { tutorUid, studentUid } = data;
+  const storageRef = refStorage(
+    storage,
+    `user/${tutorUid}/student/${studentUid}/info/studentProfile`
+  );
+
+  deleteObject(storageRef)
+    .then(() => {
+      // File deleted successfully
+    })
+    .catch((error) => {
+      // Uh-oh, an error occurred!
+    });
 };
 
 export const setImgProfile = (data: ImageType): Promise<UploadResult> => {

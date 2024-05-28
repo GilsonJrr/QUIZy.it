@@ -3,6 +3,7 @@ import { takeLatest, put, call } from "redux-saga/effects";
 import { student, studentList } from "../actions";
 
 import {
+  deleteImgStudent,
   getStudent,
   getStudentList,
   removeStudent,
@@ -110,8 +111,11 @@ export function* removeStudentSaga(props: StudentAction<StudentRequest>): any {
     if (studentId && uid) {
       yield call(removeStudent, uid, studentId);
       yield call(removeStudentUser, studentId);
-      // yield call(removeStudentUserAccount, studentId);
-      // yield put(deleteUser());
+      yield call(deleteImgStudent, {
+        studentUid: studentId,
+        tutorUid: uid,
+        image: "",
+      });
       const studentResponses = yield call(getStudentList, uid);
       yield put(studentList(studentResponses));
       yield put(() => onSuccess?.());
