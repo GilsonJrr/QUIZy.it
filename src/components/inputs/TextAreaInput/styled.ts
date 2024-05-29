@@ -3,6 +3,7 @@ import styled from "styled-components";
 type Props = {
   height?: string;
   width?: string;
+  fontSize?: string;
 };
 
 export const Container = styled.div<Props>`
@@ -15,7 +16,7 @@ export const Container = styled.div<Props>`
 
 export const Textarea = styled.textarea<Props>`
   border-radius: 10px;
-  font-size: 1.4rem;
+  font-size: ${({ fontSize }) => fontSize};
   padding: 10px;
   border: 1px solid ${({ theme }) => theme.colors.main.default};
   height: ${({ height }) => height};

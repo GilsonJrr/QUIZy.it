@@ -18,25 +18,10 @@ export const ChatContainer = styled.div`
   flex-direction: column;
   overflow: scroll;
   overflow-x: hidden;
-  /* height: 100%; */
+  height: 100%;
 `;
 
 export const Content = styled.div`
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 10px 0 0 0;
-  height: 80%;
-  width: 100%;
-  overflow: hidden;
-  overflow-y: hidden;
-  overflow-x: hidden; */
-
-  /* width: 100%;
-  height: 100%;
-  margin: 10px 0 0 0; */
-
   height: 70vh;
   overflow: hidden;
   overflow-y: hidden;
@@ -46,7 +31,6 @@ export const Content = styled.div`
   align-items: center;
   justify-content: center;
   margin: 10px 0 0 0;
-  /* height: 80%; */
   width: 100%;
 `;
 
@@ -84,16 +68,16 @@ export const MessageTextContainer = styled.div`
 export const MessageContainer = styled.div<Props>`
   width: 100%;
   display: flex;
-  /* flex-direction: ${({ user }) => (user ? "row" : "row-reverse")}; */
   justify-content: ${({ user }) => (user ? "flex-end" : "flex-start")};
-  align-items: center;
+  align-items: flex-start;
   gap: 14px;
   margin-bottom: 10px;
 `;
 
 export const ArrowLeft = css`
   position: absolute;
-  left: -16px;
+  left: -14px;
+  top: 7px;
   border-left: 8px solid transparent;
   border-right: 8px solid ${({ theme }) => theme.colors.main.default};
   border-top: 8px solid transparent;
@@ -102,7 +86,8 @@ export const ArrowLeft = css`
 
 export const ArrowRight = css`
   position: absolute;
-  right: -16px;
+  right: -14px;
+  top: 7px;
   border-left: 8px solid ${({ theme }) => theme.colors.quiz.right};
   border-right: 8px solid transparent;
   border-top: 8px solid transparent;
@@ -118,9 +103,17 @@ export const Message = styled.div<Props>`
   justify-content: center;
   padding: 10px 20px;
   position: relative;
+  /* width: 90%; */
 
   ::after {
     content: "";
     ${({ user }) => (user ? ArrowRight : ArrowLeft)}
   }
+`;
+
+export const AvatarContainer = styled.div`
+  width: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
 `;

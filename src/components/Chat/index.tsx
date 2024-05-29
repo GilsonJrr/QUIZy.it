@@ -131,17 +131,21 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
           return (
             <Styled.MessageContainer user={userType === message.from}>
               {userType !== message.from && (
-                <Avatar
-                  name={
-                    userType === "tutor" ? student?.info?.name : tutorInfo?.name
-                  }
-                  photo={
-                    userType === "tutor"
-                      ? student?.info?.photo
-                      : tutorInfo?.photo
-                  }
-                  size="small"
-                />
+                <Styled.AvatarContainer>
+                  <Avatar
+                    name={
+                      userType === "tutor"
+                        ? student?.info?.name
+                        : tutorInfo?.name
+                    }
+                    photo={
+                      userType === "tutor"
+                        ? student?.info?.photo
+                        : tutorInfo?.photo
+                    }
+                    size="small"
+                  />
+                </Styled.AvatarContainer>
               )}
               <Styled.Message user={userType === message.from}>
                 {preparedText.type === "text" ? (
@@ -163,11 +167,13 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
                 )}
               </Styled.Message>
               {userType === message.from && (
-                <Avatar
-                  name={user?.info?.name || student?.info?.name}
-                  photo={user?.info?.photo || student?.info?.photo}
-                  size="small"
-                />
+                <Styled.AvatarContainer>
+                  <Avatar
+                    name={user?.info?.name || student?.info?.name}
+                    photo={user?.info?.photo || student?.info?.photo}
+                    size="small"
+                  />
+                </Styled.AvatarContainer>
               )}
             </Styled.MessageContainer>
           );
@@ -178,6 +184,8 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
           <TextAreaInput
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            size="smaller"
+            height="10vh"
           />
         </Styled.MessageTextContainer>
         <Button onClick={handleSendMessage} width="100%" align="center">
