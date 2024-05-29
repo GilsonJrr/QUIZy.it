@@ -52,18 +52,6 @@ export const getChat = async (
   return;
 };
 
-export const setNewStudentChat = async (data: ChatTypeValues) => {
-  const { tutorUid, studentUid, newStudentChat } = data;
-  set(ref(database, `user/${tutorUid}/students/${studentUid}/alert/`), {
-    newChats: newStudentChat,
-  })
-    .then((chats) => chats)
-    .catch((err) => {
-      throw new Error(err);
-    });
-  return;
-};
-
 export const setChat = async (_uid: string, data: ChatTypeValues) => {
   const {
     tutorUid,

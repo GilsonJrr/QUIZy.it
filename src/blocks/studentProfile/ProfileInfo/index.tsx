@@ -12,21 +12,22 @@ import Chat from "components/Chat";
 
 type ProfileInfoProps = {
   student: StudentTypeValues;
+  openTab: string;
 };
 
-const ProfileInfo: FC<ProfileInfoProps> = ({ student }) => {
+const ProfileInfo: FC<ProfileInfoProps> = ({ student, openTab }) => {
   const navigate = useNavigate();
 
   const { user } = useSelector((state: RootState) => state.user);
 
-  const [tab, setTab] = useState("Profile");
+  const [tab, setTab] = useState(openTab);
 
   const { photo, name, socialNetWork, birthDate, email, phone, about, uid } =
     student;
 
   useEffect(() => {
-    setTab("Profile");
-  }, [student]);
+    setTab(openTab);
+  }, [openTab]);
 
   return (
     <Styled.Container>
@@ -35,7 +36,7 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ student }) => {
           tabs={[{ label: "Profile" }, { label: "Chat" }]}
           activeTab={(tab) => setTab(tab)}
           radius={10}
-          active={tab}
+          active={openTab}
         />
       </Styled.TabContainer>
       {tab === "Profile" && (

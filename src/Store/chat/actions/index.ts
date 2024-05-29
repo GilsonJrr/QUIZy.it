@@ -33,7 +33,7 @@ export function chatList(props: ChatTypeValues): ChatAction<ChatTypeValues> {
   };
 }
 
-export function CHAT(props: ChatTypeValues): ChatAction<ChatTypeValues> {
+export function chat(props: ChatTypeValues): ChatAction<ChatTypeValues> {
   return {
     type: ChatTypes.CHAT,
     payload: { ...props },
@@ -43,15 +43,6 @@ export function CHAT(props: ChatTypeValues): ChatAction<ChatTypeValues> {
 export function setChat(props: ChatRequest): ChatAction<ChatRequest> {
   return {
     type: ChatTypes.SET_CHAT,
-    payload: { ...props },
-  };
-}
-
-export function setOpenStudentChat(
-  props: ChatRequest
-): ChatAction<ChatRequest> {
-  return {
-    type: ChatTypes.SET_OPEN_STUDENT_CHAT,
     payload: { ...props },
   };
 }

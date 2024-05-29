@@ -38,6 +38,8 @@ const StudentProfile: FC<StudentProfileProps> = () => {
   const isMobile = useDeviceType();
 
   const studentId = new URLSearchParams(location.search).get("studentId");
+  const openTab = new URLSearchParams(location.search).get("tab");
+
   const [tab, setTab] = useState("Info");
 
   const student =
@@ -213,7 +215,10 @@ const StudentProfile: FC<StudentProfileProps> = () => {
             isLoading={!student}
           >
             {student && student?.info && (
-              <Block.ProfileInfo student={student.info} />
+              <Block.ProfileInfo
+                student={student.info}
+                openTab={openTab || ""}
+              />
             )}
           </Card>
         )}

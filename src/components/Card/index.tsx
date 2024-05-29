@@ -99,7 +99,7 @@ const Card: FC<CardProps> = ({
           {searchable && (
             <SearchInput value={searchValue} setValue={(e) => setSearch?.(e)} />
           )}
-          {update && <Styled.UpdateIcon onClick={update} />}
+          {update && !isMobile && <Styled.UpdateIcon onClick={update} />}
           {redirectTo && (
             <Button
               onClick={() => navigate(redirectPath)}

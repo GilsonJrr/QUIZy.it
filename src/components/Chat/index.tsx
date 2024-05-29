@@ -12,7 +12,6 @@ import {
   chatListCleanUp,
   requestChatList,
   setChat,
-  setOpenStudentChat,
 } from "Store/chat/actions";
 import { ChatTypeValues } from "Store/chat/types";
 import Avatar from "components/Avatar";
@@ -60,9 +59,6 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
       message: message,
       from: userType,
       date: Date.now(),
-      read: false,
-      newStudentChat: true,
-      newTutorChat: true,
     };
     dispatch(setChat(preparedData));
 
@@ -84,16 +80,6 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
       dispatch(requestTutorPhoto({ uid: tutorUid }));
     }
   }, [chats, dispatch, studentUid, tutorInfo, tutorUid]);
-
-  useEffect(() => {
-    dispatch(
-      setOpenStudentChat({
-        tutorUid: tutorUid,
-        studentUid: studentUid,
-        newStudentChat: false,
-      })
-    );
-  }, [dispatch, studentUid, tutorUid]);
 
   useEffect(() => {
     if (chatContainerRef.current) {

@@ -1,6 +1,6 @@
 import { takeLatest, put, call, take, cancelled } from "redux-saga/effects";
 
-import { CHAT, chatList } from "../actions";
+import { chat, chatList } from "../actions";
 
 import {
   getChat,
@@ -8,7 +8,6 @@ import {
   setChat,
   removeChat,
   subscribeToChatList,
-  setNewStudentChat,
 } from "../repository";
 
 import { ChatAction, ChatRequest, ChatTypeValues, ChatTypes } from "../types";
@@ -53,25 +52,7 @@ export function* getChatSaga(props: ChatAction<ChatRequest>): any {
   try {
     if (uid && studentUid) {
       const chatResponses = yield call(getChat, uid, studentUid, chatId);
-      yield put(CHAT(chatResponses));
-    }
-  } catch (err: any) {
-    yield put(err);
-  }
-}
-
-export function* setOpenStudentChatSaga(
-  props: ChatAction<ChatTypeValues>
-): any {
-  const uid = props.payload.tutorUid;
-  const payload = props.payload;
-  const studentUid = props.payload.studentUid;
-
-  try {
-    if (uid && payload && studentUid) {
-      yield call(setNewStudentChat, payload);
-      const chatResponses = yield call(getChatList, uid, studentUid);
-      yield put(chatList(chatResponses));
+      yield put(chat(chatResponses));
     }
   } catch (err: any) {
     yield put(err);
@@ -86,7 +67,6 @@ export function* setChatSaga(props: ChatAction<ChatTypeValues>): any {
   try {
     if (uid && payload && studentUid) {
       yield call(setChat, uid, payload);
-      yield call(setNewStudentChat, payload);
       const chatResponses = yield call(getChatList, uid, studentUid);
       yield put(chatList(chatResponses));
     }
@@ -114,7 +94,6 @@ export function* removeChatSaga(props: ChatAction<ChatRequest>): any {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default [
   takeLatest(ChatTypes.SET_CHAT, setChatSaga),
-  takeLatest(ChatTypes.SET_OPEN_STUDENT_CHAT, setOpenStudentChatSaga),
   takeLatest(ChatTypes.REQUEST_CHAT_LIST, getChatListSaga),
   takeLatest(ChatTypes.REQUEST_CHAT, getChatSaga),
   takeLatest(ChatTypes.REMOVE_CHAT, removeChatSaga),
