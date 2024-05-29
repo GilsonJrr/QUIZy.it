@@ -207,18 +207,40 @@ export const DropDowContainer = styled.div<Props>`
   z-index: 40000;
 `;
 
-export const MessageContainer = styled.div`
+export const Message = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   border-bottom: 1px solid ${({ theme }) => theme.colors.main.default};
   padding-bottom: 6px;
   margin-bottom: 2px;
+  gap: 2px;
   &:last-child {
     border-bottom: 0px;
   }
 
   &:hover {
     border-bottom: 1px solid rgba(0, 0, 0);
+    background-color: ${({ theme }) => theme.colors.background.highlight};
   }
+`;
+
+export const MessageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 20px 25px 0 25px;
+  overflow: scroll;
+  overflow-y: hidden;
+  min-height: 20vh;
+  max-height: 60vh;
+  width: 300px;
+`;
+
+export const MessageButtons = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 8px;
 `;

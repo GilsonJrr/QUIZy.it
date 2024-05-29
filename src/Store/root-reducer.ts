@@ -11,6 +11,7 @@ import { quizReducer } from "./quiz/reducers";
 import { resultReducer } from "./result/reducers";
 import { myListReducer } from "./myList/reducers";
 import { chatReducer } from "./chat/reducers";
+import { alertReducer } from "./alert/reducers";
 
 import { ExampleState } from "./example/types";
 import { StudentState } from "./students/types";
@@ -22,6 +23,7 @@ import { ResultState } from "./result/types";
 import { MyListState } from "./myList/types";
 import { ChatState } from "./chat/types";
 import { AuthState } from "./auth/types";
+import { AlertState } from "./alert/types";
 
 const rootReducer: Reducer<
   {
@@ -35,6 +37,7 @@ const rootReducer: Reducer<
     result: ResultState;
     myList: MyListState;
     chat: ChatState;
+    alert: AlertState;
   },
   any
 > = combineReducers({
@@ -48,6 +51,7 @@ const rootReducer: Reducer<
   result: resultReducer.bind(null) as Reducer<ResultState>,
   myList: myListReducer.bind(null) as Reducer<MyListState>,
   chat: chatReducer.bind(null) as Reducer<ChatState>,
+  alert: alertReducer.bind(null) as Reducer<AlertState>,
 });
 
 export type RootState = ReturnType<typeof rootReducer> & PersistedState;

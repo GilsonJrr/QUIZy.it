@@ -15,9 +15,12 @@ import { requestStudent } from "Store/students/actions";
 import LoadingSpinner from "components/LoadingSpiner";
 import { LoadingContainerFullPage } from "components/Container/styled";
 import MenuModal from "components/Modal/MenuModal";
-// import LanguageSwitcher from "components/languageSwitcher";
+import LanguageSwitcher from "components/languageSwitcher";
 import { useAnimation } from "hooks/useAnimation";
 import { Title } from "components/ui/Typography/styled";
+import Tooltip from "components/Tooltip";
+import Button from "components/Button";
+import { AlertTypeValues } from "Store/alert/types";
 
 type dashboardProps = {
   children?: ReactNode | ReactNode[];
@@ -55,7 +58,9 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
     handleModal(<ProfileModal />);
   };
 
-  const messages: any[] = [];
+  const messages = Object.values(
+    student?.alert || ""
+  ) as unknown as AlertTypeValues[];
 
   useEffect(() => {
     if (userStudent) {
@@ -67,6 +72,8 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
       );
     }
   }, [dispatch, userStudent]);
+
+  console.log("student", messages);
 
   if (isLoading) {
     return (
@@ -86,31 +93,64 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
           <Title>
             {RouterTitle[`${currentUrl}${search}` as keyof typeof RouterTitle]}
           </Title>
-          {/* <LanguageSwitcher /> */}
+          <LanguageSwitcher />
         </Styled.HeaderTitle>
         <Styled.HeaderMessage>
-          <Styled.AlertContainer
-            onClick={handleOpenMessages}
-            onBlur={handleBlur}
-            tabIndex={0}
+          <Tooltip
+            toolTipContent={
+              <Styled.MessageContainer>
+                {messages?.map((message) => {
+                  return (
+                    <Styled.Message>
+                      <Title size="medium" fontWeight="bolder">
+                        {message.type}
+                      </Title>
+                      <Title multiLine size="small">
+                        {message.message}
+                      </Title>
+                      <Styled.MessageButtons>
+                        <Button
+                          onClick={() =>
+                            navigate(
+                              `/students/student-profile?studentId=${message.senderUid}&&chat=true`
+                            )
+                          }
+                          size="small"
+                          width="100%"
+                          align="center"
+                        >
+                          Open
+                        </Button>
+                        <Button
+                          variant="anchor-dark"
+                          size="small"
+                          width="100%"
+                          align="center"
+                        >
+                          Got it
+                        </Button>
+                      </Styled.MessageButtons>
+                    </Styled.Message>
+                  );
+                })}
+              </Styled.MessageContainer>
+            }
+            position={"top"}
+            onHover
           >
-            <Styled.Alert size={25} />
-            {messages.length > 0 && (
-              <Styled.AlertTag>
-                {messages.length >= 100 ? "99+" : messages.length}
-              </Styled.AlertTag>
-            )}
-            <Styled.DropDowContainer open={openMessages}>
-              {messages?.map((message) => {
-                return (
-                  <Styled.MessageContainer>
-                    <Title>{message.from}</Title>
-                    <Title multiLine>{message.message}</Title>
-                  </Styled.MessageContainer>
-                );
-              })}
-            </Styled.DropDowContainer>
-          </Styled.AlertContainer>
+            <Styled.AlertContainer
+              onClick={handleOpenMessages}
+              onBlur={handleBlur}
+              tabIndex={0}
+            >
+              <Styled.Alert size={25} />
+              {messages.length > 0 && (
+                <Styled.AlertTag>
+                  {messages.length >= 100 ? "99+" : messages.length}
+                </Styled.AlertTag>
+              )}
+            </Styled.AlertContainer>
+          </Tooltip>
         </Styled.HeaderMessage>
         <Styled.HeaderProfile onClick={handleOpenProfile}>
           <Styled.ProfileTitles>

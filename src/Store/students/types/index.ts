@@ -1,3 +1,4 @@
+import { AlertTypeValues } from "Store/alert/types";
 import { ResultTypeValues } from "Store/result/types";
 
 export enum StudentTypes {
@@ -62,6 +63,7 @@ export type StudentTypeValues = {
 
   info?: TInfo;
   results?: ResultTypeValues[];
+  alert?: AlertTypeValues;
 };
 
 export type ImageType = {

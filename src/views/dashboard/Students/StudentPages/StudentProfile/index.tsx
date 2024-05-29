@@ -38,7 +38,7 @@ const StudentProfile: FC<StudentProfileProps> = () => {
   const isMobile = useDeviceType();
 
   const studentId = new URLSearchParams(location.search).get("studentId");
-  const openTab = new URLSearchParams(location.search).get("tab");
+  const openChat = new URLSearchParams(location.search).get("chat");
 
   const [tab, setTab] = useState("Info");
 
@@ -119,6 +119,8 @@ const StudentProfile: FC<StudentProfileProps> = () => {
   const handleChangeStudent = (uid: string) => {
     navigate(`/students/student-profile?studentId=${uid}`);
   };
+
+  //pic is to big
 
   if (studentLoading || quizLoading) {
     return (
@@ -217,7 +219,7 @@ const StudentProfile: FC<StudentProfileProps> = () => {
             {student && student?.info && (
               <Block.ProfileInfo
                 student={student.info}
-                openTab={openTab || ""}
+                openChat={Boolean(openChat) || false}
               />
             )}
           </Card>

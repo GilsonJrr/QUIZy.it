@@ -19,6 +19,7 @@ import { requestStudent } from "Store/students/actions";
 import { requestTutorPhoto } from "Store/user/actions";
 import LoadingSpinner from "components/LoadingSpiner";
 import { LoadingContainerCard } from "components/Container/styled";
+// import { setAlert } from "Store/alert/actions";
 
 type ChatProps = {
   tutorUid: string;
@@ -44,10 +45,13 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
   );
 
   const [message, setMessage] = useState("");
+  const [newMessageCounter, setNewMessageCounter] = useState(1);
   const [messages, setMessages] = useState<ChatTypeValues[]>();
 
   const handleSendMessage = () => {
     if (!message) return;
+    setNewMessageCounter(newMessageCounter + 1);
+    const name = userType === "tutor" ? user?.info?.name : student?.info?.name;
 
     const preparedData = {
       tutorUid: tutorUid,
@@ -60,7 +64,21 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
       from: userType,
       date: Date.now(),
     };
+
+    const preparedInfo = {
+      tutorUid: tutorUid,
+      studentUid: studentUid || "",
+      // infoUid: idGenerator(18),
+      type: "chat",
+      message: `you have ${newMessageCounter} new messages from ${name}`,
+      quantity: 1,
+      senderName: name,
+      senderUid: userType === "tutor" ? tutorUid : studentUid,
+      open: false,
+      userType: userType,
+    };
     dispatch(setChat(preparedData));
+    // dispatch(setAlert(preparedInfo));
 
     // TODO: criar um dispache que:
     // se vinher do tutor seta para uma aluno algo como:
@@ -75,11 +93,14 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
     if (chats === undefined) {
       dispatch(requestChatList({ tutorUid: tutorUid, studentUid: studentUid }));
     }
-    dispatch(requestStudent({ uid: tutorUid, studentId: studentUid }));
     if (tutorInfo === undefined) {
       dispatch(requestTutorPhoto({ uid: tutorUid }));
     }
   }, [chats, dispatch, studentUid, tutorInfo, tutorUid]);
+
+  useEffect(() => {
+    dispatch(requestStudent({ uid: tutorUid, studentId: studentUid }));
+  }, [dispatch, studentUid, tutorUid]);
 
   useEffect(() => {
     if (chatContainerRef.current) {

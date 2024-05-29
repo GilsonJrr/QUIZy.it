@@ -103,7 +103,7 @@ const Students: FC<StudentsProps> = () => {
     students && students?.length > 0
       ? filterStudents()
           ?.filter((student) =>
-            student.info?.name.toUpperCase().includes(search.toUpperCase())
+            student.info?.name?.toUpperCase().includes(search?.toUpperCase())
           )
           .map((student) => student.info)
           .filter((info): info is TInfo => info !== undefined)
