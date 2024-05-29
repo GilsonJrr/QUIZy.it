@@ -77,7 +77,7 @@ const Multiple: FC<MultipleProps> = ({
                 disabled={showAnswer}
                 partialDisabled
                 width="100%"
-                padding="20px"
+                padding="15px"
               >
                 <Styled.ButtonContent
                   reverse={!((showAnswer && !active) || !showAnswer)}

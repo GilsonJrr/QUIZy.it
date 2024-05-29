@@ -114,6 +114,10 @@ const StudentProfile: FC<StudentProfileProps> = () => {
     );
   });
 
+  const handleChangeStudent = (uid: string) => {
+    navigate(`/students/student-profile?studentId=${uid}`);
+  };
+
   if (studentLoading || quizLoading) {
     return (
       <LoadingContainerFullPage>
@@ -192,11 +196,7 @@ const StudentProfile: FC<StudentProfileProps> = () => {
                       name={group.info?.name}
                       photo={group.info?.photo}
                       size="medium"
-                      onClick={() =>
-                        navigate(
-                          `/students/student-profile?studentId=${group.info?.uid}`
-                        )
-                      }
+                      onClick={() => handleChangeStudent(group.info?.uid || "")}
                     />
                   );
                 })}

@@ -15,6 +15,16 @@ export const getUser = async (uid: string) => {
     });
 };
 
+export const getTutorInfo = async (uid: string) => {
+  return get(ref(database, `user/${uid}/info`))
+    .then((user) => {
+      return { photo: user.val().photo, name: user.val().name };
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
+};
+
 export const getUserStudent = async (uid: string) => {
   return get(ref(database, `student/${uid}`))
     .then((user) => user.val())

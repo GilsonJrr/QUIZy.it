@@ -1,5 +1,14 @@
 import { database } from "lib/firebase";
-import { ref, set, get, remove, onValue } from "firebase/database";
+import {
+  ref,
+  set,
+  get,
+  remove,
+  onValue,
+  query,
+  orderByKey,
+  limitToFirst,
+} from "firebase/database";
 
 import { ChatTypeValues } from "../types";
 
@@ -64,14 +73,40 @@ export const setChat = async (_uid: string, data: ChatTypeValues) => {
     newTutorChat,
     ...rest
   } = data;
-  set(
-    ref(database, `user/${tutorUid}/students/${studentUid}/chat/${chatUid}/`),
-    rest
-  )
-    .then((chats) => chats)
-    .catch((err) => {
-      throw new Error(err);
-    });
+
+  const chatRef = ref(
+    database,
+    `user/${tutorUid}/students/${studentUid}/chat/`
+  );
+
+  try {
+    const snapshot = await get(chatRef);
+    const chats = snapshot.val();
+    const chatKeys = Object.keys(chats || {});
+
+    if (chatKeys.length >= 100) {
+      const oldestChatsQuery = query(
+        chatRef,
+        orderByKey(),
+        limitToFirst(chatKeys.length - 99)
+      );
+      const oldestChatsSnapshot = await get(oldestChatsQuery);
+      const oldestChats = oldestChatsSnapshot.val();
+
+      for (const key in oldestChats) {
+        await remove(
+          ref(database, `user/${tutorUid}/students/${studentUid}/chat/${key}`)
+        );
+      }
+    }
+    await set(
+      ref(database, `user/${tutorUid}/students/${studentUid}/chat/${chatUid}/`),
+      { chatUid: chatUid, ...rest }
+    );
+  } catch (err) {
+    // throw new Error(err);
+  }
+
   return;
 };
 

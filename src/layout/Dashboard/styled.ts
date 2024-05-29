@@ -204,6 +204,7 @@ export const DropDowContainer = styled.div<Props>`
   max-width: 40vw;
   transition: 0.3s ease-in-out all;
   transform: ${({ open }) => (open ? "scale(1)" : "scale(0)")};
+  z-index: 40000;
 `;
 
 export const MessageContainer = styled.div`

@@ -14,6 +14,13 @@ export function requestUser(props: UserRequest): UserAction<UserRequest> {
   };
 }
 
+export function requestTutorPhoto(props: UserRequest): UserAction<UserRequest> {
+  return {
+    type: UserTypes.REQUEST_TUTOR_INFO,
+    payload: { ...props },
+  };
+}
+
 export function requestStudentUser(
   props: UserRequest
 ): UserAction<UserRequest> {
@@ -66,6 +73,13 @@ export function setUserFeedback(props: FeedbackData): UserAction<FeedbackData> {
 export function user(props: UseData): UserAction<UseData> {
   return {
     type: UserTypes.USER,
+    payload: { ...props },
+  };
+}
+
+export function tutorInfo(props: UseData): UserAction<UseData> {
+  return {
+    type: UserTypes.TUTOR_INFO,
     payload: { ...props },
   };
 }

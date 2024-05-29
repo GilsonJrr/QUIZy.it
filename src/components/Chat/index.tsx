@@ -15,6 +15,11 @@ import {
   setOpenStudentChat,
 } from "Store/chat/actions";
 import { ChatTypeValues } from "Store/chat/types";
+import Avatar from "components/Avatar";
+import { requestStudent } from "Store/students/actions";
+import { requestTutorPhoto } from "Store/user/actions";
+import LoadingSpinner from "components/LoadingSpiner";
+import { LoadingContainerCard } from "components/Container/styled";
 
 type ChatProps = {
   tutorUid: string;
@@ -23,10 +28,21 @@ type ChatProps = {
 };
 
 const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
-  const dispatch = useDispatch();
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
 
-  const { chats } = useSelector((state: RootState) => state.chat);
+  const dispatch = useDispatch();
+
+  const { chats, isLoading: chatLoading } = useSelector(
+    (state: RootState) => state.chat
+  );
+  const {
+    user,
+    tutorInfo,
+    isLoading: userLoading,
+  } = useSelector((state: RootState) => state.user);
+  const { student, isLoading } = useSelector(
+    (state: RootState) => state.student
+  );
 
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<ChatTypeValues[]>();
@@ -37,7 +53,10 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
     const preparedData = {
       tutorUid: tutorUid,
       studentUid: studentUid || "",
-      chatUid: String(chats?.length) || "0",
+      chatUid:
+        chats && chats?.length > 0
+          ? String(Number(chats[chats?.length - 1].chatUid) + 1)
+          : "0",
       message: message,
       from: userType,
       date: Date.now(),
@@ -46,12 +65,34 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
       newTutorChat: true,
     };
     dispatch(setChat(preparedData));
+
+    // TODO: criar um dispache que:
+    // se vinher do tutor seta para uma aluno algo como:
+    // student/alert/: {"5 new mensages"}
+    // se vinher do aluno seta para uma aluno algo como:
+    // tutor/alert/: {"5 new mensages from {nome do aluno}"}
+
     setMessage("");
   };
 
   useEffect(() => {
-    dispatch(requestChatList({ tutorUid: tutorUid, studentUid: studentUid }));
-    dispatch(setOpenStudentChat({ tutorUid: tutorUid, studentUid: studentUid, newStudentChat: false, }))
+    if (chats === undefined) {
+      dispatch(requestChatList({ tutorUid: tutorUid, studentUid: studentUid }));
+    }
+    dispatch(requestStudent({ uid: tutorUid, studentId: studentUid }));
+    if (tutorInfo === undefined) {
+      dispatch(requestTutorPhoto({ uid: tutorUid }));
+    }
+  }, [chats, dispatch, studentUid, tutorInfo, tutorUid]);
+
+  useEffect(() => {
+    dispatch(
+      setOpenStudentChat({
+        tutorUid: tutorUid,
+        studentUid: studentUid,
+        newStudentChat: false,
+      })
+    );
   }, [dispatch, studentUid, tutorUid]);
 
   useEffect(() => {
@@ -74,6 +115,14 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
     };
   }, [dispatch]);
 
+  if (isLoading || userLoading || chatLoading) {
+    return (
+      <LoadingContainerCard>
+        <LoadingSpinner />
+      </LoadingContainerCard>
+    );
+  }
+
   return (
     <Styled.Content>
       <Styled.ChatContainer ref={chatContainerRef}>
@@ -81,20 +130,45 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
           const preparedText = linkConverter(message.message || "");
           return (
             <Styled.MessageContainer user={userType === message.from}>
+              {userType !== message.from && (
+                <Avatar
+                  name={
+                    userType === "tutor" ? student?.info?.name : tutorInfo?.name
+                  }
+                  photo={
+                    userType === "tutor"
+                      ? student?.info?.photo
+                      : tutorInfo?.photo
+                  }
+                  size="small"
+                />
+              )}
               <Styled.Message user={userType === message.from}>
                 {preparedText.type === "text" ? (
                   <Paragraph
                     multiLine
                     color={userType === message.from ? "default" : "light"}
+                    size="smaller"
                   >
                     {preparedText.label}
                   </Paragraph>
                 ) : (
-                  <LinkText href={preparedText.link} target="_blank">
+                  <LinkText
+                    href={preparedText.link}
+                    target="_blank"
+                    size="smaller"
+                  >
                     {preparedText.label}
                   </LinkText>
                 )}
               </Styled.Message>
+              {userType === message.from && (
+                <Avatar
+                  name={user?.info?.name || student?.info?.name}
+                  photo={user?.info?.photo || student?.info?.photo}
+                  size="small"
+                />
+              )}
             </Styled.MessageContainer>
           );
         })}

@@ -28,6 +28,7 @@ export const QuestionContainer = styled.div<Props>`
     height: 100%;
     overflow-y: auto;
     height: 100%;
+    padding-bottom: 95px;
   }
 `;
 
@@ -77,8 +78,6 @@ export const AnswerIndex = styled.div<Props>`
   height: 40px;
   width: 40px;
   border-radius: 100%;
-  line-height: 0;
-  font-weight: 700;
 `;
 
 export const CheckIcon = styled(FaCheck)`

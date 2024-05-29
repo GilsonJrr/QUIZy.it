@@ -146,7 +146,7 @@ export const QuizCheckContainer = styled.div<Props>`
       ? theme.colors.quiz.rightSecondary
       : checkType === "incorrect"
       ? theme.colors.quiz.wrongPrimary
-      : ""};
+      : "transparent"};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -158,7 +158,12 @@ export const QuizCheckContainer = styled.div<Props>`
     display ? "50px 20px 20px" : "0 20px 20px 20px"};
   @media screen and (min-width: 600px) {
     flex-direction: row;
-    padding: 50px 40px;
+    padding: ${({ display }) => (display ? "50px 40px" : "0 40px 50px 40px")};
+    pointer-events: none;
+
+    button {
+      pointer-events: all;
+    }
   }
 `;
 

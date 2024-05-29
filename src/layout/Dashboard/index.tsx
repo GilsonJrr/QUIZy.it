@@ -15,7 +15,7 @@ import { requestStudent } from "Store/students/actions";
 import LoadingSpinner from "components/LoadingSpiner";
 import { LoadingContainerFullPage } from "components/Container/styled";
 import MenuModal from "components/Modal/MenuModal";
-import LanguageSwitcher from "components/languageSwitcher";
+// import LanguageSwitcher from "components/languageSwitcher";
 import { useAnimation } from "hooks/useAnimation";
 import { Title } from "components/ui/Typography/styled";
 
@@ -105,7 +105,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
                 return (
                   <Styled.MessageContainer>
                     <Title>{message.from}</Title>
-                    <Title>{message.message}</Title>
+                    <Title multiLine>{message.message}</Title>
                   </Styled.MessageContainer>
                 );
               })}

@@ -14,11 +14,11 @@ type TypographyProps = {
 };
 
 enum ETypeSize {
-  "smaller" = "0.9rem",
-  "small" = "1.2rem",
-  "medium" = "1.4rem",
-  "big" = "1.8rem",
-  "bigger" = "2rem",
+  "smaller" = "0.8rem",
+  "small" = "1.1rem",
+  "medium" = "1.3rem",
+  "big" = "1.7rem",
+  "bigger" = "1.9rem",
 }
 
 enum EFontWeight {

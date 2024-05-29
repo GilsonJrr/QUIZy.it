@@ -1,5 +1,5 @@
 import { Reducer } from "redux";
-import { UserState, UseData, UserTypes } from "../types";
+import { UserState, UseData, UserTypes, TTutorInfo } from "../types";
 
 interface RequestUserAgenda {
   type: UserTypes.REQUEST_USER;
@@ -42,6 +42,15 @@ interface SetUserFeedback {
   type: UserTypes.SET_USER_FEEDBACK;
 }
 
+interface RequestTutorPhoto {
+  type: UserTypes.REQUEST_TUTOR_INFO;
+}
+
+interface TutorPhoto {
+  type: UserTypes.TUTOR_INFO;
+  payload: TTutorInfo;
+}
+
 type AgendaAction =
   | RequestUserAgenda
   | UserAgenda
@@ -51,12 +60,15 @@ type AgendaAction =
   | SetUserStudent
   | SetStudentToUser
   | RequestUserStudent
-  | UserStudent;
+  | UserStudent
+  | RequestTutorPhoto
+  | TutorPhoto;
 
 const agendaInitialState: UserState = {
   isLoading: false,
   user: undefined,
   userStudent: undefined,
+  tutorInfo: undefined,
 };
 
 const userReducer: Reducer<UserState, AgendaAction> = (
@@ -134,6 +146,21 @@ const userReducer: Reducer<UserState, AgendaAction> = (
         ...state,
         isLoading: false,
         error: undefined,
+      };
+    }
+    case UserTypes.REQUEST_TUTOR_INFO: {
+      return {
+        ...state,
+        isLoading: false,
+        error: undefined,
+      };
+    }
+    case UserTypes.TUTOR_INFO: {
+      return {
+        ...state,
+        isLoading: false,
+        error: undefined,
+        tutorInfo: action.payload,
       };
     }
     default: {

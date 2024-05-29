@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import * as Styled from "./styled";
 import { StudentTypeValues } from "Store/students/types";
 import Avatar from "components/Avatar";
@@ -24,14 +24,19 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ student }) => {
   const { photo, name, socialNetWork, birthDate, email, phone, about, uid } =
     student;
 
+  useEffect(() => {
+    setTab("Profile");
+  }, [student]);
+
   return (
     <Styled.Container>
       <Styled.TabContainer>
-        {/* <Tabs
+        <Tabs
           tabs={[{ label: "Profile" }, { label: "Chat" }]}
           activeTab={(tab) => setTab(tab)}
           radius={10}
-        /> */}
+          active={tab}
+        />
       </Styled.TabContainer>
       {tab === "Profile" && (
         <Styled.Content>
@@ -75,13 +80,13 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ student }) => {
           </Styled.ButtonContainer>
         </Styled.Content>
       )}
-      {/* {tab === "Chat" && (
+      {tab === "Chat" && (
         <Chat
           tutorUid={user?.info?.uid || ""}
           studentUid={uid || ""}
           userType={"tutor"}
         />
-      )} */}
+      )}
     </Styled.Container>
   );
 };

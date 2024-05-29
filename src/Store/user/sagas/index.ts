@@ -1,8 +1,9 @@
 import { takeLatest, put, call } from "redux-saga/effects";
 
-import { user, userStudent } from "../actions";
+import { tutorInfo, user, userStudent } from "../actions";
 
 import {
+  getTutorInfo,
   getUser,
   getUserStudent,
   setNewStudent,
@@ -22,6 +23,20 @@ export function* requestUserStudentSaga(props: UserAction<UserRequest>): any {
       const userAgendaResponses = yield call(getUserStudent, uid);
       localStorage.setItem("userType", userAgendaResponses.userType);
       yield put(userStudent(userAgendaResponses));
+    }
+  } catch (err: any) {
+    // yield put(authError('cannot sign In'));
+  }
+}
+
+export function* requestTutorPhotoSaga(props: UserAction<UserRequest>): any {
+  const uid = props.payload.uid;
+
+  try {
+    if (uid) {
+      const responses = yield call(getTutorInfo, uid);
+      console.log("responses", responses);
+      yield put(tutorInfo(responses));
     }
   } catch (err: any) {
     // yield put(authError('cannot sign In'));
@@ -102,4 +117,5 @@ export default [
   takeLatest(UserTypes.SET_USER, setUserSaga),
   takeLatest(UserTypes.SET_STUDENT_TO_USER, setStudentToUserSaga),
   takeLatest(UserTypes.SET_USER_STUDENT, setStudentUserSaga),
+  takeLatest(UserTypes.REQUEST_TUTOR_INFO, requestTutorPhotoSaga),
 ];

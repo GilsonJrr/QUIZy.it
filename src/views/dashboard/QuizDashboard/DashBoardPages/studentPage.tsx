@@ -62,7 +62,7 @@ export const StudentPage = () => {
               { label: "Quiz" },
               { label: "List" },
               { label: "Result" },
-              // { label: "Chat" },
+              { label: "Chat" },
             ]}
             activeTab={(tab) => setTab(tab)}
             radius={5}
@@ -80,13 +80,13 @@ export const StudentPage = () => {
           scrollable={innerTab !== "Chat"}
           innerCard={isMobile}
         >
-          {/* {!isMobile && (
+          {!isMobile && (
             <Tabs
               tabs={[{ label: "List" }, { label: "Chat" }]}
               activeTab={(tab) => setInnerTab(tab)}
               radius={10}
             />
-          )} */}
+          )}
           {innerTab === "List" &&
             (myList.length > 0 ? (
               myList?.map((list) => {
@@ -113,7 +113,7 @@ export const StudentPage = () => {
       {(tab === "Result" || !isMobile) && (
         <Block.ResultsCard gridName="card2" origin />
       )}
-      {/* {tab === "Chat" && isMobile && (
+      {tab === "Chat" && isMobile && (
         <Styled.ChatContainer>
           <Chat
             tutorUid={userStudent?.tutorID || ""}
@@ -121,7 +121,7 @@ export const StudentPage = () => {
             userType={"student"}
           />
         </Styled.ChatContainer>
-      )} */}
+      )}
     </Styled.Container>
   );
 };
