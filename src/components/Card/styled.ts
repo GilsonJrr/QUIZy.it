@@ -1,5 +1,8 @@
 import styled from "styled-components";
 
+//Icon
+import { GrUpdate } from "react-icons/gr";
+
 type Props = {
   gridName?: string;
   scrollable?: boolean;
@@ -82,4 +85,8 @@ export const EmptyContainer = styled.div`
 export const TitleContainer = styled.div`
   display: flex;
   gap: 10px;
+`;
+
+export const UpdateIcon = styled(GrUpdate)`
+  cursor: pointer;
 `;

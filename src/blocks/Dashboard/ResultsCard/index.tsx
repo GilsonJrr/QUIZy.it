@@ -1,11 +1,12 @@
 import React, { FC, useState } from "react";
 import Card from "components/Card";
 import useDeviceType from "hooks/useDeviceType";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { useTranslation } from "react-i18next";
 import TutorResultTable from "components/Table/TutorResultTable";
 import StudentResultTable from "components/Table/StudentResultTable";
+import { requestQuizList } from "Store/quiz/actions";
 
 type QuizzesCardProps = {
   origin?: boolean;
@@ -14,6 +15,7 @@ type QuizzesCardProps = {
 
 const QuizzesCard: FC<QuizzesCardProps> = ({ origin, gridName }) => {
   const isMobile = useDeviceType();
+  const dispatch = useDispatch();
 
   const { t } = useTranslation();
   const { userStudent, user } = useSelector((state: RootState) => state.user);
@@ -23,6 +25,12 @@ const QuizzesCard: FC<QuizzesCardProps> = ({ origin, gridName }) => {
 
   const [search, setSearch] = useState<string>();
   const [filter, setFilter] = useState(true);
+
+  const handleUpdate = () => {
+    dispatch(
+      requestQuizList({ uid: userStudent?.tutorID || user?.info?.uid || "" })
+    );
+  };
 
   return (
     <Card
@@ -38,6 +46,7 @@ const QuizzesCard: FC<QuizzesCardProps> = ({ origin, gridName }) => {
       searchable
       searchValue={search}
       setSearch={(e) => setSearch(e)}
+      update={handleUpdate}
     >
       {userType === "tutor" ? (
         <TutorResultTable search={search} filter={filter} itemKey={"name"} />

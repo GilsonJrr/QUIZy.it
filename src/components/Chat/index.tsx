@@ -152,7 +152,7 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
                   <Paragraph
                     multiLine
                     color={userType === message.from ? "default" : "light"}
-                    size="smaller"
+                    size="small"
                   >
                     {preparedText.label}
                   </Paragraph>
@@ -160,7 +160,7 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
                   <LinkText
                     href={preparedText.link}
                     target="_blank"
-                    size="smaller"
+                    size="small"
                   >
                     {preparedText.label}
                   </LinkText>
@@ -184,7 +184,7 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
           <TextAreaInput
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            size="smaller"
+            size="small"
             height="10vh"
           />
         </Styled.MessageTextContainer>

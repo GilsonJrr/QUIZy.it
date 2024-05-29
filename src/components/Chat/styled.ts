@@ -9,7 +9,6 @@ export const ButtonContainer = styled.div`
   align-items: center;
   justify-content: flex-end;
   margin: auto 0 0 0;
-  /* height: 100%; */
 `;
 
 export const ChatContainer = styled.div`
@@ -22,7 +21,7 @@ export const ChatContainer = styled.div`
 `;
 
 export const Content = styled.div`
-  height: 70vh;
+  height: 100%;
   overflow: hidden;
   overflow-y: hidden;
   overflow-x: hidden;
@@ -32,6 +31,9 @@ export const Content = styled.div`
   justify-content: center;
   margin: 10px 0 0 0;
   width: 100%;
+  @media screen and (min-width: 600px) {
+    height: 70vh;
+  }
 `;
 
 export const TabContainer = styled.div`
@@ -103,7 +105,6 @@ export const Message = styled.div<Props>`
   justify-content: center;
   padding: 10px 20px;
   position: relative;
-  /* width: 90%; */
 
   ::after {
     content: "";
