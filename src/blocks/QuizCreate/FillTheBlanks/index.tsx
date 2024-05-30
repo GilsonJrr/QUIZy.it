@@ -172,7 +172,7 @@ const FillTheBlanks: FC<FillTheBlanksProps> = ({ sendQuiz, deleteQuiz }) => {
   }, []);
 
   const handleAddHiddenWord = (word: string) => {
-    if (hiddenWords.includes(word)) {
+    if (hiddenWords?.includes(word)) {
       hiddenWords && setHiddenWords(hiddenWords?.filter((a) => a !== word));
       hiddenWords &&
         setValue(
@@ -244,7 +244,7 @@ const FillTheBlanks: FC<FillTheBlanksProps> = ({ sendQuiz, deleteQuiz }) => {
                   return (
                     <Button
                       variant={
-                        hiddenWords.includes(word) ? "primary" : "secondary"
+                        hiddenWords?.includes(word) ? "primary" : "secondary"
                       }
                       padding="5px 10px"
                       radius="40px"
