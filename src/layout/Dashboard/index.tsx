@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useEffect, useMemo, useState } from "react";
+import React, { FC, ReactNode, useEffect, useState } from "react";
 import * as Styled from "./styled";
 import Sidebar from "components/Sidebar";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -18,14 +18,11 @@ import MenuModal from "components/Modal/MenuModal";
 // import LanguageSwitcher from "components/languageSwitcher";
 import { useAnimation } from "hooks/useAnimation";
 import { Title } from "components/ui/Typography/styled";
-import Tooltip from "components/Tooltip";
-import Button from "components/Button";
-import { AlertTypeValues } from "Store/alert/types";
 import {
-  removeAlert,
   requestStudentAlertList,
   requestTutorAlertList,
 } from "Store/alert/actions";
+import Alert from "components/Alert";
 
 type dashboardProps = {
   children?: ReactNode | ReactNode[];
@@ -39,88 +36,17 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
     (state: RootState) => state.user
   );
   const { student } = useSelector((state: RootState) => state.student);
-  const { studentAlerts, tutorAlerts } = useSelector(
-    (state: RootState) => state.alert
-  );
 
   const { handleModal } = useModalContext();
 
-  const [openMessages, setOpenMessages] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const { triggerAnimation } = useAnimation();
 
   const currentUrl = location.pathname;
   const search = location.search && location.search[0];
 
-  const userType = user?.info?.userType || userStudent?.userType;
-
-  const handleOpenMessages = () => {
-    messages?.length > 0 && setOpenMessages(!openMessages);
-  };
-
   const handleOpenProfile = () => {
     handleModal(<ProfileModal />);
-  };
-
-  const messages = useMemo(() => {
-    return userType === "student"
-      ? Object.values(studentAlerts || "")
-      : userType === "tutor"
-      ? Object.values(tutorAlerts || "")
-      : ([] as unknown as AlertTypeValues[]);
-  }, [studentAlerts, tutorAlerts, userType]);
-
-  const handleOpenAlert = (message: AlertTypeValues) => {
-    if (userType === "tutor") {
-      message.senderUid &&
-        navigate(
-          `/students/student-profile?studentId=${message.senderUid}&&chat=true`
-        );
-      dispatch(
-        removeAlert({
-          userType: "tutor",
-          alertUid: message.senderUid,
-          tutorUid: user?.info?.uid || "",
-        })
-      );
-      return;
-    }
-    if (userType === "student") {
-      navigate(`/?chat=true`);
-      dispatch(
-        removeAlert({
-          userType: "student",
-          studentUid: userStudent?.uid,
-          alertUid: message.senderUid,
-          tutorUid: userStudent?.tutorID || "",
-        })
-      );
-      return;
-    }
-  };
-
-  const handleGotIt = (message: AlertTypeValues) => {
-    if (userType === "tutor") {
-      dispatch(
-        removeAlert({
-          userType: "tutor",
-          alertUid: message.senderUid,
-          tutorUid: user?.info?.uid || "",
-        })
-      );
-      return;
-    }
-    if (userType === "student") {
-      dispatch(
-        removeAlert({
-          userType: "student",
-          studentUid: userStudent?.uid,
-          alertUid: message.senderUid,
-          tutorUid: userStudent?.tutorID || "",
-        })
-      );
-      return;
-    }
   };
 
   useEffect(() => {
@@ -174,54 +100,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
           {/* <LanguageSwitcher /> */}
         </Styled.HeaderTitle>
         <Styled.HeaderMessage>
-          <Tooltip
-            toolTipContent={
-              <Styled.MessageContainer>
-                {messages?.map((message) => {
-                  return (
-                    <Styled.Message>
-                      <Title size="medium" fontWeight="bolder">
-                        {message.type}
-                      </Title>
-                      <Title multiLine size="small">
-                        {message.message}
-                      </Title>
-                      <Styled.MessageButtons>
-                        <Button
-                          onClick={() => handleOpenAlert(message)}
-                          size="small"
-                          width="100%"
-                          align="center"
-                        >
-                          Open
-                        </Button>
-                        <Button
-                          onClick={() => handleGotIt(message)}
-                          variant="anchor-dark"
-                          size="small"
-                          width="100%"
-                          align="center"
-                        >
-                          Got it
-                        </Button>
-                      </Styled.MessageButtons>
-                    </Styled.Message>
-                  );
-                })}
-              </Styled.MessageContainer>
-            }
-            position={"top"}
-            disable={messages.length === 0}
-          >
-            <Styled.AlertContainer onClick={handleOpenMessages}>
-              <Styled.Alert size={25} />
-              {messages.length > 0 && (
-                <Styled.AlertTag>
-                  {messages.length >= 100 ? "99+" : messages.length}
-                </Styled.AlertTag>
-              )}
-            </Styled.AlertContainer>
-          </Tooltip>
+          <Alert />
         </Styled.HeaderMessage>
         <Styled.HeaderProfile onClick={handleOpenProfile}>
           <Styled.ProfileTitles>
@@ -243,6 +122,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
           <Title>
             {RouterTitle[`${currentUrl}${search}` as keyof typeof RouterTitle]}
           </Title>
+          <Alert />
         </Styled.HeaderTitle>
         <Styled.HeaderHamburgerMenu onClick={() => handleModal(<MenuModal />)}>
           <GiHamburgerMenu size={25} />

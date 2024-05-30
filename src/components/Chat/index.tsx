@@ -19,7 +19,7 @@ import { requestStudent } from "Store/students/actions";
 import { requestTutorPhoto } from "Store/user/actions";
 import LoadingSpinner from "components/LoadingSpiner";
 import { LoadingContainerCard } from "components/Container/styled";
-import { setAlert } from "Store/alert/actions";
+import { removeAlert, setAlert } from "Store/alert/actions";
 import { useLocation } from "react-router-dom";
 
 type ChatProps = {
@@ -83,23 +83,14 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
     dispatch(setChat(preparedData));
     dispatch(setAlert(preparedInfo));
 
-    // TODO: criar um dispache que:
-    // se vinher do tutor seta para uma aluno algo como:
-    // student/alert/: {"5 new mensages"}
-    // se vinher do aluno seta para uma aluno algo como:
-    // tutor/alert/: {"5 new mensages from {nome do aluno}"}
-
     setMessage("");
   };
 
   useEffect(() => {
-    if (chats === undefined) {
-      dispatch(requestChatList({ tutorUid: tutorUid, studentUid: studentUid }));
-    }
     if (tutorInfo === undefined) {
       dispatch(requestTutorPhoto({ uid: tutorUid }));
     }
-  }, [chats, dispatch, studentUid, tutorInfo, tutorUid]);
+  }, [dispatch, tutorInfo, tutorUid]);
 
   useEffect(() => {
     dispatch(requestStudent({ uid: tutorUid, studentId: studentUid }));
@@ -128,6 +119,30 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
       dispatch(chatListCleanUp());
     };
   }, [dispatch]);
+
+  useEffect(() => {
+    if (userType === "tutor") {
+      dispatch(
+        removeAlert({
+          userType: "tutor",
+          alertUid: studentUid,
+          tutorUid: tutorUid || "",
+        })
+      );
+      return;
+    }
+    if (userType === "student") {
+      dispatch(
+        removeAlert({
+          userType: "student",
+          studentUid: studentUid,
+          alertUid: tutorUid,
+          tutorUid: tutorUid || "",
+        })
+      );
+      return;
+    }
+  }, [dispatch, studentUid, tutorUid, userType]);
 
   if (isLoading || userLoading || chatLoading) {
     return (

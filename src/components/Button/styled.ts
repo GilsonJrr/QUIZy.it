@@ -104,5 +104,9 @@ export const Button = styled.button<Props>`
     opacity: ${({ partialDisabled }) => (partialDisabled ? "1" : "0.5")};
   }
 
+  &:hover {
+    filter: brightness(1.8);
+  }
+
   transition: 0.2s ease-in-out all;
 `;

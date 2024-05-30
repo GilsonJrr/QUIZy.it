@@ -106,14 +106,16 @@ export const Logo = styled.img`
 export const HeaderTitle = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 60%;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-top: none;
   border-left: none;
   padding: 10px 20px;
+  gap: 20px;
   @media screen and (min-width: 600px) {
     width: 64%;
+    padding: 10px 20px 10px 40px;
     justify-content: space-between;
   }
 `;
@@ -218,11 +220,6 @@ export const Message = styled.div`
   &:last-child {
     border-bottom: 0px;
   }
-
-  &:hover {
-    border-bottom: 1px solid rgba(0, 0, 0);
-    background-color: ${({ theme }) => theme.colors.background.highlight};
-  }
 `;
 
 export const MessageContainer = styled.div`
@@ -230,10 +227,9 @@ export const MessageContainer = styled.div`
   flex-direction: column;
   margin: 20px 25px 0 25px;
   overflow: scroll;
-  overflow-y: hidden;
-  min-height: 20vh;
+  overflow-x: hidden;
   max-height: 60vh;
-  width: 300px;
+  width: 350px;
 `;
 
 export const MessageButtons = styled.div`
@@ -242,5 +238,5 @@ export const MessageButtons = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  margin-top: 8px;
+  margin: 8px 0;
 `;
