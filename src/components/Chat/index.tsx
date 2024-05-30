@@ -19,7 +19,8 @@ import { requestStudent } from "Store/students/actions";
 import { requestTutorPhoto } from "Store/user/actions";
 import LoadingSpinner from "components/LoadingSpiner";
 import { LoadingContainerCard } from "components/Container/styled";
-// import { setAlert } from "Store/alert/actions";
+import { setAlert } from "Store/alert/actions";
+import { useLocation } from "react-router-dom";
 
 type ChatProps = {
   tutorUid: string;
@@ -31,6 +32,9 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
 
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const openChat = new URLSearchParams(location.search).get("chat");
 
   const { chats, isLoading: chatLoading } = useSelector(
     (state: RootState) => state.chat
@@ -68,9 +72,8 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
     const preparedInfo = {
       tutorUid: tutorUid,
       studentUid: studentUid || "",
-      // infoUid: idGenerator(18),
       type: "chat",
-      message: `you have ${newMessageCounter} new messages from ${name}`,
+      message: `you have new messages from ${name}`,
       quantity: 1,
       senderName: name,
       senderUid: userType === "tutor" ? tutorUid : studentUid,
@@ -78,7 +81,7 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
       userType: userType,
     };
     dispatch(setChat(preparedData));
-    // dispatch(setAlert(preparedInfo));
+    dispatch(setAlert(preparedInfo));
 
     // TODO: criar um dispache que:
     // se vinher do tutor seta para uma aluno algo como:
@@ -101,6 +104,10 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
   useEffect(() => {
     dispatch(requestStudent({ uid: tutorUid, studentId: studentUid }));
   }, [dispatch, studentUid, tutorUid]);
+
+  useEffect(() => {
+    dispatch(requestChatList({ tutorUid: tutorUid, studentUid: studentUid }));
+  }, [dispatch, studentUid, tutorUid, openChat]);
 
   useEffect(() => {
     if (chatContainerRef.current) {

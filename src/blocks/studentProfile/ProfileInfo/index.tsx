@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import * as Styled from "./styled";
 import { StudentTypeValues } from "Store/students/types";
 import Avatar from "components/Avatar";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Button from "components/Button";
 import { Paragraph, Title } from "components/ui/Typography/styled";
 import Tabs from "components/Tabs";
@@ -12,11 +12,13 @@ import Chat from "components/Chat";
 
 type ProfileInfoProps = {
   student: StudentTypeValues;
-  openChat: boolean;
 };
 
-const ProfileInfo: FC<ProfileInfoProps> = ({ student, openChat }) => {
+const ProfileInfo: FC<ProfileInfoProps> = ({ student }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const openChat = new URLSearchParams(location.search).get("chat");
 
   const { user } = useSelector((state: RootState) => state.user);
 
@@ -25,17 +27,9 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ student, openChat }) => {
   const { photo, name, socialNetWork, birthDate, email, phone, about, uid } =
     student;
 
-  console.log("openChat", openChat);
-
-  // useEffect(() => {
-  //   if (openChat) {
-  //     setTab("Chat");
-  //   }
-  // }, [openChat]);
-
   useEffect(() => {
-    setTab("Profile");
-  }, [student]);
+    setTab(openChat ? "Chat" : "Profile");
+  }, [student, openChat]);
 
   return (
     <Styled.Container>

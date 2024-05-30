@@ -2,10 +2,11 @@ export enum AlertTypes {
   ALERT_CLEAN_UP = "ALERT_CLEAN_UP",
   ALERT_LIST_CLEAN_UP = "ALERT_LIST_CLEAN_UP",
   SET_ALERT = "SET_ALERT",
-  REQUEST_ALERT_LIST = "REQUEST_ALERT_LIST",
+  REQUEST_STUDENT_ALERT_LIST = "REQUEST_STUDENT_ALERT_LIST",
+  REQUEST_TUTOR_ALERT_LIST = "REQUEST_TUTOR_ALERT_LIST",
   REQUEST_ALERT = "REQUEST_ALERT",
-  ALERT_LIST = "ALERT_LIST",
-  ALERT = "ALERT",
+  ALERT_STUDENT_LIST = "ALERT_STUDENT_LIST ",
+  ALERT_TUTOR_LIST = "ALERT_TUTOR_LIST",
   REMOVE_ALERT = "REMOVE_ALERT",
 }
 
@@ -20,6 +21,7 @@ export type AlertRequest = {
   alertUid?: string;
   newStudentAlert?: boolean;
   newTutorAlert?: boolean;
+  userType?: "tutor" | "student" | string;
 };
 
 export type AlertTypeValues = {
@@ -38,6 +40,8 @@ export type AlertTypeValues = {
 export type AlertState = {
   isLoading: boolean;
   error: string | undefined;
-  alerts: AlertTypeValues[] | undefined;
-  alert: AlertTypeValues | undefined;
+  studentAlerts: AlertTypeValues[] | undefined;
+  studentAlert: AlertTypeValues | undefined;
+  tutorAlerts: AlertTypeValues[] | undefined;
+  tutorAlert: AlertTypeValues | undefined;
 };

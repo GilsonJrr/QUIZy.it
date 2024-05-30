@@ -1,4 +1,11 @@
-import React, { FC, ReactNode, useEffect, useRef, useState } from "react";
+import React, {
+  FC,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+  FocusEvent,
+} from "react";
 import * as Styled from "./styled";
 
 type TooltipProps = {
@@ -18,9 +25,11 @@ const Tooltip: FC<TooltipProps> = ({
   width,
   disable = false,
 }) => {
-  const [showSelector, setShowSelector] = useState(false);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const [showSelector, setShowSelector] = useState(false);
+  const [isMouseInside, setIsMouseInside] = useState(false);
 
   const handleClickOutside = (event: MouseEvent) => {
     if (
@@ -40,6 +49,30 @@ const Tooltip: FC<TooltipProps> = ({
     }
   };
 
+  const handleLostFocus = (event: FocusEvent<HTMLDivElement>) => {
+    // if (!event.currentTarget.contains(event.relatedTarget)) {
+    // }
+    setTimeout(() => {
+      setShowSelector(false);
+    }, 100);
+  };
+
+  const handleMouseEnter = () => {
+    setIsMouseInside(true);
+  };
+
+  const handleMouseLeaveCard = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (
+      isMouseInside &&
+      !event.currentTarget.contains(event.relatedTarget as Node)
+    ) {
+      setTimeout(() => {
+        setShowSelector(false);
+      }, 100);
+      setIsMouseInside(false);
+    }
+  };
+
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
     tooltipRef.current &&
@@ -54,13 +87,19 @@ const Tooltip: FC<TooltipProps> = ({
   }, []);
 
   return (
-    <Styled.Container width={width}>
+    <Styled.Container
+      width={width}
+      tabIndex={0}
+      onBlur={handleLostFocus}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeaveCard}
+    >
       <Styled.Content
         hover={onHover}
         showSelector={showSelector}
         width={width}
         onClick={() => setShowSelector(!showSelector)}
-        ref={containerRef}
+        ref={onHover ? containerRef : null}
         onMouseOver={() => (onHover ? setShowSelector(true) : "")}
         disable={disable}
       >
@@ -79,7 +118,7 @@ const Tooltip: FC<TooltipProps> = ({
         }}
       />
       <Styled.ToolTipContent
-        ref={tooltipRef}
+        ref={onHover ? tooltipRef : null}
         position={position}
         showSelector={!disable && !!toolTipContent && showSelector}
       >

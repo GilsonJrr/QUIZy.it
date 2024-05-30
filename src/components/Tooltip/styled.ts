@@ -135,6 +135,20 @@ export const ToolTipContent = styled.div<Props>`
   display: ${({ showSelector }) => (showSelector ? "flex" : "none")};
   position: absolute;
   flex-direction: column;
+  z-index: 60000;
+  background-color: ${({ theme }) => theme.colors.background.default};
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
+  border-radius: 10px;
+  gap: 10px;
+  align-items: flex-start;
+  transition: 0.3s ease-in-out all;
+  -webkit-box-shadow: 0px 15px 27px 1px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 15px 27px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 15px 27px 1px rgba(0, 0, 0, 0.3);
+
+  button {
+    gap: 10px;
+  }
 
   ${({ position }) =>
     position === "bottom"
@@ -144,22 +158,6 @@ export const ToolTipContent = styled.div<Props>`
       : position === "right"
       ? FromTheRight
       : ""}
-
-  z-index: 1000;
-  background-color: ${({ theme }) => theme.colors.background.default};
-  border: 1px solid ${({ theme }) => theme.colors.main.default};
-  border-radius: 10px;
-  gap: 10px;
-  align-items: flex-start;
-  transition: 0.3s ease-in-out all;
-
-  -webkit-box-shadow: 0px 15px 27px 1px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0px 15px 27px 1px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 15px 27px 1px rgba(0, 0, 0, 0.3);
-
-  button {
-    gap: 10px;
-  }
 
   ${({ position }) =>
     position === "bottom"

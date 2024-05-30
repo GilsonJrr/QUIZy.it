@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useEffect, useState } from "react";
+import React, { FC, ReactNode, useEffect, useMemo, useState } from "react";
 import * as Styled from "./styled";
 import Sidebar from "components/Sidebar";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -15,12 +15,17 @@ import { requestStudent } from "Store/students/actions";
 import LoadingSpinner from "components/LoadingSpiner";
 import { LoadingContainerFullPage } from "components/Container/styled";
 import MenuModal from "components/Modal/MenuModal";
-import LanguageSwitcher from "components/languageSwitcher";
+// import LanguageSwitcher from "components/languageSwitcher";
 import { useAnimation } from "hooks/useAnimation";
 import { Title } from "components/ui/Typography/styled";
 import Tooltip from "components/Tooltip";
 import Button from "components/Button";
 import { AlertTypeValues } from "Store/alert/types";
+import {
+  removeAlert,
+  requestStudentAlertList,
+  requestTutorAlertList,
+} from "Store/alert/actions";
 
 type dashboardProps = {
   children?: ReactNode | ReactNode[];
@@ -34,6 +39,9 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
     (state: RootState) => state.user
   );
   const { student } = useSelector((state: RootState) => state.student);
+  const { studentAlerts, tutorAlerts } = useSelector(
+    (state: RootState) => state.alert
+  );
 
   const { handleModal } = useModalContext();
 
@@ -44,23 +52,95 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
   const currentUrl = location.pathname;
   const search = location.search && location.search[0];
 
-  const handleBlur = () => {
-    setTimeout(() => {
-      setOpenMessages(false);
-    }, 200);
-  };
+  const userType = user?.info?.userType || userStudent?.userType;
 
   const handleOpenMessages = () => {
-    messages.length > 0 && setOpenMessages(!openMessages);
+    messages?.length > 0 && setOpenMessages(!openMessages);
   };
 
   const handleOpenProfile = () => {
     handleModal(<ProfileModal />);
   };
 
-  const messages = Object.values(
-    student?.alert || ""
-  ) as unknown as AlertTypeValues[];
+  const messages = useMemo(() => {
+    return userType === "student"
+      ? Object.values(studentAlerts || "")
+      : userType === "tutor"
+      ? Object.values(tutorAlerts || "")
+      : ([] as unknown as AlertTypeValues[]);
+  }, [studentAlerts, tutorAlerts, userType]);
+
+  const handleOpenAlert = (message: AlertTypeValues) => {
+    if (userType === "tutor") {
+      message.senderUid &&
+        navigate(
+          `/students/student-profile?studentId=${message.senderUid}&&chat=true`
+        );
+      dispatch(
+        removeAlert({
+          userType: "tutor",
+          alertUid: message.senderUid,
+          tutorUid: user?.info?.uid || "",
+        })
+      );
+      return;
+    }
+    if (userType === "student") {
+      navigate(`/?chat=true`);
+      dispatch(
+        removeAlert({
+          userType: "student",
+          studentUid: userStudent?.uid,
+          alertUid: message.senderUid,
+          tutorUid: userStudent?.tutorID || "",
+        })
+      );
+      return;
+    }
+  };
+
+  const handleGotIt = (message: AlertTypeValues) => {
+    if (userType === "tutor") {
+      dispatch(
+        removeAlert({
+          userType: "tutor",
+          alertUid: message.senderUid,
+          tutorUid: user?.info?.uid || "",
+        })
+      );
+      return;
+    }
+    if (userType === "student") {
+      dispatch(
+        removeAlert({
+          userType: "student",
+          studentUid: userStudent?.uid,
+          alertUid: message.senderUid,
+          tutorUid: userStudent?.tutorID || "",
+        })
+      );
+      return;
+    }
+  };
+
+  useEffect(() => {
+    dispatch(
+      requestTutorAlertList({
+        tutorUid: user?.info?.uid || "",
+        userType: "tutor",
+      })
+    );
+  }, [dispatch, user]);
+
+  useEffect(() => {
+    dispatch(
+      requestStudentAlertList({
+        studentUid: userStudent?.uid,
+        tutorUid: userStudent?.tutorID || "",
+        userType: "student",
+      })
+    );
+  }, [dispatch, userStudent]);
 
   useEffect(() => {
     if (userStudent) {
@@ -73,8 +153,6 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
     }
   }, [dispatch, userStudent]);
 
-  console.log("student", messages);
-
   if (isLoading) {
     return (
       <LoadingContainerFullPage>
@@ -82,6 +160,8 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
       </LoadingContainerFullPage>
     );
   }
+
+  console.log("messages", messages);
 
   return (
     <Styled.Container>
@@ -93,7 +173,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
           <Title>
             {RouterTitle[`${currentUrl}${search}` as keyof typeof RouterTitle]}
           </Title>
-          <LanguageSwitcher />
+          {/* <LanguageSwitcher /> */}
         </Styled.HeaderTitle>
         <Styled.HeaderMessage>
           <Tooltip
@@ -110,11 +190,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
                       </Title>
                       <Styled.MessageButtons>
                         <Button
-                          onClick={() =>
-                            navigate(
-                              `/students/student-profile?studentId=${message.senderUid}&&chat=true`
-                            )
-                          }
+                          onClick={() => handleOpenAlert(message)}
                           size="small"
                           width="100%"
                           align="center"
@@ -122,6 +198,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
                           Open
                         </Button>
                         <Button
+                          onClick={() => handleGotIt(message)}
                           variant="anchor-dark"
                           size="small"
                           width="100%"
@@ -136,13 +213,9 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
               </Styled.MessageContainer>
             }
             position={"top"}
-            onHover
+            disable={messages.length === 0}
           >
-            <Styled.AlertContainer
-              onClick={handleOpenMessages}
-              onBlur={handleBlur}
-              tabIndex={0}
-            >
+            <Styled.AlertContainer onClick={handleOpenMessages}>
               <Styled.Alert size={25} />
               {messages.length > 0 && (
                 <Styled.AlertTag>

@@ -13,10 +13,16 @@ import Tabs from "components/Tabs";
 import * as Block from "blocks/Dashboard";
 import Chat from "components/Chat";
 import { Title } from "components/ui/Typography/styled";
+import { useNavigate } from "react-router-dom";
 
 export const StudentPage = () => {
   const dispatch = useDispatch();
   const isMobile = useDeviceType();
+  const navigate = useNavigate();
+
+  const urlParams = new URLSearchParams(window.location.search);
+
+  const openChat = urlParams.get("chat");
 
   const { quizzes } = useSelector((state: RootState) => state.quiz);
   const { userStudent } = useSelector((state: RootState) => state.user);
@@ -53,6 +59,15 @@ export const StudentPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, myLists]);
 
+  useEffect(() => {
+    if (openChat) {
+      setInnerTab("Chat");
+      navigate("/");
+    }
+  }, [navigate, openChat]);
+
+  console.log("openChat aaa", openChat);
+
   return (
     <Styled.Container>
       {isMobile && (
@@ -85,6 +100,7 @@ export const StudentPage = () => {
               tabs={[{ label: "List" }, { label: "Chat" }]}
               activeTab={(tab) => setInnerTab(tab)}
               radius={10}
+              active={innerTab}
             />
           )}
           {innerTab === "List" &&

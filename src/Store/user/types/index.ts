@@ -1,3 +1,5 @@
+import { AlertTypeValues } from "Store/alert/types";
+
 export enum UserTypes {
   REQUEST_USER = "REQUEST_USER",
   REQUEST_TUTOR_INFO = "REQUEST_TUTOR_INFO",
@@ -73,6 +75,7 @@ export type UseData = {
   onSuccess?: () => void;
   //***/
   info?: Info;
+  alert?: AlertTypeValues;
   //adicionar os outros campos
 };
 
