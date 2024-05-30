@@ -13,6 +13,7 @@ import LoadingSpinner from "components/LoadingSpiner";
 import { useNavigate } from "react-router-dom";
 import Button from "components/Button";
 import { Title } from "components/ui/Typography/styled";
+import PasswordInput from "components/inputs/PasswordInput";
 
 type SignUpProps = {};
 
@@ -73,10 +74,9 @@ const SignUp: FC<SignUpProps> = () => {
           error={errors.name}
           {...register("name")}
         />
-        <SimpleInput
+        <PasswordInput
           label={<Styled.Label>Password</Styled.Label>}
           placeholder="Type your password"
-          type="password"
           error={errors.password}
           {...register("password")}
         />

@@ -7,12 +7,6 @@ export const Container = styled.div<Props>`
   flex-direction: column;
   width: 100%;
   align-items: center;
-
-  input {
-    border: 2px solid ${({ theme }) => theme.colors.background.default};
-    background-color: transparent;
-    color: ${({ theme }) => theme.colors.background.default};
-  }
 `;
 
 export const Label = styled.label`

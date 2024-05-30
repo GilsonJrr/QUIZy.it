@@ -35,7 +35,6 @@ export function* requestTutorPhotoSaga(props: UserAction<UserRequest>): any {
   try {
     if (uid) {
       const responses = yield call(getTutorInfo, uid);
-      console.log("responses", responses);
       yield put(tutorInfo(responses));
     }
   } catch (err: any) {

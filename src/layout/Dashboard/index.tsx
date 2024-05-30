@@ -161,8 +161,6 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
     );
   }
 
-  console.log("messages", messages);
-
   return (
     <Styled.Container>
       <Styled.Header>

@@ -66,8 +66,6 @@ export const StudentPage = () => {
     }
   }, [navigate, openChat]);
 
-  console.log("openChat aaa", openChat);
-
   return (
     <Styled.Container>
       {isMobile && (

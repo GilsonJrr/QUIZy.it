@@ -1,6 +1,5 @@
 import React from "react";
 import * as Styled from "./styled";
-import SimpleInput from "components/inputs/SimpleInput";
 import Logo from "assets/images/White_Logo.png";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -15,6 +14,7 @@ import Button from "components/Button";
 import { useModalContext } from "components/Modal/modalContext";
 import AlertModal from "components/Modal/AlertModal";
 import { Title } from "components/ui/Typography/styled";
+import PasswordInput from "components/inputs/PasswordInput";
 
 type TResetPassword = {
   password: string;
@@ -67,17 +67,15 @@ const ResetPassword = () => {
       </Title>
 
       <Styled.Form onSubmit={handleSubmit(onSubmit)}>
-        <SimpleInput
+        <PasswordInput
           label={<Styled.Label>Password</Styled.Label>}
           placeholder="Type your email"
-          type="password"
           error={errors.password}
           {...register("password")}
         />
-        <SimpleInput
+        <PasswordInput
           label={<Styled.Label>Confirm Password</Styled.Label>}
           placeholder="Type your password"
-          type="password"
           error={errors.confirmPassword}
           {...register("confirmPassword")}
         />

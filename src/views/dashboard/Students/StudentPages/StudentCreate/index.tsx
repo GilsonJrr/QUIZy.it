@@ -488,13 +488,15 @@ const StudentCreate: FC<StudentCreateProps> = () => {
           </Card>
         )}
         <Styled.ButtonContainer
-          justify={studentId !== null ? "space-between" : "flex-end"}
+          // justify={studentId !== null ? "space-between" : "flex-end"}
+          justify={"flex-end"}
         >
-          {studentId !== null && (
+          {/* //TODO: deletar todos os results tb */}
+          {/* {studentId !== null && (
             <Button type="button" onClick={handleDelete} variant="danger">
               {isMobile ? "Delete" : "Delete Student"}
             </Button>
-          )}
+          )} */}
           <Button type="submit" form="newStudentForm" disabled={imgLoading}>
             {studentId !== null ? "Update " : "Add "}{" "}
             {isMobile ? "" : "Student"}
