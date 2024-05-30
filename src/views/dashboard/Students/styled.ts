@@ -48,5 +48,4 @@ export const TabContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 0 20px 0;
 `;

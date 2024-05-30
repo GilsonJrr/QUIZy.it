@@ -156,7 +156,7 @@ const Students: FC<StudentsProps> = () => {
         <Styled.TabContainer>
           <Tabs
             tabs={[
-              { label: t("students.menuTab1"), color: " " },
+              { label: t("students.menuTab1") },
               { label: t("students.menuTab2") },
             ]}
             activeTab={(tab) => setMenuTab(tab)}
@@ -185,10 +185,12 @@ const Students: FC<StudentsProps> = () => {
         >
           <Styled.CardInner>
             {!groupLoading ? (
-              <Tabs
-                tabs={[{ label: t("students.tab1") }, ...tabs]}
-                activeTab={(tab) => setTab(tab)}
-              />
+              <Styled.TabContainer>
+                <Tabs
+                  tabs={[{ label: t("students.tab1"), color: "" }, ...tabs]}
+                  activeTab={(tab) => setTab(tab)}
+                />
+              </Styled.TabContainer>
             ) : (
               <LoadingContainerCard>
                 <LoadingSpinner size="medium" />

@@ -26,16 +26,6 @@ export const Card = styled.div<Props>`
   height: ${({ height }) => height || "100%"};
   overflow: auto;
 
-  ::-webkit-scrollbar-thumb {
-    background-color: transparent;
-  }
-
-  &:hover {
-    ::-webkit-scrollbar-thumb {
-      background-color: ${({ theme }) => theme.colors.main.default};
-    }
-  }
-
   @media screen and (min-width: 600px) {
     border-radius: 20px;
     transition: 0.3s ease-in-out all;

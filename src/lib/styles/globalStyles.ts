@@ -53,6 +53,7 @@ const GlobalStyle = createGlobalStyle`
   }
   *::-webkit-scrollbar {
       width: 4px;
+      height: 6px;
   }
   *::-webkit-scrollbar-button {
       background-color: ${({ theme }) => theme.colors.background.highlight};
@@ -62,8 +63,11 @@ const GlobalStyle = createGlobalStyle`
       background-color: transparent;
   }
   *::-webkit-scrollbar-thumb {
-      background-color: ${({ theme }) => theme.colors.main.default};
+      background-color: transparent;
       border-radius: 5px;
+      @media screen and (min-width: 600px) {
+        background-color: ${({ theme }) => theme.colors.main.default};
+      }
   }
   *::-webkit-scrollbar-corner {
       background-color: transparent;
