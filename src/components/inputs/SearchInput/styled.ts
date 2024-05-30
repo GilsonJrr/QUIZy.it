@@ -6,7 +6,7 @@ export const Container = styled.div<Props>`
   padding: 8px 20px;
   border-radius: 30px;
   border: 1px solid ${({ theme }) => theme.colors.main.default};
-  background-color: ${({ theme }) => theme.colors.background.highlight};
+  background-color: ${({ theme }) => theme.colors.background.default};
   display: flex;
   align-items: center;
   justify-content: space-between;

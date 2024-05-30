@@ -105,7 +105,10 @@ export const Button = styled.button<Props>`
   }
 
   &:hover {
-    filter: brightness(${({ variant }) => (variant === "danger" ? 1.1 : 1.8)});
+    filter: brightness(
+      ${({ variant }) =>
+        variant === "danger" ? 1.1 : variant === "secondary" ? 0.91 : 1.5}
+    );
   }
 
   transition: 0.2s ease-in-out all;
