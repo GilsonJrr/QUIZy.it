@@ -16,7 +16,7 @@ export const Container = styled.div<Props>`
   position: relative;
   width: 100%;
   border-radius: 10px;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     padding: 0px;
     border: 0px;
   }
@@ -107,7 +107,7 @@ export const TabContainer = styled.div`
     flex-wrap: nowrap;
   }
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     padding: 0px;
     border-top: 0px;
     align-items: flex-start;

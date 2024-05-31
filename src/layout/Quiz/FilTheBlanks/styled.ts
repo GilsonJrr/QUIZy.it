@@ -9,7 +9,7 @@ export const QuestionContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 20px;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     flex-direction: row;
     justify-content: space-between;
     margin-top: 50px;

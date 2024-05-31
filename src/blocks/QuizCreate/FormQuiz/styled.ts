@@ -7,7 +7,7 @@ export const SelectContainer = styled.div`
   justify-content: space-between;
   gap: 30px;
   flex-direction: column;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     flex-direction: row;
   }
 `;

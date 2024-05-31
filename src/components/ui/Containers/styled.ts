@@ -11,7 +11,7 @@ export const RowContainer = styled.div<ContainersProps>`
   align-items: center;
   justify-content: center;
   gap: ${({ gap }) => gap};
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     flex-direction: row;
   }
 `;

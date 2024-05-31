@@ -50,14 +50,14 @@ export const Message = styled.div`
 export const MessageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 20px 25px 0 25px;
+  margin: 20px 25px 0px 25px;
   overflow: scroll;
   overflow-x: hidden;
-  width: 100%;
   padding: 20px 0;
   max-height: 50vh;
   min-height: 50vh;
-  @media screen and (min-width: 600px) {
+
+  @media screen and (min-width: 900px) {
     width: 350px;
     padding: 0 0;
     min-height: 20vh;

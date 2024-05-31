@@ -6,7 +6,7 @@ const useDeviceType = () => {
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      setIsMobile(width < 768); // Change 768 to your desired breakpoint for mobile/desktop
+      setIsMobile(width < 900); // Change 768 to your desired breakpoint for mobile/desktop
     };
 
     // Initial check on component mount

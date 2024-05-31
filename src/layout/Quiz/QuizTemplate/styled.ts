@@ -18,7 +18,7 @@ export const Container = styled.div`
   height: 100vh;
   background-color: ${({ theme }) => theme.colors.background.default};
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     padding: 0px;
     overflow: hidden;
   }
@@ -27,7 +27,7 @@ export const Container = styled.div`
 export const QuizContainer = styled.div<Props>`
   padding: 20px 15px 100px;
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     padding: ${({ preview }) => (preview ? 0 : 30)}px;
     display: flex;
     flex-direction: column;
@@ -43,7 +43,7 @@ export const Header = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 6px;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     gap: 30px;
   }
 `;
@@ -66,7 +66,7 @@ export const QuestionContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 20px;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     flex-direction: row;
     justify-content: space-between;
     margin-top: 50px;
@@ -87,7 +87,7 @@ export const Close = styled.div`
   justify-content: center;
   cursor: pointer;
   color: ${({ theme }) => theme.colors.main.default};
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     height: 30px;
     width: 30px;
     background-color: ${({ theme }) => theme.colors.background.tertiary};
@@ -131,7 +131,7 @@ export const ContinueButtonContainer = styled.div`
   bottom: 10px;
   padding: 0 0 25px 0px;
   width: 100%;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     display: flex;
     padding: 25px 0px;
     justify-content: flex-end;
@@ -159,7 +159,7 @@ export const QuizCheckContainer = styled.div<Props>`
   bottom: 0;
   padding: ${({ display }) =>
     display ? "50px 20px 20px" : "0 20px 20px 20px"};
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     flex-direction: row;
     padding: ${({ display }) => (display ? "50px 40px" : "0 40px 50px 40px")};
     pointer-events: none;
@@ -190,7 +190,7 @@ export const CheckedAnswerIcon = styled.div<Props>`
       : checkType === "incorrect"
       ? theme.colors.quiz.wrong
       : ""};
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     height: 80px;
     width: 80px;
   }

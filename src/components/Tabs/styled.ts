@@ -26,7 +26,7 @@ export const Container = styled.div<Props>`
     right: 0;
   }
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     overflow: auto;
   }
 `;

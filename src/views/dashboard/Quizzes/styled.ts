@@ -6,7 +6,7 @@ export const Container = styled.div`
   padding: 0;
   display: flex;
   flex-direction: column;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     /* padding: 20px 40px; */
     display: grid;
     grid-template-columns: 1fr 1fr;

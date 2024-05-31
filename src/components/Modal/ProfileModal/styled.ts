@@ -11,7 +11,7 @@ export const Container = styled.div<Props>`
   top: 0;
 
   background-color: rgba(0, 0, 0, 0.15);
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     position: absolute;
     z-index: 100000;
   }
@@ -20,7 +20,7 @@ export const Container = styled.div<Props>`
 export const Content = styled.div<Props>`
   height: 100%;
   background-color: ${({ theme }) => theme.colors.background.highlight};
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     background-color: ${({ theme }) => theme.colors.background.default};
     border-left: 1px solid ${({ theme }) => theme.colors.main.default};
     width: 100vw;
@@ -42,7 +42,7 @@ export const ChevronRight = styled(FaChevronRight)`
 
 export const IconContainer = styled.div`
   display: none;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     display: block;
   }
 `;

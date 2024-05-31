@@ -12,7 +12,7 @@ export const OptionButtonContainer = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     flex-direction: row;
     padding: 30px;
   }
@@ -41,7 +41,7 @@ export const OptionButton = styled.button<Props>`
     transform: scale(1.05);
   }
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     width: ${({ width }) => width};
   }
 `;

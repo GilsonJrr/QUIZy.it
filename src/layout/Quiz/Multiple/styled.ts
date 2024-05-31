@@ -19,7 +19,7 @@ export const QuestionContainer = styled.div<Props>`
   align-items: center;
   justify-content: center;
   margin-top: 20px;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
@@ -40,7 +40,7 @@ export const OptionsContainer = styled.div`
   justify-content: center;
   overflow-y: scroll;
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     width: 50%;
   }
 `;

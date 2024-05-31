@@ -13,7 +13,7 @@ export const Container = styled.div<Props>`
   display: flex;
   flex-direction: column;
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     height: 100%;
     padding: 20px 0px;
     display: grid;

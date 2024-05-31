@@ -30,7 +30,7 @@ export const Container = styled.div<Props>`
     left: 0;
   }
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     &::after {
       background: linear-gradient(
         90deg,

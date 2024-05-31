@@ -43,7 +43,7 @@ export const Content = styled.div<Props>`
   width: 100vw;
   border-bottom: 1px solid ${({ theme }) => theme.colors.main.default};
   justify-content: space-between;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     border: 1px solid ${({ theme }) => theme.colors.main.default};
     border-radius: 20px;
     top: 5px;

@@ -20,7 +20,7 @@ export const Container = styled.div`
 export const Header = styled.div`
   display: none;
   height: 8%;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     display: flex;
     width: 100%;
     background-color: ${({ theme }) => theme.colors.background.default};
@@ -50,7 +50,7 @@ export const Content = styled.div`
   width: 100%;
   height: 92%;
   flex-direction: column;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     flex-direction: row;
   }
 `;
@@ -58,7 +58,7 @@ export const Content = styled.div`
 export const ChildrenContainer = styled.div<Props>`
   padding: 15px;
   height: calc(100vh - 9vh);
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     width: 94%;
     padding: 20px 40px;
     ${({ triggerAnimation }) =>
@@ -77,8 +77,8 @@ export const HeaderMobile = styled.div`
   top: 0;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.background.default};
-  height: 6vh;
-  @media screen and (min-width: 600px) {
+  height: 10vh;
+  @media screen and (min-width: 900px) {
     display: none;
   }
 `;
@@ -91,7 +91,7 @@ export const LogoContainer = styled.div`
   border-top: none;
   cursor: pointer;
   width: 20%;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     width: 6%;
     padding: 10px 15px;
   }
@@ -99,7 +99,7 @@ export const LogoContainer = styled.div`
 
 export const Logo = styled.img`
   width: 50%;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     width: 80%;
   }
 `;
@@ -114,7 +114,7 @@ export const HeaderTitle = styled.div`
   border-left: none;
   padding: 10px 20px;
   gap: 20px;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     width: 64%;
     padding: 0px 20px 0px 40px;
     justify-content: flex-end;

@@ -42,7 +42,7 @@ export const Content = styled.div<Props>`
   border-bottom: 3px solid
     ${({ theme, type }) => theme.colors.alert[type as typeProps]};
   justify-content: space-between;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     border: 2px solid
       ${({ theme, type }) => theme.colors.alert[type as typeProps]};
     border-radius: 20px;

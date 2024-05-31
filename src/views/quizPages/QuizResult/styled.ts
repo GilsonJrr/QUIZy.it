@@ -18,7 +18,7 @@ export const Container = styled.div<Props>`
   flex-direction: column;
   padding: 20px;
   overflow: hidden;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     padding: 30px 60px;
   }
 `;
@@ -29,7 +29,7 @@ export const TitlesContainer = styled.div`
   display: flex;
   flex-direction: column-reverse;
   padding-bottom: 30px;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     gap: 50px;
     flex-direction: row;
     padding-bottom: 0px;
@@ -41,7 +41,7 @@ export const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     padding: 0 20px 30px;
     width: 50%;
   }
@@ -51,7 +51,7 @@ export const MessageContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     padding: 0 20px 30px;
     width: 50%;
   }
@@ -67,7 +67,7 @@ export const ScoreMessage = styled.p`
   font-size: 0.8rem;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.main.default};
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     text-align: center;
     font-size: 1.5rem;
     text-align: left;
@@ -81,7 +81,7 @@ export const ButtonContainer = styled.div`
   width: 100%;
   gap: 20px;
   margin: auto 0 0 0;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     justify-content: flex-end;
   }
 `;
@@ -116,7 +116,7 @@ export const ResumeTextContainer = styled.div<Props>`
   border: ${({ answer }) => (answer ? "1" : "0")}px solid
     ${({ theme }) => theme.colors.main.default};
   border-radius: 4px;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     align-items: center;
     flex-direction: row;
   }

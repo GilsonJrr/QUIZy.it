@@ -23,7 +23,7 @@ export const ContainerInner = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     padding: 20px 0px;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -44,7 +44,7 @@ export const ButtonContainer = styled.div<Props>`
 
   margin-bottom: 55px;
   padding-top: 10px;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     margin-bottom: 0;
   }
 `;
@@ -59,7 +59,7 @@ export const ButtonCardContainer = styled.div<Props>`
   width: 100%;
   justify-content: center;
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     justify-content: ${({ justify }) => justify || "flex-end"};
     background: linear-gradient(
       0deg,
@@ -76,7 +76,7 @@ export const SelectContainer = styled.div`
   justify-content: space-between;
   gap: 10px;
   flex-direction: column;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     flex-direction: row;
   }
 `;

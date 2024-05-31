@@ -36,7 +36,7 @@ export const OptionContainer = styled.div`
 
 export const Container = styled.div`
   width: 100%;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     width: 30vw;
     height: 80vh;
   }

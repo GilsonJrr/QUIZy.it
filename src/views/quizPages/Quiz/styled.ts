@@ -17,14 +17,14 @@ export const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.main.primary};
   box-sizing: border-box;
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     padding: 0px;
   }
 `;
 
 export const QuizContainer = styled.div`
   padding: 20px 15px;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     padding: 30px;
     display: flex;
     flex-direction: column;
@@ -39,7 +39,7 @@ export const Header = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 6px;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     gap: 30px;
   }
 `;
@@ -62,7 +62,7 @@ export const QuestionContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 20px;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     flex-direction: row;
     justify-content: space-between;
     margin-top: 50px;
@@ -78,7 +78,7 @@ export const OptionsContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     width: 50%;
   }
 `;
@@ -95,7 +95,7 @@ export const Close = styled.div`
   font-size: 10px;
   font-weight: 800;
   cursor: pointer;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     background-color: ${({ theme }) => theme.colors.background.tertiary};
     border: 1px solid ${({ theme }) => theme.colors.main.default};
   }
@@ -154,7 +154,7 @@ export const QuizCheckContainer = styled.div<Props>`
   justify-content: space-between;
   flex-direction: column;
   gap: 40px;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     flex-direction: row;
   }
 `;

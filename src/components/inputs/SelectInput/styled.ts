@@ -9,7 +9,7 @@ export const Container = styled.div<Props>`
   width: 100%;
   position: relative;
   width: 100%;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     width: ${({ width }) => width || "100%"};
   }
 `;

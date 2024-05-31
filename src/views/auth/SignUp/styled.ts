@@ -21,7 +21,7 @@ export const LogoContainer = styled.div`
   gap: 8px;
   margin-bottom: 40px;
   flex-direction: column;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     flex-direction: row;
   }
 `;
@@ -46,7 +46,7 @@ export const ButtonContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     flex-direction: row;
   }
 `;

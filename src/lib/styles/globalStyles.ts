@@ -102,7 +102,7 @@ const GlobalStyle = createGlobalStyle`
   *::-webkit-scrollbar-thumb {
       background-color: transparent;
       border-radius: 5px;
-      @media screen and (min-width: 600px) {
+      @media screen and (min-width: 900px) {
         background-color: ${({ theme }) => theme.colors.main.default};
       }
   }

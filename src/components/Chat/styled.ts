@@ -31,7 +31,7 @@ export const Content = styled.div`
   justify-content: center;
   margin: 10px 0 0 0;
   width: 100%;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     height: 70vh;
   }
 `;
@@ -53,7 +53,7 @@ export const TabContainer = styled.div`
     flex-wrap: nowrap;
   }
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     padding: 0px;
     border-top: 0px;
     align-items: flex-start;

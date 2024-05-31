@@ -25,7 +25,7 @@ export const ContainerInner = styled.div`
   flex-direction: column;
   padding: 10px 0;
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 0.2fr;
@@ -44,7 +44,7 @@ export const ButtonContainer = styled.div<Props>`
   justify-content: ${({ justify }) => justify || "flex-end"};
   margin-bottom: 45px;
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     margin-bottom: 0px;
   }
 `;
@@ -135,7 +135,7 @@ export const CategoryCard = styled.div<Props>`
   background-color: ${({ active, theme }) =>
     active ? theme.colors.main.default : ""};
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     width: 48%;
   }
 `;
@@ -152,7 +152,7 @@ export const NameColorContainer = styled.div`
   width: 100%;
   gap: 20px;
   flex-direction: column;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     flex-direction: row;
   }
 `;

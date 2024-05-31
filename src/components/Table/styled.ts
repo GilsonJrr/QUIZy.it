@@ -41,7 +41,7 @@ export const TableHeaderComponents = styled.div<Props>`
   border-radius: 3px;
   display: flex;
   justify-content: center;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     justify-content: ${({ align }) => align || "flex-start"};
   }
 `;

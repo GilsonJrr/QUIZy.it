@@ -39,7 +39,7 @@ export const ContainerBackGround = styled.div<Props>`
   justify-content: flex-end;
   flex-direction: column;
   z-index: 100;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     background-color: transparent;
     width: 7vw;
   }
@@ -56,7 +56,7 @@ export const MenuContainer = styled.div`
   border-top: none;
   background-color: ${({ theme }) => theme.colors.background.tertiary};
   height: auto;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     padding: 20px 20px 0 20px;
     height: 100%;
   }
@@ -81,7 +81,7 @@ export const IconContainer = styled.div<Props>`
     color: ${({ theme }) => theme.colors.background.default};
   }
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     align-items: center;
     justify-content: center;
   }
@@ -103,7 +103,7 @@ export const ExitContainer = styled.div`
   justify-content: flex-start;
   gap: 20px;
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     padding: 0;
     align-items: center;
     justify-content: center;

@@ -9,7 +9,7 @@ export const Container = styled.div<Props>`
   background-color: ${({ theme }) => theme.colors.main.default};
   gap: 60px;
   padding: 100px 20px 10px;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     gap: 60px;
     padding: 60px 200px;
   }
@@ -18,7 +18,7 @@ export const Container = styled.div<Props>`
 export const FormContainer = styled.div<Props>`
   display: flex;
   width: 100%;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     width: 55%;
   }
 `;

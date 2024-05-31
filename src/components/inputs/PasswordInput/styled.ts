@@ -12,7 +12,7 @@ export const Container = styled.div<Props>`
   align-items: ${({ viewMode }) => (viewMode ? "center" : "auto")};
   justify-content: ${({ viewMode }) => (viewMode ? "center" : "auto")};
   width: 100%;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     width: ${({ width }) => width || "100%"};
   }
 `;

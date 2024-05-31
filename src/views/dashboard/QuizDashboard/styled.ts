@@ -6,7 +6,7 @@ export const Container = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     width: 100%;
     height: 100%;
     display: grid;
@@ -39,7 +39,7 @@ export const ChatContainer = styled.div`
   width: 100%;
   border-radius: 10px;
   overflow: hidden;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     padding: 0px;
     border: 0px;
   }

@@ -26,7 +26,7 @@ export const Card = styled.div<Props>`
   height: ${({ height }) => height || "100%"};
   overflow: auto;
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     border-radius: 20px;
     border: 1px solid ${({ theme }) => theme.colors.main.default};
     background-color: ${({ theme }) => theme.colors.background.default};

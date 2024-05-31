@@ -29,7 +29,7 @@ export const TableBodyComponents = styled.div<Props>`
   display: flex;
   justify-content: center;
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     justify-content: flex-start;
   }
 `;

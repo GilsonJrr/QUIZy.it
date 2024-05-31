@@ -24,7 +24,7 @@ export const LoaderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     width: 25%;
   }
 `;
@@ -52,7 +52,7 @@ export const QuizImageTutor = styled.img`
   background-color: ${({ theme }) => theme.colors.main.secondary};
   border-radius: 20px 0 0 20px;
   object-fit: cover;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     width: 25%;
   }
 `;
@@ -71,14 +71,14 @@ export const QuizTitlesContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     width: 85%;
   }
 `;
 
 export const StartButton = styled.div`
   display: none;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     display: flex;
     bottom: 15px;
     right: 30px;
@@ -90,7 +90,7 @@ export const StartButton = styled.div`
 export const TextContainer = styled.div`
   display: flex;
   width: calc(100% - 120px);
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     width: calc(100% - 120px);
   }
 `;

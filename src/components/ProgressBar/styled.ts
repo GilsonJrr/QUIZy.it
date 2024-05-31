@@ -32,7 +32,7 @@ export const ProgressBarFill = styled.div<Props>`
   padding: ${({ progress }) =>
     progress && progress < 20 ? "0 0 0 5px" : "0 0 0 15px"};
   align-items: center;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     min-width: 16%;
   }
 `;

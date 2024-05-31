@@ -15,7 +15,7 @@ export const Container = styled.div<Props>`
   gap: 10px;
   margin: 0 10px;
   width: 100%;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 900px) {
     width: auto;
   }
 `;
