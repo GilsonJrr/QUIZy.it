@@ -37,15 +37,6 @@ const backgroundColors: string[] = [
   "transparent",
 ];
 
-// const backgroundColorsHover: string[] = [
-//   theme.colors.main.secondary,
-//   theme.colors.background.highlight,
-//   theme.colors.quiz.wrong,
-//   theme.colors.quiz.right,
-//   "transparent",
-//   "transparent",
-// ];
-
 enum EVariantBorder {
   primary,
   secondary,
@@ -93,6 +84,7 @@ export const Button = styled.button<Props>`
   padding: ${({ padding }) => padding || "10px 40px"};
   width: ${({ width }) => width};
   font-size: ${({ size }) => size};
+  font-weight: 600;
   cursor: pointer;
 
   display: flex;

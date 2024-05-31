@@ -63,7 +63,7 @@ const RenderQuizCard: FC<RenderQuizCardProps> = ({
         </Styled.LoaderContainer>
       ) : userType === "student" ? (
         <Styled.ProgressContainer>
-          <Styled.ImageContainer
+          <Styled.CircularProgress
             value={
               notCompleted
                 ? 0
@@ -76,23 +76,25 @@ const RenderQuizCard: FC<RenderQuizCardProps> = ({
             })}
           >
             <Styled.QuizImage src={item.image ? item.image : EmptyImage} />
-          </Styled.ImageContainer>
+          </Styled.CircularProgress>
         </Styled.ProgressContainer>
       ) : (
         <Styled.QuizImageTutor src={item.image ? item.image : EmptyImage} />
       )}
-      <Styled.QuizTitlesContainer>
-        <Title>{item.title}</Title>
-        <Title size="smaller" fontWeight="lighter" margin="2px 0 0 0">
-          {item.category ? `${item.category} | ` : ""} {item.type}
-        </Title>
-        <Title size="smaller" fontWeight="lighter">
-          {item.description}
-        </Title>
-      </Styled.QuizTitlesContainer>
-      <Styled.StartButton>
-        <Title size="small">{editMode ? "Edit" : "Start"}</Title>
-      </Styled.StartButton>
+      <Styled.TextContainer>
+        <Styled.QuizTitlesContainer>
+          <Title>{item.title}</Title>
+          <Title size="smaller" fontWeight="lighter" margin="2px 0 0 0">
+            {item.category ? `${item.category} | ` : ""} {item.type}
+          </Title>
+          <Title size="smaller" fontWeight="lighter">
+            {item.description}
+          </Title>
+        </Styled.QuizTitlesContainer>
+        <Styled.StartButton>
+          <Title size="small">{editMode ? "Edit" : "Start"}</Title>
+        </Styled.StartButton>
+      </Styled.TextContainer>
     </Styled.QuizCard>
   );
 };

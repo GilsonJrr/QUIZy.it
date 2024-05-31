@@ -86,6 +86,7 @@ export const Close = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  color: ${({ theme }) => theme.colors.main.default};
   @media screen and (min-width: 600px) {
     height: 30px;
     width: 30px;

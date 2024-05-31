@@ -95,15 +95,7 @@ const Multiple: FC<MultipleProps> = ({
                       )}
                     </Styled.AnswerIndex>
                   )}
-                  <Title
-                    textAlign="left"
-                    margin="0 auto 0 0"
-                    multiLine
-                    width="70%"
-                    color="light"
-                  >
-                    {answer.answer || ""}
-                  </Title>
+                  {answer.answer || ""}
                 </Styled.ButtonContent>
               </Button>
             </Styled.ButtonContainer>

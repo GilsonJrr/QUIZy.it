@@ -30,19 +30,14 @@ export const LoaderContainer = styled.div`
 `;
 
 export const ProgressContainer = styled.div`
-  height: 140px;
-  width: 140px;
-
+  height: 120px;
+  width: 118px;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  @media screen and (min-width: 600px) {
-    height: 120px;
-    width: 120px;
-  }
 `;
 
-export const ImageContainer = styled(CircularProgressbarWithChildren)`
+export const CircularProgress = styled(CircularProgressbarWithChildren)`
   height: 100%;
   display: flex;
   align-items: center;
@@ -67,28 +62,35 @@ export const QuizImage = styled.img`
   object-fit: cover;
   border-radius: 100%;
   position: absolute;
-  /* margin-top: -15px; */
-
-  /* @media screen and (min-width: 600px) {
-    width: 25%;
-  } */
 `;
 
 export const QuizTitlesContainer = styled.div`
-  width: 65%;
+  width: 100%;
   padding: 20px;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   @media screen and (min-width: 600px) {
-    width: 75%;
+    width: 85%;
   }
 `;
 
 export const StartButton = styled.div`
-  bottom: 15px;
-  right: 30px;
-  font-weight: 600;
-  margin: auto 0 10px 0;
+  display: none;
+  @media screen and (min-width: 600px) {
+    display: flex;
+    bottom: 15px;
+    right: 30px;
+    font-weight: 600;
+    margin: auto 0 10px 0;
+  }
+`;
+
+export const TextContainer = styled.div`
+  display: flex;
+  width: calc(100% - 120px);
+  @media screen and (min-width: 600px) {
+    width: calc(100% - 120px);
+  }
 `;

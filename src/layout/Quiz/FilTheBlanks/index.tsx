@@ -81,6 +81,7 @@ const FilTheBlanks: FC<FilTheBlanksProps> = ({
         multiLine
         margin="20px 0 30px"
         textAlign="center"
+        color="default"
       >
         Fill the blanks
       </Title>

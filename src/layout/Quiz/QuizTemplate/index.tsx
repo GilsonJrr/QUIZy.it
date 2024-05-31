@@ -133,9 +133,7 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
             preview={preview}
           />
         )}
-        {(!isNewQuiz === null
-          ? quiz?.type === "FillTheBlanks"
-          : type === "FillTheBlanks") && (
+        {(quiz?.type === "FillTheBlanks" || type === "FillTheBlanks") && (
           <FilTheBlanks
             questions={filTheBlanks?.[current]}
             setSelectedAnswer={(answer) => setSelectedAnswer(answer)}
