@@ -16,4 +16,8 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-bottom: 20px;
+  @media screen and (min-width: 900px) {
+    margin-bottom: 0;
+  }
 `;

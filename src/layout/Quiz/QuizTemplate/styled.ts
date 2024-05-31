@@ -127,10 +127,13 @@ export const AnswerIndex = styled.div`
   font-weight: 700;
 `;
 
-export const ContinueButtonContainer = styled.div`
+export const ContinueButtonContainer = styled.div<Props>`
   bottom: 10px;
-  padding: 0 0 25px 0px;
   width: 100%;
+  position: ${({ display }) => (display ? "relative" : "fixed")};
+  padding: ${({ display }) => (display ? "0 25px 25px" : "0 25px 45px")};
+  bottom: 0;
+  left: 0;
   @media screen and (min-width: 900px) {
     display: flex;
     padding: 25px 0px;

@@ -9,6 +9,10 @@ export const Container = styled.div<Props>`
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin-bottom: 20px;
+  @media screen and (min-width: 900px) {
+    margin-bottom: 0;
+  }
 `;
 
 export const ButtonContainer = styled.div<Props>`

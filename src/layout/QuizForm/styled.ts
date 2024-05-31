@@ -29,8 +29,21 @@ export const Container = styled.div<Props>`
 `;
 
 export const ButtonContainer = styled.div<Props>`
-  grid-area: "buttonContainer";
+  position: fixed;
+  bottom: 0;
+  left: 0;
   display: flex;
-  justify-content: ${({ justify }) => justify || "flex-end"};
-  margin-bottom: 5px;
+  align-items: flex-end;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 10px 15px;
+
+  @media screen and (min-width: 900px) {
+    position: relative;
+    grid-area: "buttonContainer";
+    display: flex;
+    justify-content: ${({ justify }) => justify || "flex-end"};
+    margin-bottom: 5px;
+    padding: 0;
+  }
 `;

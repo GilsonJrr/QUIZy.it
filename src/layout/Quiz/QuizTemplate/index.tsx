@@ -4,7 +4,7 @@ import * as Styled from "./styled";
 import { FaCheck } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { Answer, QuestionFiltered, TResume } from "types/index";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setResult } from "Store/result/actions";
 import { useSelector } from "react-redux";
@@ -38,9 +38,6 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isMobile = useDeviceType();
-  const location = useLocation();
-
-  const isNewQuiz = new URLSearchParams(location.search).get("quizId");
 
   const { quiz } = useSelector((state: RootState) => state.quiz);
   const { student } = useSelector((state: RootState) => state.student);
@@ -207,7 +204,7 @@ const QuizTemplate: FC<QuizTemplateProps> = ({
           ) : (
             <Styled.CheckedAnswerIcon checkType={""} display={showAnswer} />
           )}
-          <Styled.ContinueButtonContainer>
+          <Styled.ContinueButtonContainer display={showAnswer}>
             <Button
               onClick={
                 showAnswer && showScore

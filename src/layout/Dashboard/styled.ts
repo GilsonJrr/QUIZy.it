@@ -77,7 +77,7 @@ export const HeaderMobile = styled.div`
   top: 0;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.background.default};
-  height: 10vh;
+  height: 6vh;
   @media screen and (min-width: 900px) {
     display: none;
   }
