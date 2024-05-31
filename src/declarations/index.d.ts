@@ -6,6 +6,7 @@ import {
   QuizType,
   AlertType,
   TextType,
+  ButtonType,
 } from "lib/styled-components/models";
 import translationEN from "locales/pt.json";
 import translationPT from "locales/pt.json";
@@ -18,6 +19,7 @@ declare module "styled-components" {
       quiz: Record<QuizType, string>;
       alert: Record<AlertType, string>;
       text: Record<TextType, string>;
+      button: Record<ButtonType, string>;
     };
   }
   export const styled = styledModule;

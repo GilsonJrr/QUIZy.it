@@ -8,7 +8,7 @@ type Props = {
 export const Container = styled.div<Props>`
   height: ${({ size }) => size};
   width: ${({ size }) => size};
-  background-color: ${({ theme }) => theme.colors.main.secondary};
+  background-color: ${({ theme }) => theme.colors.background.secondary};
   border-radius: 100%;
   display: flex;
   align-items: center;
@@ -20,7 +20,7 @@ export const Container = styled.div<Props>`
 
 export const Name = styled.h2<Props>`
   font-size: ${({ size }) => size};
-  color: ${({ theme }) => theme.colors.main.default};
+  color: ${({ theme }) => theme.colors.text.default};
 `;
 
 export const Photo = styled.img<Props>`

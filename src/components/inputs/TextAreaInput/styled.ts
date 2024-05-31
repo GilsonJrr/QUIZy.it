@@ -23,7 +23,7 @@ export const Textarea = styled.textarea<Props>`
   resize: none;
   background-color: ${({ theme }) => theme.colors.background.highlight};
   outline: none;
-  color: ${({ theme }) => theme.colors.main.default};
+  color: ${({ theme }) => theme.colors.text.default};
 `;
 
 export const Error = styled.p`

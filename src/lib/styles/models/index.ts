@@ -16,3 +16,11 @@ export type QuizType = "right" | "wrong";
 export type AlertType = "Error" | "Success" | "Warning" | "Info";
 
 export type TextType = "Error" | "Success" | "Warning" | "default" | "light";
+
+export type ButtonType =
+  | "primary"
+  | "secondary"
+  | "danger"
+  | "success"
+  | "anchor-dark"
+  | "anchor-white";

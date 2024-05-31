@@ -40,7 +40,7 @@ export const Tab = styled.div<Props>`
   background-color: ${({ active, theme }) =>
     active ? theme.colors.main.default : theme.colors.background.tertiary};
   color: ${({ active, theme }) =>
-    active ? theme.colors.background.tertiary : theme.colors.main.default};
+    active ? theme.colors.text.light : theme.colors.text.default};
   font-size: 0.9rem;
 
   white-space: nowrap;

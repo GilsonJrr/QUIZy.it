@@ -34,21 +34,29 @@ export const theme: DefaultTheme = {
       default: "#4a4747",
       light: "#f8f8f8",
     },
+    button: {
+      primary: "#4a4747",
+      secondary: "#f8f8f8",
+      danger: "#c78788",
+      success: "#89c799",
+      "anchor-dark": "transparent",
+      "anchor-white": "transparent",
+    },
   },
 };
 
 export const darkTheme: DefaultTheme = {
   colors: {
     background: {
-      default: "#070707",
-      secondary: "#050505",
-      tertiary: "#000000",
-      highlight: "#0f0f0f",
+      default: "#0E2738",
+      secondary: "#3B3D43",
+      tertiary: "#3B3D43",
+      highlight: "#0C1A38",
     },
     main: {
-      default: "#b5b8b8",
-      primary: "#0a0905",
-      secondary: "#191919",
+      default: "#537C98",
+      primary: "#3B3D43",
+      secondary: "#0C1A38",
     },
     quiz: {
       default: "#4a4747",
@@ -68,8 +76,16 @@ export const darkTheme: DefaultTheme = {
       error: "#c78788",
       success: "#89c799",
       warning: "#ccc67e",
-      default: "#b5b8b8",
-      light: "#070707",
+      default: "#f8f8f8",
+      light: "#f8f8f8",
+    },
+    button: {
+      primary: "#537C98",
+      secondary: "#0E2738",
+      danger: "#c78788",
+      success: "#89c799",
+      "anchor-dark": "transparent",
+      "anchor-white": "transparent",
     },
   },
 };

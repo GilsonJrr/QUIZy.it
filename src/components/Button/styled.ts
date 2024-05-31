@@ -1,16 +1,15 @@
-import { theme } from "lib/styles/globalStyles";
 import styled from "styled-components";
 
 type VariantProps =
-  | "primary"
-  | "secondary"
-  | "danger"
-  | "success"
-  | "anchor-dark"
-  | "anchor-white";
+  | "primary" // colors.background.secondary
+  | "secondary" // colors.background.default
+  | "danger" // colors.alert.error
+  | "success" // colors.alert.success
+  | "anchor-dark" // transparent
+  | "anchor-white"; // transparent
 
 type Props = {
-  variant?: VariantProps;
+  variant: VariantProps;
   size?: string;
   radius?: string;
   padding?: string;
@@ -19,67 +18,20 @@ type Props = {
   partialDisabled?: boolean;
 };
 
-enum EVariantBackGround {
-  primary,
-  secondary,
-  danger,
-  success,
-  "anchor-dark",
-  "anchor-white",
+enum EColor {
+  primary = "light",
+  secondary = "default",
+  danger = "light",
+  success = "light",
+  "anchor-dark" = "default",
+  "anchor-white" = "light",
 }
-
-const backgroundColors: string[] = [
-  theme.colors.main.default,
-  theme.colors.background.default,
-  theme.colors.quiz.wrong,
-  theme.colors.quiz.right,
-  "transparent",
-  "transparent",
-];
-
-enum EVariantBorder {
-  primary,
-  secondary,
-  danger,
-  "anchor-dark",
-  "anchor-white",
-}
-
-const borderColors: string[] = [
-  theme.colors.main.default,
-  theme.colors.main.default,
-  theme.colors.quiz.wrong,
-  "transparent",
-  "transparent",
-];
-
-enum EVariantColor {
-  primary,
-  secondary,
-  danger,
-  "anchor-dark",
-  "anchor-white",
-}
-
-const colors: string[] = [
-  theme.colors.background.default,
-  theme.colors.main.default,
-  theme.colors.background.default,
-  theme.colors.main.default,
-  theme.colors.background.default,
-];
 
 export const Button = styled.button<Props>`
-  border: 1px solid
-    ${({ variant }) =>
-      borderColors[EVariantBorder[variant as keyof typeof EVariantBorder]]};
-  background-color: ${({ variant }) =>
-    backgroundColors[
-      EVariantBackGround[variant as keyof typeof EVariantBackGround]
-    ]};
+  border: none;
+  background-color: ${({ theme, variant }) => theme.colors.button[variant]};
   outline: none;
-  color: ${({ variant }) =>
-    colors[EVariantColor[variant as keyof typeof EVariantColor]]};
+  color: ${({ variant, theme }) => theme.colors.text[EColor[variant]]};
   border-radius: ${({ radius }) => radius || "10px"};
   padding: ${({ padding }) => padding || "10px 40px"};
   width: ${({ width }) => width};
