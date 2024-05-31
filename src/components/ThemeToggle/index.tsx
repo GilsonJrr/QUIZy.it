@@ -23,7 +23,7 @@ const ThemeToggle: FC<ThemeToggleProps> = () => {
   return (
     <Styled.Container onClick={() => handleToggle()} active={active}>
       <Styled.Toggle>
-        {active ? <Styled.Moon size={30} /> : <Styled.Sum size={35} />}
+        {active ? <Styled.Moon size={30} /> : <Styled.Sum size={30} />}
       </Styled.Toggle>
     </Styled.Container>
   );

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { TbMoonFilled } from "react-icons/tb";
-import { WiMoonAltNew } from "react-icons/wi";
+import { MdSunny } from "react-icons/md";
 
 type Props = {
   active?: boolean;
@@ -15,7 +15,7 @@ export const Container = styled.div<Props>`
   display: flex;
   align-items: center;
   justify-content: ${({ active }) => (active ? "flex-start" : "flex-end")};
-  padding: 0 0 0 3px;
+  padding: 0 3px;
   height: 35px;
   transition: 0.3s ease-in-out all;
   cursor: pointer;
@@ -28,7 +28,7 @@ export const Toggle = styled.div<Props>`
   justify-content: center;
 `;
 
-export const Sum = styled(WiMoonAltNew)`
+export const Sum = styled(MdSunny)`
   color: ${({ theme }) => theme.colors.alert.warning};
 `;
 
