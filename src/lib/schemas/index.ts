@@ -83,5 +83,7 @@ export const NewQuizSchema = Yup.object().shape({
   description: Yup.string(),
   image: Yup.string(),
   type: Yup.string().required("O tipo é obrigatório"),
-  category: Yup.string().required("A categoria é obrigatória"),
+  category: Yup.string()
+    .required("Select one category")
+    .notOneOf(["categoryLess"], "Select one category"),
 });

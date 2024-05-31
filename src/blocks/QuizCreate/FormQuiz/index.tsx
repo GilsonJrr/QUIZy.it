@@ -11,7 +11,7 @@ import RenderQuizCard from "components/renderItems/RenderQuizCard";
 import QuizForm from "layout/QuizForm";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { requestQuiz } from "Store/quiz/actions";
 import LoadingSpinner from "components/LoadingSpiner";
@@ -38,6 +38,7 @@ const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const isMobile = useDeviceType();
+  const navigate = useNavigate();
 
   const { user } = useSelector((state: RootState) => state.user);
   const { quiz, isLoading } = useSelector((state: RootState) => state.quiz);
@@ -145,6 +146,12 @@ const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
       setValue("image", pic);
     });
   };
+
+  useEffect(() => {
+    if (categories?.length === 0) {
+      navigate(-1);
+    }
+  }, [categories, navigate]);
 
   if (isLoading) {
     return (

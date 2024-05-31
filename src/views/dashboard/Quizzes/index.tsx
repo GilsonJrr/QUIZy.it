@@ -21,6 +21,8 @@ import { LoadingContainerFullPage } from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
 
 import * as Block from "blocks/Dashboard";
+import { useModalContext } from "components/Modal/modalContext";
+import DialogModal from "components/Modal/DialogModal";
 
 type QuizzesProps = {};
 
@@ -28,10 +30,11 @@ const Quizzes: FC<QuizzesProps> = () => {
   const dispatch = useDispatch();
   const isMobile = useDeviceType();
   const { t } = useTranslation();
+  const { handleModal } = useModalContext();
 
   const { user, userStudent } = useSelector((state: RootState) => state.user);
   const { student } = useSelector((state: RootState) => state.student);
-  const { categories: cat, isLoading: categoryLoading } = useSelector(
+  const { categories, isLoading: categoryLoading } = useSelector(
     (state: RootState) => state.category
   );
   const { quizzes } = useSelector((state: RootState) => state.quiz);
@@ -71,7 +74,18 @@ const Quizzes: FC<QuizzesProps> = () => {
     {
       option: t("quizzes.addQuiz"),
       optionIcon: <IoMdAddCircleOutline size={40} />,
-      onClick: () => navigate("/quizzes/quiz-create"),
+      onClick: () =>
+        categories?.length === 0
+          ? handleModal(
+              <DialogModal
+                type={"default"}
+                title="New quiz"
+                message={"Add at least one category before add a quiz"}
+                onConfirm={() => navigate("/quizzes/category-create")}
+                optionTitle="Add category"
+              />
+            )
+          : navigate("/quizzes/quiz-create"),
     },
     {
       option: t("quizzes.addCategory"),
@@ -81,10 +95,10 @@ const Quizzes: FC<QuizzesProps> = () => {
   ];
 
   useEffect(() => {
-    if (cat === undefined) {
+    if (categories === undefined) {
       dispatch(requestCategoryList({ uid: requestUid }));
     }
-  }, [dispatch, cat, requestUid]);
+  }, [dispatch, categories, requestUid]);
 
   useEffect(() => {
     if (quizzes === undefined) {

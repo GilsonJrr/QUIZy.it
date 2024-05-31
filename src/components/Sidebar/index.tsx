@@ -13,11 +13,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { useDispatch } from "react-redux";
 import { requestSignOut } from "Store/auth/actions";
-import Tooltip from "components/Tooltip";
-
-import { IoMdAddCircleOutline } from "react-icons/io";
-import { MdPlaylistAddCheck } from "react-icons/md";
-import { FaUserEdit } from "react-icons/fa";
 import { useAnimation } from "hooks/useAnimation";
 
 type SidebarProps = {
@@ -49,39 +44,6 @@ const Sidebar: FC<SidebarProps> = ({ display, onClose }) => {
     dispatch(requestSignOut());
   };
 
-  const quizzesToolTipOptions = () => {
-    return (
-      <Styled.SideBarToolTipOptionContainer>
-        <Styled.SideBarOption onClick={() => navigate("/quizzes/quiz-create")}>
-          <IoMdAddCircleOutline size={40} /> Add quiz
-        </Styled.SideBarOption>
-        <Styled.SideBarOption
-          onClick={() => navigate("/quizzes/category-create")}
-        >
-          <MdPlaylistAddCheck size={40} /> Add category
-        </Styled.SideBarOption>
-      </Styled.SideBarToolTipOptionContainer>
-    );
-  };
-
-  const studentsToolTipOptions = () => {
-    return (
-      <Styled.SideBarToolTipOptionContainer>
-        <Styled.SideBarOption
-          onClick={() => navigate("/students/student-create")}
-        >
-          <FaUserEdit size={40} /> Add student
-        </Styled.SideBarOption>
-        <Styled.SideBarOption
-          onClick={() => navigate("/students/group-create")}
-        >
-          <IoMdAddCircleOutline size={40} />
-          Add group
-        </Styled.SideBarOption>
-      </Styled.SideBarToolTipOptionContainer>
-    );
-  };
-
   return (
     <Styled.Container showMenu={display}>
       <Styled.ContainerBackGround onClick={onClose}>
@@ -92,38 +54,19 @@ const Sidebar: FC<SidebarProps> = ({ display, onClose }) => {
           >
             <IoMdHome size={30} />
           </Styled.IconContainer>
-          <Tooltip
-            toolTipContent={
-              currentUrl === "quizzes" ? "" : quizzesToolTipOptions()
-            }
-            position={"right"}
-            onHover
-            width={"100%"}
-            disable={userType === "student"}
+          <Styled.IconContainer
+            active={currentUrl === "quizzes"}
+            onClick={() => handleRedirect("/quizzes")}
           >
-            <Styled.IconContainer
-              active={currentUrl === "quizzes"}
-              onClick={() => handleRedirect("/quizzes")}
-            >
-              <MdOutlineQuiz size={30} />
-            </Styled.IconContainer>
-          </Tooltip>
+            <MdOutlineQuiz size={30} />
+          </Styled.IconContainer>
           {userType === "tutor" && (
-            <Tooltip
-              toolTipContent={
-                currentUrl === "students" ? "" : studentsToolTipOptions()
-              }
-              position={"right"}
-              onHover
-              width={"100%"}
+            <Styled.IconContainer
+              active={currentUrl === "students"}
+              onClick={() => handleRedirect("/students")}
             >
-              <Styled.IconContainer
-                active={currentUrl === "students"}
-                onClick={() => handleRedirect("/students")}
-              >
-                <FaPeopleGroup size={30} />
-              </Styled.IconContainer>
-            </Tooltip>
+              <FaPeopleGroup size={30} />
+            </Styled.IconContainer>
           )}
           <Styled.IconContainer
             active={currentUrl === "results"}
