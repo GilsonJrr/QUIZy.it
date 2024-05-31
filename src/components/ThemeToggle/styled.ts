@@ -17,7 +17,6 @@ export const Container = styled.div<Props>`
   justify-content: ${({ active }) => (active ? "flex-start" : "flex-end")};
   padding: 0 3px;
   height: 35px;
-  transition: 0.3s ease-in-out all;
   cursor: pointer;
   width: 70px;
 `;
