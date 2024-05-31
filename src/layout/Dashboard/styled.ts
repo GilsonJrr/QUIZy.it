@@ -3,6 +3,7 @@ import styled, { css, keyframes } from "styled-components";
 import { IoMdMail } from "react-icons/io";
 import { HiBellAlert } from "react-icons/hi2";
 import { FaChevronLeft } from "react-icons/fa";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 type Props = {
   open?: boolean;
@@ -172,6 +173,10 @@ export const AlertContainer = styled.div`
 export const Mail = styled(IoMdMail)``;
 
 export const Alert = styled(HiBellAlert)``;
+
+export const Hamburger = styled(GiHamburgerMenu)`
+  color: ${({ theme }) => theme.colors.main.default};
+`;
 
 export const AlertTag = styled.div`
   height: 20px;

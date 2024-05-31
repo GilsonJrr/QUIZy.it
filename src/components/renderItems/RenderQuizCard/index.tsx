@@ -72,7 +72,7 @@ const RenderQuizCard: FC<RenderQuizCardProps> = ({
                   100
             }
             styles={buildStyles({
-              pathColor: `${theme.colors.main.default}`,
+              pathColor: `${theme.colors.quiz.right}`,
             })}
           >
             <Styled.QuizImage src={item.image ? item.image : EmptyImage} />

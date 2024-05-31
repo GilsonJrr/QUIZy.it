@@ -52,7 +52,7 @@ export const MenuContainer = styled.div`
   gap: 20px;
   padding: 20px;
   width: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid ${({ theme }) => theme.colors.main.default};
   border-top: none;
   background-color: ${({ theme }) => theme.colors.background.tertiary};
   height: auto;
@@ -95,9 +95,8 @@ export const ExitContainer = styled.div`
   cursor: pointer;
   color: ${({ theme }) => theme.colors.quiz.wrongSecondary};
   width: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.3);
   border-top: none;
-  padding: 35px;
+  padding: 20px 35px;
   background-color: ${({ theme }) => theme.colors.background.tertiary};
   display: flex;
   align-items: center;
@@ -109,4 +108,13 @@ export const ExitContainer = styled.div`
     align-items: center;
     justify-content: center;
   }
+`;
+
+export const DarModeContainer = styled.div`
+  display: flex;
+  padding: 20px 35px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.main.default};
 `;

@@ -16,6 +16,8 @@ import { CgProfile } from "react-icons/cg";
 import { useDispatch } from "react-redux";
 import { requestSignOut } from "Store/auth/actions";
 import { Title } from "components/ui/Typography/styled";
+import ThemeToggle from "components/ThemeToggle";
+import { useTheme } from "lib/styles/Theme";
 
 type MenuModalProps = {};
 
@@ -23,6 +25,7 @@ const MenuModal: FC<MenuModalProps> = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isDarkMode } = useTheme();
 
   const { handleModal } = useModalContext();
 
@@ -91,6 +94,12 @@ const MenuModal: FC<MenuModalProps> = () => {
             </Title>
           </Styled.IconContainer>
         </Styled.MenuContainer>
+        <Styled.DarModeContainer>
+          <Title color={currentUrl === "profile" ? "light" : "default"}>
+            {isDarkMode ? "Light" : "Dark"} mode
+          </Title>
+          <ThemeToggle />
+        </Styled.DarModeContainer>
         <Styled.ExitContainer onClick={handleSignOut}>
           <IoMdExit size={30} />
           <Title color="error">Exit</Title>

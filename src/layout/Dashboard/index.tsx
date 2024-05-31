@@ -6,7 +6,6 @@ import { RouterTitle } from "types";
 
 import Logo from "assets/images/Logo.png";
 
-import { GiHamburgerMenu } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { useModalContext } from "components/Modal/modalContext";
@@ -137,7 +136,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
           <Alert />
         </Styled.HeaderTitle>
         <Styled.HeaderHamburgerMenu onClick={() => handleModal(<MenuModal />)}>
-          <GiHamburgerMenu size={25} />
+          <Styled.Hamburger size={25} />
         </Styled.HeaderHamburgerMenu>
       </Styled.HeaderMobile>
       <Styled.Content>
