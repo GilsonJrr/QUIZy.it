@@ -44,7 +44,7 @@ export const MenuContainer = styled.div`
   gap: 20px;
   padding: 20px 10px;
   width: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
   border-top: none;
   background-color: ${({ theme }) => theme.colors.background.tertiary};
   height: auto;
@@ -88,7 +88,7 @@ export const ExitContainer = styled.div`
   cursor: pointer;
   color: ${({ theme }) => theme.colors.quiz.wrongSecondary};
   width: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
   border-top: none;
   padding: 35px;
   background-color: ${({ theme }) => theme.colors.background.default};
@@ -112,6 +112,7 @@ export const SideBarToolTipOptionContainer = styled.div`
   width: 150px;
   gap: 10px;
   padding: 10px;
+  color: ${({ theme }) => theme.colors.main.default};
 `;
 
 export const SideBarOption = styled.div`

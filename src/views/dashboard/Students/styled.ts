@@ -26,7 +26,7 @@ export const CardInner = styled.div`
     height: 50px;
     background: linear-gradient(
       0deg,
-      rgba(255, 255, 255, 1) 20%,
+      ${({ theme }) => theme.colors.background.default} 20%,
       rgba(255, 255, 255, 0) 100%
     );
     bottom: 0;

@@ -28,7 +28,6 @@ export const Card = styled.div<Props>`
 
   @media screen and (min-width: 600px) {
     border-radius: 20px;
-    transition: 0.3s ease-in-out all;
     border: 1px solid ${({ theme }) => theme.colors.main.default};
     background-color: ${({ theme }) => theme.colors.background.default};
 
@@ -79,4 +78,5 @@ export const TitleContainer = styled.div`
 
 export const UpdateIcon = styled(GrUpdate)`
   cursor: pointer;
+  color: ${({ theme }) => theme.colors.main.default};
 `;

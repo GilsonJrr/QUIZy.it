@@ -19,7 +19,9 @@ const RenderCategoriesCard: FC<RenderCategoriesCardProps> = ({
     >
       <Styled.QuizTitlesContainer>
         <Title>{item.title}</Title>
-        <Styled.StartButton>Open</Styled.StartButton>
+        <Styled.StartButton>
+          <Title size="small">Open</Title>
+        </Styled.StartButton>
       </Styled.QuizTitlesContainer>
     </Styled.QuizCard>
   );

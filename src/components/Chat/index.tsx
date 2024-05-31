@@ -178,11 +178,7 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
               )}
               <Styled.Message user={userType === message.from}>
                 {preparedText.type === "text" ? (
-                  <Paragraph
-                    multiLine
-                    color={userType === message.from ? "default" : "light"}
-                    size="small"
-                  >
+                  <Paragraph multiLine color={"light"} size="small">
                     {preparedText.label}
                   </Paragraph>
                 ) : (

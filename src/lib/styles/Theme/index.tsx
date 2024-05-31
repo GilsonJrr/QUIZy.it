@@ -1,11 +1,43 @@
-import React, { FC, ReactNode } from "react";
+// ThemeContext.tsx
+import React, { createContext, useContext, useState, ReactNode } from "react";
 import { ThemeProvider } from "styled-components";
-import { theme } from "../globalStyles";
+import { theme, darkTheme } from "../globalStyles";
 
-type ThemeProps = { children: ReactNode | ReactNode[] };
+type ThemeType = "dark" | "light";
+interface ThemeContextType {
+  isDarkMode: boolean;
+  toggleTheme: () => void;
+  defaultTheme: (theme: ThemeType) => void;
+}
 
-const Theme: FC<ThemeProps> = ({ children }) => {
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
+  return context;
 };
 
-export default Theme;
+export const ThemeProviderComponent: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleTheme = () => {
+    setIsDarkMode((prevMode) => !prevMode);
+  };
+
+  const defaultTheme = (theme: ThemeType) => {
+    setIsDarkMode(theme === "dark" ? true : false);
+  };
+
+  return (
+    <ThemeContext.Provider value={{ isDarkMode, toggleTheme, defaultTheme }}>
+      <ThemeProvider theme={isDarkMode ? darkTheme : theme}>
+        {children}
+      </ThemeProvider>
+    </ThemeContext.Provider>
+  );
+};

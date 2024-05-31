@@ -24,7 +24,7 @@ export const theme: DefaultTheme = {
     alert: {
       error: "#c78788",
       success: "#89c799",
-      warning: "#ccc67e",
+      warning: "#dbd15a",
       info: "#4a4747",
     },
     text: {
@@ -33,6 +33,43 @@ export const theme: DefaultTheme = {
       warning: "#ccc67e",
       default: "#4a4747",
       light: "#f8f8f8",
+    },
+  },
+};
+
+export const darkTheme: DefaultTheme = {
+  colors: {
+    background: {
+      default: "#070707",
+      secondary: "#050505",
+      tertiary: "#000000",
+      highlight: "#0f0f0f",
+    },
+    main: {
+      default: "#b5b8b8",
+      primary: "#0a0905",
+      secondary: "#191919",
+    },
+    quiz: {
+      default: "#4a4747",
+      right: "#89c799",
+      rightSecondary: "#a6e3b6",
+      wrong: "#c78788",
+      wrongPrimary: "#e3a6a7",
+      wrongSecondary: "#996868",
+    },
+    alert: {
+      error: "#c78788",
+      success: "#89c799",
+      warning: "#ccc67e",
+      info: "#4a4747",
+    },
+    text: {
+      error: "#c78788",
+      success: "#89c799",
+      warning: "#ccc67e",
+      default: "#b5b8b8",
+      light: "#070707",
     },
   },
 };

@@ -86,7 +86,7 @@ export const LogoContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
   border-top: none;
   cursor: pointer;
   width: 20%;
@@ -108,24 +108,40 @@ export const HeaderTitle = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 60%;
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
   border-top: none;
   border-left: none;
   padding: 10px 20px;
   gap: 20px;
   @media screen and (min-width: 600px) {
     width: 64%;
-    padding: 10px 20px 10px 40px;
-    justify-content: space-between;
+    padding: 0px 20px 0px 40px;
+    justify-content: flex-end;
   }
+`;
+
+export const TitleContainer = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 auto 0 0;
+  width: 100%;
+`;
+
+export const OptionContainer = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0 0 20px;
+  border-left: 1px solid ${({ theme }) => theme.colors.main.default};
 `;
 
 export const HeaderHamburgerMenu = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  /* width: 5vw; */
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
   border-top: none;
   border-left: none;
   padding: 10px 20px;
@@ -136,7 +152,7 @@ export const HeaderMessage = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
   border-top: none;
   border-left: none;
   padding: 10px 20px;
@@ -179,7 +195,7 @@ export const HeaderProfile = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid ${({ theme }) => theme.colors.main.default};
   padding: 10px 20px;
   width: 25%;
 `;
@@ -190,6 +206,7 @@ export const ProfileTitles = styled.div`
 
 export const ChevronLeft = styled(FaChevronLeft)`
   cursor: pointer;
+  color: ${({ theme }) => theme.colors.main.default};
 `;
 
 //TODO: separar em um componenente DropDow

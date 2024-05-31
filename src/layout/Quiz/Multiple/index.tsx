@@ -100,6 +100,7 @@ const Multiple: FC<MultipleProps> = ({
                     margin="0 auto 0 0"
                     multiLine
                     width="70%"
+                    color="light"
                   >
                     {answer.answer || ""}
                   </Title>

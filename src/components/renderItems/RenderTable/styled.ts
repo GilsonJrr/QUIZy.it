@@ -23,7 +23,7 @@ export const TableContent = styled.div`
 
 export const TableBodyComponents = styled.div<Props>`
   width: ${({ width }) => width}%;
-  border: 1px solid rgba(0, 0, 0, 0.8);
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
   padding: 5px 10px;
   border-radius: 3px;
   display: flex;
@@ -36,7 +36,7 @@ export const TableBodyComponents = styled.div<Props>`
 
 export const ListContainer = styled.div`
   display: flex;
-  border: 1px solid rgba(0, 0, 0, 0.8);
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
   background-color: ${({ theme }) => theme.colors.background.default};
   border-radius: 10px;
   width: 100%;

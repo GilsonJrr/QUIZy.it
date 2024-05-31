@@ -48,6 +48,7 @@ export const Input = styled.input<Props>`
   justify-content: center;
   text-align: center;
   width: ${({ width }) => (width && width + 2) || 3}rem;
+  color: ${({ theme }) => theme.colors.main.default};
 `;
 
 export const AnswerCheckerContainer = styled.div`

@@ -11,6 +11,10 @@ export const Container = styled.div<Props>`
   justify-content: center;
 `;
 
-export const AToZ = styled(FaSortAlphaDown)``;
+export const AToZ = styled(FaSortAlphaDown)`
+  color: ${({ theme }) => theme.colors.main.default};
+`;
 
-export const ZToA = styled(FaSortAlphaUpAlt)``;
+export const ZToA = styled(FaSortAlphaUpAlt)`
+  color: ${({ theme }) => theme.colors.main.default};
+`;

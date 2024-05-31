@@ -58,7 +58,8 @@ export const Paragraph = styled.p<TypographyProps>`
   font-size: ${({ size }) => ETypeSize[size || "medium"]};
   font-weight: ${({ fontWeight }) => fontWeight || "normal"};
   color: ${({ theme, color }) => theme.colors.text[color || "default"]};
-  word-break: break-all;
+  text-align: ${({ textAlign }) => textAlign};
+  word-break: normal;
 `;
 
 export const LinkText = styled.a<TypographyProps>`

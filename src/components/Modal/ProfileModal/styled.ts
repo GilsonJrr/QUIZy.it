@@ -37,6 +37,7 @@ export const Content = styled.div<Props>`
 
 export const ChevronRight = styled(FaChevronRight)`
   cursor: pointer;
+  color: ${({ theme }) => theme.colors.main.default};
 `;
 
 export const IconContainer = styled.div`

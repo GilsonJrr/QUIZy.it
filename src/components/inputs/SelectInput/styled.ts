@@ -21,6 +21,7 @@ export const Select = styled.select<Props>`
   border: 1px solid ${({ theme }) => theme.colors.main.default};
   background-color: ${({ theme }) => theme.colors.background.highlight};
   outline: none;
+  color: ${({ theme }) => theme.colors.text.default};
 `;
 
 export const Option = styled.option<Props>`
@@ -28,6 +29,7 @@ export const Option = styled.option<Props>`
   font-size: 1.4rem;
   padding: 10px;
   border: 1px solid ${({ theme }) => theme.colors.main.default};
+  color: ${({ theme }) => theme.colors.text.default};
 `;
 
 export const Error = styled.p`

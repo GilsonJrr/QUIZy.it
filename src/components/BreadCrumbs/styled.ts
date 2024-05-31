@@ -8,6 +8,7 @@ type Props = {
 
 export const Arrows = styled(FiChevronsRight)`
   display: flex;
+  color: ${({ theme }) => theme.colors.main.default};
 `;
 
 export const Container = styled.div<Props>`

@@ -8,7 +8,7 @@ type Props = {
 };
 
 export const ProgressBar = styled.div<Props>`
-  background-color: ${({ theme }) => theme.colors.background.tertiary};
+  background-color: ${({ theme }) => theme.colors.background.default};
   border-radius: ${({ radius }) => radius}px;
   width: 100%;
   height: 30px;

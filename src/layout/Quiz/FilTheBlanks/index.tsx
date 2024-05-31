@@ -95,7 +95,7 @@ const FilTheBlanks: FC<FilTheBlanksProps> = ({
                 onBlur={handleAnswer}
               />
             ) : (
-              <h1>{word}</h1>
+              <Title size="bigger">{word}</Title>
             );
           })}
         </Styled.Words>

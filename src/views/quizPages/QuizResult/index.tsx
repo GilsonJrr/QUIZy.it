@@ -80,31 +80,29 @@ const QuizResult: FC<QuizResultProps> = () => {
           {userType === "tutor" && (
             <>
               <Title size="smaller">Student</Title>
-              <Styled.ScoreMessage>{studentName}</Styled.ScoreMessage>
+              <Title>{studentName}</Title>
             </>
           )}
           <Title size="smaller">Quiz</Title>
-          <Styled.ScoreMessage>{quiz?.title}</Styled.ScoreMessage>
+          <Title>{quiz?.title}</Title>
           <Title size="smaller">Quiz Info</Title>
-          <Styled.ScoreMessage>
+          <Title>
             {quiz?.type} | {quiz?.category}
-          </Styled.ScoreMessage>
+          </Title>
           <Title size="smaller">Final score</Title>
           <ProgressBar progress={finalScore} radius={5} />
         </Styled.InfoContainer>
         {userType === "student" ? (
           <Styled.MessageContainer>
             <Title size="smaller">FeedBack</Title>
-            <Styled.ScoreMessage>{handleMessage()}</Styled.ScoreMessage>
+            <Title>{handleMessage()}</Title>
           </Styled.MessageContainer>
         ) : (
           <Styled.InfoContainer>
             <Title size="smaller">Time spent</Title>
-            <Styled.ScoreMessage>
-              {formatTime(allInfo?.timeSpent)}
-            </Styled.ScoreMessage>
+            <Title>{formatTime(allInfo?.timeSpent)}</Title>
             <Title size="smaller">Tries</Title>
-            <Styled.ScoreMessage>{allInfo?.tries}</Styled.ScoreMessage>
+            <Title>{allInfo?.tries}</Title>
           </Styled.InfoContainer>
         )}
       </Styled.TitlesContainer>
@@ -119,7 +117,7 @@ const QuizResult: FC<QuizResultProps> = () => {
                   ) : (
                     <Styled.CloseIcon size={25} />
                   )}
-                  <h3>{res.question}</h3>
+                  <Title>{res.question}</Title>
                 </Styled.ResumeTextContainer>
               )}
               {quiz?.type === "FillTheBlanks" ? (
@@ -183,10 +181,12 @@ const QuizResult: FC<QuizResultProps> = () => {
                   ) : (
                     <>
                       <Styled.CircleIcon right={false} />
-                      Your answer: <h4>{res.selectedAnswer}</h4> Right answer:
+                      <Title fontWeight="lighter">Your answer:</Title>{" "}
+                      <Title>{res.selectedAnswer}</Title>
+                      <Title fontWeight="lighter"> Right answer:</Title>
                     </>
                   )}
-                  <h4>{res.rightAnswer}</h4>
+                  <Title>{res.rightAnswer}</Title>
                 </Styled.ResumeTextContainer>
               )}
             </Styled.ResumeContainerInner>

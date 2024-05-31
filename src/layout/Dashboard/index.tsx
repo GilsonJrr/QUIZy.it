@@ -23,6 +23,7 @@ import {
   requestTutorAlertList,
 } from "Store/alert/actions";
 import Alert from "components/Alert";
+import ThemeToggle from "components/ThemeToggle";
 
 type dashboardProps = {
   children?: ReactNode | ReactNode[];
@@ -94,10 +95,21 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
           <Styled.Logo src={Logo} />
         </Styled.LogoContainer>
         <Styled.HeaderTitle>
-          <Title>
-            {RouterTitle[`${currentUrl}${search}` as keyof typeof RouterTitle]}
-          </Title>
-          {/* <LanguageSwitcher /> */}
+          <Styled.TitleContainer>
+            <Title>
+              {
+                RouterTitle[
+                  `${currentUrl}${search}` as keyof typeof RouterTitle
+                ]
+              }
+            </Title>
+          </Styled.TitleContainer>
+          {/* <Styled.OptionContainer>
+            <LanguageSwitcher />
+          </Styled.OptionContainer> */}
+          <Styled.OptionContainer>
+            <ThemeToggle />
+          </Styled.OptionContainer>
         </Styled.HeaderTitle>
         <Styled.HeaderMessage>
           <Alert />

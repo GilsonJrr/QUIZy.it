@@ -36,7 +36,7 @@ export const TableBodyContent = styled.div`
 export const TableHeaderComponents = styled.div<Props>`
   width: ${({ width }) => width}%;
   background-color: ${({ theme }) => theme.colors.main.default};
-  color: white;
+  color: ${({ theme }) => theme.colors.text.light};
   padding: 5px 10px;
   border-radius: 3px;
   display: flex;

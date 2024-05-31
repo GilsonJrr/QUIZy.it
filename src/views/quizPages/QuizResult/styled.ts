@@ -66,6 +66,7 @@ export const ScoreMessage = styled.p`
   padding: 0px;
   font-size: 0.8rem;
   font-weight: 500;
+  color: ${({ theme }) => theme.colors.main.default};
   @media screen and (min-width: 600px) {
     text-align: center;
     font-size: 1.5rem;

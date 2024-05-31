@@ -15,7 +15,8 @@ export const Container = styled.div`
   height: 100vh;
   padding: 0px;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  background-color: ${({ theme }) => theme.colors.background.default};
 
   @media screen and (min-width: 600px) {
     padding: 0px;
@@ -25,6 +26,7 @@ export const Container = styled.div`
 
 export const QuizContainer = styled.div<Props>`
   padding: 20px 15px 100px;
+
   @media screen and (min-width: 600px) {
     padding: ${({ preview }) => (preview ? 0 : 30)}px;
     display: flex;

@@ -17,6 +17,7 @@ import Button from "components/Button";
 import { addLeadingZero } from "functions/index";
 import AlertModal from "components/Modal/AlertModal";
 import { TQuizDelete } from "types/index";
+import { Title } from "components/ui/Typography/styled";
 
 type FillTheBlanksProps = {
   sendQuiz: (data: QuizTypeValues) => void;
@@ -238,7 +239,7 @@ const FillTheBlanks: FC<FillTheBlanksProps> = ({ sendQuiz, deleteQuiz }) => {
           />
           {spitedPhrase?.length > 1 && (
             <>
-              <h2>Choose Words to be Blank</h2>
+              <Title>Choose Words to be Blank</Title>
               <Styled.Words>
                 {spitedPhrase?.map((word) => {
                   return (

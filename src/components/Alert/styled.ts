@@ -12,13 +12,15 @@ export const AlertContainer = styled.div`
   cursor: pointer;
 `;
 
-export const Alert = styled(HiBellAlert)``;
+export const Alert = styled(HiBellAlert)`
+  color: ${({ theme }) => theme.colors.main.default};
+`;
 
 export const AlertTag = styled.div`
   height: 20px;
   width: 20px;
   border-radius: 100%;
-  background-color: yellow;
+  background-color: ${({ theme }) => theme.colors.alert.warning};
   position: absolute;
   top: -7px;
   right: -7px;

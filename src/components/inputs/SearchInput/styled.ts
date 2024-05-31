@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { FaSearch } from "react-icons/fa";
+
 type Props = {};
 
 export const Container = styled.div<Props>`
@@ -24,4 +26,9 @@ export const Input = styled.input`
   background-color: transparent;
   font-size: 1rem;
   width: 80%;
+  color: ${({ theme }) => theme.colors.text.default};
+`;
+
+export const Search = styled(FaSearch)`
+  color: ${({ theme }) => theme.colors.main.default};
 `;

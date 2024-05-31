@@ -90,7 +90,9 @@ const RenderQuizCard: FC<RenderQuizCardProps> = ({
           {item.description}
         </Title>
       </Styled.QuizTitlesContainer>
-      <Styled.StartButton>{editMode ? "Edit" : "Start"}</Styled.StartButton>
+      <Styled.StartButton>
+        <Title size="small">{editMode ? "Edit" : "Start"}</Title>
+      </Styled.StartButton>
     </Styled.QuizCard>
   );
 };

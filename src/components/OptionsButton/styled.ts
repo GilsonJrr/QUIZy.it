@@ -35,6 +35,7 @@ export const OptionButton = styled.button<Props>`
   font-weight: 600;
   cursor: pointer;
   transition: 0.4s ease-in-out all;
+  color: ${({ theme }) => theme.colors.text.default};
 
   &:hover {
     transform: scale(1.05);
