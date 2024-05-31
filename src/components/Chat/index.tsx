@@ -21,6 +21,7 @@ import LoadingSpinner from "components/LoadingSpiner";
 import { LoadingContainerCard } from "components/Container/styled";
 import { removeAlert, setAlert } from "Store/alert/actions";
 import { useLocation } from "react-router-dom";
+import { IoSend } from "react-icons/io5";
 
 type ChatProps = {
   tutorUid: string;
@@ -51,6 +52,7 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
   const [message, setMessage] = useState("");
   const [newMessageCounter, setNewMessageCounter] = useState(1);
   const [messages, setMessages] = useState<ChatTypeValues[]>();
+  const [rows, setRows] = useState(1);
 
   const handleSendMessage = () => {
     if (!message) return;
@@ -84,6 +86,30 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
     dispatch(setAlert(preparedInfo));
 
     setMessage("");
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const lineHeight = 26;
+    const previousRows = e.target.rows;
+    e.target.rows = 1;
+
+    const currentRows = Math.floor(e.target.scrollHeight / lineHeight);
+
+    if (currentRows === previousRows) {
+      e.target.rows = currentRows;
+    }
+
+    if (currentRows >= 5) {
+      e.target.rows = 5;
+      e.target.scrollTop = e.target.scrollHeight;
+    }
+
+    setRows(currentRows < 5 ? currentRows : 5);
+    setMessage(e.target.value);
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
   };
 
   useEffect(() => {
@@ -208,14 +234,16 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
         <Styled.MessageTextContainer>
           <TextAreaInput
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={(e) => handleChange(e)}
             size="small"
-            height="10vh"
+            rows={rows}
           />
         </Styled.MessageTextContainer>
-        <Button onClick={handleSendMessage} width="100%" align="center">
-          Send
-        </Button>
+        <Styled.ButtonInnerContainer>
+          <Button onClick={handleSendMessage} align="center" padding="13px">
+            <IoSend />
+          </Button>
+        </Styled.ButtonInnerContainer>
       </Styled.ButtonContainer>
     </Styled.Content>
   );

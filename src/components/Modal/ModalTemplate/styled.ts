@@ -23,6 +23,7 @@ export const Container = styled.div`
   position: fixed;
   bottom: 0;
   width: 100%;
+  border: 1px solid ${({ theme }) => theme.colors.main.default};
   @media screen and (min-width: 600px) {
     width: auto;
     position: relative;

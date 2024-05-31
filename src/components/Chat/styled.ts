@@ -5,9 +5,9 @@ type Props = { user?: boolean };
 export const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   justify-content: flex-end;
+  gap: 10px;
   margin: auto 0 0 0;
 `;
 
@@ -117,4 +117,8 @@ export const AvatarContainer = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
+`;
+
+export const ButtonInnerContainer = styled.div`
+  margin-bottom: 10px;
 `;

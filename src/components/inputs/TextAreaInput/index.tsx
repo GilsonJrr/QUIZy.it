@@ -10,6 +10,7 @@ interface TextAreaInputProps
   error?: FieldError | undefined;
   width?: string;
   size?: "smaller" | "small" | "medium" | "big" | "bigger";
+  rows?: number;
 }
 
 enum ETypeSize {
@@ -21,7 +22,7 @@ enum ETypeSize {
 }
 
 const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
-  ({ label, error, height, width, size = "medium", ...rest }, ref) => {
+  ({ label, error, height, width, rows, size = "medium", ...rest }, ref) => {
     return (
       <Styled.Container width={width}>
         <Title size="smaller">{label}</Title>
@@ -30,6 +31,7 @@ const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
           {...rest}
           height={height}
           fontSize={ETypeSize[size]}
+          rows={rows}
         />
         {error && <Styled.Error>{error.message}</Styled.Error>}
       </Styled.Container>
