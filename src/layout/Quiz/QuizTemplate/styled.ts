@@ -136,7 +136,7 @@ export const ContinueButtonContainer = styled.div<Props>`
   left: 0;
   @media screen and (min-width: 900px) {
     display: flex;
-    padding: 25px 0px;
+    padding: ${({ display }) => (display ? "0 25px 25px" : "0 65px 75px")};
     justify-content: flex-end;
     right: 0;
     width: 30%;

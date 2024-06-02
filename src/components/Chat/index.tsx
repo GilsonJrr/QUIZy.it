@@ -79,9 +79,11 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
       quantity: 1,
       senderName: name,
       senderUid: userType === "tutor" ? tutorUid : studentUid,
+      receiverUid: userType === "tutor" ? studentUid : tutorUid,
       open: false,
       userType: userType,
     };
+
     dispatch(setChat(preparedData));
     dispatch(setAlert(preparedInfo));
 

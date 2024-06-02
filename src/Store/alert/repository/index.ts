@@ -3,13 +3,13 @@ import { ref, set, get, remove, onValue } from "firebase/database";
 
 import { AlertTypeValues } from "../types";
 
-export const subscribeToStudentAlertList = (
+export const subscribeToAlertList = (
   uid: string,
-  studentId: string,
+  receiverUid: string,
   callback: (alert: any[]) => void
 ) => {
   const unsubscribe = onValue(
-    ref(database, `user/${uid}/students/${studentId}/alert`),
+    ref(database, `alert/${uid}/${receiverUid}`),
     (snapshot) => {
       const alert: any[] = [];
       snapshot.forEach((childSnapshot) => {
@@ -22,46 +22,18 @@ export const subscribeToStudentAlertList = (
   return unsubscribe;
 };
 
-export const subscribeToTutorAlertList = (
-  uid: string,
-  callback: (alert: any[]) => void
-) => {
-  const unsubscribe = onValue(
-    ref(database, `user/${uid}/alert`),
-    (snapshot) => {
-      const alert: any[] = [];
-      snapshot.forEach((childSnapshot) => {
-        alert.push(childSnapshot.val());
-      });
-      callback(alert);
-    }
-  );
-
-  return unsubscribe;
-};
-
-export const getStudentAlertList = async (uid: string, studentId: string) => {
-  return get(ref(database, `user/${uid}/students/${studentId}/alert`))
+export const getAlertList = async (data: AlertTypeValues) => {
+  const { tutorUid, receiverUid } = data;
+  return get(ref(database, `alert/${tutorUid}/${receiverUid}`))
     .then((alerts) => alerts.val())
     .catch((err) => {
       throw new Error(err);
     });
 };
 
-export const getTutorAlertList = async (uid: string) => {
-  return get(ref(database, `user/${uid}/alert`))
-    .then((alerts) => alerts.val())
-    .catch((err) => {
-      throw new Error(err);
-    });
-};
-
-export const getStudentAlert = async (
-  uid: string,
-  studentId: string,
-  alertId: string
-) => {
-  get(ref(database, `user/${uid}/students/${studentId}/alert/${alertId}/`))
+export const getAlert = async (data: AlertTypeValues) => {
+  const { tutorUid, senderUid, receiverUid } = data;
+  get(ref(database, `alert/${tutorUid}/${receiverUid}/${senderUid}`))
     .then((alerts) => alerts.val())
     .catch((err) => {
       throw new Error(err);
@@ -69,22 +41,10 @@ export const getStudentAlert = async (
   return;
 };
 
-export const getTutorAlert = async (uid: string, alertId: string) => {
-  get(ref(database, `user/${uid}/alert/${alertId}/`))
-    .then((alerts) => alerts.val())
-    .catch((err) => {
-      throw new Error(err);
-    });
-  return;
-};
-
-export const setStudentAlert = async (data: AlertTypeValues) => {
+export const setAlert = async (data: AlertTypeValues) => {
   const { tutorUid, studentUid, ...rest } = data;
   return set(
-    ref(
-      database,
-      `user/${tutorUid}/students/${studentUid}/alert/${rest.senderUid}`
-    ),
+    ref(database, `alert/${tutorUid}/${rest.receiverUid}/${rest.senderUid}`),
     rest
   )
     .then((groups) => groups)
@@ -93,31 +53,11 @@ export const setStudentAlert = async (data: AlertTypeValues) => {
     });
 };
 
-export const setTutorAlert = async (data: AlertTypeValues) => {
+export const removeAlert = async (data: AlertTypeValues) => {
   const { tutorUid, studentUid, ...rest } = data;
-  return set(ref(database, `user/${tutorUid}/alert/${rest.senderUid}`), rest)
-    .then((groups) => groups)
-    .catch((err) => {
-      throw new Error(err);
-    });
-};
-
-export const removeStudentAlert = async (
-  uid: string,
-  studentId: string,
-  alertId: string
-) => {
   return remove(
-    ref(database, `user/${uid}/students/${studentId}/alert/${alertId}/`)
+    ref(database, `alert/${tutorUid}/${rest.receiverUid}/${rest.senderUid}`)
   )
-    .then((alerts) => alerts)
-    .catch((err) => {
-      throw new Error(err);
-    });
-};
-
-export const removeTutorAlert = async (uid: string, alertId: string) => {
-  return remove(ref(database, `user/${uid}/alert/${alertId}/`))
     .then((alerts) => alerts)
     .catch((err) => {
       throw new Error(err);

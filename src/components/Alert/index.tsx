@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import * as Styled from "./styled";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,11 +8,7 @@ import { Title } from "components/ui/Typography/styled";
 import Tooltip from "components/Tooltip";
 import Button from "components/Button";
 import { AlertTypeValues } from "Store/alert/types";
-import {
-  removeAlert,
-  requestStudentAlertList,
-  requestTutorAlertList,
-} from "Store/alert/actions";
+import { removeAlert, requestAlertList } from "Store/alert/actions";
 import useDeviceType from "hooks/useDeviceType";
 import { useModalContext } from "components/Modal/modalContext";
 import ModalTemplate from "components/Modal/ModalTemplate";
@@ -26,9 +22,7 @@ const Alert: FC<AlertProps> = () => {
 
   const { handleModal } = useModalContext();
   const { user, userStudent } = useSelector((state: RootState) => state.user);
-  const { studentAlerts, tutorAlerts } = useSelector(
-    (state: RootState) => state.alert
-  );
+  const { alerts } = useSelector((state: RootState) => state.alert);
 
   const [openMessages, setOpenMessages] = useState(false);
 
@@ -37,47 +31,49 @@ const Alert: FC<AlertProps> = () => {
   const renderMessageList = () => {
     return (
       <Styled.MessageContainer>
-        {messages?.map((message) => {
-          return (
-            <Styled.Message>
-              <Title size="medium" fontWeight="bolder">
-                {message.type}
-              </Title>
-              <Title multiLine size="small">
-                {message.message}
-              </Title>
-              <Styled.MessageButtons>
-                <Button
-                  onClick={() => handleOpenAlert(message)}
-                  size="small"
-                  width="100%"
-                  align="center"
-                >
-                  Open
-                </Button>
-                <Button
-                  onClick={() => handleGotIt(message)}
-                  variant="anchor-dark"
-                  size="small"
-                  width="100%"
-                  align="center"
-                >
-                  Got it
-                </Button>
-              </Styled.MessageButtons>
-            </Styled.Message>
-          );
-        })}
+        {alerts &&
+          alerts.length > 0 &&
+          alerts?.map((message) => {
+            return (
+              <Styled.Message>
+                <Title size="medium" fontWeight="bolder">
+                  {message.type}
+                </Title>
+                <Title multiLine size="small">
+                  {message.message}
+                </Title>
+                <Styled.MessageButtons>
+                  <Button
+                    onClick={() => handleOpenAlert(message)}
+                    size="small"
+                    width="100%"
+                    align="center"
+                  >
+                    Open
+                  </Button>
+                  <Button
+                    onClick={() => handleGotIt(message)}
+                    variant="anchor-dark"
+                    size="small"
+                    width="100%"
+                    align="center"
+                  >
+                    Got it
+                  </Button>
+                </Styled.MessageButtons>
+              </Styled.Message>
+            );
+          })}
       </Styled.MessageContainer>
     );
   };
 
   const handleOpenMessages = () => {
-    messages?.length > 0 && setOpenMessages(!openMessages);
+    alerts && alerts?.length > 0 && setOpenMessages(!openMessages);
   };
 
   const handleOpenMessagesModal = () => {
-    if (messages?.length === 0) return;
+    if (alerts?.length === 0) return;
     handleModal(
       <ModalTemplate>
         <Styled.DragClose />
@@ -85,14 +81,6 @@ const Alert: FC<AlertProps> = () => {
       </ModalTemplate>
     );
   };
-
-  const messages = useMemo(() => {
-    return userType === "student"
-      ? Object.values(studentAlerts || "")
-      : userType === "tutor"
-      ? Object.values(tutorAlerts || "")
-      : ([] as unknown as AlertTypeValues[]);
-  }, [studentAlerts, tutorAlerts, userType]);
 
   const handleOpenAlert = (message: AlertTypeValues) => {
     if (userType === "tutor") {
@@ -102,9 +90,9 @@ const Alert: FC<AlertProps> = () => {
         );
       dispatch(
         removeAlert({
-          userType: "tutor",
-          alertUid: message.senderUid,
           tutorUid: user?.info?.uid || "",
+          receiverUid: user?.info?.uid,
+          senderUid: message.senderUid,
         })
       );
       return;
@@ -113,10 +101,9 @@ const Alert: FC<AlertProps> = () => {
       navigate(`/?chat=true`);
       dispatch(
         removeAlert({
-          userType: "student",
-          studentUid: userStudent?.uid,
-          alertUid: message.senderUid,
           tutorUid: userStudent?.tutorID || "",
+          receiverUid: userStudent?.uid || "",
+          senderUid: userStudent?.tutorID,
         })
       );
       return;
@@ -148,23 +135,15 @@ const Alert: FC<AlertProps> = () => {
   };
 
   useEffect(() => {
-    dispatch(
-      requestTutorAlertList({
-        tutorUid: user?.info?.uid || "",
-        userType: "tutor",
-      })
-    );
-  }, [dispatch, user]);
-
-  useEffect(() => {
-    dispatch(
-      requestStudentAlertList({
-        studentUid: userStudent?.uid,
-        tutorUid: userStudent?.tutorID || "",
-        userType: "student",
-      })
-    );
-  }, [dispatch, userStudent]);
+    if (alerts === undefined) {
+      dispatch(
+        requestAlertList({
+          tutorUid: user?.info?.uid || userStudent?.tutorID || "",
+          receiverUid: user?.info?.uid || userStudent?.uid || "",
+        })
+      );
+    }
+  }, [alerts, dispatch, user, userStudent]);
 
   useEffect(() => {
     if (userStudent) {
@@ -181,9 +160,9 @@ const Alert: FC<AlertProps> = () => {
     return (
       <Styled.AlertContainer onClick={handleOpenMessagesModal}>
         <Styled.Alert size={25} />
-        {messages.length > 0 && (
+        {alerts && alerts?.length > 0 && (
           <Styled.AlertTag>
-            {messages.length >= 100 ? "99+" : messages.length}
+            {alerts && alerts?.length >= 100 ? "99+" : alerts?.length}
           </Styled.AlertTag>
         )}
       </Styled.AlertContainer>
@@ -194,13 +173,13 @@ const Alert: FC<AlertProps> = () => {
     <Tooltip
       toolTipContent={renderMessageList()}
       position={"top"}
-      disable={messages.length === 0}
+      disable={alerts?.length === 0}
     >
       <Styled.AlertContainer onClick={handleOpenMessages}>
         <Styled.Alert size={25} />
-        {messages.length > 0 && (
+        {alerts && alerts?.length > 0 && (
           <Styled.AlertTag>
-            {messages.length >= 100 ? "99+" : messages.length}
+            {alerts && alerts?.length >= 100 ? "99+" : alerts.length}
           </Styled.AlertTag>
         )}
       </Styled.AlertContainer>

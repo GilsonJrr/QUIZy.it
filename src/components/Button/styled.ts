@@ -28,7 +28,11 @@ enum EColor {
 }
 
 export const Button = styled.button<Props>`
-  border: none;
+  border: 1px solid
+    ${({ theme, variant }) =>
+      variant === "anchor-dark" || variant === "anchor-white"
+        ? "transparent"
+        : theme.colors.button.default};
   background-color: ${({ theme, variant }) => theme.colors.button[variant]};
   outline: none;
   color: ${({ variant, theme }) => theme.colors.text[EColor[variant]]};

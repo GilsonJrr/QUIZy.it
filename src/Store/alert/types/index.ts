@@ -4,7 +4,9 @@ export enum AlertTypes {
   SET_ALERT = "SET_ALERT",
   REQUEST_STUDENT_ALERT_LIST = "REQUEST_STUDENT_ALERT_LIST",
   REQUEST_TUTOR_ALERT_LIST = "REQUEST_TUTOR_ALERT_LIST",
+  REQUEST_ALERT_LIST = "REQUEST_ALERT_LIST",
   REQUEST_ALERT = "REQUEST_ALERT",
+  ALERT_LIST = "ALERT_LIST",
   ALERT_STUDENT_LIST = "ALERT_STUDENT_LIST ",
   ALERT_TUTOR_LIST = "ALERT_TUTOR_LIST",
   REMOVE_ALERT = "REMOVE_ALERT",
@@ -18,6 +20,8 @@ export type AlertAction<Payload> = {
 export type AlertRequest = {
   tutorUid: string;
   studentUid?: string;
+  senderUid?: string;
+  receiverUid?: string;
   alertUid?: string;
   newStudentAlert?: boolean;
   newTutorAlert?: boolean;
@@ -33,6 +37,7 @@ export type AlertTypeValues = {
   quantity: number;
   senderName: string;
   senderUid: string;
+  receiverUid: string;
   open: boolean;
   userType: "tutor" | "student";
 };
@@ -40,8 +45,6 @@ export type AlertTypeValues = {
 export type AlertState = {
   isLoading: boolean;
   error: string | undefined;
-  studentAlerts: AlertTypeValues[] | undefined;
-  studentAlert: AlertTypeValues | undefined;
-  tutorAlerts: AlertTypeValues[] | undefined;
-  tutorAlert: AlertTypeValues | undefined;
+  alerts: AlertTypeValues[] | undefined;
+  alert: AlertTypeValues | undefined;
 };

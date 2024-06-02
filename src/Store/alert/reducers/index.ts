@@ -17,23 +17,13 @@ interface RemoveAlert {
   type: AlertTypes.REMOVE_ALERT;
 }
 
-interface requestStudentAlertList {
-  type: AlertTypes.REQUEST_STUDENT_ALERT_LIST;
+interface requestAlertList {
+  type: AlertTypes.REQUEST_ALERT_LIST;
   payload: AlertTypeValues[];
 }
 
-interface requestTutorAlertList {
-  type: AlertTypes.REQUEST_TUTOR_ALERT_LIST;
-  payload: AlertTypeValues[];
-}
-
-interface AlertStudentList {
-  type: AlertTypes.ALERT_STUDENT_LIST;
-  payload: AlertTypeValues[];
-}
-
-interface AlertTutorList {
-  type: AlertTypes.ALERT_TUTOR_LIST;
+interface AlertList {
+  type: AlertTypes.ALERT_LIST;
   payload: AlertTypeValues[];
 }
 
@@ -46,20 +36,16 @@ type AlertAction =
   | CleanUpAlert
   | CleanUpAlertList
   | SetAlert
-  | requestStudentAlertList
-  | requestTutorAlertList
   | requestAlert
-  | AlertStudentList
-  | AlertTutorList
+  | AlertList
+  | requestAlertList
   | RemoveAlert;
 
 const alertInitialState: AlertState = {
   isLoading: false,
   error: undefined,
-  studentAlerts: undefined,
-  studentAlert: undefined,
-  tutorAlerts: undefined,
-  tutorAlert: undefined,
+  alert: undefined,
+  alerts: undefined,
 };
 
 const alertReducer: Reducer<AlertState, AlertAction> = (
@@ -86,20 +72,12 @@ const alertReducer: Reducer<AlertState, AlertAction> = (
         studentAlerts: undefined,
       };
     }
-    case AlertTypes.REQUEST_TUTOR_ALERT_LIST: {
+    case AlertTypes.REQUEST_ALERT_LIST: {
       return {
         ...state,
         isLoading: true,
         error: undefined,
-        tutorAlerts: undefined,
-      };
-    }
-    case AlertTypes.REQUEST_STUDENT_ALERT_LIST: {
-      return {
-        ...state,
-        isLoading: true,
-        error: undefined,
-        studentAlerts: undefined,
+        alerts: undefined,
       };
     }
     case AlertTypes.REQUEST_ALERT: {
@@ -107,23 +85,15 @@ const alertReducer: Reducer<AlertState, AlertAction> = (
         ...state,
         isLoading: true,
         error: undefined,
-        tutorAlert: undefined,
+        alert: undefined,
       };
     }
-    case AlertTypes.ALERT_STUDENT_LIST: {
+    case AlertTypes.ALERT_LIST: {
       return {
         ...state,
         isLoading: false,
         error: undefined,
-        studentAlerts: Object.values(action.payload),
-      };
-    }
-    case AlertTypes.ALERT_TUTOR_LIST: {
-      return {
-        ...state,
-        isLoading: false,
-        error: undefined,
-        tutorAlerts: Object.values(action.payload),
+        alerts: Object.values(action.payload),
       };
     }
     case AlertTypes.SET_ALERT: {
@@ -131,7 +101,6 @@ const alertReducer: Reducer<AlertState, AlertAction> = (
         ...state,
         isLoading: false,
         error: undefined,
-        alerts: action.payload,
       };
     }
     case AlertTypes.REMOVE_ALERT: {

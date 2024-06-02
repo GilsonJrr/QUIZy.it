@@ -17,10 +17,7 @@ import MenuModal from "components/Modal/MenuModal";
 // import LanguageSwitcher from "components/languageSwitcher";
 import { useAnimation } from "hooks/useAnimation";
 import { Title } from "components/ui/Typography/styled";
-import {
-  requestStudentAlertList,
-  requestTutorAlertList,
-} from "Store/alert/actions";
+import { requestAlertList } from "Store/alert/actions";
 import Alert from "components/Alert";
 import ThemeToggle from "components/ThemeToggle";
 
@@ -51,16 +48,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
 
   useEffect(() => {
     dispatch(
-      requestTutorAlertList({
-        tutorUid: user?.info?.uid || "",
-        userType: "tutor",
-      })
-    );
-  }, [dispatch, user]);
-
-  useEffect(() => {
-    dispatch(
-      requestStudentAlertList({
+      requestAlertList({
         studentUid: userStudent?.uid,
         tutorUid: userStudent?.tutorID || "",
         userType: "student",

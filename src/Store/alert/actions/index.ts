@@ -17,20 +17,11 @@ export function alertListCleanUp() {
   };
 }
 
-export function requestTutorAlertList(
+export function requestAlertList(
   props: AlertRequest
 ): AlertAction<AlertRequest> {
   return {
-    type: AlertTypes.REQUEST_TUTOR_ALERT_LIST,
-    payload: { ...props },
-  };
-}
-
-export function requestStudentAlertList(
-  props: AlertRequest
-): AlertAction<AlertRequest> {
-  return {
-    type: AlertTypes.REQUEST_STUDENT_ALERT_LIST,
+    type: AlertTypes.REQUEST_ALERT_LIST,
     payload: { ...props },
   };
 }
@@ -42,20 +33,11 @@ export function requestAlert(props: AlertRequest): AlertAction<AlertRequest> {
   };
 }
 
-export function alertTutorList(
+export function alertList(
   props: AlertTypeValues
 ): AlertAction<AlertTypeValues> {
   return {
-    type: AlertTypes.ALERT_TUTOR_LIST,
-    payload: { ...props },
-  };
-}
-
-export function alertStudentList(
-  props: AlertTypeValues
-): AlertAction<AlertTypeValues> {
-  return {
-    type: AlertTypes.ALERT_STUDENT_LIST,
+    type: AlertTypes.ALERT_LIST,
     payload: { ...props },
   };
 }

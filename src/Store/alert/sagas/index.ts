@@ -1,84 +1,41 @@
 import { takeLatest, put, call, take, cancelled } from "redux-saga/effects";
 
-import { alertStudentList, alertTutorList } from "../actions";
+import { alertList } from "../actions";
 
 import {
-  getStudentAlert,
-  getStudentAlertList,
-  setStudentAlert,
-  removeStudentAlert,
-  subscribeToStudentAlertList,
-  getTutorAlertList,
-  setTutorAlert,
-  removeTutorAlert,
-  subscribeToTutorAlertList,
+  subscribeToAlertList,
+  setAlert,
+  removeAlert,
+  getAlert,
 } from "../repository";
 
-import {
-  AlertAction,
-  AlertRequest,
-  AlertTypeValues,
-  AlertTypes,
-} from "../types";
+import { AlertAction, AlertTypeValues, AlertTypes } from "../types";
 import { eventChannel } from "redux-saga";
 
 //ALERT
-function createStudentAlertListChannel(uid: string, studentId: string) {
-  return eventChannel((emit) => {
-    const unsubscribe = subscribeToStudentAlertList(
-      uid,
-      studentId,
-      (quizzes) => {
-        emit(quizzes);
-      }
-    );
-    return () => unsubscribe();
-  });
-}
 
-function createTutorAlertListChannel(uid: string) {
+function createAlertListChannel(uid: string, receiverUid: string) {
   return eventChannel((emit) => {
-    const unsubscribe = subscribeToTutorAlertList(uid, (quizzes) => {
+    const unsubscribe = subscribeToAlertList(uid, receiverUid, (quizzes) => {
       emit(quizzes);
     });
     return () => unsubscribe();
   });
 }
 
-export function* getStudentAlertListSaga(
-  props: AlertAction<AlertRequest>
-): any {
-  const uid = props.payload.tutorUid;
-  const studentUid = props.payload.studentUid;
-
-  const quizStudentListChannel = yield call(
-    createStudentAlertListChannel,
-    uid || "",
-    studentUid || ""
-  );
-  try {
-    while (true) {
-      const quizResponses = yield take(quizStudentListChannel);
-      yield put(alertStudentList(quizResponses));
-    }
-  } finally {
-    if (yield cancelled()) {
-      quizStudentListChannel.close();
-    }
-  }
-}
-
-export function* getTutorAlertListSaga(props: AlertAction<AlertRequest>): any {
-  const uid = props.payload.tutorUid;
+export function* getAlertListSaga(props: AlertAction<AlertTypeValues>): any {
+  const payload = props.payload;
 
   const quizTutorListChannel = yield call(
-    createTutorAlertListChannel,
-    uid || ""
+    createAlertListChannel,
+    payload.tutorUid || "",
+    payload.receiverUid || ""
   );
   try {
     while (true) {
       const quizResponses = yield take(quizTutorListChannel);
-      yield put(alertTutorList(quizResponses));
+      console.log("quizResponses", quizResponses, payload);
+      yield put(alertList(quizResponses));
     }
   } finally {
     if (yield cancelled()) {
@@ -87,14 +44,12 @@ export function* getTutorAlertListSaga(props: AlertAction<AlertRequest>): any {
   }
 }
 
-export function* getAlertSaga(props: AlertAction<AlertRequest>): any {
-  const uid = props.payload.tutorUid;
-  const alertId = props.payload.alertUid || "";
-  const studentUid = props.payload.studentUid;
+export function* getAlertSaga(props: AlertAction<AlertTypeValues>): any {
+  const payload = props.payload;
 
   try {
-    if (uid && studentUid) {
-      yield call(getStudentAlert, uid, studentUid, alertId);
+    if (payload) {
+      yield call(getAlert, payload);
     }
   } catch (err: any) {
     yield put(err);
@@ -102,18 +57,11 @@ export function* getAlertSaga(props: AlertAction<AlertRequest>): any {
 }
 
 export function* setAlertSaga(props: AlertAction<AlertTypeValues>): any {
-  const uid = props.payload.tutorUid;
   const payload = props.payload;
-  const studentUid = props.payload.studentUid;
 
   try {
-    if (uid && payload && studentUid) {
-      if (payload.userType === "student") {
-        yield call(setTutorAlert, payload);
-      }
-      if (payload.userType === "tutor") {
-        yield call(setStudentAlert, payload);
-      }
+    if (payload) {
+      yield call(setAlert, payload);
     }
   } catch (err: any) {
     yield put(err);
@@ -121,21 +69,11 @@ export function* setAlertSaga(props: AlertAction<AlertTypeValues>): any {
 }
 
 export function* removeAlertSaga(props: AlertAction<AlertTypeValues>): any {
-  const alertId = props.payload.alertUid;
-  const uid = props.payload.tutorUid;
-  const studentUid = props.payload.studentUid;
   const payload = props.payload;
 
   try {
-    if (payload.userType === "student" && alertId && uid && studentUid) {
-      yield call(removeStudentAlert, uid, studentUid, alertId);
-      const alertResponses = yield call(getStudentAlertList, uid, studentUid);
-      yield put(alertStudentList(alertResponses));
-    }
-    if (payload.userType === "tutor" && alertId && uid) {
-      yield call(removeTutorAlert, uid, alertId);
-      const alertResponses = yield call(getTutorAlertList, uid);
-      yield put(alertTutorList(alertResponses));
+    if (payload) {
+      yield call(removeAlert, payload);
     }
   } catch (err: any) {
     yield put(err);
@@ -145,8 +83,7 @@ export function* removeAlertSaga(props: AlertAction<AlertTypeValues>): any {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default [
   takeLatest(AlertTypes.SET_ALERT, setAlertSaga),
-  takeLatest(AlertTypes.REQUEST_STUDENT_ALERT_LIST, getStudentAlertListSaga),
-  takeLatest(AlertTypes.REQUEST_TUTOR_ALERT_LIST, getTutorAlertListSaga),
+  takeLatest(AlertTypes.REQUEST_ALERT_LIST, getAlertListSaga),
   takeLatest(AlertTypes.REQUEST_ALERT, getAlertSaga),
   takeLatest(AlertTypes.REMOVE_ALERT, removeAlertSaga),
 ];
