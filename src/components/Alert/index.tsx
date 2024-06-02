@@ -137,12 +137,15 @@ const Alert: FC<AlertProps> = () => {
     if (alerts === undefined) {
       dispatch(
         requestAlertList({
-          tutorUid: user?.info?.uid || userStudent?.tutorID || "",
-          receiverUid: user?.info?.uid || userStudent?.uid || "",
+          tutorUid:
+            (userType === "tutor" ? user?.info?.uid : userStudent?.tutorID) ||
+            "",
+          receiverUid:
+            (userType === "tutor" ? user?.info?.uid : userStudent?.uid) || "",
         })
       );
     }
-  }, [alerts, dispatch, user, userStudent]);
+  }, [alerts, dispatch, user, userStudent, userType]);
 
   useEffect(() => {
     if (userStudent) {
