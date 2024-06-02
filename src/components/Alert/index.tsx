@@ -114,9 +114,9 @@ const Alert: FC<AlertProps> = () => {
     if (userType === "tutor") {
       dispatch(
         removeAlert({
-          userType: "tutor",
-          alertUid: message.senderUid,
           tutorUid: user?.info?.uid || "",
+          receiverUid: user?.info?.uid,
+          senderUid: message.senderUid,
         })
       );
       return;
@@ -124,10 +124,9 @@ const Alert: FC<AlertProps> = () => {
     if (userType === "student") {
       dispatch(
         removeAlert({
-          userType: "student",
-          studentUid: userStudent?.uid,
-          alertUid: message.senderUid,
           tutorUid: userStudent?.tutorID || "",
+          receiverUid: userStudent?.uid || "",
+          senderUid: userStudent?.tutorID,
         })
       );
       return;

@@ -18,7 +18,7 @@ export const subscribeToChatList = (
   callback: (chat: any[]) => void
 ) => {
   const unsubscribe = onValue(
-    ref(database, `user/${uid}/students/${studentId}/chat`),
+    ref(database, `chat/${uid}/${studentId}`),
     (snapshot) => {
       const chat: any[] = [];
       snapshot.forEach((childSnapshot) => {
@@ -32,7 +32,7 @@ export const subscribeToChatList = (
 };
 
 export const getChatList = async (uid: string, studentId: string) => {
-  return get(ref(database, `user/${uid}/students/${studentId}/chat`))
+  return get(ref(database, `chat/${uid}/${studentId}`))
     .then((chats) => chats.val())
     .catch((err) => {
       throw new Error(err);
@@ -44,7 +44,7 @@ export const getChat = async (
   studentId: string,
   chatId: string
 ) => {
-  get(ref(database, `user/${uid}/students/${studentId}/chat/${chatId}/`))
+  get(ref(database, `chat/${uid}/${studentId}/${chatId}`))
     .then((chats) => chats.val())
     .catch((err) => {
       throw new Error(err);
@@ -62,10 +62,7 @@ export const setChat = async (_uid: string, data: ChatTypeValues) => {
     ...rest
   } = data;
 
-  const chatRef = ref(
-    database,
-    `user/${tutorUid}/students/${studentUid}/chat/`
-  );
+  const chatRef = ref(database, `chat/${tutorUid}/${studentUid}`);
 
   try {
     const snapshot = await get(chatRef);
@@ -82,15 +79,13 @@ export const setChat = async (_uid: string, data: ChatTypeValues) => {
       const oldestChats = oldestChatsSnapshot.val();
 
       for (const key in oldestChats) {
-        await remove(
-          ref(database, `user/${tutorUid}/students/${studentUid}/chat/${key}`)
-        );
+        await remove(ref(database, `chat/${tutorUid}/${studentUid}/${key}`));
       }
     }
-    await set(
-      ref(database, `user/${tutorUid}/students/${studentUid}/chat/${chatUid}/`),
-      { chatUid: chatUid, ...rest }
-    );
+    await set(ref(database, `chat/${tutorUid}/${studentUid}/${chatUid}/`), {
+      chatUid: chatUid,
+      ...rest,
+    });
   } catch (err) {
     // throw new Error(err);
   }
@@ -103,9 +98,7 @@ export const removeChat = async (
   studentId: string,
   chatId: string
 ) => {
-  return remove(
-    ref(database, `user/${uid}/students/${studentId}/chat/${chatId}/`)
-  )
+  return remove(ref(database, `chat/${uid}/${studentId}/${chatId}/`))
     .then((chats) => chats)
     .catch((err) => {
       throw new Error(err);

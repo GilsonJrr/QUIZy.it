@@ -152,9 +152,9 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
     if (userType === "tutor") {
       dispatch(
         removeAlert({
-          userType: "tutor",
-          alertUid: studentUid,
           tutorUid: tutorUid || "",
+          receiverUid: tutorUid || "",
+          senderUid: studentUid || "",
         })
       );
       return;
@@ -162,10 +162,9 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
     if (userType === "student") {
       dispatch(
         removeAlert({
-          userType: "student",
-          studentUid: studentUid,
-          alertUid: tutorUid,
           tutorUid: tutorUid || "",
+          receiverUid: studentUid || "",
+          senderUid: tutorUid || "",
         })
       );
       return;
