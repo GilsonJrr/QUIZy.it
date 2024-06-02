@@ -58,8 +58,8 @@ const alertReducer: Reducer<AlertState, AlertAction> = (
         ...state,
         error: undefined,
         payload: undefined,
-        tutorAlert: undefined,
-        studentAlert: undefined,
+        alerts: undefined,
+        alert: undefined,
       };
     }
     case AlertTypes.ALERT_LIST_CLEAN_UP: {
@@ -68,8 +68,8 @@ const alertReducer: Reducer<AlertState, AlertAction> = (
         isLoading: true,
         error: undefined,
         payload: undefined,
-        tutorAlerts: undefined,
-        studentAlerts: undefined,
+        alerts: undefined,
+        alert: undefined,
       };
     }
     case AlertTypes.REQUEST_ALERT_LIST: {
@@ -78,6 +78,7 @@ const alertReducer: Reducer<AlertState, AlertAction> = (
         isLoading: true,
         error: undefined,
         alerts: undefined,
+        alert: undefined,
       };
     }
     case AlertTypes.REQUEST_ALERT: {
@@ -85,6 +86,7 @@ const alertReducer: Reducer<AlertState, AlertAction> = (
         ...state,
         isLoading: true,
         error: undefined,
+        alerts: undefined,
         alert: undefined,
       };
     }
