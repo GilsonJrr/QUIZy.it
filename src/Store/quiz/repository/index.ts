@@ -23,7 +23,7 @@ export const subscribeToQuizList = (
   uid: string,
   callback: (quizzes: any[]) => void
 ) => {
-  const unsubscribe = onValue(ref(database, `user/${uid}/quiz`), (snapshot) => {
+  const unsubscribe = onValue(ref(database, `quiz/${uid}`), (snapshot) => {
     const quizzes: any[] = [];
     snapshot.forEach((childSnapshot) => {
       quizzes.push(childSnapshot.val());
@@ -40,7 +40,7 @@ export const getQuizList = async (
   category?: string,
   size?: number
 ) => {
-  const queryRef = ref(database, `user/${uid}/quiz`);
+  const queryRef = ref(database, `quiz/${uid}`);
   const quizQuery = category
     ? query(queryRef, orderByChild("category"), equalTo(category))
     : size
@@ -61,7 +61,7 @@ export const getQuizList = async (
 };
 
 export const getQuiz = async (uid: string, quizId: string) => {
-  return get(ref(database, `user/${uid}/quiz/${quizId}`))
+  return get(ref(database, `quiz/${uid}/${quizId}`))
     .then((quiz) => quiz.val())
     .catch((err) => {
       throw new Error(err);
@@ -70,7 +70,7 @@ export const getQuiz = async (uid: string, quizId: string) => {
 
 export const setQuiz = async (_uid: string, data: QuizTypeValues) => {
   const { uid, ...rest } = data;
-  return set(ref(database, `user/${_uid}/quiz/${data.id}`), rest)
+  return set(ref(database, `quiz/${_uid}/${data.id}`), rest)
     .then((quiz) => quiz)
     .catch((err) => {
       throw new Error(err);
@@ -78,7 +78,7 @@ export const setQuiz = async (_uid: string, data: QuizTypeValues) => {
 };
 
 export const removeQuiz = async (uid: string, studentId: string) => {
-  return remove(ref(database, `user/${uid}/quiz/${studentId}`))
+  return remove(ref(database, `quiz/${uid}/${studentId}`))
     .then((quiz) => quiz)
     .catch((err) => {
       throw new Error(err);

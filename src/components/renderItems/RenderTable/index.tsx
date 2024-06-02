@@ -1,13 +1,13 @@
 import React, { FC } from "react";
 import * as Styled from "./styled";
-import { TResult, TTutorResult } from "types/index";
 import { useNavigate } from "react-router-dom";
 import useDeviceType from "hooks/useDeviceType";
 import { Title } from "components/ui/Typography/styled";
+import { ResultTypeValues } from "Store/result/types";
 
 type RenderTableProps = {
-  item?: TResult;
-  tutorResultTable?: TTutorResult;
+  item?: ResultTypeValues;
+  tutorResultTable?: ResultTypeValues;
   tutorView?: boolean;
 };
 
@@ -35,24 +35,24 @@ const RenderTable: FC<RenderTableProps> = ({
           state: {
             score: item?.score,
             amount: item?.amount,
-            quizResume: item?.quizResume,
-            quizId: item?.quizId,
+            quizResume: item?.resume,
+            quizId: item?.quizUid,
             studentName: item?.studentName,
-            allInfo: item?.extraInfo,
+            allInfo: item,
           },
         })
-      : navigate(`/quiz?quizId=${item?.quizId}`);
+      : navigate(`/quiz?quizId=${item?.quizUid}`);
   };
 
   const handleOpenResult = () => {
     navigate("/quizResult", {
       state: {
-        score: tutorResultTable?.extraInfo?.score,
-        amount: tutorResultTable?.extraInfo?.amount,
-        quizResume: tutorResultTable?.extraInfo?.resume,
-        quizId: tutorResultTable?.extraInfo?.quizUid,
+        score: tutorResultTable?.score,
+        amount: tutorResultTable?.amount,
+        quizResume: tutorResultTable?.resume,
+        quizId: tutorResultTable?.quizUid,
         studentName: tutorResultTable?.studentName,
-        allInfo: tutorResultTable?.extraInfo,
+        allInfo: tutorResultTable,
       },
     });
   };
@@ -61,7 +61,7 @@ const RenderTable: FC<RenderTableProps> = ({
     return isMobile ? (
       <Styled.ListContainer onClick={handleRetry}>
         <Styled.List>
-          <Title>{item?.quiz}</Title>
+          <Title>{item?.quizTitle}</Title>
           <Styled.ListInfoContainer>
             <Styled.InfoContainer>
               <Title fontWeight="lighter">
@@ -78,7 +78,7 @@ const RenderTable: FC<RenderTableProps> = ({
       <Styled.TableContent>
         <Styled.TableBodyComponents width={50}>
           <Title size="smaller" fontWeight="lighter">
-            {item?.quiz}
+            {item?.quizTitle}
           </Title>
         </Styled.TableBodyComponents>
         <Styled.TableBodyComponents width={15}>
@@ -104,9 +104,9 @@ const RenderTable: FC<RenderTableProps> = ({
     return isMobile ? (
       <Styled.ListContainer onClick={handleOpenResult}>
         <Styled.List>
-          <Title>{tutorResultTable?.name}</Title>
+          <Title>{tutorResultTable?.studentName}</Title>
           <Styled.ListInfoContainer>
-            <Title fontWeight="lighter">{tutorResultTable?.quiz}</Title>
+            <Title fontWeight="lighter">{tutorResultTable?.quizTitle}</Title>
             <Title fontWeight="lighter">
               {tutorResultTable?.score} / {tutorResultTable?.amount}
             </Title>
@@ -117,12 +117,12 @@ const RenderTable: FC<RenderTableProps> = ({
       <Styled.TableContent>
         <Styled.TableBodyComponents width={40}>
           <Title size="smaller" fontWeight="lighter">
-            {tutorResultTable?.name}
+            {tutorResultTable?.studentName}
           </Title>
         </Styled.TableBodyComponents>
         <Styled.TableBodyComponents width={40}>
           <Title size="smaller" fontWeight="lighter">
-            {tutorResultTable?.quiz}
+            {tutorResultTable?.quizTitle}
           </Title>
         </Styled.TableBodyComponents>
         <Styled.TableBodyComponents width={15}>

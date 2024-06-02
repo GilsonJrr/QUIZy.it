@@ -13,8 +13,12 @@ interface SetResult {
   payload: ResultTypeValues[];
 }
 
-interface RemoveResult {
-  type: ResultTypes.REMOVE_RESULT;
+interface RemoveStudentResult {
+  type: ResultTypes.REMOVE_STUDENT_RESULT;
+}
+
+interface RemoveQuizResult {
+  type: ResultTypes.REMOVE_QUIZ_RESULT;
 }
 
 interface requestResultList {
@@ -45,7 +49,8 @@ type ResultAction =
   | requestResult
   | ResultList
   | Result
-  | RemoveResult;
+  | RemoveStudentResult
+  | RemoveQuizResult;
 
 const resultInitialState: ResultState = {
   isLoading: false,
@@ -116,7 +121,14 @@ const resultReducer: Reducer<ResultState, ResultAction> = (
         results: action.payload,
       };
     }
-    case ResultTypes.REMOVE_RESULT: {
+    case ResultTypes.REMOVE_STUDENT_RESULT: {
+      return {
+        ...state,
+        isLoading: true,
+        error: undefined,
+      };
+    }
+    case ResultTypes.REMOVE_QUIZ_RESULT: {
       return {
         ...state,
         isLoading: true,

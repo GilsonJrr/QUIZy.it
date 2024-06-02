@@ -6,7 +6,8 @@ import {
   getResult,
   getResultList,
   setResult,
-  removeResult,
+  removeStudentResult,
+  removeQuizResult,
 } from "../repository";
 
 import {
@@ -21,11 +22,10 @@ import { quizList } from "Store/quiz/actions";
 export function* getResultListSaga(props: ResultAction<ResultRequest>): any {
   const uid = props.payload.uid;
   const studentUid = props.payload.studentUid;
-  const quizUid = props.payload.quizUid;
 
   try {
-    if (uid && studentUid && quizUid) {
-      const resultResponses = yield call(getResultList, uid);
+    if (uid) {
+      const resultResponses = yield call(getResultList, uid, studentUid);
       yield put(resultList(resultResponses));
     }
   } catch (err: any) {
@@ -35,12 +35,12 @@ export function* getResultListSaga(props: ResultAction<ResultRequest>): any {
 
 export function* getResultSaga(props: ResultAction<ResultRequest>): any {
   const uid = props.payload.uid;
-  const resultId = props.payload.resultId || "";
+  const quizUid = props.payload.quizUid || "";
   const studentUid = props.payload.studentUid;
 
   try {
     if (uid && studentUid) {
-      const resultResponses = yield call(getResult, uid, studentUid, resultId);
+      const resultResponses = yield call(getResult, uid, studentUid, quizUid);
       yield put(result(resultResponses));
     }
   } catch (err: any) {
@@ -65,14 +65,31 @@ export function* setResultSaga(props: ResultAction<ResultTypeValues>): any {
   }
 }
 
-export function* removeResultSaga(props: ResultAction<ResultRequest>): any {
-  const resultId = props.payload.resultId;
+export function* removeStudentResultSaga(
+  props: ResultAction<ResultRequest>
+): any {
   const uid = props.payload.uid;
   const studentUid = props.payload.studentUid;
 
   try {
-    if (resultId && uid && studentUid) {
-      yield call(removeResult, uid, resultId, resultId);
+    if (uid && studentUid) {
+      yield call(removeStudentResult, uid, studentUid);
+      const resultResponses = yield call(getResultList, uid);
+      yield put(resultList(resultResponses));
+    }
+  } catch (err: any) {
+    yield put(err);
+  }
+}
+
+export function* removeQuizResultSaga(props: ResultAction<ResultRequest>): any {
+  const uid = props.payload.uid;
+  const quizUid = props.payload.quizUid;
+
+  try {
+    if (uid && quizUid) {
+      console.log("teste 2", quizUid, uid);
+      yield call(removeQuizResult, uid, quizUid);
       const resultResponses = yield call(getResultList, uid);
       yield put(resultList(resultResponses));
     }
@@ -86,5 +103,6 @@ export default [
   takeLatest(ResultTypes.SET_RESULT, setResultSaga),
   takeLatest(ResultTypes.REQUEST_RESULT_LIST, getResultListSaga),
   takeLatest(ResultTypes.REQUEST_RESULT, getResultSaga),
-  takeLatest(ResultTypes.REMOVE_RESULT, removeResultSaga),
+  takeLatest(ResultTypes.REMOVE_STUDENT_RESULT, removeStudentResultSaga),
+  takeLatest(ResultTypes.REMOVE_QUIZ_RESULT, removeQuizResultSaga),
 ];

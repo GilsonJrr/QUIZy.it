@@ -1,16 +1,17 @@
 import React, { FC, useEffect, useMemo } from "react";
 import Table from "..";
 import RenderTable from "components/renderItems/RenderTable";
-import { TTutorResult } from "types/index";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
+import { ResultTypeValues } from "Store/result/types";
+import { requestResultList } from "Store/result/actions";
 
 type TutorResultTableProps = {
   dashBoard?: boolean;
   emptyState?: (empty: boolean) => void;
   search?: string;
   filter?: boolean;
-  itemKey?: string;
+  itemKey: string;
 };
 
 const TutorResultTable: FC<TutorResultTableProps> = ({
@@ -20,7 +21,10 @@ const TutorResultTable: FC<TutorResultTableProps> = ({
   filter,
   itemKey,
 }) => {
-  const { quizzes } = useSelector((state: RootState) => state.quiz);
+  const dispatch = useDispatch();
+
+  const { results } = useSelector((state: RootState) => state.result);
+  const { user } = useSelector((state: RootState) => state.user);
 
   const TableHeaderTitles = [
     { label: "Name", width: 40 },
@@ -30,50 +34,42 @@ const TutorResultTable: FC<TutorResultTableProps> = ({
   ];
 
   const tutorResults = useMemo(() => {
-    const myResults = quizzes?.map((quiz) => ({
-      results: quiz.results,
-    }));
-    return myResults
-      ? Object.values(myResults)
-          ?.map((res) => {
-            return Object.values(res.results || "")?.map((innerQuiz) => {
-              return {
-                name: innerQuiz?.studentName || "",
-                quiz: innerQuiz.quizTitle || "",
-                score: innerQuiz.score,
-                amount: innerQuiz.amount,
-                extraInfo: innerQuiz,
-                studentName: innerQuiz?.studentName,
-                date: innerQuiz.date,
-              };
-            });
-          })
-          .flatMap((innerArray) => innerArray)
-          .sort((a, b) => parseInt(b?.date || "") - parseInt(a?.date || ""))
-          .filter((e) =>
-            (e as Record<string, string>)[itemKey || ""]
-              ?.toUpperCase()
-              .includes(search?.toUpperCase() || "")
-          )
-          .sort((a, b) => {
-            const comparison = (a as Record<string, string>)[
-              itemKey || ""
-            ].localeCompare((b as Record<string, string>)[itemKey || ""]);
-            return filter ? comparison : -comparison;
-          })
-      : [];
-  }, [filter, itemKey, quizzes, search]);
+    return (
+      results
+        ?.filter((e) =>
+          (e as unknown as Record<string, string>)[itemKey || ""]
+            ?.toUpperCase()
+            .includes(search?.toUpperCase() || "")
+        )
+        .sort((a, b) => {
+          const comparison = (a as unknown as Record<string, string>)[
+            itemKey || ""
+          ].localeCompare(
+            (b as unknown as Record<string, string>)[itemKey || ""]
+          );
+          return filter ? comparison : -comparison;
+        }) || []
+    );
+  }, [filter, itemKey, results, search]);
 
   useEffect(() => {
     emptyState?.(tutorResults.length === 0);
   }, [emptyState, tutorResults.length]);
 
+  useEffect(() => {
+    if (results === undefined) {
+      dispatch(
+        requestResultList({
+          uid: user?.info?.uid || "",
+        })
+      );
+    }
+  }, [dispatch, user, results]);
+
   return (
-    <Table<TTutorResult>
+    <Table<ResultTypeValues>
       header={TableHeaderTitles}
-      content={
-        (dashBoard ? tutorResults.slice(0, 5) : tutorResults) as TTutorResult[]
-      }
+      content={tutorResults}
       renderItem={(item) => <RenderTable tutorResultTable={item} />}
     />
   );

@@ -1,9 +1,12 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useEffect, useMemo } from "react";
 import Table from "..";
 import RenderTable from "components/renderItems/RenderTable";
-import { THeader, TResult } from "types/index";
+import { THeader } from "types/index";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
+import { ResultTypeValues } from "Store/result/types";
+import { useDispatch } from "react-redux";
+import { requestResultList, resultListCleanUp } from "Store/result/actions";
 
 type StudentResultTableProps = {
   dashBoard?: boolean;
@@ -22,7 +25,10 @@ const StudentResultTable: FC<StudentResultTableProps> = ({
   filter,
   itemKey,
 }) => {
-  const { quizzes } = useSelector((state: RootState) => state.quiz);
+  const dispatch = useDispatch();
+
+  const { results } = useSelector((state: RootState) => state.result);
+  const { user, userStudent } = useSelector((state: RootState) => state.user);
 
   const TableHeaderTitles: THeader[] = [
     { label: "Title", width: 50 },
@@ -30,52 +36,45 @@ const StudentResultTable: FC<StudentResultTableProps> = ({
     { label: "Date", width: 20 },
     { label: "Option", width: 15, align: "center" },
   ];
-  const results = useMemo(() => {
-    const myResults = quizzes?.map((student) => ({
-      results: Object.fromEntries(
-        Object.entries(student.results || {})?.filter(
-          ([key, value]) => key === studentID
+
+  const studentResults = useMemo(() => {
+    return (
+      results
+        ?.filter((e) =>
+          (e as unknown as Record<string, string>)[itemKey || ""]
+            ?.toUpperCase()
+            .includes(search?.toUpperCase() || "")
         )
-      ),
-    }));
-    return myResults
-      ? Object.values(myResults)
-          ?.map((res) => {
-            return Object.values(res.results)[0]
-              ? {
-                  date: Object.values(res.results)[0]?.date,
-                  quiz: Object.values(res.results)[0]?.quizTitle,
-                  score: Object.values(res.results)[0]?.score,
-                  quizId: Object.values(res.results)[0]?.quizUid,
-                  amount: Object.values(res.results)[0]?.amount,
-                  quizResume: Object.values(res.results)[0]?.resume,
-                  studentName: Object.values(res.results)[0]?.studentName,
-                  extraInfo: Object.values(res.results)[0],
-                }
-              : undefined;
-          })
-          ?.filter((empty) => empty !== undefined)
-          .sort((a, b) => parseInt(b?.date || "") - parseInt(a?.date || ""))
-          .filter((e) =>
-            (e as unknown as Record<string, string>)[itemKey || ""]
-              ?.toUpperCase()
-              .includes(search?.toUpperCase() || "")
-          )
-          .sort((a, b) => {
-            const comparison = (a as unknown as Record<string, string>)[
-              itemKey || ""
-            ].localeCompare(
-              (b as unknown as Record<string, string>)[itemKey || ""]
-            );
-            return filter ? comparison : -comparison;
-          })
-      : [];
-  }, [filter, itemKey, quizzes, search, studentID]);
+        .sort((a, b) => {
+          const comparison = (a as unknown as Record<string, string>)[
+            itemKey || ""
+          ].localeCompare(
+            (b as unknown as Record<string, string>)[itemKey || ""]
+          );
+          return filter ? comparison : -comparison;
+        }) || []
+    );
+  }, [filter, itemKey, results, search]);
+
+  useEffect(() => {
+    dispatch(
+      requestResultList({
+        uid: user?.info?.uid || userStudent?.tutorID || "",
+        studentUid: studentID || "",
+      })
+    );
+  }, [dispatch, user, userStudent, studentID]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resultListCleanUp());
+    };
+  }, [dispatch]);
 
   return (
-    <Table<TResult>
+    <Table<ResultTypeValues>
       header={TableHeaderTitles}
-      content={(dashBoard ? results.slice(0, 5) : results) as TResult[]}
+      content={studentResults}
       renderItem={(item) => <RenderTable item={item} tutorView={tutorView} />}
     />
   );

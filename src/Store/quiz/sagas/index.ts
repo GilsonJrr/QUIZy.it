@@ -13,6 +13,7 @@ import {
 
 import { QuizAction, QuizRequest, QuizTypeValues, QuizTypes } from "../types";
 import { eventChannel } from "redux-saga";
+import { removeQuizResult } from "Store/result/actions";
 
 //Quiz
 function createQuizListChannel(uid: string) {
@@ -107,6 +108,7 @@ export function* removeQuizSaga(props: QuizAction<QuizRequest>): any {
     if (quizId && uid) {
       yield call(removeQuiz, uid, quizId);
       yield call(deleteImgQuiz, { uid: uid, id: quizId });
+      yield put(removeQuizResult({ uid: uid, quizUid: quizId }));
       const quizResponses = yield call(getQuizList, uid);
       yield put(quizList(quizResponses));
       yield put(() => onSuccess?.());

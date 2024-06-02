@@ -12,12 +12,14 @@ type ToggleInputProps = {
   Label: string;
   setValue: (value: boolean) => void;
   width?: string;
+  value: boolean;
 };
 
 const ToggleInput: FC<ToggleInputProps> = ({
   options,
   Label,
   setValue,
+  value,
   width,
 }) => {
   const [active, setActive] = useState(0);
@@ -28,9 +30,10 @@ const ToggleInput: FC<ToggleInputProps> = ({
   };
 
   useEffect(() => {
-    setValue(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setActive(value ? 0 : 1);
+  }, [value]);
+
+  console.log("value", value);
 
   return (
     <Styled.Wrapper width={width}>

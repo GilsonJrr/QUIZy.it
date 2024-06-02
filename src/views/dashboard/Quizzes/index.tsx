@@ -137,14 +137,14 @@ const Quizzes: FC<QuizzesProps> = () => {
       )}
       {(!isMobile || tab === t("quizzes.quizzes")) && (
         <Block.QuizzesCard
-          gridName="card2"
+          gridName="card3"
           editMode={userType === "tutor"}
           origin
         />
       )}
       {(!isMobile || tab === t("quizzes.categories")) && (
         <Block.CategoriesCard
-          gridName="card3"
+          gridName="card2"
           editMode={userType === "tutor"}
         />
       )}

@@ -158,10 +158,7 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({
 
       questions?.forEach((question, index) => {
         setValue(`questions.${index}.questionTitle`, question.questionTitle);
-        setValue(
-          `questions.${index}.rightAnswer`,
-          question.rightAnswer || true
-        );
+        setValue(`questions.${index}.rightAnswer`, question.rightAnswer);
       });
     }
   }, [quiz, setValue]);
@@ -220,6 +217,9 @@ const TrueOrFalseQuestion: FC<TrueOrFalseQuestionProps> = ({
                 { label: "True", value: true },
                 { label: "False", value: false },
               ]}
+              value={
+                watch(`questions.${selectedQuestion}.rightAnswer`) || false
+              }
               setValue={(value) =>
                 setValue(`questions.${selectedQuestion}.rightAnswer`, value)
               }

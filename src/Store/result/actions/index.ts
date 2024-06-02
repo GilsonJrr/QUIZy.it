@@ -60,11 +60,20 @@ export function setResult(props: ResultRequest): ResultAction<ResultRequest> {
   };
 }
 
-export function removeResult(
+export function removeStudentResult(
   props: ResultRequest
 ): ResultAction<ResultRequest> {
   return {
-    type: ResultTypes.REMOVE_RESULT,
+    type: ResultTypes.REMOVE_STUDENT_RESULT,
+    payload: { ...props },
+  };
+}
+
+export function removeQuizResult(
+  props: ResultRequest
+): ResultAction<ResultRequest> {
+  return {
+    type: ResultTypes.REMOVE_QUIZ_RESULT,
     payload: { ...props },
   };
 }

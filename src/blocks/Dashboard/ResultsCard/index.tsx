@@ -6,7 +6,7 @@ import { RootState } from "Store/root-reducer";
 import { useTranslation } from "react-i18next";
 import TutorResultTable from "components/Table/TutorResultTable";
 import StudentResultTable from "components/Table/StudentResultTable";
-import { requestQuizList } from "Store/quiz/actions";
+import { requestResultList } from "Store/result/actions";
 
 type QuizzesCardProps = {
   origin?: boolean;
@@ -28,7 +28,10 @@ const QuizzesCard: FC<QuizzesCardProps> = ({ origin, gridName }) => {
 
   const handleUpdate = () => {
     dispatch(
-      requestQuizList({ uid: userStudent?.tutorID || user?.info?.uid || "" })
+      requestResultList({
+        uid: user?.info?.uid || userStudent?.tutorID || "",
+        studentUid: userStudent?.uid || "",
+      })
     );
   };
 
@@ -49,13 +52,17 @@ const QuizzesCard: FC<QuizzesCardProps> = ({ origin, gridName }) => {
       update={handleUpdate}
     >
       {userType === "tutor" ? (
-        <TutorResultTable search={search} filter={filter} itemKey={"name"} />
+        <TutorResultTable
+          search={search}
+          filter={filter}
+          itemKey={"studentName"}
+        />
       ) : (
         <StudentResultTable
           studentID={userStudent?.uid}
           search={search}
           filter={filter}
-          itemKey={"quiz"}
+          itemKey={"quizTitle"}
         />
       )}
     </Card>

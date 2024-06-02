@@ -1,17 +1,30 @@
 import { database } from "lib/firebase";
-import { ref, set, get, remove } from "firebase/database";
+import {
+  ref,
+  set,
+  get,
+  remove,
+  orderByChild,
+  equalTo,
+  query,
+} from "firebase/database";
 
 import { ResultTypeValues } from "../types";
 
-export const getResultList = async (uid: string) => {
-  return get(
-    ref(
-      database,
-      // `user/${uid}/students/${studentId}/results`
-      `user/${uid}/quiz/`
-    )
-  )
-    .then((results) => results.val())
+export const getResultList = async (uid: string, studentUid?: string) => {
+  const queryRef = ref(database, `results/${uid}`);
+  const quizQuery = studentUid
+    ? query(queryRef, orderByChild("studentUid"), equalTo(studentUid))
+    : query(queryRef);
+
+  return get(quizQuery)
+    .then((snapshot) => {
+      const quizzes: any[] = [];
+      snapshot.forEach((childSnapshot) => {
+        quizzes.push(childSnapshot.val());
+      });
+      return quizzes;
+    })
     .catch((err) => {
       throw new Error(err);
     });
@@ -20,10 +33,11 @@ export const getResultList = async (uid: string) => {
 export const getResult = async (
   uid: string,
   studentId: string,
-  resultId: string
+  quizUid: string
 ) => {
   return get(
-    ref(database, `user/${uid}/quiz/${studentId}/results/${studentId}/`)
+    // ref(database, `user/${uid}/quiz/${studentId}/results/${studentId}/`)
+    ref(database, `results/${uid}/${quizUid}_${studentId}`)
   )
     .then((results) => results.val())
     .catch((err) => {
@@ -36,7 +50,8 @@ export const setResult = async (_uid: string, data: ResultTypeValues) => {
   return set(
     ref(
       database,
-      `user/${data.tutorUid}/quiz/${data.quizUid}/results/${data.studentUid}/`
+      // `user/${data.tutorUid}/quiz/${data.quizUid}/results/${data.studentUid}/`
+      `results/${data.tutorUid}/${data.quizUid}_${data.studentUid}`
     ),
     rest
   )
@@ -46,15 +61,43 @@ export const setResult = async (_uid: string, data: ResultTypeValues) => {
     });
 };
 
-export const removeResult = async (
-  uid: string,
-  studentId: string,
-  resultId: string
-) => {
-  return remove(
-    ref(database, `user/${uid}/students/${studentId}/results/${resultId}/`)
-  )
-    .then((results) => results)
+export const removeStudentResult = async (uid: string, studentUid: string) => {
+  const queryRef = ref(database, `results/${uid}`);
+  const quizQuery = query(
+    queryRef,
+    orderByChild("studentUid"),
+    equalTo(studentUid)
+  );
+
+  return get(quizQuery)
+    .then((snapshot) => {
+      const removePromises: Promise<void>[] = [];
+      snapshot.forEach((childSnapshot) => {
+        removePromises.push(
+          remove(ref(database, `results/${uid}/${childSnapshot.key}`))
+        );
+      });
+      return Promise.all(removePromises);
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
+};
+
+export const removeQuizResult = async (uid: string, quizUid: string) => {
+  const queryRef = ref(database, `results/${uid}`);
+  const quizQuery = query(queryRef, orderByChild("quizUid"), equalTo(quizUid));
+
+  return get(quizQuery)
+    .then((snapshot) => {
+      const removePromises: Promise<void>[] = [];
+      snapshot.forEach((childSnapshot) => {
+        removePromises.push(
+          remove(ref(database, `results/${uid}/${childSnapshot.key}`))
+        );
+      });
+      return Promise.all(removePromises);
+    })
     .catch((err) => {
       throw new Error(err);
     });
