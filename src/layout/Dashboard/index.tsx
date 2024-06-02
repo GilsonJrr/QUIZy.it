@@ -17,7 +17,6 @@ import MenuModal from "components/Modal/MenuModal";
 // import LanguageSwitcher from "components/languageSwitcher";
 import { useAnimation } from "hooks/useAnimation";
 import { Title } from "components/ui/Typography/styled";
-import { requestAlertList } from "Store/alert/actions";
 import Alert from "components/Alert";
 import ThemeToggle from "components/ThemeToggle";
 
@@ -45,16 +44,6 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
   const handleOpenProfile = () => {
     handleModal(<ProfileModal />);
   };
-
-  useEffect(() => {
-    dispatch(
-      requestAlertList({
-        studentUid: userStudent?.uid,
-        tutorUid: userStudent?.tutorID || "",
-        userType: "student",
-      })
-    );
-  }, [dispatch, userStudent]);
 
   useEffect(() => {
     if (userStudent) {
