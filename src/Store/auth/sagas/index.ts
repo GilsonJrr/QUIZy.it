@@ -39,6 +39,7 @@ import { myListCleanUp, myListListCleanUp } from "Store/myList/actions";
 import { quizCleanUp, quizListCleanUp } from "Store/quiz/actions";
 import { categoryCleanUp, categoryListCleanUp } from "Store/category/actions";
 import { groupCleanUp, groupListCleanUp } from "Store/group/actions";
+import { alertCleanUp, alertListCleanUp } from "Store/alert/actions";
 
 export function* requestSignInEmailPasswordSaga(
   props: AuthAction<AuthSignInInput>
@@ -88,6 +89,8 @@ export function* requestSignOutSaga(): any {
     yield put(categoryListCleanUp());
     yield put(groupCleanUp());
     yield put(groupListCleanUp());
+    yield put(alertCleanUp());
+    yield put(alertListCleanUp());
 
     yield put(signOut());
   } catch {
