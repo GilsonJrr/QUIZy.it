@@ -19,6 +19,7 @@ import { useAnimation } from "hooks/useAnimation";
 import { Title } from "components/ui/Typography/styled";
 import Alert from "components/Alert";
 import ThemeToggle from "components/ThemeToggle";
+import FeedBack from "components/FeedBack";
 
 type dashboardProps = {
   children?: ReactNode | ReactNode[];
@@ -80,6 +81,9 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
               }
             </Title>
           </Styled.TitleContainer>
+          <Styled.OptionContainer>
+            <FeedBack />
+          </Styled.OptionContainer>
           {/* <Styled.OptionContainer>
             <LanguageSwitcher />
           </Styled.OptionContainer> */}

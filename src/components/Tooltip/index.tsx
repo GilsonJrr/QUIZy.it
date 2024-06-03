@@ -15,6 +15,9 @@ type TooltipProps = {
   onHover?: boolean;
   width?: string;
   disable?: boolean;
+  editable?: boolean;
+  onCloseTooltip?: () => void;
+  showTooltip?: boolean;
 };
 
 const Tooltip: FC<TooltipProps> = ({
@@ -23,12 +26,15 @@ const Tooltip: FC<TooltipProps> = ({
   position,
   onHover,
   width,
+  editable,
   disable = false,
+  onCloseTooltip,
+  showTooltip,
 }) => {
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const [showSelector, setShowSelector] = useState(false);
+  const [showSelector, setShowSelector] = useState(showTooltip);
   const [isMouseInside, setIsMouseInside] = useState(false);
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -37,6 +43,7 @@ const Tooltip: FC<TooltipProps> = ({
       !containerRef.current.contains(event.target as Node)
     ) {
       setShowSelector(false);
+      onCloseTooltip?.();
     }
   };
 
@@ -46,15 +53,17 @@ const Tooltip: FC<TooltipProps> = ({
       !tooltipRef.current.contains(event.relatedTarget as Node)
     ) {
       setShowSelector(false);
+      onCloseTooltip?.();
     }
   };
 
   const handleLostFocus = (event: FocusEvent<HTMLDivElement>) => {
-    // if (!event.currentTarget.contains(event.relatedTarget)) {
-    // }
-    setTimeout(() => {
-      setShowSelector(false);
-    }, 100);
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setTimeout(() => {
+        setShowSelector(false);
+        onCloseTooltip?.();
+      }, 100);
+    }
   };
 
   const handleMouseEnter = () => {
@@ -63,15 +72,27 @@ const Tooltip: FC<TooltipProps> = ({
 
   const handleMouseLeaveCard = (event: React.MouseEvent<HTMLDivElement>) => {
     if (
+      editable &&
       isMouseInside &&
       !event.currentTarget.contains(event.relatedTarget as Node)
     ) {
       setTimeout(() => {
         setShowSelector(false);
+        onCloseTooltip?.();
       }, 100);
       setIsMouseInside(false);
+      return;
     }
+    setTimeout(() => {
+      setShowSelector(false);
+      onCloseTooltip?.();
+    }, 100);
+    setIsMouseInside(false);
   };
+
+  useEffect(() => {
+    setShowSelector(showTooltip);
+  }, [showTooltip]);
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
@@ -84,6 +105,7 @@ const Tooltip: FC<TooltipProps> = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
         tooltipRef.current.removeEventListener("mouseleave", handleMouseLeave);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -114,6 +136,7 @@ const Tooltip: FC<TooltipProps> = ({
             !tooltipRef.current.contains(event.relatedTarget as Node)
           ) {
             setShowSelector(false);
+            onCloseTooltip?.();
           }
         }}
       />

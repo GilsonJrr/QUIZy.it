@@ -151,7 +151,7 @@ const StudentProfile: FC<StudentProfileProps> = () => {
             <StudentResultTable
               studentID={studentId || ""}
               tutorView
-              itemKey="quiz"
+              itemKey="quizTitle"
             />
           </Card>
         )}

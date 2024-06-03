@@ -31,6 +31,7 @@ import { LoadingContainerFullPage } from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
 import ResetPassword from "views/auth/ResetPassword";
 import RequestReset from "views/auth/RequestReset";
+import Settings from "views/dashboard/Settings";
 
 const Routers = () => {
   const { user } = useSelector((state: RootState) => state.user);
@@ -108,6 +109,7 @@ const Routers = () => {
                 />
               </>
             )}
+            <Route path="/settings" element={<Settings />} />
             <Route path="/results" element={<Results />} />
             <Route path="/profile" element={<ProfileModal />} />
           </Route>

@@ -32,7 +32,7 @@ export const Button = styled.button<Props>`
     ${({ theme, variant }) =>
       variant === "anchor-dark" || variant === "anchor-white"
         ? "transparent"
-        : theme.colors.button.default};
+        : theme.colors.main.default};
   background-color: ${({ theme, variant }) => theme.colors.button[variant]};
   outline: none;
   color: ${({ variant, theme }) => theme.colors.text[EColor[variant]]};

@@ -34,7 +34,6 @@ export const TopArrow = css`
   &::after {
     content: "";
     position: absolute;
-    right: 17px;
     bottom: 100%;
     border-top: 15px solid transparent;
     border-bottom: 15px solid ${({ theme }) => theme.colors.main.default};
@@ -45,7 +44,6 @@ export const TopArrow = css`
   &::before {
     content: "";
     position: absolute;
-    right: 17px;
     bottom: calc(100% - 1px);
     border-top: 15px solid transparent;
     border-bottom: 14px solid ${({ theme }) => theme.colors.background.default};
@@ -59,7 +57,6 @@ export const BottomArrow = css`
   &::after {
     content: "";
     position: absolute;
-    left: 17px;
     top: 100%;
     border-top: 15px solid ${({ theme }) => theme.colors.main.default};
     border-bottom: 15px solid transparent;
@@ -70,7 +67,6 @@ export const BottomArrow = css`
   &::before {
     content: "";
     position: absolute;
-    left: 17px;
     top: 99%;
     border-top: 14px solid ${({ theme }) => theme.colors.background.default};
     border-bottom: 15px solid transparent;
@@ -107,13 +103,11 @@ export const RightArrow = css`
 
 export const FromTheTop = css`
   top: 100%;
-  right: -22px;
-  margin-top: 15px;
+  margin-top: 16px;
 `;
 
 export const FromTheBottom = css`
   bottom: 100%;
-  left: -22px;
   margin-bottom: 15px;
 `;
 
@@ -140,7 +134,7 @@ export const ToolTipContent = styled.div<Props>`
   border: 1px solid ${({ theme }) => theme.colors.main.default};
   border-radius: 10px;
   gap: 10px;
-  align-items: flex-start;
+  align-items: center;
   transition: 0.3s ease-in-out all;
   -webkit-box-shadow: 0px 15px 27px 1px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 0px 15px 27px 1px rgba(0, 0, 0, 0.3);

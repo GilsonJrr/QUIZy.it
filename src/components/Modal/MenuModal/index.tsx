@@ -11,6 +11,7 @@ import { FaFileSignature } from "react-icons/fa6";
 import { MdOutlineQuiz } from "react-icons/md";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { IoMdExit } from "react-icons/io";
+import { IoMdSettings } from "react-icons/io";
 
 import { CgProfile } from "react-icons/cg";
 import { useDispatch } from "react-redux";
@@ -91,6 +92,15 @@ const MenuModal: FC<MenuModalProps> = () => {
             <CgProfile size={30} />
             <Title color={currentUrl === "profile" ? "light" : "default"}>
               Profile
+            </Title>
+          </Styled.IconContainer>
+          <Styled.IconContainer
+            active={currentUrl === "settings"}
+            onClick={() => navigate("/settings")}
+          >
+            <IoMdSettings size={30} />
+            <Title color={currentUrl === "settings" ? "light" : "default"}>
+              Settings
             </Title>
           </Styled.IconContainer>
         </Styled.MenuContainer>
