@@ -28,7 +28,7 @@ export const StudentPage = () => {
   const { userStudent } = useSelector((state: RootState) => state.user);
   const { myLists } = useSelector((state: RootState) => state.myList);
 
-  const [tab, setTab] = useState("Quizzes");
+  const [tab, setTab] = useState("Quiz");
   const [innerTab, setInnerTab] = useState("List");
 
   const myList = useMemo(() => {
