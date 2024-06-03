@@ -5,6 +5,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { RouterTitle } from "types";
 
 import Logo from "assets/images/Logo.png";
+import LogoDark from "assets/images/Logo_dark.png";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
@@ -20,6 +21,7 @@ import { Title } from "components/ui/Typography/styled";
 import Alert from "components/Alert";
 import ThemeToggle from "components/ThemeToggle";
 import FeedBack from "components/FeedBack";
+import { useTheme } from "lib/styles/Theme";
 
 type dashboardProps = {
   children?: ReactNode | ReactNode[];
@@ -29,6 +31,8 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isDarkMode } = useTheme();
+
   const { user, userStudent, isLoading } = useSelector(
     (state: RootState) => state.user
   );
@@ -69,7 +73,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
     <Styled.Container>
       <Styled.Header>
         <Styled.LogoContainer onClick={() => navigate("/")}>
-          <Styled.Logo src={Logo} />
+          <Styled.Logo src={isDarkMode ? LogoDark : Logo} />
         </Styled.LogoContainer>
         <Styled.HeaderTitle>
           <Styled.TitleContainer>
@@ -108,7 +112,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
       </Styled.Header>
       <Styled.HeaderMobile>
         <Styled.LogoContainer>
-          <Styled.Logo src={Logo} />
+          <Styled.Logo src={isDarkMode ? LogoDark : Logo} />
         </Styled.LogoContainer>
         <Styled.HeaderTitle>
           <Title>

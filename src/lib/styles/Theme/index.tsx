@@ -23,7 +23,10 @@ export const useTheme = () => {
 export const ThemeProviderComponent: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const initialTheme =
+    String(localStorage.getItem("quizy.it_theme")).toLowerCase() === "true";
+
+  const [isDarkMode, setIsDarkMode] = useState(initialTheme || false);
 
   const toggleTheme = () => {
     setIsDarkMode((prevMode) => !prevMode);

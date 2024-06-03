@@ -12,6 +12,7 @@ const ThemeToggle: FC<ThemeToggleProps> = () => {
   const handleToggle = () => {
     toggleTheme();
     setActive(!active);
+    localStorage.setItem("quizy.it_theme", String(!active));
   };
 
   useEffect(() => {
