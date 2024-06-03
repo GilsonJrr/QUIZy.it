@@ -11,6 +11,10 @@ import { useModalContext } from "components/Modal/modalContext";
 import AlertModal from "components/Modal/AlertModal";
 import useDeviceType from "hooks/useDeviceType";
 
+const PUBLIC_KEY = process.env.REACT_APP_EMAILJS_PUBLIC_KEY;
+const SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID;
+const TEMPLATE_FEEDBACK_ID = process.env.REACT_APP_EMAILJS_TEMPLATE_FEEDBACK_ID;
+
 type FeedBackProps = {};
 
 const FeedBack: FC<FeedBackProps> = () => {
@@ -33,33 +37,30 @@ const FeedBack: FC<FeedBackProps> = () => {
       to_name: "Gilson",
     };
 
-    emailjs
-      .send(
-        process.env.REACT_APP_EMAILJS_SERVICE_ID || "",
-        process.env.REACT_APP_EMAILJS_TEMPLATE_FEEDBACK_ID || "",
-        data,
-        {
-          publicKey: process.env.REACT_APP_EMAILJS_PUBLIC_KEY || "",
-        }
-      )
-      .then(
-        () => {
-          handleModal(
-            <AlertModal
-              type={"success"}
-              message={"Feedback sent successfully"}
-            />
-          );
-        },
-        (error) => {
-          handleModal(
-            <AlertModal
-              type={"error"}
-              message={`Feedback sent failed: ${error.text}`}
-            />
-          );
-        }
-      );
+    if (SERVICE_ID && TEMPLATE_FEEDBACK_ID) {
+      emailjs
+        .send(SERVICE_ID, TEMPLATE_FEEDBACK_ID, data, {
+          publicKey: PUBLIC_KEY,
+        })
+        .then(
+          () => {
+            handleModal(
+              <AlertModal
+                type={"success"}
+                message={"Feedback sent successfully"}
+              />
+            );
+          },
+          (error) => {
+            handleModal(
+              <AlertModal
+                type={"error"}
+                message={`Feedback sent failed: ${error.text}`}
+              />
+            );
+          }
+        );
+    }
 
     setFeedback("");
     setOpenTooltip(false);
@@ -101,7 +102,6 @@ const FeedBack: FC<FeedBackProps> = () => {
       position={"top"}
       editable
       showTooltip={openTooltip}
-      onCloseTooltip={() => setFeedback("")}
     >
       <Button
         size="small"
