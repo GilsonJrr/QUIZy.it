@@ -8,14 +8,20 @@ export const Container = styled.div`
 
   @media screen and (min-width: 900px) {
     display: grid;
-    grid-template-columns: 1fr 0.9fr 1fr 1.3fr;
+    grid-template-columns: 1fr 0.9fr 1fr 1.6fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
     grid-column-gap: 20px;
     grid-row-gap: 20px;
+    /* grid-template-areas:
+      "results results categories information"
+      "results results categories information"
+      "results results categories information"
+      "group group group information"
+      "group group group information"; */
     grid-template-areas:
-      "results results categories information"
-      "results results categories information"
-      "results results categories information"
+      "results results results information"
+      "results results results information"
+      "results results results information"
       "group group group information"
       "group group group information";
   }

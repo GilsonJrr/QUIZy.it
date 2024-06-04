@@ -40,6 +40,7 @@ const StudentProfile: FC<StudentProfileProps> = () => {
   const studentId = new URLSearchParams(location.search).get("studentId");
 
   const [tab, setTab] = useState("Info");
+  const [resultTab, setResultTab] = useState("Results");
 
   const student =
     students?.filter((student) => student.info?.uid === studentId)[0] ||
@@ -119,8 +120,6 @@ const StudentProfile: FC<StudentProfileProps> = () => {
     navigate(`/students/student-profile?studentId=${uid}`);
   };
 
-  //pic is to big
-
   if (studentLoading || quizLoading) {
     return (
       <LoadingContainerFullPage>
@@ -134,7 +133,7 @@ const StudentProfile: FC<StudentProfileProps> = () => {
       <BreadCrumbs crumbs={crumbs} />
       {isMobile && (
         <Tabs
-          tabs={[{ label: "Info" }, { label: "Result" }, { label: "Category" }]}
+          tabs={[{ label: "Info" }, { label: "Result" }]}
           activeTab={(tab) => setTab(tab)}
           radius={10}
         />
@@ -142,20 +141,28 @@ const StudentProfile: FC<StudentProfileProps> = () => {
       <Styled.Container>
         {(!isMobile || tab === "Result") && (
           <Card
-            title={"Results"}
+            title={""}
             gridName="results"
             isEmpty={false}
             emptyMessage={`${student?.info?.name} has't completed any quiz yet`}
             innerCard={isMobile}
           >
-            <StudentResultTable
-              studentID={studentId || ""}
-              tutorView
-              itemKey="quizTitle"
+            <Tabs
+              tabs={[{ label: "Results" }]}
+              activeTab={(tab) => setResultTab(tab)}
+              radius={10}
             />
+            {resultTab === "Results" && (
+              <StudentResultTable
+                studentID={studentId || ""}
+                tutorView
+                itemKey="quizTitle"
+              />
+            )}
           </Card>
         )}
-        {(!isMobile || tab === "Category") && (
+        {/* TODO: reativar aqui apos decidir a melhor forma de salvar esses resultados */}
+        {/* {(!isMobile || tab === "Category") && (
           <>
             <Card
               title={"Categories"}
@@ -206,6 +213,29 @@ const StudentProfile: FC<StudentProfileProps> = () => {
               </Styled.GroupContainer>
             </Card>
           </>
+        )} */}
+        {!isMobile && (
+          <Card
+            title={"Same group"}
+            isEmpty={sameGroupStudents?.length === 0}
+            gridName="group"
+            emptyMessage={`${student?.info?.name} is alone here`}
+            innerCard={isMobile}
+            isLoading={!student}
+          >
+            <Styled.GroupContainer>
+              {sameGroupStudents?.map((group) => {
+                return (
+                  <Avatar
+                    name={group.info?.name}
+                    photo={group.info?.photo}
+                    size="medium"
+                    onClick={() => handleChangeStudent(group.info?.uid || "")}
+                  />
+                );
+              })}
+            </Styled.GroupContainer>
+          </Card>
         )}
         {(!isMobile || tab === "Info") && (
           <Card
