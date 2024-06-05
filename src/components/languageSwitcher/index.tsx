@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import * as Styled from "./styled";
 import { useTranslation } from "react-i18next";
 import Button from "components/Button";
@@ -9,6 +9,7 @@ type LanguageSwitcherProps = {};
 const LanguageSwitcher: FC<LanguageSwitcherProps> = () => {
   const { i18n } = useTranslation();
   const [showSelector, setShowSelector] = useState(false);
+  const selectedLanguage = localStorage.getItem("quizy.it_language");
 
   const changeLanguage = (lng: string) => {
     i18n
@@ -16,22 +17,32 @@ const LanguageSwitcher: FC<LanguageSwitcherProps> = () => {
       .then(() => {})
       .catch((error) => {});
     setShowSelector(!showSelector);
+    localStorage.setItem("quizy.it_language", lng);
   };
 
   const activeIcon = () => {
     switch (true) {
       case i18n.language === "en":
         return <Styled.USIcon />;
-      case i18n.language === "pt":
+      case i18n.language === "pt-BR":
         return <Styled.BRIcon />;
     }
   };
+
+  useEffect(() => {
+    if (selectedLanguage) {
+      i18n
+        .changeLanguage(selectedLanguage)
+        .then(() => {})
+        .catch((error) => {});
+    }
+  }, [i18n, selectedLanguage]);
 
   const toolTipContent = () => {
     return (
       <Styled.OptionsContainer>
         <Button
-          onClick={() => changeLanguage("pt")}
+          onClick={() => changeLanguage("pt-BR")}
           variant="anchor-dark"
           padding="0"
           size="small"

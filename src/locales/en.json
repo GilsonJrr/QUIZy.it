@@ -1,4 +1,41 @@
 {
+  "components": {
+    "feedBack": {
+      "button": "FeedBack",
+      "title": "Give us your feedback about Quizy",
+      "sendButton": "Send"
+    },
+    "renderItems": {
+      "renderQuizCard": {
+        "edit": "Edit",
+        "start": "Start"
+      }
+    }
+  },
+  "user": {
+    "type": { "tutor": "Tutor", "student": "Student" }
+  },
+  "pageTitle": {
+    "/home": "Dashboard",
+    "/": "Dashboard",
+    "/user": "User",
+    "/settings": "Settings",
+    "/results": "Results",
+    "/quizzes": "Quizzes",
+    "/students": "Students",
+    "/messages": "Messages",
+    "/quizzes/quiz-create": "Add quiz",
+    "/quizzes/quiz-create?": "Edit quiz",
+    "/students/student-create": "Add Student",
+    "/students/student-create?": "Edit Student",
+    "/students/group-create": "Add Group",
+    "/students/group-create?": "Edit Group",
+    "/students/student-profile": "Student Profile",
+    "/students/student-profile?": "Student Profile",
+    "/quizzes/category-create": "Add Category",
+    "/quizzes/category-create?": "Edit Category",
+    "/profile": "Profile"
+  },
   "dashboard": {
     "allQuizzes": "Quizzes",
     "emptyQuiz": "Quiz not found",
@@ -75,16 +112,5 @@
     "emptyMessageSearch": "Student not found",
     "emptyMessageNoSearch": "you have not registered any student so far",
     "modalMessage": "Your student account has been successfully created. he will receive a e-mail to reset the password and be able to do the first login"
-  },
-  "welcome": "Welcome to our app!",
-  "intro": "This is a sample introduction.",
-  "button": {
-    "submit": "Submit",
-    "cancel": "Cancel"
-  },
-  "errors": {
-    "required": "This field is required.",
-    "invalidEmail": "Invalid email address.",
-    "maxLength": "Maximum length exceeded."
   }
 }

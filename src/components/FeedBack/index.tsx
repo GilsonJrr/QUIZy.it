@@ -10,6 +10,7 @@ import { RootState } from "Store/root-reducer";
 import { useModalContext } from "components/Modal/modalContext";
 import AlertModal from "components/Modal/AlertModal";
 import useDeviceType from "hooks/useDeviceType";
+import { useTranslation } from "react-i18next";
 
 const PUBLIC_KEY = process.env.REACT_APP_EMAILJS_PUBLIC_KEY;
 const SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID;
@@ -19,6 +20,7 @@ type FeedBackProps = {};
 
 const FeedBack: FC<FeedBackProps> = () => {
   const isMobile = useDeviceType();
+  const { t } = useTranslation();
 
   const { user } = useSelector((state: RootState) => state.user);
   const { student } = useSelector((state: RootState) => state.student);
@@ -70,7 +72,7 @@ const FeedBack: FC<FeedBackProps> = () => {
     return (
       <Styled.Container>
         <Title size="small" multiLine>
-          Give us your feedback about Quizy
+          {t("components.feedBack.title")}
         </Title>
         <TextAreaInput
           rows={4}
@@ -79,7 +81,7 @@ const FeedBack: FC<FeedBackProps> = () => {
           size="small"
         />
         <Button width="100%" align="center" onClick={() => sendEmail()}>
-          Send
+          {t("components.feedBack.sendButton")}
         </Button>
       </Styled.Container>
     );
@@ -89,7 +91,7 @@ const FeedBack: FC<FeedBackProps> = () => {
     return (
       <Styled.Details>
         <Styled.Summary>
-          <Title color="light">FeedBack</Title>
+          <Title color="light">{t("components.feedBack.button")}</Title>
         </Styled.Summary>
         {renderFeedbackForm()}
       </Styled.Details>
@@ -109,7 +111,7 @@ const FeedBack: FC<FeedBackProps> = () => {
         padding="10px 15px"
         onClick={() => setOpenTooltip(true)}
       >
-        FeedBack
+        {t("components.feedBack.button")}
       </Button>
     </Tooltip>
   );

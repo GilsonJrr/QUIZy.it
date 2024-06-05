@@ -12,6 +12,7 @@ import "react-circular-progressbar/dist/styles.css";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { theme } from "lib/styles/globalStyles";
+import { useTranslation } from "react-i18next";
 
 type RenderQuizCardProps = {
   item: QuizTypeValues;
@@ -32,6 +33,7 @@ const RenderQuizCard: FC<RenderQuizCardProps> = ({
   loading,
 }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const { handleModal } = useModalContext();
   const { user, userStudent } = useSelector((state: RootState) => state.user);
@@ -92,7 +94,11 @@ const RenderQuizCard: FC<RenderQuizCardProps> = ({
           </Title>
         </Styled.QuizTitlesContainer>
         <Styled.StartButton>
-          <Title size="small">{editMode ? "Edit" : "Start"}</Title>
+          <Title size="small">
+            {editMode
+              ? t("components.renderItems.renderQuizCard.edit")
+              : t("components.renderItems.renderQuizCard.start")}
+          </Title>
         </Styled.StartButton>
       </Styled.TextContainer>
     </Styled.QuizCard>

@@ -1,4 +1,41 @@
 {
+  "components": {
+    "feedBack": {
+      "button": "FeedBack",
+      "title": "Nos dê seu feedback sobre o Quizy",
+      "sendButton": "Enviar"
+    },
+    "renderItems": {
+      "renderQuizCard": {
+        "edit": "Editar",
+        "start": "Começar"
+      }
+    }
+  },
+  "user": {
+    "type": { "tutor": "Professor", "student": "Estudante" }
+  },
+  "pageTitle": {
+    "/home": "Início",
+    "/": "Inicio",
+    "/user": "Usuário",
+    "/settings": "Configurações",
+    "/results": "Resultados",
+    "/quizzes": "Questionários",
+    "/students": "Estudantes",
+    "/messages": "Mensagens",
+    "/quizzes/quiz-create": "Adicionar questionário",
+    "/quizzes/quiz-create?": "Editar questionário",
+    "/students/student-create": "Adicionar estudante",
+    "/students/student-create?": "Editar estudante",
+    "/students/group-create": "Adicionar grupo",
+    "/students/group-create?": "Editar grupo",
+    "/students/student-profile": "Perfil do estudante",
+    "/students/student-profile?": "Perfil do estudante",
+    "/quizzes/category-create": "Adicionar categoria",
+    "/quizzes/category-create?": "Editar categoria",
+    "/profile": "Perfil"
+  },
   "dashboard": {
     "allQuizzes": "Quizzes",
     "emptyQuiz": "Quiz não encontrado",
@@ -75,16 +112,5 @@
     "emptyMessageSearch": "Você ainda não registrou nenhum estudante até agora",
     "emptyMessageNoSearch": "Você ainda não registrou nenhum estudante até agora",
     "modalMessage": "A conta do seu estudante foi criada com sucesso. Ele receberá um e-mail para redefinir a senha e poder fazer o primeiro login"
-  },
-  "welcome": "Welcome to our app!",
-  "intro": "This is a sample introduction.",
-  "button": {
-    "submit": "Submit",
-    "cancel": "Cancel"
-  },
-  "errors": {
-    "required": "This field is required.",
-    "invalidEmail": "Invalid email address.",
-    "maxLength": "Maximum length exceeded."
   }
 }

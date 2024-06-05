@@ -69,7 +69,7 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
   });
 
   const onSubmit = (data: TStudent) => {
-    if (categories && categories?.length >= 10) {
+    if (categories && categories?.length >= 8) {
       return handleModal(
         <AlertModal
           type="warning"

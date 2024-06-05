@@ -22,6 +22,9 @@ import Alert from "components/Alert";
 import ThemeToggle from "components/ThemeToggle";
 import FeedBack from "components/FeedBack";
 import { useTheme } from "lib/styles/Theme";
+import { useTranslation } from "react-i18next";
+
+type UserType = "tutor" | "student";
 
 type dashboardProps = {
   children?: ReactNode | ReactNode[];
@@ -32,6 +35,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isDarkMode } = useTheme();
+  const { t } = useTranslation();
 
   const { user, userStudent, isLoading } = useSelector(
     (state: RootState) => state.user
@@ -61,6 +65,18 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
     }
   }, [dispatch, userStudent]);
 
+  const handleUserType = (
+    userType: UserType
+  ): "user.type.tutor" | "user.type.student" => {
+    return `user.type.${userType}`;
+  };
+
+  const userType: UserType =
+    (user?.info?.userType as UserType) ||
+    (student?.info?.userType as UserType) ||
+    "tutor";
+  const userTypeText = handleUserType(userType);
+
   if (isLoading) {
     return (
       <LoadingContainerFullPage>
@@ -78,11 +94,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
         <Styled.HeaderTitle>
           <Styled.TitleContainer>
             <Title>
-              {
-                RouterTitle[
-                  `${currentUrl}${search}` as keyof typeof RouterTitle
-                ]
-              }
+              {t(`pageTitle.${currentUrl}` as keyof typeof useTranslation)}
             </Title>
           </Styled.TitleContainer>
           <Styled.OptionContainer>
@@ -104,7 +116,7 @@ const Dashboard: FC<dashboardProps> = ({ children }) => {
               {user?.info?.name || student?.info?.name}
             </Title>
             <Title size="smaller" fontWeight="lighter">
-              {user?.info?.userType || student?.info?.userType || ""}
+              {t(userTypeText)}
             </Title>
           </Styled.ProfileTitles>
           <Styled.ChevronLeft size={20} />
