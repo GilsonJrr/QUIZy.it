@@ -12,7 +12,6 @@ import { setUser } from "Store/user/actions";
 import Avatar from "components/Avatar";
 import { useModalContext } from "../modalContext";
 import SimpleInput from "components/inputs/SimpleInput";
-import { TStudent } from "views/dashboard/Students/StudentPages/StudentCreate";
 
 import { LoadingContainerCard } from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
@@ -20,6 +19,7 @@ import Button from "components/Button";
 import { setImgStudent, setImgUser } from "Store/user/repository";
 import { UseData, UserPhoto } from "Store/user/types";
 import FileInput from "components/inputs/FileInput";
+import { TStudent } from "blocks/Students/StudentCreate";
 
 type ExampleProps = {};
 

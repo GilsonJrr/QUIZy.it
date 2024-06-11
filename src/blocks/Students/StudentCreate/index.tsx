@@ -2,7 +2,6 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Styled from "./styled";
-import BreadCrumbs from "components/BreadCrumbs";
 import Card from "components/Card";
 import SimpleInput from "components/inputs/SimpleInput";
 import TextAreaInput from "components/inputs/TextAreaInput";
@@ -11,7 +10,7 @@ import { TOption } from "types/index";
 import { StudentCreateSchema } from "lib/schemas";
 import { useDispatch } from "react-redux";
 import {
-  removeStudent,
+  // removeStudent,
   requestStudent,
   setStudent,
   updateStudent,
@@ -19,11 +18,11 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { requestGroupList } from "Store/group/actions";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import LoadingSpinner from "components/LoadingSpiner";
 import { LoadingContainerFullPage } from "components/Container/styled";
 import { useModalContext } from "components/Modal/modalContext";
-import DeleteModal from "components/Modal/DeleteModal";
+// import DeleteModal from "components/Modal/DeleteModal";
 import useDeviceType from "hooks/useDeviceType";
 import Tabs from "components/Tabs";
 import Button from "components/Button";
@@ -31,8 +30,9 @@ import AlertModal from "components/Modal/AlertModal";
 import FileInput from "components/inputs/FileInput";
 import { ImageType } from "Store/students/types";
 import { setImgProfile } from "Store/students/repository";
+import { Title } from "components/ui/Typography/styled";
 
-type StudentCreateProps = {};
+type StudentCreateProps = { onClick?: () => void };
 
 export type TStudent = {
   name: string;
@@ -49,15 +49,17 @@ export type TStudent = {
   tutorID?: string;
 };
 
-const StudentCreate: FC<StudentCreateProps> = () => {
+const StudentCreate: FC<StudentCreateProps> = ({ onClick }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const location = useLocation();
   const isMobile = useDeviceType();
 
   const { handleModal } = useModalContext();
 
   const studentId = new URLSearchParams(location.search).get("id");
+  // const studentId = localStorage.getItem("quizy_edit_student_id");
+
+  console.log("studentId aqui", studentId);
 
   const { groups } = useSelector((state: RootState) => state.group);
   const { user, isLoading } = useSelector((state: RootState) => state.user);
@@ -130,7 +132,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
           />
         )
       );
-      navigate("/students");
+      onClick?.();
     } else {
       dispatch(
         setStudent(newStudentData),
@@ -144,9 +146,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
           />
         )
       );
-      navigate(
-        `/students?newStudentCreated=true&studentsQuantity=${students?.length}`
-      );
+      onClick?.();
     }
   };
 
@@ -183,23 +183,6 @@ const StudentCreate: FC<StudentCreateProps> = () => {
     unregister(extraFields[id]);
     setExtraFields(extraFields?.filter((_, index) => index !== id));
   };
-
-  const crumbs = [
-    { label: "Students", path: "/students" },
-    { label: "Add Students", path: "" },
-  ];
-
-  const fromProfileCrumbs = [
-    { label: "Students", path: "/students" },
-    {
-      label: "Student Profile",
-      path: `/students/student-profile?studentId=${studentId}`,
-    },
-    {
-      label: "Edit Students",
-      path: "",
-    },
-  ];
 
   const options: TOption[] = groups
     ? groups?.map((group) => {
@@ -269,25 +252,31 @@ const StudentCreate: FC<StudentCreateProps> = () => {
     }
   }, [reset, setValue, studentId, student]);
 
-  const handleDelete = () => {
-    handleModal(
-      <DeleteModal
-        deleteTitle={watch("name") || ""}
-        onDelete={() => {
-          dispatch(
-            removeStudent(
-              { uid: userID || "", studentId: student?.info?.uid },
-              () =>
-                handleModal(
-                  <AlertModal type={"default"} message={"Student removed"} />
-                )
-            )
-          );
-          navigate("/students");
-        }}
-      />
-    );
-  };
+  // useEffect(() => {
+  //   return () => {
+  //     navigate(`/students`);
+  //   };
+  // }, []);
+
+  // const handleDelete = () => {
+  //   handleModal(
+  //     <DeleteModal
+  //       deleteTitle={watch("name") || ""}
+  //       onDelete={() => {
+  //         dispatch(
+  //           removeStudent(
+  //             { uid: userID || "", studentId: student?.info?.uid },
+  //             () =>
+  //               handleModal(
+  //                 <AlertModal type={"default"} message={"Student removed"} />
+  //               )
+  //           )
+  //         );
+  //         navigate("/students");
+  //       }}
+  //     />
+  //   );
+  // };
 
   const handleUploadPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
     const quizImageData: ImageType = {
@@ -312,29 +301,24 @@ const StudentCreate: FC<StudentCreateProps> = () => {
 
   return (
     <Styled.Container>
-      <BreadCrumbs crumbs={studentId !== null ? fromProfileCrumbs : crumbs} />
       {isMobile && (
         <Styled.TabContainer>
           <Tabs
-            tabs={[{ label: "Information" }, { label: "Extra Information" }]}
+            tabs={[{ label: "Information" }, { label: "Extra" }]}
             activeTab={(tab) => setTab(tab)}
             radius={10}
+            wrap
           />
         </Styled.TabContainer>
       )}
       <Styled.ContainerInner>
         {(!isMobile || tab === "Information") && (
-          <Card
-            title={"New Student"}
-            innerCard={isMobile}
-            isEmpty={false}
-            gridName="newQuiz"
+          <Styled.Form
+            id="newStudentForm"
+            onSubmit={handleSubmit(onSubmit)}
+            padding={isMobile}
           >
-            <Styled.Form
-              id="newStudentForm"
-              onSubmit={handleSubmit(onSubmit)}
-              padding={isMobile}
-            >
+            <Styled.NamesColorContainer>
               <Styled.SelectContainer>
                 <SimpleInput
                   label={"Name"}
@@ -409,16 +393,18 @@ const StudentCreate: FC<StudentCreateProps> = () => {
                   width="49%"
                 />
               </Styled.SelectContainer>
-              <TextAreaInput
-                label="About"
-                height="15vh"
-                error={errors.about}
-                {...register("about")}
-              />
-            </Styled.Form>
-          </Card>
+              <Styled.TextAreaContainer>
+                <TextAreaInput
+                  label="About"
+                  height="100%"
+                  error={errors.about}
+                  {...register("about")}
+                />
+              </Styled.TextAreaContainer>
+            </Styled.NamesColorContainer>
+          </Styled.Form>
         )}
-        {(!isMobile || tab === "Extra Information") && (
+        {(!isMobile || tab === "Extra") && (
           <Card
             isEmpty={false}
             gridName="newQuestion"
@@ -465,7 +451,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
               </Styled.Form>
             ) : (
               <Styled.EmptyForm>
-                <h2>Add here extra info about you student</h2>
+                <Title multiLine>Add here extra info about you student</Title>
               </Styled.EmptyForm>
             )}
             <Styled.ButtonCardContainer>
@@ -481,7 +467,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
                   )
                 }
               >
-                Add extra information
+                Add extra Info
               </Button>
             </Styled.ButtonCardContainer>
             <div ref={bottomRef}></div>
@@ -498,8 +484,7 @@ const StudentCreate: FC<StudentCreateProps> = () => {
             </Button>
           )} */}
           <Button type="submit" form="newStudentForm" disabled={imgLoading}>
-            {studentId !== null ? "Update " : "Add "}{" "}
-            {isMobile ? "" : "Student"}
+            {!!studentId ? "Update " : "Add "} {isMobile ? "" : "Student"}
           </Button>
         </Styled.ButtonContainer>
       </Styled.ContainerInner>

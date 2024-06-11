@@ -15,9 +15,6 @@ import Students from "views/dashboard/Students";
 import { ModalProvider } from "components/Modal/modalContext";
 import NotFound from "views/NotFound";
 import QuizCreate from "views/dashboard/Quizzes/QuizzesPages/QuizCreate";
-import StudentCreate from "views/dashboard/Students/StudentPages/StudentCreate";
-import GroupCreate from "views/dashboard/Students/StudentPages/GroupCreate";
-import StudentProfile from "views/dashboard/Students/StudentPages/StudentProfile";
 import LoadingImage from "components/LoadingImage";
 import AuthPages from "layout/AuthPages";
 import Login from "views/auth/Login";
@@ -95,18 +92,6 @@ const Routers = () => {
                   element={<CategoryCreate />}
                 />
                 <Route path="/students" element={<Students />} />
-                <Route
-                  path="/students/student-profile"
-                  element={<StudentProfile />}
-                />
-                <Route
-                  path="/students/student-create"
-                  element={<StudentCreate />}
-                />
-                <Route
-                  path="/students/group-create"
-                  element={<GroupCreate />}
-                />
               </>
             )}
             <Route path="/settings" element={<Settings />} />

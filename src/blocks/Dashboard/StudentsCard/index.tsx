@@ -8,9 +8,9 @@ import List from "components/List";
 import RenderStudentCard from "components/renderItems/RenderStudentCard";
 import { TInfo } from "Store/students/types";
 
-type StudentsCardProps = { gridName?: string };
+type StudentsCardProps = { gridName?: string; onClick?: () => void };
 
-const StudentsCard: FC<StudentsCardProps> = ({ gridName }) => {
+const StudentsCard: FC<StudentsCardProps> = ({ gridName, onClick }) => {
   const isMobile = useDeviceType();
 
   const { t } = useTranslation();
@@ -44,7 +44,9 @@ const StudentsCard: FC<StudentsCardProps> = ({ gridName }) => {
     >
       <List<TInfo>
         content={filterStudents ?? []}
-        renderItem={(item) => <RenderStudentCard item={item} />}
+        renderItem={(item) => (
+          <RenderStudentCard item={item} onClick={() => onClick?.()} />
+        )}
         search={search}
         itemKey={"name"}
         filter={student}

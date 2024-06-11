@@ -120,9 +120,9 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
     }
   }, [dispatch, tutorInfo, tutorUid]);
 
-  useEffect(() => {
-    dispatch(requestStudent({ uid: tutorUid, studentId: studentUid }));
-  }, [dispatch, studentUid, tutorUid]);
+  // useEffect(() => {
+  //   dispatch(requestStudent({ uid: tutorUid, studentId: studentUid }));
+  // }, [dispatch, studentUid, tutorUid]);
 
   useEffect(() => {
     dispatch(requestChatList({ tutorUid: tutorUid, studentUid: studentUid }));

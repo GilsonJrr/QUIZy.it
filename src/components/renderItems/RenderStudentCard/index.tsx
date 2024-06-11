@@ -5,22 +5,36 @@ import Avatar from "components/Avatar";
 import { useNavigate } from "react-router-dom";
 import useDeviceType from "hooks/useDeviceType";
 import { Title } from "components/ui/Typography/styled";
+import { useDispatch } from "react-redux";
+import { requestStudent } from "Store/students/actions";
 
 type RenderStudentCardProps = {
   item: StudentTypeValues;
   width?: string;
+  onClick: () => void;
 };
 
-const RenderStudentCard: FC<RenderStudentCardProps> = ({ item, width }) => {
+const RenderStudentCard: FC<RenderStudentCardProps> = ({
+  item,
+  width,
+  onClick,
+}) => {
   const navigate = useNavigate();
   const isMobile = useDeviceType();
+  const dispatch = useDispatch();
+
+  const handleStudent = () => {
+    dispatch(requestStudent({ uid: item.tutorID || "", studentId: item.uid }));
+    onClick();
+  };
 
   return (
     <Styled.Container
       width={width}
-      onClick={() =>
-        navigate(`/students/student-profile?studentId=${item.uid}`)
-      }
+      onClick={() => handleStudent()}
+      // onClick={() =>
+      //   navigate(`/students/student-profile?studentId=${item.uid}`)
+      // }
     >
       <Avatar size="big" name={item.name} photo={item.photo} />
       <Styled.InfoContainer>

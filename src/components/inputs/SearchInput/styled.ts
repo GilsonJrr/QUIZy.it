@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { FaSearch } from "react-icons/fa";
 
-type Props = {};
+type Props = { width?: string };
 
 export const Container = styled.div<Props>`
   padding: 8px 20px;
@@ -16,7 +16,7 @@ export const Container = styled.div<Props>`
   margin: 0 10px;
   width: 100%;
   @media screen and (min-width: 900px) {
-    width: auto;
+    width: ${({ width }) => (width ? width : "auto")};
   }
 `;
 

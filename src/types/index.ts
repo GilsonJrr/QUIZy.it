@@ -87,9 +87,12 @@ export type THeader = {
 };
 
 export type TOptions = {
-  option?: string;
+  option: string;
   optionIcon?: ReactNode;
+  path?: string;
   onClick?: () => void;
+  active?: boolean;
+  displayOnActive?: boolean;
 };
 
 export type TStudentList = {

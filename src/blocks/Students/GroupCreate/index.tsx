@@ -2,7 +2,6 @@ import React, { FC, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Styled from "./styled";
-import BreadCrumbs from "components/BreadCrumbs";
 import Card from "components/Card";
 import SimpleInput from "components/inputs/SimpleInput";
 import TextAreaInput from "components/inputs/TextAreaInput";
@@ -13,7 +12,7 @@ import { removeGroup, requestGroupList, setGroup } from "Store/group/actions";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import Avatar from "components/Avatar";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useModalContext } from "components/Modal/modalContext";
 import DeleteModal from "components/Modal/DeleteModal";
 import useDeviceType from "hooks/useDeviceType";
@@ -22,7 +21,10 @@ import Button from "components/Button";
 import AlertModal from "components/Modal/AlertModal";
 import { Title } from "components/ui/Typography/styled";
 import ColorInput from "components/inputs/ColorInput";
-type StudentCreateProps = {};
+
+type StudentCreateProps = {
+  onClick?: () => void;
+};
 
 type TStudent = {
   title: string;
@@ -31,15 +33,12 @@ type TStudent = {
   color?: string;
 };
 
-const GroupCreate: FC<StudentCreateProps> = () => {
+const GroupCreate: FC<StudentCreateProps> = ({ onClick }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
   const isMobile = useDeviceType();
 
   const { handleModal } = useModalContext();
-
-  const groupId = new URLSearchParams(location.search).get("id");
 
   const { groups } = useSelector((state: RootState) => state.group);
   const { students } = useSelector((state: RootState) => state.student);
@@ -48,6 +47,7 @@ const GroupCreate: FC<StudentCreateProps> = () => {
   const userID = user?.info?.uid;
 
   const [tab, setTab] = useState("Group");
+  const [groupId, setGroupId] = useState("");
 
   const {
     register,
@@ -73,7 +73,7 @@ const GroupCreate: FC<StudentCreateProps> = () => {
       );
     }
     const preparedData = {
-      id: groupId !== null ? groupId : idGenerator(18),
+      id: groupId !== "" ? groupId : idGenerator(18),
       uid: userID || "",
       userType: "student",
       ...data,
@@ -85,7 +85,7 @@ const GroupCreate: FC<StudentCreateProps> = () => {
           <AlertModal
             type={"success"}
             message={
-              groupId !== null
+              groupId !== ""
                 ? "Group update successfully"
                 : "Group created successfully"
             }
@@ -93,7 +93,7 @@ const GroupCreate: FC<StudentCreateProps> = () => {
         )
       )
     );
-    navigate("/students");
+    onClick?.();
   };
 
   useEffect(() => {
@@ -102,21 +102,19 @@ const GroupCreate: FC<StudentCreateProps> = () => {
     }
   }, [dispatch, groups, userID]);
 
-  const crumbs = [
-    { label: "Students", path: "/students" },
-    { label: groupId !== null ? "Edit Group" : "Add Group", path: "" },
-  ];
-
   useEffect(() => {
-    if (groupId !== null && groups) {
+    if (groupId !== "" && groups && groups.length > 0) {
       reset(...groups?.filter((g) => g.id === groupId));
     }
   }, [groupId, groups, reset]);
 
   const hasStudent = useMemo(() => {
-    return students?.some(
-      (a) => a.info?.group === groups?.filter((g) => g.id === groupId)[0]?.title
-    );
+    if (groups && groups.length > 0) {
+      return students?.some(
+        (a) =>
+          a.info?.group === groups?.filter((g) => g.id === groupId)[0]?.title
+      );
+    }
   }, [groupId, groups, students]);
 
   const handleDelete = () => {
@@ -144,18 +142,19 @@ const GroupCreate: FC<StudentCreateProps> = () => {
       image: "",
     };
     if (id === groupId) {
-      navigate(`/students/group-create`);
+      setGroupId("");
       setTab("Group");
       reset(emptyState);
     } else {
-      navigate(`/students/group-create?id=${id}`);
+      setGroupId(id);
       setTab("Group");
     }
   };
 
+  console.log("groupId", groupId);
+
   return (
     <Styled.Container>
-      <BreadCrumbs crumbs={crumbs} />
       {isMobile && (
         <Styled.TabContainer>
           <Tabs
@@ -168,41 +167,42 @@ const GroupCreate: FC<StudentCreateProps> = () => {
       )}
       <Styled.ContainerInner>
         {(!isMobile || tab === "Group") && (
-          <Card
-            title={"New Group"}
-            isEmpty={false}
-            gridName="newQuiz"
-            innerCard={isMobile}
-          >
-            <Styled.Form id="newGroupForm" onSubmit={handleSubmit(onSubmit)}>
-              <Styled.NameColorContainer>
-                <SimpleInput
-                  label={"Group Title"}
-                  placeholder="Enter the group title"
-                  error={
-                    hasStudent
-                      ? {
-                          type: "custom",
-                          message: "Group has active student, can't be changed",
-                        }
-                      : errors.title
-                  }
-                  {...register("title")}
-                  disabled={hasStudent}
-                />
-                <ColorInput
-                  color={watch("color") || ""}
-                  onChange={(color) => setValue("color", color)}
-                />
-              </Styled.NameColorContainer>
+          <Styled.Form id="newGroupForm" onSubmit={handleSubmit(onSubmit)}>
+            <Styled.NameColorContainer>
+              <SimpleInput
+                maxLength={15}
+                label={"Group Title"}
+                placeholder="Enter the group title"
+                error={
+                  watch("title")?.length === 15
+                    ? {
+                        type: "custom",
+                        message: "Character limit reached! 15/15",
+                      }
+                    : hasStudent
+                    ? {
+                        type: "custom",
+                        message: "Group has active student, can't be changed",
+                      }
+                    : errors.title
+                }
+                {...register("title")}
+                disabled={hasStudent}
+              />
+              <ColorInput
+                color={watch("color") || ""}
+                onChange={(color) => setValue("color", color)}
+              />
+            </Styled.NameColorContainer>
+            <Styled.TextAreaContainer>
               <TextAreaInput
                 label="About"
-                height="50vh"
+                height="100%"
                 error={errors.about}
                 {...register("about")}
               />
-            </Styled.Form>
-          </Card>
+            </Styled.TextAreaContainer>
+          </Styled.Form>
         )}
         {(!isMobile || tab === "Groups") && (
           <Card
@@ -236,11 +236,9 @@ const GroupCreate: FC<StudentCreateProps> = () => {
           </Card>
         )}
         <Styled.ButtonContainer
-          justify={
-            groupId !== null && !hasStudent ? "space-between" : "flex-end"
-          }
+          justify={groupId !== "" && !hasStudent ? "space-between" : "flex-end"}
         >
-          {groupId !== null && !hasStudent && (
+          {groupId !== "" && !hasStudent && (
             <Button
               type="button"
               disabled={hasStudent}
@@ -251,7 +249,7 @@ const GroupCreate: FC<StudentCreateProps> = () => {
             </Button>
           )}
           <Button type="submit" form="newGroupForm">
-            {groupId !== null ? "Update " : "Add "} {isMobile ? "" : "Group"}
+            {groupId !== "" ? "Update " : "Add "} {isMobile ? "" : "Group"}
           </Button>
         </Styled.ButtonContainer>
       </Styled.ContainerInner>

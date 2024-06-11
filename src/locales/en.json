@@ -22,6 +22,7 @@
     "/settings": "Settings",
     "/results": "Results",
     "/quizzes": "Quizzes",
+    "/students?": "Students",
     "/students": "Students",
     "/messages": "Messages",
     "/quizzes/quiz-create": "Add quiz",
@@ -103,9 +104,9 @@
     "addQuestion": "Add Question"
   },
   "students": {
-    "option1": "Add student",
-    "option2": "Add group",
-    "tab1": "All",
+    "option1": "New student",
+    "option2": "Groups",
+    "tab1": "Groups",
     "menuTab1": "Students",
     "menuTab2": "Options",
     "title": "Students",

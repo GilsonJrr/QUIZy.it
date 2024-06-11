@@ -1,12 +1,7 @@
-import React, { FC, useEffect, useMemo, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import * as Styled from "./styled";
-import Card from "components/Card";
-import OptionsButton from "components/OptionsButton";
+import CardTab from "components/CardTab";
 import { TOptions } from "types/index";
-import { IoMdAddCircleOutline } from "react-icons/io";
-import { FaUserEdit } from "react-icons/fa";
-import RenderStudentCard from "components/renderItems/RenderStudentCard";
-import Tabs from "components/Tabs";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { requestStudentList } from "Store/students/actions";
@@ -15,13 +10,10 @@ import { requestGroupList } from "Store/group/actions";
 import useDeviceType from "hooks/useDeviceType";
 import AlertModal from "components/Modal/AlertModal";
 import { useModalContext } from "components/Modal/modalContext";
-import {
-  LoadingContainerCard,
-  LoadingContainerFullPage,
-} from "components/Container/styled";
+import { LoadingContainerFullPage } from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
-import { TInfo } from "Store/students/types";
 import { useTranslation } from "react-i18next";
+import * as Blocks from "blocks/Students";
 
 type StudentsProps = {};
 
@@ -57,61 +49,39 @@ const Students: FC<StudentsProps> = () => {
 
   const userID = user?.info?.uid;
 
-  const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState(true);
+  const [cardTab, setCardTab] = useState(t("students.title"));
 
   const Options: TOptions[] = [
     {
+      option: t("students.title"),
+      active: cardTab === t("students.title"),
+      onClick: () => {
+        setCardTab(t("students.title"));
+        navigate(`/students`);
+      },
+    },
+    {
       option: t("students.option1"),
-      optionIcon: <FaUserEdit size={40} />,
-      onClick: () => navigate("/students/student-create"),
+      active: cardTab === t("students.option1"),
+      onClick: () => {
+        setCardTab(t("students.option1"));
+        navigate(`/students`);
+      },
     },
     {
       option: t("students.option2"),
-      optionIcon: <IoMdAddCircleOutline size={40} />,
-      onClick: () => navigate("/students/group-create"),
+      active: cardTab === t("students.option2"),
+      onClick: () => {
+        setCardTab(t("students.option2"));
+        navigate(`/students`);
+      },
     },
-    // {
-    //   option: t("students.option3"),
-    //   optionIcon: <FaEdit size={40} />,
-    //   onClick: () => navigate(randomQuiz()),
-    // },
+    {
+      option: "Profile",
+      active: cardTab === "Profile",
+      displayOnActive: true,
+    },
   ];
-  const [tab, setTab] = useState(t("students.tab1"));
-  const [menuTab, setMenuTab] = useState(t("students.menuTab1"));
-
-  const tabs = useMemo(() => {
-    if (groups && groups.length > 0 && !groupLoading) {
-      return groups.map((group) => {
-        return { label: group.title, color: group.color };
-      });
-    } else {
-      return [];
-    }
-  }, [groupLoading, groups]);
-
-  const filterStudents = () => {
-    switch (true) {
-      case tab === t("students.tab1"):
-        return students;
-      default:
-        return students?.filter((student) => student?.info?.group === tab);
-    }
-  };
-
-  const searchedStudents: TInfo[] =
-    students && students?.length > 0
-      ? filterStudents()
-          ?.filter((student) =>
-            student.info?.name?.toUpperCase().includes(search?.toUpperCase())
-          )
-          .map((student) => student.info)
-          .filter((info): info is TInfo => info !== undefined)
-          .sort((a, b) => {
-            const order = a.name.localeCompare(b.name);
-            return filter ? order : -order;
-          }) ?? []
-      : [];
 
   useEffect(() => {
     if (groups === undefined) {
@@ -152,67 +122,29 @@ const Students: FC<StudentsProps> = () => {
 
   return (
     <Styled.Container>
-      {isMobile && (
-        <Styled.TabContainer>
-          <Tabs
-            tabs={[
-              { label: t("students.menuTab1") },
-              { label: t("students.menuTab2") },
-            ]}
-            activeTab={(tab) => setMenuTab(tab)}
-            radius={5}
+      <CardTab
+        isEmpty={students?.length === 0}
+        isLoading={isLoading || groupLoading}
+        innerCard={isMobile}
+        options={Options}
+      >
+        {cardTab === t("students.title") && (
+          <Blocks.StudentList onClick={() => setCardTab("Profile")} />
+        )}
+        {cardTab === t("students.option1") && (
+          <Blocks.StudentCreate
+            onClick={() => setCardTab(t("students.title"))}
           />
-        </Styled.TabContainer>
-      )}
-      {(!isMobile || menuTab === t("students.menuTab2")) && (
-        <OptionsButton options={Options} width="20%" />
-      )}
-      {(!isMobile || menuTab === t("students.menuTab1")) && (
-        <Card
-          title={t("students.title")}
-          isEmpty={students?.length === 0}
-          emptyMessage={
-            search
-              ? t("students.emptyMessageSearch")
-              : t("students.emptyMessageNoSearch")
-          }
-          searchable
-          searchValue={search}
-          setSearch={(e) => setSearch(e)}
-          isLoading={isLoading || groupLoading}
-          innerCard={isMobile}
-          setOrder={(order) => setFilter(order)}
-        >
-          <Styled.CardInner>
-            {!groupLoading ? (
-              <Styled.TabContainer>
-                <Tabs
-                  tabs={[{ label: t("students.tab1"), color: "" }, ...tabs]}
-                  activeTab={(tab) => setTab(tab)}
-                />
-              </Styled.TabContainer>
-            ) : (
-              <LoadingContainerCard>
-                <LoadingSpinner size="medium" />
-              </LoadingContainerCard>
-            )}
-            <Styled.MapRow>
-              {searchedStudents?.map((item) => {
-                if (item) {
-                  return (
-                    <RenderStudentCard
-                      item={item}
-                      width={isMobile ? "100%" : "49%"}
-                    />
-                  );
-                }
-
-                return null;
-              })}
-            </Styled.MapRow>
-          </Styled.CardInner>
-        </Card>
-      )}
+        )}
+        {cardTab === t("students.option2") && (
+          <Blocks.GroupCreate onClick={() => setCardTab(t("students.title"))} />
+        )}
+        {cardTab === "Profile" && (
+          <Blocks.StudentProfile
+            onEditClick={() => setCardTab(t("students.option1"))}
+          />
+        )}
+      </CardTab>
     </Styled.Container>
   );
 };

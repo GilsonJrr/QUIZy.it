@@ -12,9 +12,10 @@ import Chat from "components/Chat";
 
 type ProfileInfoProps = {
   student: StudentTypeValues;
+  onClick?: () => void;
 };
 
-const ProfileInfo: FC<ProfileInfoProps> = ({ student }) => {
+const ProfileInfo: FC<ProfileInfoProps> = ({ student, onClick }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -26,6 +27,12 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ student }) => {
 
   const { photo, name, socialNetWork, birthDate, email, phone, about, uid } =
     student;
+
+  const handleEdit = () => {
+    // localStorage.setItem("quizy_edit_student_id", uid || "");
+    navigate(`/students?id=${uid}`);
+    onClick?.();
+  };
 
   useEffect(() => {
     setTab(openChat ? "Chat" : "Profile");
@@ -39,6 +46,7 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ student }) => {
           activeTab={(tab) => setTab(tab)}
           radius={10}
           active={tab}
+          wrap
         />
       </Styled.TabContainer>
       {tab === "Profile" && (
@@ -74,7 +82,8 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ student }) => {
           </Styled.AboutContainer>
           <Styled.ButtonContainer>
             <Button
-              onClick={() => navigate(`/students/student-create?id=${uid}`)}
+              // onClick={() => navigate(`/students?id=${uid}`)}
+              onClick={handleEdit}
               width="100%"
               align="center"
             >

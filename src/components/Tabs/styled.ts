@@ -4,6 +4,7 @@ type Props = {
   active?: boolean;
   radius?: number;
   color?: string;
+  wrap?: boolean;
 };
 
 export const Container = styled.div<Props>`
@@ -12,11 +13,12 @@ export const Container = styled.div<Props>`
   width: 100%;
   overflow: scroll;
   position: relative;
-  padding: 0 40px 0 0;
+  padding: ${({ wrap }) => (wrap ? "0" : "0 40px 0 0")};
+  flex-wrap: ${({ wrap }) => (wrap ? "wrap" : "nowrap")};
   &:after {
     content: "";
     position: fixed;
-    height: 40px;
+    height: ${({ wrap }) => (wrap ? "0px" : "40px")};
     width: 50px;
     background: linear-gradient(
       90deg,
@@ -47,4 +49,6 @@ export const Tab = styled.div<Props>`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  flex-grow: ${({ wrap }) => (wrap ? 1 : 0)};
 `;

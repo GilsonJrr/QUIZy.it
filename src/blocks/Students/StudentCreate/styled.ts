@@ -14,19 +14,21 @@ export const Container = styled.div<Props>`
   width: 100%;
   height: 100%;
   position: relative;
+  overflow: hidden;
 `;
 
 export const ContainerInner = styled.div`
   width: 100%;
   height: 100%;
-  padding: 20px 0px;
 
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 9vh);
-  padding: 10px 0;
+  overflow: scroll;
+  margin-bottom: 85px;
 
   @media screen and (min-width: 900px) {
+    margin-bottom: 0px;
+    padding: 0px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 0.2fr;
@@ -44,10 +46,37 @@ export const ButtonContainer = styled.div<Props>`
   display: flex;
   justify-content: ${({ justify }) => justify || "flex-end"};
 
-  margin-bottom: 45px;
+  margin-bottom: 55px;
+  padding-top: 10px;
+  position: fixed;
+  bottom: -25px;
+  right: 19px;
 
   @media screen and (min-width: 900px) {
-    margin-bottom: 0px;
+    margin-bottom: 0;
+    position: relative;
+    bottom: 0;
+    right: 0;
+  }
+`;
+
+export const ButtonCardContainer = styled.div<Props>`
+  grid-area: "buttonContainer";
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 30px 0;
+  width: 100%;
+  justify-content: flex-end;
+
+  @media screen and (min-width: 900px) {
+    justify-content: ${({ justify }) => justify || "flex-end"};
+    background: linear-gradient(
+      0deg,
+      ${({ theme }) => theme.colors.background.default} 20%,
+      rgba(255, 255, 255, 0) 100%
+    );
   }
 `;
 
@@ -56,13 +85,22 @@ export const SelectContainer = styled.div`
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  gap: 30px;
+  gap: 10px;
+  flex-direction: column;
+  margin-bottom: 10px;
+  @media screen and (min-width: 900px) {
+    flex-direction: row;
+    margin-bottom: 0px;
+  }
 `;
 
 export const Form = styled.form<Props>`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  grid-area: newQuiz;
+  gap: 10px;
   padding-bottom: ${({ padding }) => (padding ? "150" : "")}px;
   height: 100%;
 `;
@@ -73,6 +111,12 @@ export const EmptyForm = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
+
+  h2 {
+    font-size: 1.3rem;
+    text-align: center;
+    font-weight: 500;
+  }
 `;
 
 export const AnswerContainer = styled.div<Props>`
@@ -103,6 +147,7 @@ export const InputLabel = styled.input`
   border: none;
   outline: none;
   margin-bottom: 4px;
+  background-color: transparent;
 `;
 
 export const ExtraInfoContainer = styled.div`
@@ -115,47 +160,21 @@ export const DeleteIcon = styled(FaTrashAlt)`
   margin-bottom: 12px;
 `;
 
-export const GroupCardContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  width: 100%;
-  overflow: auto;
-  padding-bottom: 150px;
-`;
-
-export const GroupCard = styled.div<Props>`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.main.default};
-  border-radius: 10px;
-  padding: 5px 15px 5px 10px;
-  cursor: pointer;
-
-  width: 100%;
-
-  background-color: ${({ active, theme }) =>
-    active ? theme.colors.main.default : ""};
-
-  @media screen and (min-width: 900px) {
-    width: 48%;
-  }
-`;
-
 export const TabContainer = styled.div`
   display: flex;
-  margin: 20px 0 0;
+  margin: 10px 0 0;
 `;
 
-export const NameColorContainer = styled.div`
+export const NamesColorContainer = styled.div`
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  gap: 20px;
-  flex-direction: column;
-  @media screen and (min-width: 900px) {
-    flex-direction: row;
-  }
+  height: 100%;
+`;
+
+export const TextAreaContainer = styled.div`
+  display: flex;
+  width: 100%;
+  height: 30%;
 `;

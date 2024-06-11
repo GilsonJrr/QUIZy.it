@@ -22,6 +22,7 @@
     "/settings": "Configurações",
     "/results": "Resultados",
     "/quizzes": "Questionários",
+    "/students?": "Estudantes",
     "/students": "Estudantes",
     "/messages": "Mensagens",
     "/quizzes/quiz-create": "Adicionar questionário",
@@ -103,9 +104,9 @@
     "addQuestion": "Adicionar Questão"
   },
   "students": {
-    "option1": "Adicionar estudante",
-    "option2": "Adicionar grupo",
-    "tab1": "Todos",
+    "option1": "Novo estudante",
+    "option2": "Grupos",
+    "tab1": "Grupos",
     "menuTab1": "Opções",
     "menuTab2": "Options",
     "title": "Estudantes",

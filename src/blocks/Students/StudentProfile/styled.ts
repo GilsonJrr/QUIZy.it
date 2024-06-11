@@ -4,20 +4,15 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: 90%;
 
   @media screen and (min-width: 900px) {
+    height: 100%;
     display: grid;
     grid-template-columns: 1fr 0.9fr 1fr 1.6fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
     grid-column-gap: 20px;
     grid-row-gap: 20px;
-    /* grid-template-areas:
-      "results results categories information"
-      "results results categories information"
-      "results results categories information"
-      "group group group information"
-      "group group group information"; */
     grid-template-areas:
       "results results results information"
       "results results results information"
@@ -33,6 +28,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  padding: 10px 0 0 0;
 `;
 
 export const GroupContainer = styled.div`

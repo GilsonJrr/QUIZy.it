@@ -12,13 +12,14 @@ export const Container = styled.div<Props>`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 100%;
+  height: 98%;
   position: relative;
   width: 100%;
   border-radius: 10px;
   @media screen and (min-width: 900px) {
     padding: 0px;
     border: 0px;
+    height: 100%;
   }
 `;
 
@@ -74,7 +75,10 @@ export const Phone = styled(FaPhoneSquare)`
 
 export const ButtonContainer = styled.div`
   width: 100%;
-  margin: auto 0 0 0;
+  margin: auto 0 10px 0;
+  @media screen and (min-width: 900px) {
+    margin: auto 0 0 0;
+  }
 `;
 
 export const Content = styled.div`

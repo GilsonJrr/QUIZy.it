@@ -1,29 +1,24 @@
-import React, { FC, useEffect, useMemo, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import * as Styled from "./styled";
 import * as Block from "blocks/studentProfile";
-import BreadCrumbs from "components/BreadCrumbs";
 import Card from "components/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { requestStudent } from "Store/students/actions";
-import { useLocation, useNavigate } from "react-router-dom";
 import Avatar from "components/Avatar";
 import { requestResultList } from "Store/result/actions";
 import LoadingSpinner from "components/LoadingSpiner";
 import { LoadingContainerFullPage } from "components/Container/styled";
-import ProgressBar from "components/ProgressBar";
 import { requestQuizList } from "Store/quiz/actions";
 import Tabs from "components/Tabs";
 import useDeviceType from "hooks/useDeviceType";
 import StudentResultTable from "components/Table/StudentResultTable";
-import { sumByCategory } from "utils/index";
-import { Title } from "components/ui/Typography/styled";
 
-type StudentProfileProps = {};
+type StudentProfileProps = { onEditClick: () => void };
 
-const StudentProfile: FC<StudentProfileProps> = () => {
+const StudentProfile: FC<StudentProfileProps> = ({ onEditClick }) => {
   const {
-    student: otherStudent,
+    student,
     isLoading: studentLoading,
     students,
   } = useSelector((state: RootState) => state.student);
@@ -33,81 +28,38 @@ const StudentProfile: FC<StudentProfileProps> = () => {
   const { user } = useSelector((state: RootState) => state.user);
 
   const dispatch = useDispatch();
-  const location = useLocation();
-  const navigate = useNavigate();
   const isMobile = useDeviceType();
-
-  const studentId = new URLSearchParams(location.search).get("studentId");
 
   const [tab, setTab] = useState("Info");
   const [resultTab, setResultTab] = useState("Results");
 
-  const student =
-    students?.filter((student) => student.info?.uid === studentId)[0] ||
-    otherStudent;
-
-  const crumbs = [
-    { label: "Students", path: "/students" },
-    { label: "Students Profile", path: "" },
-  ];
-
-  const CategoryResults = useMemo(() => {
-    const myResults = quizzes?.map((student) => ({
-      results: Object.fromEntries(
-        Object.entries(student.results || {}).filter(
-          ([key, value]) => key === studentId
-        )
-      ),
-    }));
-    return myResults
-      ? Object.values(myResults)
-          ?.map((res) => {
-            return Object.values(res.results)[0]
-              ? {
-                  category: Object.values(res.results)[0].quizCategory,
-                  size: parseInt(Object.values(res.results)[0].score || ""),
-                }
-              : undefined;
-          })
-          .filter((empty) => empty !== undefined)
-      : [];
-  }, [quizzes, studentId]);
-
-  useEffect(() => {
-    if (!student) {
-      dispatch(
-        requestStudent({
-          uid: user?.info?.uid || "",
-          studentId: studentId || "",
-        })
-      );
-    }
-  }, [dispatch, student, studentId, user]);
+  // useEffect(() => {
+  //   if (!student) {
+  //     dispatch(
+  //       requestStudent({
+  //         uid: user?.info?.uid || "",
+  //         studentId: studentId || "",
+  //       })
+  //     );
+  //   }
+  // }, [dispatch, student, studentId, user]);
 
   useEffect(() => {
     if (quizzes === undefined) {
       dispatch(
         requestResultList({
           uid: user?.info?.uid || "",
-          studentUid: studentId || "",
+          studentUid: student?.info?.uid || "",
         })
       );
     }
-  }, [dispatch, quizzes, studentId, user]);
+  }, [dispatch, quizzes, student, user]);
 
   useEffect(() => {
     if (quizzes === undefined) {
       dispatch(requestQuizList({ uid: user?.info?.uid || "" }));
     }
   }, [dispatch, quizzes, user]);
-
-  const categoryTotal = sumByCategory(
-    quizzes?.map((quiz) => {
-      return { category: quiz.category, size: quiz.questions?.length };
-    }) as any[]
-  );
-
-  const studentTotal = sumByCategory(CategoryResults);
 
   const sameGroupStudents = students?.filter((studentList) => {
     return (
@@ -117,7 +69,8 @@ const StudentProfile: FC<StudentProfileProps> = () => {
   });
 
   const handleChangeStudent = (uid: string) => {
-    navigate(`/students/student-profile?studentId=${uid}`);
+    // navigate(`/students/student-profile?studentId=${uid}`);
+    dispatch(requestStudent({ uid: user?.info?.uid || "", studentId: uid }));
   };
 
   if (studentLoading || quizLoading) {
@@ -128,18 +81,20 @@ const StudentProfile: FC<StudentProfileProps> = () => {
     );
   }
 
+  console.log("studentID", student?.info?.uid);
+
   return (
     <Styled.Wrapper>
-      <BreadCrumbs crumbs={crumbs} />
       {isMobile && (
         <Tabs
-          tabs={[{ label: "Info" }, { label: "Result" }]}
+          tabs={[{ label: "Info" }, { label: "More" }]}
           activeTab={(tab) => setTab(tab)}
           radius={10}
+          wrap
         />
       )}
       <Styled.Container>
-        {(!isMobile || tab === "Result") && (
+        {(!isMobile || tab === "More") && (
           <Card
             title={""}
             gridName="results"
@@ -154,7 +109,7 @@ const StudentProfile: FC<StudentProfileProps> = () => {
             />
             {resultTab === "Results" && (
               <StudentResultTable
-                studentID={studentId || ""}
+                studentID={student?.info?.uid || ""}
                 tutorView
                 itemKey="quizTitle"
               />
@@ -246,7 +201,7 @@ const StudentProfile: FC<StudentProfileProps> = () => {
             isLoading={!student}
           >
             {student && student?.info && (
-              <Block.ProfileInfo student={student.info} />
+              <Block.ProfileInfo student={student.info} onClick={onEditClick} />
             )}
           </Card>
         )}
