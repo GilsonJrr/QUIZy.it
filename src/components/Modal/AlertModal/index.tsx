@@ -1,7 +1,7 @@
 import React, { FC, ReactNode, useEffect } from "react";
 import * as Styled from "./styled";
 import { useModalContext } from "../modalContext";
-import { Paragraph, Title } from "components/ui/Typography/styled";
+import { Title } from "components/ui/Typography/styled";
 
 type AlertModalProps = {
   type: "error" | "success" | "warning" | "default";
@@ -40,11 +40,13 @@ const AlertModal: FC<AlertModalProps> = ({
           <Title color={type}>
             {title
               ? title
+              : type === "default"
+              ? "Info"
               : type[0].toLocaleUpperCase() + type.slice(1, type.length)}
           </Title>
-          <Paragraph size="small" textAlign="center">
+          <Title size="small" textAlign="left" multiLine fontWeight="lighter">
             {message}
-          </Paragraph>
+          </Title>
         </Styled.TextContainer>
         <Styled.CloseContainer>
           <Styled.CloseIcon size={20} onClick={() => handleModal("")} />

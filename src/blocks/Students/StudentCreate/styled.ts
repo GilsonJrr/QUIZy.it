@@ -71,6 +71,7 @@ export const ButtonCardContainer = styled.div<Props>`
   justify-content: flex-end;
 
   @media screen and (min-width: 900px) {
+    padding: 30px;
     justify-content: ${({ justify }) => justify || "flex-end"};
     background: linear-gradient(
       0deg,

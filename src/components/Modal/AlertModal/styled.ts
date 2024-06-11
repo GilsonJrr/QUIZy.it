@@ -47,19 +47,25 @@ export const Content = styled.div<Props>`
       ${({ theme, type }) => theme.colors.alert[type as typeProps]};
     border-radius: 20px;
     top: 5px;
-    max-width: 25vw;
+    max-width: 35vw;
+    justify-content: flex-start;
   }
 `;
 
-export const IconContainer = styled.div``;
+export const IconContainer = styled.div`
+  width: 10%;
+`;
 
 export const TextContainer = styled.div<Props>`
   display: flex;
   flex-direction: column;
   gap: 6px;
+  width: 80%;
 `;
 
-export const CloseContainer = styled.div``;
+export const CloseContainer = styled.div`
+  width: 10%;
+`;
 
 export const Message = styled.p``;
 
