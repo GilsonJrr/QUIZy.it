@@ -9,6 +9,7 @@ import useDeviceType from "hooks/useDeviceType";
 import Tabs from "components/Tabs";
 import { useTranslation } from "react-i18next";
 import * as Block from "blocks/Dashboard";
+import { useNavigate } from "react-router-dom";
 
 export const TutorPage = () => {
   const { students } = useSelector((state: RootState) => state.student);
@@ -18,6 +19,7 @@ export const TutorPage = () => {
 
   const dispatch = useDispatch();
   const isMobile = useDeviceType();
+  const navigate = useNavigate();
 
   const userID = user?.info?.uid;
 
@@ -54,7 +56,10 @@ export const TutorPage = () => {
         <Block.QuizzesCard gridName="card1" editMode />
       )}
       {(tab === t("dashboard.labelStudents") || !isMobile) && (
-        <Block.StudentsCard gridName="card3" />
+        <Block.StudentsCard
+          gridName="card3"
+          onClick={() => navigate("/students?Profile=true")}
+        />
       )}
       {(tab === t("dashboard.labelResults") || !isMobile) && (
         <Block.ResultsCard gridName="card2" />

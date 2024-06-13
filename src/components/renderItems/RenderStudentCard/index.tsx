@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import * as Styled from "./styled";
 import { StudentTypeValues } from "Store/students/types";
 import Avatar from "components/Avatar";
-import { useNavigate } from "react-router-dom";
 import useDeviceType from "hooks/useDeviceType";
 import { Title } from "components/ui/Typography/styled";
 import { useDispatch } from "react-redux";
@@ -19,7 +18,6 @@ const RenderStudentCard: FC<RenderStudentCardProps> = ({
   width,
   onClick,
 }) => {
-  const navigate = useNavigate();
   const isMobile = useDeviceType();
   const dispatch = useDispatch();
 
@@ -29,13 +27,7 @@ const RenderStudentCard: FC<RenderStudentCardProps> = ({
   };
 
   return (
-    <Styled.Container
-      width={width}
-      onClick={() => handleStudent()}
-      // onClick={() =>
-      //   navigate(`/students/student-profile?studentId=${item.uid}`)
-      // }
-    >
+    <Styled.Container width={width} onClick={() => handleStudent()}>
       <Avatar size="big" name={item.name} photo={item.photo} />
       <Styled.InfoContainer>
         <Title>{item.name}</Title>

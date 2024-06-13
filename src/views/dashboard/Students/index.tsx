@@ -46,6 +46,7 @@ const Students: FC<StudentsProps> = () => {
   const studentsQuantity = new URLSearchParams(location.search).get(
     "studentsQuantity"
   );
+  const ProfileUrlTab = new URLSearchParams(location.search).get("Profile");
 
   const userID = user?.info?.uid;
 
@@ -111,6 +112,12 @@ const Students: FC<StudentsProps> = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newStudentCreated, students, studentsQuantity]);
+
+  useEffect(() => {
+    if (ProfileUrlTab) {
+      setCardTab("Profile");
+    }
+  }, [ProfileUrlTab]);
 
   if (isLoading || authLoading || userLoading) {
     return (
