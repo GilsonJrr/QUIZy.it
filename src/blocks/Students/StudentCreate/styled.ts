@@ -24,6 +24,7 @@ export const ContainerInner = styled.div`
   display: flex;
   flex-direction: column;
   overflow: scroll;
+  overflow-x: hidden;
   margin-bottom: 85px;
 
   @media screen and (min-width: 900px) {

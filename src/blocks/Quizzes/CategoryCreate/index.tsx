@@ -2,7 +2,6 @@ import React, { FC, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Styled from "./styled";
-import BreadCrumbs from "components/BreadCrumbs";
 import Card from "components/Card";
 import SimpleInput from "components/inputs/SimpleInput";
 import TextAreaInput from "components/inputs/TextAreaInput";
@@ -12,7 +11,7 @@ import { idGenerator } from "utils/index";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import Avatar from "components/Avatar";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   removeCategory,
   requestCategoryList,
@@ -42,12 +41,9 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
   const isMobile = useDeviceType();
 
   const { handleModal } = useModalContext();
-
-  const categoryId = new URLSearchParams(location.search).get("id");
 
   const { categories } = useSelector((state: RootState) => state.category);
   const { quizzesCategory } = useSelector((state: RootState) => state.quiz);
@@ -56,6 +52,7 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
   const userID = user?.info?.uid;
 
   const [tab, setTab] = useState("Category");
+  const [categoryId, setCategoryId] = useState("");
 
   const {
     register,
@@ -115,17 +112,6 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
     }
   }, [dispatch, quizzesCategory, userID]);
 
-  const crumbs = [
-    { label: t("addCategory.quizzes"), path: "/quizzes" },
-    {
-      label:
-        categoryId !== null
-          ? t("addCategory.editCategory")
-          : t("addCategory.addCategory"),
-      path: "",
-    },
-  ];
-
   useEffect(() => {
     const categoryArray = Array.isArray(categories) ? categories : [];
     if (categoryId !== null && categories) {
@@ -170,18 +156,17 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
       image: "",
     };
     if (id === categoryId) {
-      navigate(`/quizzes/category-create`);
+      setCategoryId("");
       setTab("Category");
       reset(emptyState);
     } else {
-      navigate(`/quizzes/category-create?id=${id}`);
+      setCategoryId(id);
       setTab("Category");
     }
   };
 
   return (
     <Styled.Container>
-      <BreadCrumbs crumbs={crumbs} />
       {isMobile && (
         <Styled.TabContainer>
           <Tabs
@@ -192,46 +177,46 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
             activeTab={(tab) => setTab(tab)}
             radius={5}
             active={tab}
+            wrap
           />
         </Styled.TabContainer>
       )}
       <Styled.ContainerInner>
         {(!isMobile || tab === t("addCategory.category")) && (
-          <Card
-            title={t("addCategory.newCategory")}
-            isEmpty={false}
-            gridName="newQuiz"
-            innerCard={isMobile}
-          >
-            <Styled.Form id="newCategoryForm" onSubmit={handleSubmit(onSubmit)}>
-              <Styled.NameColorContainer>
-                <SimpleInput
-                  label={t("addCategory.categoryTitle")}
-                  placeholder={t("addCategory.enterCategoryTitle")}
-                  error={
-                    hasQuiz
-                      ? {
-                          type: "custom",
-                          message: t("addCategory.categoryHasActiveQuiz"),
-                        }
-                      : errors.title
-                  }
-                  {...register("title")}
-                  disabled={hasQuiz}
-                />
-                <ColorInput
-                  color={watch("color") || ""}
-                  onChange={(color) => setValue("color", color)}
-                />
-              </Styled.NameColorContainer>
-              <TextAreaInput
-                label={t("addCategory.about")}
-                height="50vh"
-                error={errors.about}
-                {...register("about")}
+          <Styled.Form id="newCategoryForm" onSubmit={handleSubmit(onSubmit)}>
+            <Styled.NameColorContainer>
+              <SimpleInput
+                maxLength={15}
+                label={t("addCategory.categoryTitle")}
+                placeholder={t("addCategory.enterCategoryTitle")}
+                error={
+                  watch("title")?.length === 15
+                    ? {
+                        type: "custom",
+                        message: "Character limit reached! 15/15",
+                      }
+                    : hasQuiz
+                    ? {
+                        type: "custom",
+                        message: t("addCategory.categoryHasActiveQuiz"),
+                      }
+                    : errors.title
+                }
+                {...register("title")}
+                disabled={hasQuiz}
               />
-            </Styled.Form>
-          </Card>
+              <ColorInput
+                color={watch("color") || ""}
+                onChange={(color) => setValue("color", color)}
+              />
+            </Styled.NameColorContainer>
+            <TextAreaInput
+              label={t("addCategory.about")}
+              height="100%"
+              error={errors.about}
+              {...register("about")}
+            />
+          </Styled.Form>
         )}
         {(!isMobile || tab === t("addCategory.allCategories")) && (
           <Card
@@ -267,11 +252,9 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
           </Card>
         )}
         <Styled.ButtonContainer
-          justify={
-            categoryId !== null && !hasQuiz ? "space-between" : "flex-end"
-          }
+          justify={categoryId !== "" && !hasQuiz ? "space-between" : "flex-end"}
         >
-          {categoryId !== null && !hasQuiz && (
+          {categoryId !== "" && !hasQuiz && (
             <Button
               type="button"
               disabled={hasQuiz}
@@ -284,7 +267,7 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
             </Button>
           )}
           <Button type="submit" form="newCategoryForm">
-            {categoryId !== null
+            {categoryId !== ""
               ? `${t("addCategory.update")} `
               : `${t("addCategory.add")} `}
             {isMobile ? "" : t("addCategory.category")}

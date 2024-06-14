@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
 import * as Styled from "./styled";
-import BreadCrumbs from "components/BreadCrumbs";
 import * as Block from "blocks/QuizCreate/index";
 import { QuizRequest, QuizTypeValues } from "Store/quiz/types";
 import { useDispatch } from "react-redux";
@@ -25,29 +24,6 @@ const QuizCreate: FC<QuizCreateProps> = () => {
   const quizId = new URLSearchParams(location.search).get("quizId");
 
   const [quizType, setQuizType] = useState<string>();
-
-  const crumbs = [
-    { label: t("quizCreate.quizzes"), path: "/quizzes" },
-    {
-      label: quizId ? t("quizCreate.editQuiz") : t("quizCreate.addQuiz"),
-      path: "",
-    },
-  ];
-
-  const crumbsQuestion = [
-    { label: t("quizCreate.quizzes"), path: "/quizzes" },
-    {
-      label: quizId ? t("quizCreate.editQuiz") : t("quizCreate.addQuiz"),
-      onClick: () => setQuizType(undefined),
-      path: "",
-    },
-    {
-      label: quizId
-        ? t("quizCreate.editQuestion")
-        : t("quizCreate.addQuestion"),
-      path: "",
-    },
-  ];
 
   useEffect(() => {
     return () => {
@@ -91,7 +67,6 @@ const QuizCreate: FC<QuizCreateProps> = () => {
 
   return (
     <Styled.Container>
-      <BreadCrumbs crumbs={!quizType ? crumbs : crumbsQuestion} />
       {!quizType && <Block.FormQuiz quizType={(e) => setQuizType(e)} />}
       {quizType === "Multiple" && (
         <Block.MultipleQuestion

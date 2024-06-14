@@ -10,7 +10,7 @@ import Tabs, { TTabs } from "components/Tabs";
 type CardTabProps = {
   children: ReactNode | ReactNode[];
   gridName?: string;
-  isEmpty: boolean;
+  isEmpty?: boolean;
   emptyMessage?: string;
   scrollable?: boolean;
   width?: string;
@@ -64,7 +64,7 @@ const CardTab: FC<CardTabProps> = ({
   return (
     <Styled.Wrapper height={height}>
       {!isMobile && (
-        <Styled.TabContainer>
+        <Styled.TabContainer tab={options.length !== 0}>
           {options?.map((option) => {
             return (
               <Styled.Tab
@@ -85,7 +85,7 @@ const CardTab: FC<CardTabProps> = ({
         width={width}
         innerCard={innerCard}
         height={height}
-        tab={!!options}
+        tab={options.length !== 0}
       >
         {isEmpty ? (
           <Styled.EmptyContainer>

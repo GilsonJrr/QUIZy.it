@@ -20,9 +20,9 @@ export const Wrapper = styled.div<Props>`
   height: ${({ height }) => height || "100%"};
 `;
 
-export const TabContainer = styled.div`
+export const TabContainer = styled.div<Props>`
   position: absolute;
-  height: 6vh;
+  height: ${({ tab }) => (tab ? 6 : 0)}vh;
   width: 100%;
   left: 0;
   top: 1px;

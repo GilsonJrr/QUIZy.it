@@ -30,6 +30,8 @@ const StudentResultTable: FC<StudentResultTableProps> = ({
   const { results } = useSelector((state: RootState) => state.result);
   const { user, userStudent } = useSelector((state: RootState) => state.user);
 
+  const userType = user?.info?.userType || userStudent?.userType;
+
   const TableHeaderTitles: THeader[] = [
     { label: "Title", width: 50 },
     { label: "Score", width: 15 },
@@ -67,9 +69,9 @@ const StudentResultTable: FC<StudentResultTableProps> = ({
 
   useEffect(() => {
     return () => {
-      dispatch(resultListCleanUp());
+      if (userType === "tutor") dispatch(resultListCleanUp());
     };
-  }, [dispatch]);
+  }, [dispatch, userType]);
 
   return (
     <Table<ResultTypeValues>

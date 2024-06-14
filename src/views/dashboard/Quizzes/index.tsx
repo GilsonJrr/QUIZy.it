@@ -1,37 +1,35 @@
 import React, { FC, useEffect, useState } from "react";
 import * as Styled from "./styled";
 
-import { GiCardRandom } from "react-icons/gi";
-import { FaFastBackward } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import { randomQuiz } from "functions/index";
+import { useLocation, useNavigate } from "react-router-dom";
 import { TOptions } from "types/index";
-import OptionsButton from "components/OptionsButton";
-import { IoMdAddCircleOutline } from "react-icons/io";
-import { MdPlaylistAddCheck } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { useDispatch } from "react-redux";
 import { requestCategoryList } from "Store/category/actions";
 import { requestQuizList } from "Store/quiz/actions";
 import useDeviceType from "hooks/useDeviceType";
-import Tabs from "components/Tabs";
 import { useTranslation } from "react-i18next";
 import { LoadingContainerFullPage } from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
 
-import * as Block from "blocks/Dashboard";
-import { useModalContext } from "components/Modal/modalContext";
-import DialogModal from "components/Modal/DialogModal";
+import * as Block from "blocks/Quizzes";
+import CardTab from "components/CardTab";
 
 type QuizzesProps = {};
 
 const Quizzes: FC<QuizzesProps> = () => {
   const dispatch = useDispatch();
   const isMobile = useDeviceType();
-  const { t } = useTranslation();
-  const { handleModal } = useModalContext();
+  const navigate = useNavigate();
+  const location = useLocation();
 
+  const { t } = useTranslation();
+
+  const editQuiz = new URLSearchParams(location.search).get("Edit");
+  const quizId = new URLSearchParams(location.search).get("quizId");
+
+  const [cardTab, setCardTab] = useState(t("quizzes.quizzes"));
   const { user, userStudent } = useSelector((state: RootState) => state.user);
   const { student } = useSelector((state: RootState) => state.student);
   const { categories, isLoading: categoryLoading } = useSelector(
@@ -39,60 +37,12 @@ const Quizzes: FC<QuizzesProps> = () => {
   );
   const { quizzes } = useSelector((state: RootState) => state.quiz);
 
-  const [tab, setTab] = useState(t("quizzes.options"));
-
   const userID = user?.info?.uid || userStudent?.uid;
   const userType = user?.info?.userType
     ? user?.info?.userType
     : student?.info?.userType || localStorage.getItem("userType");
   const requestUid =
     userType === "tutor" ? userID || "" : userStudent?.tutorID || "";
-
-  const navigate = useNavigate();
-  const lastQuiz = localStorage.getItem("lastQuiz") || "";
-
-  const StudentOptions: TOptions[] = [
-    {
-      option: t("quizzes.radonQuiz"),
-      optionIcon: <GiCardRandom size={40} />,
-      onClick: () =>
-        navigate(
-          randomQuiz(
-            quizzes?.length || 0,
-            quizzes?.map((quiz) => quiz.id as string) || [""]
-          )
-        ),
-    },
-    {
-      option: t("quizzes.retryLastQuiz"),
-      optionIcon: <FaFastBackward size={40} />,
-      onClick: () => navigate(`/quiz?quizId=${lastQuiz}`),
-    },
-  ];
-
-  const TutorOptions: TOptions[] = [
-    {
-      option: t("quizzes.addQuiz"),
-      optionIcon: <IoMdAddCircleOutline size={40} />,
-      onClick: () =>
-        categories?.length === 0
-          ? handleModal(
-              <DialogModal
-                type={"default"}
-                title="New quiz"
-                message={"Add at least one category before add a quiz"}
-                onConfirm={() => navigate("/quizzes/category-create")}
-                optionTitle="Add category"
-              />
-            )
-          : navigate("/quizzes/quiz-create"),
-    },
-    {
-      option: t("quizzes.addCategory"),
-      optionIcon: <MdPlaylistAddCheck size={40} />,
-      onClick: () => navigate("/quizzes/category-create"),
-    },
-  ];
 
   useEffect(() => {
     if (categories === undefined) {
@@ -106,6 +56,40 @@ const Quizzes: FC<QuizzesProps> = () => {
     }
   }, [dispatch, quizzes, requestUid, userID]);
 
+  const Options: TOptions[] = [
+    {
+      option: t("quizzes.quizzes"),
+      active: cardTab === t("quizzes.quizzes"),
+      onClick: () => {
+        setCardTab(t("quizzes.quizzes"));
+        navigate("/quizzes");
+      },
+    },
+    {
+      option: quizId ? t("quizzes.editQuizzes") : t("quizzes.newQuizzes"),
+      active: cardTab === t("quizzes.newQuizzes"),
+      onClick: () => {
+        if (quizId) return;
+        setCardTab(t("quizzes.newQuizzes"));
+        navigate("/quizzes");
+      },
+    },
+    {
+      option: t("quizzes.addCategory"),
+      active: cardTab === t("quizzes.addCategory"),
+      onClick: () => {
+        setCardTab(t("quizzes.addCategory"));
+        navigate("/quizzes");
+      },
+    },
+  ];
+
+  useEffect(() => {
+    if (editQuiz) {
+      setCardTab(t("quizzes.newQuizzes"));
+    }
+  }, [editQuiz, t]);
+
   if (categoryLoading) {
     return (
       <LoadingContainerFullPage>
@@ -116,38 +100,21 @@ const Quizzes: FC<QuizzesProps> = () => {
 
   return (
     <Styled.Container>
-      {isMobile && (
-        <Styled.TabContainer>
-          <Tabs
-            tabs={[
-              { label: t("quizzes.options") },
-              { label: t("quizzes.quizzes") },
-              { label: t("quizzes.categories") },
-            ]}
-            activeTab={(tab) => setTab(tab)}
-            radius={5}
+      <CardTab
+        options={userType === "tutor" ? Options : []}
+        innerCard={isMobile}
+      >
+        {cardTab === t("quizzes.quizzes") && (
+          <Block.QuizList
+            userType={userType || ""}
+            onClick={() => {
+              setCardTab(t("quizzes.newQuizzes"));
+            }}
           />
-        </Styled.TabContainer>
-      )}
-      {(!isMobile || tab === t("quizzes.options")) && (
-        <OptionsButton
-          options={userType === "student" ? StudentOptions : TutorOptions}
-          width="45%"
-        />
-      )}
-      {(!isMobile || tab === t("quizzes.quizzes")) && (
-        <Block.QuizzesCard
-          gridName="card3"
-          editMode={userType === "tutor"}
-          origin
-        />
-      )}
-      {(!isMobile || tab === t("quizzes.categories")) && (
-        <Block.CategoriesCard
-          gridName="card2"
-          editMode={userType === "tutor"}
-        />
-      )}
+        )}
+        {cardTab === t("quizzes.newQuizzes") && <Block.QuizCreate />}
+        {cardTab === t("quizzes.addCategory") && <Block.CategoryCreate />}
+      </CardTab>
     </Styled.Container>
   );
 };

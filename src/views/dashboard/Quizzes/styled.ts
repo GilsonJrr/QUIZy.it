@@ -6,18 +6,6 @@ export const Container = styled.div`
   padding: 0;
   display: flex;
   flex-direction: column;
-  @media screen and (min-width: 900px) {
-    /* padding: 20px 40px; */
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-column-gap: 20px;
-    grid-row-gap: 20px;
-    grid-template-areas:
-      "card1 card3"
-      "card2 card3"
-      "card2 card3";
-  }
 `;
 
 export const OptionButtonContainer = styled.div`

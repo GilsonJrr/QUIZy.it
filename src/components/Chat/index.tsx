@@ -15,7 +15,6 @@ import {
 } from "Store/chat/actions";
 import { ChatTypeValues } from "Store/chat/types";
 import Avatar from "components/Avatar";
-import { requestStudent } from "Store/students/actions";
 import { requestTutorPhoto } from "Store/user/actions";
 import LoadingSpinner from "components/LoadingSpiner";
 import { LoadingContainerCard } from "components/Container/styled";
@@ -40,14 +39,8 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
   const { chats, isLoading: chatLoading } = useSelector(
     (state: RootState) => state.chat
   );
-  const {
-    user,
-    tutorInfo,
-    isLoading: userLoading,
-  } = useSelector((state: RootState) => state.user);
-  const { student, isLoading } = useSelector(
-    (state: RootState) => state.student
-  );
+  const { user, tutorInfo } = useSelector((state: RootState) => state.user);
+  const { student } = useSelector((state: RootState) => state.student);
 
   const [message, setMessage] = useState("");
   const [newMessageCounter, setNewMessageCounter] = useState(1);
@@ -120,10 +113,6 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
     }
   }, [dispatch, tutorInfo, tutorUid]);
 
-  // useEffect(() => {
-  //   dispatch(requestStudent({ uid: tutorUid, studentId: studentUid }));
-  // }, [dispatch, studentUid, tutorUid]);
-
   useEffect(() => {
     dispatch(requestChatList({ tutorUid: tutorUid, studentUid: studentUid }));
   }, [dispatch, studentUid, tutorUid, openChat]);
@@ -171,7 +160,7 @@ const Chat: FC<ChatProps> = ({ tutorUid, studentUid, userType }) => {
     }
   }, [dispatch, studentUid, tutorUid, userType]);
 
-  if (isLoading || userLoading || chatLoading) {
+  if (chatLoading) {
     return (
       <LoadingContainerCard>
         <LoadingSpinner />

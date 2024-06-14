@@ -60,7 +60,8 @@
     "options": "Options",
     "quizzes": "Quizzes",
     "categories": "Categories",
-    "newQuizzes": "New Quizzes",
+    "newQuizzes": "New Quiz",
+    "editQuizzes": "Edit Quiz",
     "allQuizzes": "All Quizzes",
     "quizNotFound": "Quiz not found",
     "noNewQuizAvailable": "No new quiz available at this time. Please check later",
@@ -105,6 +106,7 @@
   },
   "students": {
     "option1": "New student",
+    "option1Edit": "Edit student",
     "option2": "Groups",
     "tab1": "Groups",
     "menuTab1": "Students",

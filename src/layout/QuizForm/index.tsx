@@ -34,15 +34,7 @@ const QuizForm: FC<QuizFormProps> = ({
 
   return (
     <Styled.Container>
-      <Card
-        title={title}
-        isEmpty={false}
-        gridName={"newQuiz"}
-        innerCard={isMobile}
-        scrollable={isMobile}
-      >
-        {children}
-      </Card>
+      <Styled.ChildrenContainer>{children}</Styled.ChildrenContainer>
       {!isMobile && (
         <Card title={"Preview"} isEmpty={false} gridName="newQuestion">
           {preview}

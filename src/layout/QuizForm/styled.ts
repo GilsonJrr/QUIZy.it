@@ -15,7 +15,7 @@ export const Container = styled.div<Props>`
 
   @media screen and (min-width: 900px) {
     height: 100%;
-    padding: 20px 0px;
+    padding: 0px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 0.2fr;
@@ -28,13 +28,17 @@ export const Container = styled.div<Props>`
   }
 `;
 
+export const ChildrenContainer = styled.div`
+  grid-area: newQuiz;
+`;
+
 export const ButtonContainer = styled.div<Props>`
   position: fixed;
   bottom: 0;
   left: 0;
   display: flex;
   align-items: flex-end;
-  justify-content: flex-end;
+  justify-content: ${({ justify }) => justify || "flex-end"};
   width: 100%;
   padding: 10px 15px;
 

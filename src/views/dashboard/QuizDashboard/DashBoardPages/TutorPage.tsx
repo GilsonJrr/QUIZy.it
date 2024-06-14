@@ -53,7 +53,11 @@ export const TutorPage = () => {
         </Styled.TabContainer>
       )}
       {(tab === t("dashboard.labelQuizzes") || !isMobile) && (
-        <Block.QuizzesCard gridName="card1" editMode />
+        <Block.QuizzesCard
+          gridName="card1"
+          editMode
+          // onClick={() => navigate("/quizzes?Edit=true")}
+        />
       )}
       {(tab === t("dashboard.labelStudents") || !isMobile) && (
         <Block.StudentsCard

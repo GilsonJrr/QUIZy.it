@@ -14,16 +14,17 @@ export const Container = styled.div<Props>`
   width: 100%;
   height: 100%;
   position: relative;
+  overflow: hidden;
 `;
 
 export const ContainerInner = styled.div`
   width: 100%;
   height: 100%;
-  padding: 20px 0px;
+  padding: 0px;
 
   display: flex;
   flex-direction: column;
-  padding: 10px 0;
+  padding: 0;
 
   @media screen and (min-width: 900px) {
     display: grid;
@@ -44,8 +45,17 @@ export const ButtonContainer = styled.div<Props>`
   justify-content: ${({ justify }) => justify || "flex-end"};
   margin-bottom: 45px;
 
+  position: fixed;
+  bottom: -15px;
+  right: 0;
+  width: 100%;
+  padding: 0 15px;
+
   @media screen and (min-width: 900px) {
     margin-bottom: 0px;
+    position: relative;
+    bottom: 0;
+    padding: 0;
   }
 `;
 
@@ -60,8 +70,12 @@ export const SelectContainer = styled.div`
 export const Form = styled.form<Props>`
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  grid-area: newQuiz;
+  gap: 8px;
   padding-bottom: ${({ padding }) => (padding ? "150" : "")}px;
+  height: 100%;
+
+  margin-bottom: 100px;
 `;
 
 export const EmptyForm = styled.div`
@@ -142,7 +156,7 @@ export const CategoryCard = styled.div<Props>`
 
 export const TabContainer = styled.div`
   display: flex;
-  margin: 20px 0 0;
+  margin: 10px 0;
 `;
 
 export const NameColorContainer = styled.div`

@@ -14,7 +14,6 @@ import QuizResult from "views/quizPages/QuizResult";
 import Students from "views/dashboard/Students";
 import { ModalProvider } from "components/Modal/modalContext";
 import NotFound from "views/NotFound";
-import QuizCreate from "views/dashboard/Quizzes/QuizzesPages/QuizCreate";
 import LoadingImage from "components/LoadingImage";
 import AuthPages from "layout/AuthPages";
 import Login from "views/auth/Login";
@@ -22,7 +21,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { auth } from "lib/firebase";
 import SignUp from "views/auth/SignUp";
-import CategoryCreate from "views/dashboard/Quizzes/QuizzesPages/CategoryCreate";
 import ProfileModal from "components/Modal/ProfileModal";
 import { LoadingContainerFullPage } from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
@@ -85,14 +83,7 @@ const Routers = () => {
             <Route path="/quizzes" element={<Quizzes />} />
             <Route path="/teste" element={<LoadingImage />} />
             {userType !== "student" && (
-              <>
-                <Route path="/quizzes/quiz-create" element={<QuizCreate />} />
-                <Route
-                  path="/quizzes/category-create"
-                  element={<CategoryCreate />}
-                />
-                <Route path="/students" element={<Students />} />
-              </>
+              <Route path="/students" element={<Students />} />
             )}
             <Route path="/settings" element={<Settings />} />
             <Route path="/results" element={<Results />} />

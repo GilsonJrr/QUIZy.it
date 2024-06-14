@@ -20,7 +20,7 @@ export const Container = styled.div<Props>`
 export const ContainerInner = styled.div`
   width: 100%;
   height: 100%;
-  padding: 20px 0px;
+  padding: 0px;
 
   display: flex;
   flex-direction: column;

@@ -4,7 +4,6 @@ import { useModalContext } from "components/Modal/modalContext";
 import PreQuizModal from "components/Modal/PreQuizModal";
 import EmptyImage from "assets/images/Empty_quiz_image_state.png";
 import { QuizTypeValues } from "Store/quiz/types";
-import { useNavigate } from "react-router-dom";
 import { Title } from "components/ui/Typography/styled";
 import LoadingSpinner from "components/LoadingSpiner";
 import { buildStyles } from "react-circular-progressbar";
@@ -13,12 +12,15 @@ import { useSelector } from "react-redux";
 import { RootState } from "Store/root-reducer";
 import { theme } from "lib/styles/globalStyles";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import { requestQuiz } from "Store/quiz/actions";
 
 type RenderQuizCardProps = {
   item: QuizTypeValues;
   editMode?: boolean;
   preview?: boolean;
   loading?: boolean;
+  onClick?: () => void;
 };
 
 type Result = {
@@ -31,23 +33,28 @@ const RenderQuizCard: FC<RenderQuizCardProps> = ({
   editMode,
   preview,
   loading,
+  onClick,
 }) => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const { handleModal } = useModalContext();
   const { user, userStudent } = useSelector((state: RootState) => state.user);
+  const { results } = useSelector((state: RootState) => state.result);
 
   const userType = user?.info?.userType || userStudent?.userType;
 
   const handleClick = () => {
-    editMode
-      ? navigate(`/quizzes/quiz-create?quizId=${item.id}`)
-      : handleModal(<PreQuizModal item={item} />);
+    if (editMode) {
+      onClick?.();
+      dispatch(requestQuiz({ uid: user?.info?.uid || "", quizId: item.id }));
+      return;
+    }
+    handleModal(<PreQuizModal item={item} />);
   };
 
-  const studentResult: Result = Object.values(item?.results || "").filter(
-    (a) => a.studentUid === userStudent?.uid
+  const studentResult: Result = Object.values(results || "").filter(
+    (a) => a.quizUid === item?.id
   )[0];
 
   const notCompleted =

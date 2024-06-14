@@ -1,8 +1,7 @@
 import React, { FC, useEffect, useMemo, useState } from "react";
 import * as Styled from "./styled";
-import RenderStudentCard from "components/renderItems/RenderStudentCard";
 import Tabs from "components/Tabs";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { requestStudentList } from "Store/students/actions";
 import { RootState } from "Store/root-reducer";
@@ -15,30 +14,35 @@ import {
   LoadingContainerFullPage,
 } from "components/Container/styled";
 import LoadingSpinner from "components/LoadingSpiner";
-import { TInfo } from "Store/students/types";
 import { useTranslation } from "react-i18next";
 import SearchInput from "components/inputs/SearchInput";
 import AlphabeticalFilter from "components/AlphabeticalFilter";
 import ModalTemplate from "components/Modal/ModalTemplate";
+import RenderQuizCard from "components/renderItems/RenderQuizCard";
 
-type StudentsProps = {
-  onClick: () => void;
+type QuizListProps = {
+  onClick?: () => void;
+  userType?: string;
 };
 
-const Students: FC<StudentsProps> = ({ onClick }) => {
+const QuizList: FC<QuizListProps> = ({ onClick, userType }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
   const { isLoading: userLoading } = useSelector(
     (state: RootState) => state.user
   );
   const { isLoading: authLoading } = useSelector(
     (state: RootState) => state.auth
   );
-  const { students, isLoading } = useSelector(
-    (state: RootState) => state.student
+  const { quizzes, isLoading } = useSelector((state: RootState) => state.quiz);
+  const { categories, isLoading: categoryLoading } = useSelector(
+    (state: RootState) => state.category
   );
-  const { groups, isLoading: groupLoading } = useSelector(
-    (state: RootState) => state.group
-  );
+
+  // const { groups, isLoading: categoryLoading } = useSelector(
+  //   (state: RootState) => state.group
+  // );
   const { user } = useSelector((state: RootState) => state.user);
 
   const { handleModal } = useModalContext();
@@ -47,7 +51,7 @@ const Students: FC<StudentsProps> = ({ onClick }) => {
   const isMobile = useDeviceType();
   const location = useLocation();
 
-  const [tab, setTab] = useState(t("students.tab1"));
+  const [tab, setTab] = useState(t("quizzes.categories"));
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState(true);
 
@@ -61,34 +65,34 @@ const Students: FC<StudentsProps> = ({ onClick }) => {
   const userID = user?.info?.uid;
 
   const tabs = useMemo(() => {
-    if (groups && groups.length > 0 && !groupLoading) {
-      return groups.map((group) => {
-        return { label: group.title, color: group.color };
+    if (categories && categories.length > 0 && !categoryLoading) {
+      return categories.map((category) => {
+        return { label: category.title, color: category.color };
       });
     } else {
       return [];
     }
-  }, [groupLoading, groups]);
+  }, [categoryLoading, categories]);
 
   const filterStudents = () => {
     switch (true) {
-      case tab === t("students.tab1"):
-        return students;
+      case tab === t("quizzes.categories"):
+        return quizzes;
       default:
-        return students?.filter((student) => student?.info?.group === tab);
+        return quizzes?.filter((student) => student?.category === tab);
     }
   };
 
-  const searchedStudents: TInfo[] =
-    students && students?.length > 0
+  const searchedStudents =
+    quizzes && quizzes?.length > 0
       ? filterStudents()
           ?.filter((student) =>
-            student.info?.name?.toUpperCase().includes(search?.toUpperCase())
+            student.title?.toUpperCase().includes(search?.toUpperCase())
           )
-          .map((student) => student.info)
-          .filter((info): info is TInfo => info !== undefined)
+          .map((student) => student)
+          .filter((info) => info !== undefined)
           .sort((a, b) => {
-            const order = a.name.localeCompare(b.name);
+            const order = a.title.localeCompare(b.title);
             return filter ? order : -order;
           }) ?? []
       : [];
@@ -98,7 +102,7 @@ const Students: FC<StudentsProps> = ({ onClick }) => {
       <ModalTemplate>
         <Styled.TabContainer>
           <Tabs
-            tabs={[{ label: t("students.tab1"), color: "" }, ...tabs]}
+            tabs={[{ label: t("quizzes.categories"), color: "" }, ...tabs]}
             activeTab={(tab) => setTab(tab)}
             wrap
           />
@@ -108,22 +112,22 @@ const Students: FC<StudentsProps> = ({ onClick }) => {
   };
 
   useEffect(() => {
-    if (groups === undefined) {
+    if (categories === undefined) {
       dispatch(requestGroupList({ uid: userID || "" }));
     }
-  }, [dispatch, groups, userID]);
+  }, [dispatch, categories, userID]);
 
   useEffect(() => {
-    if (students === undefined && userID) {
-      dispatch(requestStudentList({ uid: userID }));
+    if (quizzes === undefined) {
+      dispatch(requestStudentList({ uid: userID || "" }));
     }
-  }, [dispatch, students, userID]);
+  }, [dispatch, quizzes, userID]);
 
   useEffect(() => {
     if (
-      students &&
+      quizzes &&
       newStudentCreated &&
-      parseInt(studentsQuantity || "") < students.length
+      parseInt(studentsQuantity || "") < quizzes.length
     ) {
       handleModal(
         <AlertModal
@@ -134,7 +138,7 @@ const Students: FC<StudentsProps> = ({ onClick }) => {
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newStudentCreated, students, studentsQuantity]);
+  }, [newStudentCreated, quizzes, studentsQuantity]);
 
   if (isLoading || authLoading || userLoading) {
     return (
@@ -146,14 +150,14 @@ const Students: FC<StudentsProps> = ({ onClick }) => {
 
   return (
     <Styled.CardInner>
-      {!groupLoading ? (
+      {!categoryLoading ? (
         <Styled.SearchContainer>
+          <AlphabeticalFilter aT0Z={(order) => setFilter?.(order)} />
           <SearchInput
             value={search}
             setValue={(search) => setSearch(search)}
             width="100%"
           />
-          <AlphabeticalFilter aT0Z={(order) => setFilter?.(order)} />
           {!isMobile && (
             <Tabs
               onClick={handleOpenFilterModal}
@@ -161,7 +165,7 @@ const Students: FC<StudentsProps> = ({ onClick }) => {
                 tabs.filter((t) => t.label === tab).length === 0
                   ? [
                       {
-                        label: t("students.tab1") || "",
+                        label: t("quizzes.categories") || "",
                         color: "",
                       },
                     ]
@@ -181,11 +185,17 @@ const Students: FC<StudentsProps> = ({ onClick }) => {
         {searchedStudents?.map((item) => {
           if (item) {
             return (
-              <RenderStudentCard
-                item={item}
-                width={isMobile ? "100%" : "49%"}
-                onClick={onClick}
-              />
+              <Styled.MapRowInner>
+                <RenderQuizCard
+                  item={item}
+                  editMode={userType === "tutor"}
+                  // width={isMobile ? "100%" : "49%"}
+                  onClick={() => {
+                    onClick?.();
+                    navigate(`/quizzes?quizId=${item.id}`);
+                  }}
+                />
+              </Styled.MapRowInner>
             );
           }
 
@@ -196,4 +206,4 @@ const Students: FC<StudentsProps> = ({ onClick }) => {
   );
 };
 
-export default Students;
+export default QuizList;

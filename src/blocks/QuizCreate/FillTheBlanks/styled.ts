@@ -10,12 +10,16 @@ export const Container = styled.div<Props>`
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin-bottom: 120px;
+  @media screen and (min-width: 900px) {
+    margin-bottom: 0;
+  }
 `;
 
 export const ContainerInner = styled.div`
   width: 100%;
   min-height: 100%;
-  padding: 20px 0px;
+  padding: 0px;
 
   display: grid;
   grid-template-columns: 1fr 1fr;

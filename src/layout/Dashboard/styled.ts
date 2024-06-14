@@ -60,7 +60,7 @@ export const ChildrenContainer = styled.div<Props>`
   height: calc(100vh - 9vh);
   @media screen and (min-width: 900px) {
     width: 94%;
-    padding: 20px 40px;
+    padding: 20px 30px;
     ${({ triggerAnimation }) =>
       triggerAnimation
         ? css`

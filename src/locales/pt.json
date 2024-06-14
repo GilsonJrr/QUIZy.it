@@ -60,7 +60,8 @@
     "options": "Opções",
     "quizzes": "Quizzes",
     "categories": "Categorias",
-    "newQuizzes": "Novos Quizzes",
+    "newQuizzes": "Novo Quiz",
+    "editQuizzes": "Editar Quiz",
     "allQuizzes": "Todos os Quizzes",
     "quizNotFound": "Quiz não encontrado",
     "noNewQuizAvailable": "Nenhum novo quiz disponível no momento. Por favor, verifique mais tarde",
@@ -105,6 +106,7 @@
   },
   "students": {
     "option1": "Novo estudante",
+    "option1Edit": "Editar estudante",
     "option2": "Grupos",
     "tab1": "Grupos",
     "menuTab1": "Opções",

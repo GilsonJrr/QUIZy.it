@@ -12,9 +12,11 @@ export const Container = styled.div<Props>`
   gap: 4px;
   position: relative;
   width: ${({ width }) => width || "100%"};
+  flex: 1;
 `;
 
 export const Textarea = styled.textarea<Props>`
+  flex: 1;
   border-radius: 10px;
   font-size: ${({ fontSize }) => fontSize};
   padding: 10px;

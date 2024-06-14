@@ -9,16 +9,24 @@ import List from "components/List";
 import { QuizTypeValues } from "Store/quiz/types";
 import { useDispatch } from "react-redux";
 import { requestQuizList } from "Store/quiz/actions";
+import { useNavigate } from "react-router-dom";
 
 type QuizzesCardProps = {
   origin?: boolean;
   editMode?: boolean;
   gridName?: string;
+  onClick?: () => void;
 };
 
-const QuizzesCard: FC<QuizzesCardProps> = ({ origin, editMode, gridName }) => {
+const QuizzesCard: FC<QuizzesCardProps> = ({
+  origin,
+  editMode,
+  gridName,
+  onClick,
+}) => {
   const isMobile = useDeviceType();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { t } = useTranslation();
   const { userStudent } = useSelector((state: RootState) => state.user);
@@ -53,7 +61,13 @@ const QuizzesCard: FC<QuizzesCardProps> = ({ origin, editMode, gridName }) => {
       <List<QuizTypeValues>
         content={quizzes || []}
         renderItem={(item) => (
-          <RenderQuizCard item={item} editMode={editMode} />
+          <RenderQuizCard
+            item={item}
+            editMode={editMode}
+            onClick={() =>
+              editMode && navigate(`/quizzes?quizId=${item.id}&Edit=true`)
+            }
+          />
         )}
         search={search}
         filter={filter}

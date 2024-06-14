@@ -19,7 +19,6 @@ import { LoadingContainerFullPage } from "components/Container/styled";
 import { setImgQuiz } from "Store/quiz/repository";
 import { ImageType } from "Store/quiz/types";
 import { RowContainer } from "components/ui/Containers/styled";
-import useDeviceType from "hooks/useDeviceType";
 
 type FormQuizProps = {
   quizType: (value: string) => void;
@@ -37,7 +36,6 @@ type TFormData = {
 const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const isMobile = useDeviceType();
   const navigate = useNavigate();
 
   const { user } = useSelector((state: RootState) => state.user);
@@ -209,7 +207,6 @@ const FormQuiz: FC<FormQuizProps> = ({ quizType }) => {
         </RowContainer>
         <TextAreaInput
           label="Description"
-          height={isMobile ? "25vh" : "38vh"}
           error={errors.description}
           {...register("description")}
         />

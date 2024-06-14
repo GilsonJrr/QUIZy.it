@@ -46,7 +46,8 @@ const Students: FC<StudentsProps> = () => {
   const studentsQuantity = new URLSearchParams(location.search).get(
     "studentsQuantity"
   );
-  const ProfileUrlTab = new URLSearchParams(location.search).get("Profile");
+  const profileUrlTab = new URLSearchParams(location.search).get("Profile");
+  const useId = new URLSearchParams(location.search).get("id");
 
   const userID = user?.info?.uid;
 
@@ -62,9 +63,10 @@ const Students: FC<StudentsProps> = () => {
       },
     },
     {
-      option: t("students.option1"),
+      option: useId ? t("students.option1Edit") : t("students.option1"),
       active: cardTab === t("students.option1"),
       onClick: () => {
+        if (useId) return;
         setCardTab(t("students.option1"));
         navigate(`/students`);
       },
@@ -114,10 +116,10 @@ const Students: FC<StudentsProps> = () => {
   }, [newStudentCreated, students, studentsQuantity]);
 
   useEffect(() => {
-    if (ProfileUrlTab) {
+    if (profileUrlTab) {
       setCardTab("Profile");
     }
-  }, [ProfileUrlTab]);
+  }, [profileUrlTab]);
 
   if (isLoading || authLoading || userLoading) {
     return (
