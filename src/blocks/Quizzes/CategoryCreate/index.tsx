@@ -27,6 +27,8 @@ import AlertModal from "components/Modal/AlertModal";
 import { useTranslation } from "react-i18next";
 import { Title } from "components/ui/Typography/styled";
 import ColorInput from "components/inputs/ColorInput";
+import SelectInput from "components/inputs/SelectInput";
+import { TOption } from "types/index";
 
 type StudentCreateProps = {};
 
@@ -35,6 +37,7 @@ type TStudent = {
   about?: string;
   image?: string;
   color?: string;
+  order?: string;
 };
 
 const CategoryCreate: FC<StudentCreateProps> = () => {
@@ -76,8 +79,9 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
         />
       );
     }
+
     const preparedData = {
-      id: categoryId !== null ? categoryId : idGenerator(18),
+      id: categoryId !== "" ? categoryId : idGenerator(18),
       uid: userID || "",
       ...data,
     };
@@ -89,7 +93,7 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
           <AlertModal
             type={"success"}
             message={
-              categoryId !== null
+              categoryId !== ""
                 ? t("addCategory.categoryUpdateSuccess")
                 : t("addCategory.categoryCreateSuccess")
             }
@@ -114,7 +118,7 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
 
   useEffect(() => {
     const categoryArray = Array.isArray(categories) ? categories : [];
-    if (categoryId !== null && categories) {
+    if (categoryId !== "" && categories) {
       reset(...categoryArray?.filter((g) => g.id === categoryId));
     }
   }, [categoryId, categories, reset]);
@@ -125,6 +129,24 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
       ?.title;
     return quizzesCategory?.some((a) => a.category === categoryTitle);
   }, [categoryId, categories, quizzesCategory]);
+
+  const orderOption: TOption[] =
+    categories && categories.length > 0
+      ? [
+          ...categories?.map((_, index) => {
+            return {
+              label: String(index + 1),
+              value: String(index + 1),
+            };
+          }),
+          {
+            label: String(categories.length + 1),
+            value: String(categories.length + 1),
+          },
+        ]
+      : [];
+
+  console.log("orderOption", orderOption);
 
   const handleDelete = () => {
     handleModal(
@@ -154,6 +176,7 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
       title: "",
       about: "",
       image: "",
+      order: categories ? String(categories?.length + 1) : "",
     };
     if (id === categoryId) {
       setCategoryId("");
@@ -164,6 +187,11 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
       setTab("Category");
     }
   };
+
+  const sortedCategories =
+    categories && categories.length > 0
+      ? [...categories].sort((a, b) => Number(a.order) - Number(b.order))
+      : [];
 
   return (
     <Styled.Container>
@@ -184,26 +212,31 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
       <Styled.ContainerInner>
         {(!isMobile || tab === t("addCategory.category")) && (
           <Styled.Form id="newCategoryForm" onSubmit={handleSubmit(onSubmit)}>
+            <SimpleInput
+              maxLength={15}
+              label={t("addCategory.categoryTitle")}
+              placeholder={t("addCategory.enterCategoryTitle")}
+              error={
+                watch("title")?.length === 15
+                  ? {
+                      type: "custom",
+                      message: "Character limit reached! 15/15",
+                    }
+                  : hasQuiz
+                  ? {
+                      type: "custom",
+                      message: t("addCategory.categoryHasActiveQuiz"),
+                    }
+                  : errors.title
+              }
+              {...register("title")}
+              disabled={hasQuiz}
+            />
             <Styled.NameColorContainer>
-              <SimpleInput
-                maxLength={15}
-                label={t("addCategory.categoryTitle")}
-                placeholder={t("addCategory.enterCategoryTitle")}
-                error={
-                  watch("title")?.length === 15
-                    ? {
-                        type: "custom",
-                        message: "Character limit reached! 15/15",
-                      }
-                    : hasQuiz
-                    ? {
-                        type: "custom",
-                        message: t("addCategory.categoryHasActiveQuiz"),
-                      }
-                    : errors.title
-                }
-                {...register("title")}
-                disabled={hasQuiz}
+              <SelectInput
+                label="Order"
+                options={orderOption}
+                {...register("order")}
               />
               <ColorInput
                 color={watch("color") || ""}
@@ -226,28 +259,27 @@ const CategoryCreate: FC<StudentCreateProps> = () => {
             innerCard={isMobile}
           >
             <Styled.CategoryCardContainer>
-              {categories &&
-                categories.length > 0 &&
-                categories?.map((category) => {
-                  return (
-                    <Styled.CategoryCard
-                      active={category.id === categoryId}
-                      onClick={() => handleUpdateCategory(category.id || "")}
+              {sortedCategories?.map((category) => {
+                return (
+                  <Styled.CategoryCard
+                    key={category.id}
+                    active={category.id === categoryId}
+                    onClick={() => handleUpdateCategory(category.id || "")}
+                  >
+                    <Avatar
+                      size="medium"
+                      name={category.title}
+                      photo={category.image}
+                      border={category.color}
+                    />
+                    <Title
+                      color={category.id === categoryId ? "light" : "default"}
                     >
-                      <Avatar
-                        size="medium"
-                        name={category.title}
-                        photo={category.image}
-                        border={category.color}
-                      />
-                      <Title
-                        color={category.id === categoryId ? "light" : "default"}
-                      >
-                        {category.title}
-                      </Title>
-                    </Styled.CategoryCard>
-                  );
-                })}
+                      {category.title}
+                    </Title>
+                  </Styled.CategoryCard>
+                );
+              })}
             </Styled.CategoryCardContainer>
           </Card>
         )}

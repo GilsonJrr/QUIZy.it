@@ -194,14 +194,14 @@ const GroupCreate: FC<StudentCreateProps> = ({ onClick }) => {
                 onChange={(color) => setValue("color", color)}
               />
             </Styled.NameColorContainer>
-            <Styled.TextAreaContainer>
-              <TextAreaInput
-                label="About"
-                height="100%"
-                error={errors.about}
-                {...register("about")}
-              />
-            </Styled.TextAreaContainer>
+            {/* <Styled.TextAreaContainer>
+            </Styled.TextAreaContainer> */}
+            <TextAreaInput
+              label="About"
+              height="100%"
+              error={errors.about}
+              {...register("about")}
+            />
           </Styled.Form>
         )}
         {(!isMobile || tab === "Groups") && (

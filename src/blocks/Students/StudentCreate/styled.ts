@@ -171,12 +171,7 @@ export const NamesColorContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 8px;
   width: 100%;
   height: 100%;
-`;
-
-export const TextAreaContainer = styled.div`
-  display: flex;
-  width: 100%;
-  height: 30%;
 `;

@@ -393,14 +393,12 @@ const StudentCreate: FC<StudentCreateProps> = ({ onClick }) => {
                   width="49%"
                 />
               </Styled.SelectContainer>
-              <Styled.TextAreaContainer>
-                <TextAreaInput
-                  label="About"
-                  height="100%"
-                  error={errors.about}
-                  {...register("about")}
-                />
-              </Styled.TextAreaContainer>
+              <TextAreaInput
+                label="About"
+                height="100%"
+                error={errors.about}
+                {...register("about")}
+              />
             </Styled.NamesColorContainer>
           </Styled.Form>
         )}

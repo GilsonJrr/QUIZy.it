@@ -175,7 +175,6 @@ export const NameColorContainer = styled.div`
   flex-direction: column;
   @media screen and (min-width: 900px) {
     flex-direction: row;
-    height: 15%;
   }
 `;
 

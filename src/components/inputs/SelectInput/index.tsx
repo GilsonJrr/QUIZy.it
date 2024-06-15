@@ -17,8 +17,12 @@ const SelectInput = forwardRef<HTMLSelectElement, SelectInputProps>(
       <Styled.Container width={width}>
         <Title size="smaller">{label}</Title>
         <Styled.Select ref={ref} {...rest}>
-          {options.map((option) => (
-            <Styled.Option key={option.value} value={option.value}>
+          {options.map((option, index) => (
+            <Styled.Option
+              key={option.value}
+              value={option.value}
+              selected={index === options.length - 1}
+            >
               {option.label}
             </Styled.Option>
           ))}
